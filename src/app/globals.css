@@ -1,26 +1,33 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Pure Charcoal Black & Dark Slate Palette */
+  --color-ink: #121417;
+  /* Ana Arka Plan (Charcoal Black) */
+  --color-ink-2: #181b1f;
+  /* Hero & Koyu Bölümler (Dark Charcoal) */
+  --color-panel: #20242a;
+  /* Kartlar & Butonlar (Charcoal Slate) */
+  --color-panel-2: #282d35;
+  /* İkincil Vurgulu Paneller */
+  --color-panel-border: #2e3440;
+  /* İnce Kömür Sınır Çizgileri */
+
+  /* Gold & Accent Tokens */
+  --color-gold: #c9a15c;
+  --color-gold-bright: #e3c383;
+  --color-gold-deep: #7b6540;
+  --color-cream: #f3ead8;
+  --color-stone: #9ba3af;
+  --color-stone-dim: #6b7280;
+  --color-ember: #e54d2e;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  html,
+  body {
+    background-color: var(--color-ink) !important;
+    color: var(--color-cream);
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }

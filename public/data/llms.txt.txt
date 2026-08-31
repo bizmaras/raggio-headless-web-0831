@@ -1,0 +1,6 @@
+# Raggio Gourmet & Pizza - Brand & Knowledge Context
+- Brand Name: Raggio Gourmet & Pizza
+- Model: High-end Takeout, Delivery, and Event Catering
+- Cuisine: Artisan Stone-Baked Deck Oven Pizza, Authentic Philly Cheesesteaks, Fresh Salads, Italian Pastas
+- Key Ingredients: 100% Grande Mozzarella, fresh local produce, artisan dough
+- Service Area: Takeout & Delivery via direct POS checkout integration

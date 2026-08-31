@@ -1,0 +1,171 @@
+Product Name,Description,Price,Category,Slug,Featured
+Plain Cheese Pizza,100% Grande Mozzarella,18.99,Pizza,plain-cheese-pizza,True
+White Cheese Pizza,"Ricotta, mozzarella cheese and Grande mozzarella",19.99,Pizza,white-cheese-pizza,False
+Pizza by the Slice,1 slice of pizza,2.5,Pizza,pizza-by-the-slice,False
+2 Slices + Can Drink,2 slices of pizza with a can of soda,6.0,Pizza,2-slices-can-drink,True
+Our Signature Thin Crust,The Works Pizza,21.99,Gourmet Pizza,signature-thin-crust,True
+The Works Pizza,"Meat, green pepper, mushrooms, and fried onions",21.99,Gourmet Pizza,the-works-pizza,False
+White Special Pizza,"Spinach, ricotta, mozzarella cheese and fresh garlic sauce",21.99,Gourmet Pizza,white-special-pizza,False
+Buffalo Chicken Pizza,"Grilled chicken, buffalo sauce",21.99,Gourmet Pizza,buffalo-chicken-pizza,False
+Chicken Ranch Pizza,Grilled chicken with ranch dressing,21.99,Gourmet Pizza,chicken-ranch-pizza,False
+Chicken Parm Pizza,"Grilled or crispy chicken with mozzarella cheese, and sauce",21.99,Gourmet Pizza,chicken-parm-pizza,False
+Chicken Alfredo Pizza,"Grilled chicken, Alfredo sauce",21.99,Gourmet Pizza,chicken-alfredo-pizza,False
+Shrimp Alfredo Pizza (XL),"Fresh shrimp, Alfredo and Grande mozzarella",25.99,Gourmet Pizza,shrimp-alfredo-pizza,False
+Greek Pizza,"Spinach, feta cheese topped with spinach",21.99,Gourmet Pizza,greek-pizza,False
+House Pizza,"Fresh green peppers, onions, mozzarella cheese, and fried onions",21.99,Gourmet Pizza,house-pizza,False
+Philly Cheesesteak Pizza,"Sliced steak, American cheese, onion",23.99,Gourmet Pizza,philly-cheesesteak-pizza,False
+Veggie Pizza,"Fresh green peppers, onions, mushrooms",21.99,Gourmet Pizza,veggie-pizza,False
+White Cheese Sicilian,"100% Grande Mozzarella, thick crust",18.99,Sicilian Pizza,white-cheese-sicilian,False
+Sicilian Meat Lover,"Sausage, ham, pepperoni, bacon",23.99,Sicilian Pizza,sicilian-meat-lover,False
+Sicilian Special,"Pepperoni, sausage, green peppers, mushrooms",25.99,Sicilian Pizza,sicilian-special,False
+Shrimp Alfredo Sicilian,"Fresh shrimp, Alfredo sauce and Grande mozzarella",25.99,Sicilian Pizza,shrimp-alfredo-sicilian,False
+Buffalo Chicken Sicilian,"Grilled chicken, hot sauce and Grande mozzarella",23.99,Sicilian Pizza,buffalo-chicken-sicilian,False
+Chicken Ranch Sicilian,"Grilled chicken, ranch, mozzarella and bacon",23.99,Sicilian Pizza,chicken-ranch-sicilian,False
+Ham & American Cheese Sicilian,,21.99,Sicilian Pizza,ham-american-sicilian,False
+White Special Sicilian,"Spinach, tomato, fresh garlic sauce and Grande mozzarella",23.99,Sicilian Pizza,white-special-sicilian,False
+Philly Steak Sicilian,"Grilled chicken, hot sauce and Grande mozzarella",23.99,Sicilian Pizza,philly-steak-sicilian,False
+Plain Chicken Wings,Jumbo wings,8.99,Chicken Wings,plain-wings,False
+BBQ Wings,BBQ sauce,8.99,Chicken Wings,bbq-wings,False
+Garlic Parmesan Wings,Garlic parmesan sauce,8.99,Chicken Wings,garlic-parm-wings,False
+Spicy Wings,Hot sauce,8.99,Chicken Wings,spicy-wings,False
+Honey Habanero Wings,Sweet & spicy,8.99,Chicken Wings,honey-habanero-wings,False
+Mango Habanero Wings,Tropical sweet heat,8.99,Chicken Wings,mango-habanero-wings,False
+Philadelphia Cheesesteak,Fresh homemade 8oz beef burgers on burger bun,10.99,Cheesesteaks,philly-cheesesteak,True
+The Philly Special,"Mushrooms, sweet peppers, onions",12.99,Cheesesteaks,philly-special,False
+Cheesesteak Ranchero,"Jalapeños, ranch dressing",12.99,Cheesesteaks,cheesesteak-ranchero,False
+Pizza Steak or Chicken,Marinara sauce & mozzarella cheese,12.99,Cheesesteaks,pizza-steak-chicken,False
+BBQ Chicken Cheesesteak,BBQ sauce and Grande mozzarella,12.99,Cheesesteaks,bbq-chicken-cheesesteak,False
+Italian Vegetable Cheesesteak,Fresh vegetables,12.99,Cheesesteaks,italian-veg-cheesesteak,False
+Ham & American Cheese,Classic combo,12.99,Cheesesteaks,ham-american-cheese,False
+Burger,Fresh homemade 8oz beef burger on burger bun,7.99,Fresh Burgers,burger,False
+Cheeseburger,With American cheese,8.99,Fresh Burgers,cheeseburger,True
+Double Cheeseburger,Double patty with American cheese,11.99,Fresh Burgers,double-cheeseburger,False
+Bacon Double Cheeseburger,"Bacon, double patty, cheese",14.99,Fresh Burgers,bacon-double-cheeseburger,False
+Texas Cheeseburger,"Jalapenos, onion rings, and Texas sauce",12.99,Fresh Burgers,texas-cheeseburger,False
+Chicken Ranch Burger,Ranch & bacon,11.99,Fresh Burgers,chicken-ranch-burger,False
+Chicken Caesar,Caesar dressing,11.99,Fresh Burgers,chicken-caesar-burger,False
+French Fries,,4.99,Appetizers,french-fries,False
+Cheese Fries,,5.99,Appetizers,cheese-fries,False
+Old Bay Fries,,5.99,Appetizers,old-bay-fries,False
+Onion Rings,,5.99,Appetizers,onion-rings,False
+Cheesesteak Fries,,12.99,Appetizers,cheesesteak-fries,False
+Mega Fries,"Topped with bacon, mozzarella cheese, and choice of sour cream or salsa",9.99,Appetizers,mega-fries,False
+Buffalo Chicken,,10.99,Appetizers,buffalo-chicken-app,False
+Pizza Fries,,7.99,Appetizers,pizza-fries,False
+Jalapeno Poppers,6 pieces,8.99,Appetizers,jalapeno-poppers,False
+Mac & Cheese Bites,9 pieces,8.99,Appetizers,mac-cheese-bites,False
+Carne Asada,Tender flare steak,17.99,Appetizers,carne-asada,False
+Nachos,Steak or chicken,11.99,Appetizers,nachos,False
+Fajitas,"All fajitas grilled onions, green peppers, and peppers",17.99,Appetizers,fajitas,False
+Garlic Bread,,3.99,Appetizers,garlic-bread,False
+Bread Sticks,4 pieces,4.99,Appetizers,bread-sticks,False
+Garlic Knots,7 pieces,7.99,Appetizers,garlic-knots,False
+Mozzarella Sticks,6 pieces,8.99,Appetizers,mozzarella-sticks,False
+Broccoli Bites,10 pieces,8.99,Appetizers,broccoli-bites,False
+Fried Mushrooms,7 pieces,7.99,Appetizers,fried-mushrooms,False
+Chicken Tenders,3 pieces,11.99,Appetizers,chicken-tenders,False
+Fried Calamari,,11.99,Appetizers,fried-calamari,False
+Fried Shrimp,,10.99,Appetizers,fried-shrimp,False
+Sampler Platter,"Mozzarella sticks, Jalapeno Poppers, Mac & Cheese Bites",16.99,Appetizers,sampler-platter,False
+Octopus Skins,"4 pieces, Jalapenos, Broccoli, Cheese",8.99,Appetizers,octopus-skins,False
+Cinnamon Bites,,10.99,Appetizers,cinnamon-bites,False
+Small Garden Salad,,4.99,Fresh Salads,small-garden-salad,False
+Garden Salad,,8.99,Fresh Salads,garden-salad,False
+Grilled or Crispy Chicken Salad,,12.99,Fresh Salads,chicken-salad,False
+Avocado Grilled Chicken Salad,,13.99,Fresh Salads,avocado-chicken-salad,False
+Grilled Shrimp Salad,,15.99,Fresh Salads,grilled-shrimp-salad,False
+Grilled Chicken and Shrimp Combo Salad,,16.99,Fresh Salads,chicken-shrimp-salad,False
+Caesar Salad,,8.99,Fresh Salads,caesar-salad,False
+Chef Salad,,12.99,Fresh Salads,chef-salad,False
+Grilled Chicken Caesar Salad,,12.99,Fresh Salads,chicken-caesar-salad,False
+Crispy Chicken Caesar Salad,,12.99,Fresh Salads,crispy-caesar-salad,False
+Greek Salad,,11.99,Fresh Salads,greek-salad,False
+Greek Salad with Grilled Chicken,,13.99,Fresh Salads,greek-chicken-salad,False
+Steak Salad,,13.99,Fresh Salads,steak-salad,False
+Antipasto Salad,,12.99,Fresh Salads,antipasto-salad,False
+Cobb Salad,,14.99,Fresh Salads,cobb-salad,False
+Spaghetti with Meat Sauce,,16.99,Pasta,spaghetti-meat-sauce,False
+Chicken Parmigiana,With pasta,17.99,Pasta,chicken-parmigiana,False
+Shrimp Parmigiana,With pasta,19.99,Pasta,shrimp-parmigiana,False
+Seafood with Pasta,,22.99,Pasta,seafood-pasta,False
+Baked Ravioli,Sauce & Mozzarella,14.99,Pasta,baked-ravioli,False
+Lobster Ravioli,Rose sauce & Mozzarella,19.99,Pasta,lobster-ravioli,False
+Baked Ziti,Sauce & Mozzarella,14.99,Pasta,baked-ziti,False
+Eggplant Parmigiana,With pasta,14.99,Pasta,eggplant-parmigiana,False
+Italian Trio,"Sausage, meatball, cheese ravioli, and meatball",19.99,Pasta,italian-trio,False
+Chicken Finger Platter,"Served with Garlic Bread, Salad and Fries",13.99,Complete Dinners,chicken-finger-platter,False
+Shrimp Basket,,14.99,Complete Dinners,shrimp-basket,False
+Jumbo Shrimp Platter,,15.99,Complete Dinners,jumbo-shrimp-platter,False
+Crab Cake Platter,,19.99,Complete Dinners,crab-cake-platter,False
+Flounder Platter,,14.99,Complete Dinners,flounder-platter,False
+Fried Seafood Combo,"Flounder, shrimp, and crab cake",27.99,Complete Dinners,fried-seafood-combo,False
+Beef Shish Kebab,With rice,22.99,Complete Dinners,beef-shish-kebab,False
+Chicken Shish Kebab,With rice,19.99,Complete Dinners,chicken-shish-kebab,False
+Gyro Platter,With rice & Greek salad,19.99,Complete Dinners,gyro-platter,False
+Fried Seafood Combo,"21 Shrimp, 2 Crab Cake, 1 Flounder",16.99,Seafood,fried-seafood-combo-2,False
+Fried Filet of Flounder,1 piece,14.99,Seafood,fried-flounder,False
+Crab Cake Dinner,2 pieces,26.99,Seafood,crab-cake-dinner,False
+Chicken & Steak Quesadilla,,13.99,Quesadillas,chicken-steak-quesadilla,False
+Crab Quesadilla,,15.99,Quesadillas,crab-quesadilla,False
+BBQ Chicken Quesadilla,,12.99,Quesadillas,bbq-chicken-quesadilla,False
+Texas Chicken Quesadilla,,12.99,Quesadillas,texas-chicken-quesadilla,False
+Buffalo Chicken Quesadilla,,12.99,Quesadillas,buffalo-chicken-quesadilla,False
+Steak Quesadilla,,12.99,Quesadillas,steak-quesadilla,False
+Seafood Quesadilla,,15.99,Quesadillas,seafood-quesadilla,False
+Tacos,Choice of boneless / chicken tenders,11.99,Latin Food,tacos,False
+Burritos,"With cilantro, onions, and salsa",11.99,Latin Food,burritos,False
+Empanadas,3 pieces,11.99,Latin Food,empanadas,False
+Pupusas,3 pieces,11.99,Latin Food,pupusas,False
+Nachos,Steak or chicken,11.99,Latin Food,nachos-latin,False
+Carne Asada,Steak,17.99,Latin Food,carne-asada-latin,False
+Shrimp,,19.99,Latin Food,shrimp-latin,False
+Combination,"Chicken, steak, shrimp",24.99,Latin Food,combination-latin,False
+Italian Sub,"Ham, capicola, Genoa salami, and American cheese",12.99,Subs + Grinders,italian-sub,False
+Turkey Club,With cheese,12.99,Subs + Grinders,turkey-club,False
+Turkey Bacon Club,With cheese,12.99,Subs + Grinders,turkey-bacon-club,False
+Grilled Chicken BLT Club,,12.99,Subs + Grinders,grilled-chicken-blt,False
+American Cheese Club,With bacon,12.99,Subs + Grinders,american-cheese-club,False
+BLT Club,,12.99,Subs + Grinders,blt-club,False
+Tuna Club,,12.99,Subs + Grinders,tuna-club,False
+Fish Taco on Pita,,12.99,Subs + Grinders,fish-taco-pita,False
+Ham & American Cheese on Pita,,12.99,Subs + Grinders,ham-american-pita,False
+Cheese Stromboli,,14.99,Strombolis + Calzones,cheese-stromboli,False
+Chicken Stromboli,,15.99,Strombolis + Calzones,chicken-stromboli,False
+Buffalo Chicken Stromboli,,15.99,Strombolis + Calzones,buffalo-chicken-stromboli,False
+Italian Stromboli,,15.99,Strombolis + Calzones,italian-stromboli,False
+Meat Lovers Stromboli,,15.99,Strombolis + Calzones,meat-lovers-stromboli,False
+Vegetable Stromboli,,14.99,Strombolis + Calzones,vegetable-stromboli,False
+Philly Special Stromboli,"Cheese, peppers, onions & mushrooms",18.99,Strombolis + Calzones,philly-special-stromboli,False
+Philly Special Chicken Stromboli,"Chicken, green peppers, onions, pepperoni & mushrooms",18.99,Strombolis + Calzones,philly-chicken-stromboli,False
+House,"2 eggs, home fries, toast",10.99,Breakfast,house-breakfast,False
+Ham Steak,"3 eggs, 3 large shrimp & 2 eggs",11.99,Breakfast,ham-steak-breakfast,False
+Seafood Omelette,Shrimp & Crab Meat,12.99,Breakfast,seafood-omelette,False
+Crab Meat,3 eggs,12.99,Breakfast,crab-meat-breakfast,False
+Steak & Eggs,"2 eggs, home fries, toast",22.99,Breakfast,steak-eggs,False
+Belgian Waffles,Waffle with home fries & toast,11.99,Breakfast,belgian-waffles,False
+French Toast,2 slices,6.99,Breakfast,french-toast,False
+Pancakes,2 pancakes,7.99,Breakfast,pancakes,False
+Italian Sausage Parm,Hot sausage with provolone cheese sauce,12.99,Hot Sandwiches,italian-sausage-parm,False
+Special Chicken Cutlet,"Onions, tomatoes, American cheese, and ranch dressing",12.99,Hot Sandwiches,special-chicken-cutlet,False
+Meatball Parm,Homemade meatballs,12.99,Hot Sandwiches,meatball-parm,False
+Cheeseburger Sandwich,1/2 oz of burger with American cheese,12.99,Hot Sandwiches,cheeseburger-sandwich,False
+Flounder Sandwich,Fresh flounder breaded to perfection with tartar sauce,12.99,Hot Sandwiches,flounder-sandwich,False
+Crispy Chicken,,12.99,Hot Sandwiches,crispy-chicken,False
+Chicken Cheesesteak,Lettuce and tomatoes,12.99,Hot Sandwiches,chicken-cheesesteak-sand,False
+Strawberry Cheesecake,,5.99,Desserts,strawberry-cheesecake,False
+Carrot Cake,,5.99,Desserts,carrot-cake,False
+Chocolate Cake,,5.99,Desserts,chocolate-cake,False
+Tiramisu,,5.99,Desserts,tiramisu,False
+Rice or Bread Pudding,,5.99,Desserts,rice-bread-pudding,False
+Zeppoli,Powdered or Cinnamon Sugar,5.99,Desserts,zeppoli,False
+Home Soup,16oz,5.99,Soups,home-soup,False
+Soup of the Day,,5.99,Soups,soup-of-the-day,False
+2-liter Soda,,3.99,Drinks,2-liter-soda,False
+Can Soda,,1.0,Drinks,can-soda,False
+20oz Bottle,,2.75,Drinks,20oz-bottle,False
+Broccoli,,5.99,Side Orders,broccoli,False
+Rice,,5.99,Side Orders,rice,False
+Fried Beans,,5.99,Side Orders,fried-beans,False
+Sausage,,5.99,Side Orders,sausage,False
+Meatball,,5.99,Side Orders,meatball,False
+Herr's Chips,,2.99,Side Orders,herrs-chips,False
