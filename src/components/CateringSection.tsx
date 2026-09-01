@@ -1,33 +1,29 @@
 'use client';
 
 import { MapPin } from 'lucide-react';
-import * as cateringModule from '../data/cateringData';
 import CateringItemCard from './CateringItemCard';
-
-interface CateringItem {
-    name: string;
-    desc?: string;
-    description?: string;
-    half: number | string;
-    full: number | string;
-}
-
-interface CateringCategory {
-    category: string;
-    items: CateringItem[];
-}
+import * as cateringModule from '../data/cateringData';
 
 export default function CateringSection() {
-    // Defensive export check supporting named (cateringCategories / cateringData) or default exports
-    const categories: CateringCategory[] =
-        (cateringModule as { cateringCategories?: CateringCategory[] }).cateringCategories ||
-        (cateringModule as { cateringData?: CateringCategory[] }).cateringData ||
-        (cateringModule as { default?: CateringCategory[] }).default ||
+    const rawItems: any[] =
+        (cateringModule as any).CATERING_ITEMS ||
+        (cateringModule as any).cateringItems ||
+        (cateringModule as any).default ||
         [];
+
+    const categoriesMap: Record<string, any[]> = {};
+    rawItems.forEach((item) => {
+        const catName = item.category || 'Other Catering';
+        if (!categoriesMap[catName]) {
+            categoriesMap[catName] = [];
+        }
+        categoriesMap[catName].push(item);
+    });
+
+    const categories = Object.keys(categoriesMap);
 
     return (
         <section id="catering" className="max-w-7xl mx-auto px-6 py-12 scroll-mt-[210px]">
-            {/* Section Header */}
             <div className="text-center mb-12 max-w-2xl mx-auto">
                 <div className="flex items-center justify-center gap-1.5 text-gold mb-2 opacity-90">
                     <MapPin className="w-4 h-4" />
@@ -41,35 +37,34 @@ export default function CateringSection() {
                 </p>
             </div>
 
-            {/* Dynamic Catering Categories Grid */}
-            {categories.map((cat, catIdx) => (
-                <div key={catIdx} className="mb-16 scroll-mt-[210px]">
-                    <h3 className="text-2xl font-semibold mb-6 pb-2 border-b border-panel-border text-cream flex items-center justify-between">
-                        <span>{cat.category}</span>
-                        <span className="text-xs font-normal text-gold-bright">
-                            {cat.items?.length || 0} items
-                        </span>
-                    </h3>
+            {categories.map((categoryName) => {
+                const items = categoriesMap[categoryName];
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {cat.items?.map((item, itemIdx) => {
-                            const halfPrice = typeof item.half === 'number' ? item.half : parseFloat(String(item.half)) || 0;
-                            const fullPrice = typeof item.full === 'number' ? item.full : parseFloat(String(item.full)) || 0;
-                            const description = item.desc || item.description || '';
+                return (
+                    <div key={categoryName} className="mb-16 scroll-mt-[210px]">
+                        <h3 className="text-2xl font-semibold mb-6 pb-2 border-b border-panel-border text-cream flex items-center justify-between">
+                            <span>{categoryName}</span>
+                            <span className="text-xs font-normal text-gold-bright">
+                                {items.length} items
+                            </span>
+                        </h3>
 
-                            return (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {items.map((item) => (
                                 <CateringItemCard
-                                    key={itemIdx}
+                                    key={item.id || item.name}
                                     name={item.name}
-                                    desc={description}
-                                    half={halfPrice}
-                                    full={fullPrice}
+                                    desc={item.description}
+                                    half={item.halfTrayPrice}
+                                    full={item.fullTrayPrice}
+                                    servesHalf={item.servesHalf}
+                                    servesFull={item.servesFull}
                                 />
-                            );
-                        })}
+                            ))}
+                        </div>
                     </div>
-                </div>
-            ))}
+                );
+            })}
         </section>
     );
 }

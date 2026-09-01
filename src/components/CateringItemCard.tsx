@@ -6,16 +6,33 @@ import { useCartStore } from '../store/useCartStore';
 interface CateringItemCardProps {
   name: string;
   desc?: string;
-  half: number;
-  full: number;
+  half: string | number;
+  full: string | number;
+  servesHalf?: string;
+  servesFull?: string;
 }
 
-export default function CateringItemCard({ name, desc, half, full }: CateringItemCardProps) {
+export default function CateringItemCard({
+  name,
+  desc,
+  half,
+  full,
+  servesHalf,
+  servesFull,
+}: CateringItemCardProps) {
   const addToCart = useCartStore((state) => state.addToCart);
   const [addedSize, setAddedSize] = useState<'half' | 'full' | null>(null);
 
+  const parsePrice = (priceVal: string | number): number => {
+    if (typeof priceVal === 'number') return priceVal;
+    return parseFloat(priceVal.replace(/[^0-9.]/g, '')) || 0;
+  };
+
+  const numericHalf = parsePrice(half);
+  const numericFull = parsePrice(full);
+
   const handleAdd = (size: 'half' | 'full') => {
-    const price = size === 'half' ? half : full;
+    const price = size === 'half' ? numericHalf : numericFull;
     const label = size === 'half' ? 'Half Tray' : 'Full Tray';
     addToCart({ name: `${name} (${label})`, price });
     setAddedSize(size);
@@ -35,7 +52,6 @@ export default function CateringItemCard({ name, desc, half, full }: CateringIte
         )}
       </div>
 
-      {/* Half Tray & Full Tray Selection Buttons */}
       <div className="mt-auto space-y-2 pt-2">
         <div className="grid grid-cols-2 gap-2">
           <button
@@ -47,9 +63,11 @@ export default function CateringItemCard({ name, desc, half, full }: CateringIte
               }`}
           >
             <div className="text-[10px] text-stone font-bold uppercase tracking-wider">
-              {addedSize === 'half' ? 'Added!' : 'Half Tray'}
+              {addedSize === 'half' ? 'Added!' : `Half (${servesHalf || '8-10'})`}
             </div>
-            <div className="text-sm font-extrabold text-gold">${half.toFixed(2)}</div>
+            <div className="text-sm font-extrabold text-gold">
+              ${numericHalf.toFixed(2)}
+            </div>
           </button>
 
           <button
@@ -61,9 +79,11 @@ export default function CateringItemCard({ name, desc, half, full }: CateringIte
               }`}
           >
             <div className="text-[10px] text-stone font-bold uppercase tracking-wider">
-              {addedSize === 'full' ? 'Added!' : 'Full Tray'}
+              {addedSize === 'full' ? 'Added!' : `Full (${servesFull || '15-20'})`}
             </div>
-            <div className="text-sm font-extrabold text-gold">${full.toFixed(2)}</div>
+            <div className="text-sm font-extrabold text-gold">
+              ${numericFull.toFixed(2)}
+            </div>
           </button>
         </div>
       </div>
