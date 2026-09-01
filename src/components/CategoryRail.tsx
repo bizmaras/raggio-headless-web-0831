@@ -1,35 +1,34 @@
 'use client';
 
 const CATEGORIES = [
-  { label: 'Deals & Specials', searchId: 'promotions', dotColor: 'bg-red-500' },
-  { label: 'Pizza', searchId: 'pizza', dotColor: 'bg-orange-500' },
-  { label: 'Gourmet Pizza', searchId: 'gourmet', dotColor: 'bg-amber-500' },
-  { label: 'Sicilian Pizza', searchId: 'sicilian', dotColor: 'bg-yellow-500' },
-  { label: 'Chicken Wings', searchId: 'wing', dotColor: 'bg-lime-500' },
-  { label: 'Cheesesteaks', searchId: 'cheesesteak', dotColor: 'bg-green-500' },
-  { label: 'Fresh Burgers', searchId: 'burger', dotColor: 'bg-emerald-500' },
-  { label: 'Appetizers', searchId: 'appetizer', dotColor: 'bg-teal-500' },
-  { label: 'Fresh Salads', searchId: 'salad', dotColor: 'bg-cyan-500' },
-  { label: 'Pasta', searchId: 'pasta', dotColor: 'bg-sky-500' },
-  { label: 'Complete Dinners', searchId: 'dinner', dotColor: 'bg-blue-500' },
-  { label: 'Seafood', searchId: 'seafood', dotColor: 'bg-indigo-500' },
-  { label: 'Quesadillas', searchId: 'quesadilla', dotColor: 'bg-violet-500' },
-  { label: 'Latin Food', searchId: 'latin', dotColor: 'bg-purple-500' },
-  { label: 'Subs & Grinders', searchId: 'subs', dotColor: 'bg-fuchsia-500' },
-  { label: 'Strombolis & Calzones', searchId: 'stromboli', dotColor: 'bg-pink-500' },
-  { label: 'Breakfast', searchId: 'breakfast', dotColor: 'bg-rose-500' },
-  { label: 'Hot Sandwiches', searchId: 'sandwiches', dotColor: 'bg-red-400' },
-  { label: 'Desserts', searchId: 'dessert', dotColor: 'bg-orange-400' },
-  { label: 'Soups', searchId: 'soup', dotColor: 'bg-amber-400' },
-  { label: 'Drinks', searchId: 'drink', dotColor: 'bg-yellow-400' },
-  { label: 'Side Orders', searchId: 'side', dotColor: 'bg-lime-400' },
-  { label: 'Catering', searchId: 'catering', dotColor: 'bg-purple-600' }
+  { label: 'Deals & Specials', searchId: 'promotions' },
+  { label: 'Pizza', searchId: 'pizza' },
+  { label: 'Gourmet Pizza', searchId: 'gourmet' },
+  { label: 'Sicilian Pizza', searchId: 'sicilian' },
+  { label: 'Chicken Wings', searchId: 'wing' },
+  { label: 'Cheesesteaks', searchId: 'cheesesteak' },
+  { label: 'Fresh Burgers', searchId: 'burger' },
+  { label: 'Appetizers', searchId: 'appetizer' },
+  { label: 'Fresh Salads', searchId: 'salad' },
+  { label: 'Pasta', searchId: 'pasta' },
+  { label: 'Complete Dinners', searchId: 'dinner' },
+  { label: 'Seafood', searchId: 'seafood' },
+  { label: 'Quesadillas', searchId: 'quesadilla' },
+  { label: 'Latin Food', searchId: 'latin' },
+  { label: 'Subs & Grinders', searchId: 'subs' },
+  { label: 'Strombolis & Calzones', searchId: 'stromboli' },
+  { label: 'Breakfast', searchId: 'breakfast' },
+  { label: 'Hot Sandwiches', searchId: 'sandwiches' },
+  { label: 'Desserts', searchId: 'dessert' },
+  { label: 'Soups', searchId: 'soup' },
+  { label: 'Drinks', searchId: 'drink' },
+  { label: 'Side Orders', searchId: 'side' },
+  { label: 'Catering', searchId: 'catering' }
 ];
 
 export default function CategoryRail() {
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, searchId: string) => {
-    // ÇÖZÜM: Deals (promotions) butonuna tıklandığında JS müdahalesini iptal et.
-    // Tıpkı Header'daki hardal butonu gibi doğal HTML linki olarak çalışsın.
+    // Deals (promotions) butonuna tıklandığında JS müdahalesini iptal et.
     if (searchId === 'promotions') {
       return;
     }
@@ -68,7 +67,8 @@ export default function CategoryRail() {
                   : 'border-panel-border bg-panel text-stone hover:text-cream hover:border-gold'
                 }`}
             >
-              <span className={`w-2 h-2 rounded-full ${cat.dotColor}`}></span>
+              {/* Tüm butonlarda standart kırmızı nokta kullanıldı */}
+              <span className="w-2 h-2 rounded-full bg-red-500"></span>
               {cat.label}
             </a>
           );
