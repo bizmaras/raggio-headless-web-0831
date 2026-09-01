@@ -1,125 +1,96 @@
 'use client';
 
-import { useState } from 'react';
-import { CATERING_ITEMS } from '@/data/cateringData';
-import { PlusCircle, Info } from 'lucide-react';
-import ItemDetailModal from './ItemDetailModal';
+import { MapPin } from 'lucide-react';
+
+const cateringCategories = [
+    {
+        category: "Subs & Trays",
+        items: [
+            { name: 'Sub Tray', tag: 'SUBS', description: 'Assortment of fresh subs prepared for group events.', image: '/images/cat-subs.jpg' },
+            { name: 'Wrap Tray', tag: 'SUBS', description: 'Assortment of fresh wraps perfect for any gathering.', image: '/images/cat-wraps.jpg' },
+        ]
+    },
+    {
+        category: "Appetizers",
+        items: [
+            { name: 'Cinnamon Bites', tag: 'APPETIZERS', description: 'Sweet and delicious cinnamon bites.', image: '/images/cat-cinnamon.jpg' },
+            { name: 'Jalapeno Poppers', tag: 'APPETIZERS', description: 'Served with Ranch Dressing.', image: '/images/cat-jalapeno.jpg' },
+        ]
+    }
+];
 
 export default function CateringSection() {
-    const [selectedItem, setSelectedItem] = useState<any>(null);
-
-    // FoodTec Catering Sipariş Linki
-    const orderUrl = "https://order.foodtecsolutions.com/ordering/phillystyleexpress/menu/Catering";
-
     return (
-        <section id="catering" className="border-t border-panel-border bg-ink-2 px-6 py-20 scroll-mt-[210px]">
-            <div className="max-w-7xl mx-auto text-center mb-14">
-                <span className="text-xs font-bold tracking-[0.25em] text-gold uppercase mb-3 block">
-                    Events & Group Orders
-                </span>
-                <h2 className="text-3xl md:text-4xl font-bold text-cream mb-4">
-                    Catering by <span className="text-gold-bright">Raggio</span>
-                </h2>
-                <p className="text-stone text-lg max-w-2xl mx-auto">
-                    Feeding a crowd in Newark? All catering trays are available in Half or Full sizes.
-                </p>
-            </div>
+        <section id="catering" className="bg-ink border-t border-panel-border pt-24 pb-32 px-6 scroll-mt-20">
+            <div className="max-w-7xl mx-auto">
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-7xl mx-auto">
-                {CATERING_ITEMS.map((item) => (
-                    <div
-                        key={item.id}
-                        className="flex flex-col justify-between p-6 rounded-2xl bg-panel border border-panel-border hover:border-gold/50 transition-colors duration-300"
-                    >
-                        <div>
-                            <div className="flex justify-between items-start gap-2 mb-2">
-                                <h3 className="text-xl font-bold text-cream">{item.name}</h3>
-                                <span className="text-[10px] font-semibold px-2.5 py-1 rounded-md bg-ink text-gold border border-panel-border uppercase tracking-wider whitespace-nowrap">
-                                    {item.category}
-                                </span>
-                            </div>
-                            <p className="text-stone text-sm leading-relaxed mb-5">
-                                {item.description}
-                            </p>
+                <div className="text-center mb-20 max-w-2xl mx-auto">
+                    <div className="flex items-center justify-center gap-1.5 text-gold-bright mb-4 opacity-90">
+                        <MapPin className="w-4 h-4" />
+                        <span className="text-xs font-bold tracking-widest uppercase">Newark, Delaware</span>
+                    </div>
+                    <h2 className="text-sm font-mono tracking-widest text-gold bg-black/50 border border-gold/30 px-3.5 py-1 rounded-full mb-3 uppercase inline-block">
+                        EVENTS & GROUP ORDERS
+                    </h2>
+                    <h1 className="text-4xl md:text-5xl font-extrabold text-cream mb-4 drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
+                        Catering by <span className="text-gold">Raggio</span>
+                    </h1>
+                    <p className="text-cream text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+                        Feeding a crowd in Newark? All catering trays are available in Half or Full sizes.
+                    </p>
+                </div>
 
-                            {/* View Details Butonu (Tıklanınca Modal Açılır) */}
-                            <button
-                                onClick={() => setSelectedItem(item)}
-                                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-full border border-panel-border hover:border-gold bg-transparent transition-all duration-300 group mb-6"
-                                aria-label={`View details for ${item.name}`}
-                            >
-                                <Info className="w-4 h-4 text-gold group-hover:text-gold-bright transition-colors" />
-                                <span className="text-sm font-medium text-cream group-hover:text-gold-bright transition-colors">
-                                    View Details & Ingredients
-                                </span>
-                            </button>
-                        </div>
+                {cateringCategories.map((cat, catIdx) => (
+                    <div key={catIdx} className="mb-20">
+                        <h3 className="text-2xl font-bold text-cream mb-8 border-b border-panel-border pb-3">
+                            {cat.category}
+                        </h3>
 
-                        {/* Fiyat ve Sipariş Butonları (Doğrudan FoodTec'e Yönlendirir) */}
-                        <div className="pt-5 border-t border-panel-border/50 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <a
-                                href={orderUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="group flex items-center justify-between px-4 py-2.5 rounded-full border border-panel-border bg-transparent hover:border-gold transition-colors duration-300"
-                            >
-                                <div className="flex items-center gap-2">
-                                    <PlusCircle className="w-4 h-4 text-stone group-hover:text-gold transition-colors" />
-                                    <span className="text-xs font-medium text-stone group-hover:text-cream transition-colors">
-                                        Half Tray <span className="opacity-50">({item.servesHalf})</span>
-                                    </span>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            {cat.items.map((item, itemIdx) => (
+                                <div
+                                    key={itemIdx}
+                                    className="flex flex-col justify-between p-8 rounded-3xl bg-panel border border-gold/10 shadow-[0_5px_40px_rgba(0,0,0,0.6)] hover:shadow-[0_10px_60px_rgba(201,161,92,0.3)] hover:-translate-y-1 transition-all duration-300"
+                                >
+                                    {/* HATA VEREN BÖLÜMÜN DÜZELTİLMİŞ HALİ */}
+                                    <div>
+                                        <div className="flex items-center justify-between gap-4 mb-4">
+                                            <h4 className="text-2xl font-bold text-cream">{item.name}</h4>
+                                            <span className="text-xs font-mono font-bold text-gold bg-ink/50 px-3 py-1 rounded-full border border-gold/40">
+                                                {item.tag}
+                                            </span>
+                                        </div>
+                                        <p className="text-stone text-sm md:text-base mb-12 leading-relaxed">
+                                            {item.description}
+                                        </p>
+                                    </div>
+
+                                    <div className="border-t border-panel-border pt-8 mt-auto">
+                                        <div className="flex items-center justify-between gap-4">
+                                            <span className="text-sm font-bold text-cream">Starting from:</span>
+                                            <div className="flex items-end gap-2">
+                                                <span className="text-sm text-stone line-through">$100.00</span>
+                                                <span className="text-3xl font-extrabold text-gold">$90.00</span>
+                                                <span className="text-xs text-stone-dim">Full Tray</span>
+                                            </div>
+                                        </div>
+                                        <button className="w-full mt-6 flex items-center justify-center gap-2 text-gold font-bold text-sm bg-panel border-2 border-gold/40 hover:bg-gold hover:text-ink px-6 py-3 rounded-full transition-all duration-300">
+                                            View Details & Ingredients
+                                        </button>
+                                    </div>
                                 </div>
-                                <span className="text-sm font-bold text-gold-bright">
-                                    {item.halfTrayPrice}
-                                </span>
-                            </a>
-
-                            <a
-                                href={orderUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="group flex items-center justify-between px-4 py-2.5 rounded-full border border-panel-border bg-transparent hover:border-gold transition-colors duration-300"
-                            >
-                                <div className="flex items-center gap-2">
-                                    <PlusCircle className="w-4 h-4 text-stone group-hover:text-gold transition-colors" />
-                                    <span className="text-xs font-medium text-stone group-hover:text-cream transition-colors">
-                                        Full Tray <span className="opacity-50">({item.servesFull})</span>
-                                    </span>
-                                </div>
-                                <span className="text-sm font-bold text-gold-bright">
-                                    {item.fullTrayPrice}
-                                </span>
-                            </a>
+                            ))}
                         </div>
                     </div>
                 ))}
-            </div>
 
-            <div className="mt-16 p-8 rounded-2xl bg-panel border border-panel-border max-w-2xl mx-auto text-center">
-                <h4 className="text-lg font-bold text-cream">Need a Custom Catering Package?</h4>
-                <p className="text-stone text-sm mt-2 mb-6">
-                    We accommodate special event requests, corporate lunches, and custom portions.
-                </p>
-                <a
-                    href={orderUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center px-8 py-3 text-sm font-bold rounded-full bg-gold text-ink hover:bg-gold-bright transition-colors duration-300"
-                >
-                    Order Catering Online via FoodTec
-                </a>
-            </div>
+                <div className="text-center mt-20">
+                    <button className="bg-gold hover:bg-gold-bright text-ink font-extrabold px-10 py-4 rounded-full shadow-lg transition-all hover:scale-105">
+                        Download Catering Menu
+                    </button>
+                </div>
 
-            {/* Tıklanan Öğenin Detay Penceresi (Modal) */}
-            {selectedItem && (
-                <ItemDetailModal
-                    isOpen={!!selectedItem}
-                    onClose={() => setSelectedItem(null)}
-                    name={selectedItem.name}
-                    price={parseFloat(selectedItem.halfTrayPrice.replace(/[^0-9.]/g, '')) || 0}
-                    description={selectedItem.description}
-                />
-            )}
+            </div>
         </section>
     );
 }
