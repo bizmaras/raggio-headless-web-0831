@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://raggio.pizza/sitemap.xml',
+    sitemap: 'https://raggiogourmetpizza.com/sitemap.xml',
   };
 }

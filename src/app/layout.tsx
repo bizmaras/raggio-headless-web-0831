@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://raggio.pizza'),
+  metadataBase: new URL('https://raggiogourmetpizza.com'),
   title: 'Raggio Gourmet & Pizza | Authentic Pizza & Catering in Newark, DE',
   description: 'Order fresh gourmet pizzas, strombolis, calzones, wings, and catering online directly via FoodTec. Fast delivery and pickup in Newark, DE.',
   alternates: {
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Raggio Gourmet & Pizza | Newark, DE',
     description: 'Fresh gourmet pizzas, handcrafted strombolis, wings, and full catering services.',
-    url: 'https://raggio.pizza',
+    url: 'https://raggiogourmetpizza.com',
     siteName: 'Raggio Gourmet & Pizza',
     images: [
       {
