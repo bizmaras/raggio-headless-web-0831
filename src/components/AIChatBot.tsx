@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { X, Send, Bot } from 'lucide-react';
 
 interface Message {
@@ -24,6 +24,50 @@ export default function AIChatBot() {
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [messages, loading]);
+
+    // Link [Metin](URL) ve Kalın Metin **Metin** formatlarını işleyen yardımcı fonksiyon
+    const renderFormattedMessage = (text: string): React.ReactNode => {
+        const regex = /(\[([^\]]+)\]\((https?:\/\/[^\s)]+)\))|(\*\*([^*]+)\*\*)/g;
+        const parts: React.ReactNode[] = [];
+        let lastIndex = 0;
+        let match;
+
+        while ((match = regex.exec(text)) !== null) {
+            if (match.index > lastIndex) {
+                parts.push(text.substring(lastIndex, match.index));
+            }
+
+            if (match[1]) {
+                // Tıklanabilir Link
+                parts.push(
+                    <a
+                        key={match.index}
+                        href={match[3]}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-bold underline text-gold hover:text-gold-bright transition-colors break-all"
+                    >
+                        {match[2]}
+                    </a>
+                );
+            } else if (match[4]) {
+                // Kalın Yazı
+                parts.push(
+                    <strong key={match.index} className="font-bold text-cream">
+                        {match[5]}
+                    </strong>
+                );
+            }
+
+            lastIndex = regex.lastIndex;
+        }
+
+        if (lastIndex < text.length) {
+            parts.push(text.substring(lastIndex));
+        }
+
+        return parts;
+    };
 
     const handleSend = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -91,8 +135,8 @@ export default function AIChatBot() {
                     <div className="flex-1 p-4 overflow-y-auto space-y-3 bg-ink/50">
                         {messages.map((msg, idx) => (
                             <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                                <div className={`max-w-[85%] p-3 rounded-2xl text-xs leading-relaxed ${msg.role === 'user' ? 'bg-gold text-ink font-semibold rounded-br-none' : 'bg-[#1c2127] text-cream border border-panel-border rounded-bl-none'}`}>
-                                    {msg.content}
+                                <div className={`max-w-[85%] p-3 rounded-2xl text-xs leading-relaxed whitespace-pre-wrap ${msg.role === 'user' ? 'bg-gold text-ink font-semibold rounded-br-none' : 'bg-[#1c2127] text-cream border border-panel-border rounded-bl-none'}`}>
+                                    {renderFormattedMessage(msg.content)}
                                 </div>
                             </div>
                         ))}
