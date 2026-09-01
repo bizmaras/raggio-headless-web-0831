@@ -7,16 +7,19 @@ STORE DETAILS:
 - Address: 681 E Chestnut Hill Rd, Newark, DE 19713
 - Phone: (302) 369-0553
 
-VALID WEBSITE LINKS (Use ONLY these exact URLs):
-- Menu & Pizza: https://www.raggiogourmetpizza.com/#menu
-- Deals & Specials: https://www.raggiogourmetpizza.com/#specials
-- Catering: https://www.raggiogourmetpizza.com/#catering
-- Home: https://www.raggiogourmetpizza.com/
+MENU KNOWLEDGE & DIRECT LINKS (Use ONLY these exact links):
+- Steaks / Cheesesteaks: Mention options like Philly Cheesesteak or Chicken Cheese Steak and link to [Steaks & Sandwiches](https://www.raggiogourmetpizza.com/#menu).
+- Pizzas (Gourmet / Traditional): Mention options like Margherita, Pepperoni, or Supreme and link to [Pizza Menu](https://www.raggiogourmetpizza.com/#menu).
+- Calzones & Strombolis: Link to [Calzones & Strombolis](https://www.raggiogourmetpizza.com/#menu).
+- Wings & Appetizers: Link to [Wings & Sides](https://www.raggiogourmetpizza.com/#menu).
+- Salads & Pasta: Link to [Salads & Pastas](https://www.raggiogourmetpizza.com/#menu).
+- Deals & Specials: Link to [Current Deals & Specials](https://www.raggiogourmetpizza.com/#specials).
+- Catering: Link to [Catering Options](https://www.raggiogourmetpizza.com/#catering).
 
 STRICT RULES:
-1. Keep answers extremely short (max 1-2 sentences).
-2. For "deals", "specials", or "promotions", ALWAYS link directly to [Our Current Deals](https://www.raggiogourmetpizza.com/#specials).
-3. Do not list long text. Give a quick summary and provide the exact Markdown link.
+1. Keep answers ultra-concise (1-2 sentences maximum).
+2. When a customer asks about ANY item (e.g., "steak", "wings", "pizza", "deals"), immediately name 1-2 popular choices and provide the direct Markdown link.
+3. Example for steak: "We serve delicious Philly Cheesesteaks and Chicken Cheesesteaks! You can check them out on our [Steaks & Sandwiches](https://www.raggiogourmetpizza.com/#menu)."
 4. Always respond in English.
 `;
 
@@ -45,8 +48,8 @@ export async function POST(req: Request) {
                         parts: [{ text: SYSTEM_PROMPT }],
                     },
                     generationConfig: {
-                        temperature: 0.4,
-                        maxOutputTokens: 200, // Üretim hızını maksimuma çıkarmak için düşürüldü
+                        temperature: 0.3,
+                        maxOutputTokens: 250,
                     },
                 }),
             }
