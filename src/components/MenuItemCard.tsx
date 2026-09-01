@@ -30,10 +30,10 @@ export default function MenuItemCard(props: MenuItemCardProps) {
 
   const itemOrderUrl = props.orderUrl || props.item?.orderUrl || 'https://phillystyleexpress.foodtecsolutions.com/';
 
-  // Sahte pizza malzemeleri tamamen kaldırıldı
+  // Key ingredients list (fallback to empty array)
   const itemIngredients = props.ingredients || props.item?.ingredients || [];
 
-  // Sahte pizza fotoğrafı tamamen kaldırıldı
+  // Item image URL
   const itemImage = props.image || props.item?.image;
 
   return (
@@ -55,9 +55,9 @@ export default function MenuItemCard(props: MenuItemCardProps) {
           className="w-full py-2.5 px-4 rounded-lg bg-ink border border-panel-border hover:border-gold text-cream hover:text-gold text-sm font-medium transition-colors flex items-center justify-center gap-2 cursor-pointer mt-auto"
         >
           <svg className="w-4 h-4 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <circle cx="12" cy="12" r="10" strokeWidth="2"></circle>
-            <path d="M12 16v-4" strokeWidth="2" strokeLinecap="round"></path>
-            <path d="M12 8h.01" strokeWidth="2" strokeLinecap="round"></path>
+            <circle cx="12" cy="12" r="10" strokeWidth="2" />
+            <path d="M12 16v-4" strokeWidth="2" strokeLinecap="round" />
+            <path d="M12 8h.01" strokeWidth="2" strokeLinecap="round" />
           </svg>
           View Details & Ingredients
         </button>
@@ -69,35 +69,37 @@ export default function MenuItemCard(props: MenuItemCardProps) {
             <button
               type="button"
               onClick={() => setIsOpen(false)}
+              aria-label="Close details modal"
               className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-ink/90 text-stone hover:text-cream flex items-center justify-center border border-panel-border cursor-pointer transition-colors"
             >
               ✕
             </button>
 
-            {/* Resim Varsa Resim, Yoksa Zarif Marka İkonu */}
+            {/* Display Image or Elegant Brand Logo Fallback */}
             <div className="w-full md:w-1/2 h-56 md:h-auto relative bg-ink border-b md:border-b-0 md:border-r border-panel-border/50 flex-shrink-0 flex items-center justify-center">
               {itemImage ? (
                 <img
                   src={itemImage}
                   alt={itemName}
+                  loading="lazy"
                   className="w-full h-full object-cover"
                 />
               ) : (
-                <div className="flex flex-col items-center justify-center p-8 text-center opacity-50">
+                <div className="flex flex-col items-center justify-center p-8 text-center">
                   <svg className="w-16 h-16 text-gold mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                   </svg>
                   <span className="text-gold font-extrabold tracking-[0.2em] uppercase text-xs">
                     Raggio Gourmet
                   </span>
-                  <span className="text-stone text-[11px] mt-1 tracking-wider">
+                  <span className="text-stone text-xs mt-1 font-medium tracking-wider">
                     Freshly Prepared
                   </span>
                 </div>
               )}
             </div>
 
-            {/* Detay Bilgisi */}
+            {/* Item Details Information */}
             <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between overflow-y-auto">
               <div>
                 <div className="flex justify-between items-start mb-4 pr-8">
@@ -109,7 +111,7 @@ export default function MenuItemCard(props: MenuItemCardProps) {
                   {itemDescription}
                 </p>
 
-                {/* Yalnızca Malzeme Varsa Göster */}
+                {/* Key Ingredients (Rendered Only When Present) */}
                 {itemIngredients.length > 0 && (
                   <div className="mb-8">
                     <span className="text-xs font-bold text-gold uppercase tracking-wider block mb-3">
