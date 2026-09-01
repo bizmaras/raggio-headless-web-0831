@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { X, Send, Bot, ExternalLink } from 'lucide-react';
+import { X, Send, Bot } from 'lucide-react';
 
 interface Message {
     role: 'user' | 'assistant';
@@ -46,6 +46,8 @@ export default function AIChatBot() {
             const data = await res.json();
             if (data.reply) {
                 setMessages((prev) => [...prev, { role: 'assistant', content: data.reply }]);
+            } else {
+                setMessages((prev) => [...prev, { role: 'assistant', content: 'I am sorry, I could not process that request.' }]);
             }
         } catch (err) {
             setMessages((prev) => [...prev, { role: 'assistant', content: 'Something went wrong. Please try again.' }]);
@@ -102,18 +104,6 @@ export default function AIChatBot() {
                             </div>
                         )}
                         <div ref={messagesEndRef} />
-                    </div>
-
-                    <div className="px-4 py-2 bg-[#181c22] border-t border-panel-border flex justify-between items-center text-[11px]">
-                        <span className="text-stone">Ready to order?</span>
-                        <a
-                            href="https://phillystyleexpress.foodtecsolutions.com/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-gold font-bold flex items-center gap-1 hover:underline"
-                        >
-                            FoodTec Order <ExternalLink className="w-3 h-3" />
-                        </a>
                     </div>
 
                     <form onSubmit={handleSend} className="p-3 bg-[#1c2127] border-t border-panel-border flex gap-2">
