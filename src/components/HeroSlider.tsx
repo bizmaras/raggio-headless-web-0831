@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { ChevronLeft, ChevronRight, MapPin } from 'lucide-react';
 
 const slides = [
@@ -62,8 +63,7 @@ export default function HeroSlider() {
       className="relative h-[520px] md:h-[580px] w-full overflow-hidden border-b border-panel-border bg-ink"
       aria-label="Raggio Gourmet Pizza Specials in Newark, DE"
     >
-
-      {/* Görseller: Daha Canlı (saturate-125, contrast-110) ve Daha Az Siyah Katman */}
+      {/* Görseller: next/image LCP ve Speed Index Optimizasyonu */}
       {slides.map((slide, index) => {
         const isActive = index === current;
         return (
@@ -72,17 +72,18 @@ export default function HeroSlider() {
             className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${isActive ? 'opacity-100 z-0' : 'opacity-0 -z-10'
               }`}
           >
-            <img
+            <Image
               src={slide.image}
               alt={slide.seoAlt}
               title={slide.seoAlt}
-              loading={index === 0 ? "eager" : "lazy"}
-              decoding="async"
-              className={`w-full h-full object-cover saturate-125 contrast-110 transition-transform duration-[4000ms] ease-out ${isActive ? 'scale-105' : 'scale-100'
+              fill
+              priority={index === 0}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
+              className={`object-cover saturate-125 contrast-110 transition-transform duration-[4000ms] ease-out ${isActive ? 'scale-105' : 'scale-100'
                 }`}
             />
 
-            {/* Karartmayı azalttık, sadece metnin arkası koyu (Text Okunabilirliği için) */}
+            {/* Karartma Katmanları */}
             <div className="absolute inset-0 bg-gradient-to-t from-[#121417] via-[#121417]/50 to-transparent" />
             <div className="absolute inset-0 bg-black/10" />
           </div>
@@ -91,26 +92,28 @@ export default function HeroSlider() {
 
       {/* İçerik Katmanı */}
       <div className="relative z-10 max-w-5xl mx-auto h-full px-6 flex flex-col items-center justify-center text-center">
-
-        {/* GEO Location Badge (Yerel SEO için ekstra sinyal) */}
+        {/* GEO Location Badge */}
         <div className="flex items-center gap-1.5 text-gold-bright mb-4 opacity-90 drop-shadow-md">
           <MapPin className="w-4 h-4" />
           <span className="text-xs font-bold tracking-widest uppercase">Newark, Delaware</span>
         </div>
 
-        {/* Soluklaştırılmış Logo (opacity-70) Gözü yemeğe odaklar */}
-        <img
-          src="/images/raggio-logo.png"
-          alt="Raggio Gourmet & Pizza - Newark, DE"
-          className="w-48 md:w-64 object-contain opacity-70 hover:opacity-100 transition-opacity duration-300 drop-shadow-md mb-4"
-        />
+        {/* Logo (Optimized with next/image) */}
+        <div className="relative w-48 md:w-64 h-16 mb-4">
+          <Image
+            src="/images/raggio-logo.png"
+            alt="Raggio Gourmet & Pizza - Newark, DE"
+            fill
+            priority
+            className="object-contain opacity-70 hover:opacity-100 transition-opacity duration-300 drop-shadow-md"
+          />
+        </div>
 
         <div key={current} className="transition-all duration-500">
           <span className="inline-block text-[11px] font-mono tracking-widest text-gold bg-black/50 backdrop-blur-sm border border-gold/30 px-3.5 py-1 rounded-full mb-3 uppercase shadow-lg">
             {activeSlide.tag}
           </span>
 
-          {/* H1 Etiketi: Arama motorları için en kritik başlık */}
           <h1 className="text-3xl md:text-5xl font-extrabold text-cream mb-3 drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
             {activeSlide.title}
           </h1>
@@ -130,7 +133,7 @@ export default function HeroSlider() {
           </a>
         </div>
 
-        {/* Sağ / Sol Oklar */}
+        {/* Sol / Sağ Oklar */}
         <button
           onClick={prevSlide}
           aria-label="Previous image"
