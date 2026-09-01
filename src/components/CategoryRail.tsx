@@ -1,47 +1,37 @@
 'use client';
 
-const categories = [
-  'Pizza', 'Gourmet Pizza', 'Sicilian Pizza', 'Chicken Wings',
-  'Cheesesteaks', 'Fresh Burgers', 'Appetizers', 'Fresh Salads',
-  'Pasta', 'Complete Dinners', 'Seafood', 'Quesadillas',
-  'Latin Food', 'Subs & Grinders', 'Strombolis & Calzones',
-  'Breakfast', 'Hot Sandwiches', 'Desserts', 'Soups', 'Drinks', 'Side Orders'
+// Eğer dosyada önceden tanımlı kendi kategorileriniz varsa, sadece aşağıdaki map fonksiyonu içindeki 'targetId' kısmını kendi kodunuza uyarlayabilirsiniz.
+// Kodu tamamen değiştiriyorsanız bu güncel ve düzeltilmiş halini doğrudan kullanabilirsiniz.
+
+const CATEGORIES = [
+  'Deals & Specials', 'Pizza', 'Gourmet Pizza', 'Sicilian Pizza', 'Chicken Wings',
+  'Cheesesteaks', 'Fresh Burgers', 'Appetizers', 'Fresh Salads', 'Pasta',
+  'Complete Dinners', 'Seafood', 'Quesadillas', 'Latin Food', 'Subs & Grinders',
+  'Strombolis & Calzones', 'Breakfast', 'Hot Sandwiches', 'Desserts', 'Soups',
+  'Drinks', 'Side Orders', 'Catering'
 ];
 
 export default function CategoryRail() {
   return (
-    <nav className="sticky top-[72px] z-40 bg-ink/95 backdrop-blur-md border-b border-panel-border py-4 px-6">
-      <div className="max-w-7xl mx-auto flex flex-wrap justify-center items-center gap-2.5">
+    <div className="sticky top-[72px] z-40 bg-ink/95 backdrop-blur-md border-b border-panel-border py-4 overflow-x-auto no-scrollbar">
+      <div className="flex gap-2 px-6 max-w-7xl mx-auto w-max">
+        {CATEGORIES.map((category) => {
 
-        {/* Featured Specials Shortcut */}
-        <a
-          href="#promotions"
-          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-ember/20 border border-ember text-ember-bright hover:bg-ember hover:text-white text-xs md:text-sm font-bold transition-all duration-200 shadow-md"
-        >
-          🔥 Deals &amp; Specials
-        </a>
-
-        {categories.map((category) => {
+          // ÇÖZÜM BURADA: Boşlukları tireye, '&' işaretlerini 'and' kelimesine çeviriyoruz.
           const targetId = category.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and');
+
           return (
             <a
               key={category}
               href={`#${targetId}`}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-panel border border-panel-border text-stone hover:text-cream hover:border-gold-deep text-xs md:text-sm font-medium transition-all duration-200"
+              className="flex items-center gap-2 px-4 py-2 rounded-full border border-panel-border bg-panel text-stone hover:text-cream hover:border-gold transition-all duration-300 whitespace-nowrap text-sm font-medium"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-ember inline-block flex-shrink-0" />
+              <span className="w-1.5 h-1.5 rounded-full bg-red-500"></span>
               {category}
             </a>
           );
         })}
-
-        <a
-          href="#catering"
-          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-panel-2 border border-gold text-gold-bright hover:bg-gold hover:text-[#1c1408] text-xs md:text-sm font-bold transition-all duration-200"
-        >
-          🍽️ Catering
-        </a>
       </div>
-    </nav>
+    </div>
   );
 }
