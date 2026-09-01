@@ -14,6 +14,8 @@ interface PromoItem {
   orderUrl: string;
 }
 
+const FOODTEC_BASE_URL = 'https://phillystyleexpress.foodtecsolutions.com/';
+
 const PROMOTIONS: PromoItem[] = [
   {
     id: 'promo-1',
@@ -24,7 +26,7 @@ const PROMOTIONS: PromoItem[] = [
     details: 'Includes 2 Extra Large Cheese Pizzas with 1 topping of your choice on each. Valid for Take-Out & Delivery only.',
     ingredients: ['Grande Mozzarella', 'Signature Sauce', 'Choice of 1 Topping per Pizza'],
     image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80',
-    orderUrl: 'https://phillystylepizzeria.com'
+    orderUrl: FOODTEC_BASE_URL
   },
   {
     id: 'promo-2',
@@ -35,7 +37,7 @@ const PROMOTIONS: PromoItem[] = [
     details: 'Includes 1 Large Pizza with 1 topping and 20 Jumbo Wings (Traditional or Boneless) with ranch or blue cheese.',
     ingredients: ['Grande Mozzarella', 'Jumbo Chicken Wings', 'Choice of Wing Sauce'],
     image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80',
-    orderUrl: 'https://phillystylepizzeria.com'
+    orderUrl: FOODTEC_BASE_URL
   },
   {
     id: 'promo-3',
@@ -46,7 +48,7 @@ const PROMOTIONS: PromoItem[] = [
     details: 'Includes 2 Large 1-Topping Pizzas, 20 Jumbo Wings, and one 2-Liter Soda of choice.',
     ingredients: ['Grande Mozzarella', 'Jumbo Wings', '2-Liter Soda'],
     image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80',
-    orderUrl: 'https://phillystylepizzeria.com'
+    orderUrl: FOODTEC_BASE_URL
   },
   {
     id: 'promo-4',
@@ -57,7 +59,7 @@ const PROMOTIONS: PromoItem[] = [
     details: 'Includes 1 Large 1-Topping Pizza and 10 Jumbo Wings with celery and choice of dipping sauce.',
     ingredients: ['Grande Mozzarella', 'Jumbo Wings', 'Dipping Sauce'],
     image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80',
-    orderUrl: 'https://phillystylepizzeria.com'
+    orderUrl: FOODTEC_BASE_URL
   },
   {
     id: 'promo-5',
@@ -68,7 +70,7 @@ const PROMOTIONS: PromoItem[] = [
     details: 'Includes 1 Large Cheese Pizza with up to 3 standard toppings of your choice.',
     ingredients: ['Grande Mozzarella', 'Choice of 3 Toppings', 'Signature Sauce'],
     image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80',
-    orderUrl: 'https://phillystylepizzeria.com'
+    orderUrl: FOODTEC_BASE_URL
   },
   {
     id: 'promo-6',
@@ -79,7 +81,7 @@ const PROMOTIONS: PromoItem[] = [
     details: 'Includes 2 Extra Large Plain Cheese Pizzas and 20 Jumbo Wings.',
     ingredients: ['Grande Mozzarella', 'Jumbo Wings', 'Fresh Garlic'],
     image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80',
-    orderUrl: 'https://phillystylepizzeria.com'
+    orderUrl: FOODTEC_BASE_URL
   },
   {
     id: 'promo-7',
@@ -90,7 +92,7 @@ const PROMOTIONS: PromoItem[] = [
     details: 'Get $5 off your total order when spending $40 or more before taxes and delivery fees.',
     ingredients: ['Applies to Any Order $40+'],
     image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80',
-    orderUrl: 'https://phillystylepizzeria.com'
+    orderUrl: FOODTEC_BASE_URL
   }
 ];
 
@@ -129,7 +131,6 @@ export default function PromotionsSection() {
             </div>
 
             <div className="flex flex-col gap-3 mt-auto">
-              {/* Direct Order Button */}
               <a
                 href={promo.orderUrl}
                 target="_blank"
@@ -142,7 +143,6 @@ export default function PromotionsSection() {
                 </svg>
               </a>
 
-              {/* Modal Pop-up Trigger Button */}
               <button
                 type="button"
                 onClick={() => setSelectedPromo(promo)}
@@ -160,11 +160,9 @@ export default function PromotionsSection() {
         ))}
       </div>
 
-      {/* Shared Popup Modal for Promotions */}
       {selectedPromo && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
           <div className="relative w-full max-w-2xl bg-panel border border-panel-border rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row">
-            {/* Close Button */}
             <button
               type="button"
               onClick={() => setSelectedPromo(null)}
@@ -173,7 +171,6 @@ export default function PromotionsSection() {
               ✕
             </button>
 
-            {/* Modal Image */}
             <div className="w-full md:w-1/2 h-48 md:h-auto relative bg-ink">
               <img
                 src={selectedPromo.image}
@@ -182,7 +179,6 @@ export default function PromotionsSection() {
               />
             </div>
 
-            {/* Modal Content */}
             <div className="w-full md:w-1/2 p-6 flex flex-col justify-between">
               <div>
                 <div className="flex justify-between items-start mb-2 pr-6">
@@ -205,7 +201,6 @@ export default function PromotionsSection() {
                 </div>
               </div>
 
-              {/* Order Online Button */}
               <a
                 href={selectedPromo.orderUrl}
                 target="_blank"
