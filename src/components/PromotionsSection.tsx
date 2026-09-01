@@ -1,13 +1,30 @@
 'use client';
 
-const PROMOTIONS = [
+import { useState } from 'react';
+
+interface PromoItem {
+  id: string;
+  tag: string;
+  title: string;
+  description: string;
+  price: string;
+  details: string;
+  ingredients: string[];
+  image: string;
+  orderUrl: string;
+}
+
+const PROMOTIONS: PromoItem[] = [
   {
     id: 'promo-1',
     tag: 'COUPON SPECIAL',
     title: '2 XL Pizzas 1 Topping Each',
     description: 'Present coupon when receiving your order. Not to be combined with any other offer. For take-out & delivery only.',
     price: '$32.99',
-    details: 'Includes 2 Extra Large Cheese Pizzas with 1 topping of your choice on each. Valid for Take-Out & Delivery only.'
+    details: 'Includes 2 Extra Large Cheese Pizzas with 1 topping of your choice on each. Valid for Take-Out & Delivery only.',
+    ingredients: ['Grande Mozzarella', 'Signature Sauce', 'Choice of 1 Topping per Pizza'],
+    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80',
+    orderUrl: 'https://phillystylepizzeria.com'
   },
   {
     id: 'promo-2',
@@ -15,7 +32,10 @@ const PROMOTIONS = [
     title: 'Large 1 Topping Pizza & 20 Wings',
     description: 'Present coupon when receiving your order. Not to be combined with any other offer. For take-out & delivery only.',
     price: '$37.99',
-    details: 'Includes 1 Large Pizza with 1 topping and 20 Jumbo Wings (Traditional or Boneless) with ranch or blue cheese.'
+    details: 'Includes 1 Large Pizza with 1 topping and 20 Jumbo Wings (Traditional or Boneless) with ranch or blue cheese.',
+    ingredients: ['Grande Mozzarella', 'Jumbo Chicken Wings', 'Choice of Wing Sauce'],
+    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80',
+    orderUrl: 'https://phillystylepizzeria.com'
   },
   {
     id: 'promo-3',
@@ -23,7 +43,10 @@ const PROMOTIONS = [
     title: '2 Lrg 1 Topping Pizza, 20 Wings & Soda',
     description: 'Present coupon when receiving your order. Not to be combined with any other offer. For take-out & delivery only.',
     price: '$52.99',
-    details: 'Includes 2 Large 1-Topping Pizzas, 20 Jumbo Wings, and one 2-Liter Soda of choice.'
+    details: 'Includes 2 Large 1-Topping Pizzas, 20 Jumbo Wings, and one 2-Liter Soda of choice.',
+    ingredients: ['Grande Mozzarella', 'Jumbo Wings', '2-Liter Soda'],
+    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80',
+    orderUrl: 'https://phillystylepizzeria.com'
   },
   {
     id: 'promo-4',
@@ -31,7 +54,10 @@ const PROMOTIONS = [
     title: 'Large 1 Topping Pizza & 10 Wings',
     description: 'Present coupon when receiving your order. Not to be combined with any other offer. For take-out & delivery only.',
     price: '$29.99',
-    details: 'Includes 1 Large 1-Topping Pizza and 10 Jumbo Wings with celery and choice of dipping sauce.'
+    details: 'Includes 1 Large 1-Topping Pizza and 10 Jumbo Wings with celery and choice of dipping sauce.',
+    ingredients: ['Grande Mozzarella', 'Jumbo Wings', 'Dipping Sauce'],
+    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80',
+    orderUrl: 'https://phillystylepizzeria.com'
   },
   {
     id: 'promo-5',
@@ -39,7 +65,10 @@ const PROMOTIONS = [
     title: 'Large Cheese Pizza with 3 Toppings',
     description: 'Present coupon when receiving your order. Not to be combined with any other offer. For take-out & delivery only.',
     price: '$19.99',
-    details: 'Includes 1 Large Cheese Pizza with up to 3 standard toppings of your choice.'
+    details: 'Includes 1 Large Cheese Pizza with up to 3 standard toppings of your choice.',
+    ingredients: ['Grande Mozzarella', 'Choice of 3 Toppings', 'Signature Sauce'],
+    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80',
+    orderUrl: 'https://phillystylepizzeria.com'
   },
   {
     id: 'promo-6',
@@ -47,7 +76,10 @@ const PROMOTIONS = [
     title: '2 XL Cheese Pizzas & 20 Wings',
     description: 'Present coupon when receiving your order. Not to be combined with any other offer. For take-out & delivery only.',
     price: '$64.99',
-    details: 'Includes 2 Extra Large Plain Cheese Pizzas and 20 Jumbo Wings.'
+    details: 'Includes 2 Extra Large Plain Cheese Pizzas and 20 Jumbo Wings.',
+    ingredients: ['Grande Mozzarella', 'Jumbo Wings', 'Fresh Garlic'],
+    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80',
+    orderUrl: 'https://phillystylepizzeria.com'
   },
   {
     id: 'promo-7',
@@ -55,20 +87,15 @@ const PROMOTIONS = [
     title: '$5 OFF with Purchase of $40 or more',
     description: 'Present coupon when receiving your order. Not to be combined with any other offer.',
     price: 'SAVE $5',
-    details: 'Get $5 off your total order when spending $40 or more before taxes and delivery fees.'
+    details: 'Get $5 off your total order when spending $40 or more before taxes and delivery fees.',
+    ingredients: ['Applies to Any Order $40+'],
+    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80',
+    orderUrl: 'https://phillystylepizzeria.com'
   }
 ];
 
 export default function PromotionsSection() {
-  const handleOrderClick = () => {
-    // Redirects directly to the online ordering portal
-    window.open('https://phillystylepizzeria.com', '_blank', 'noopener,noreferrer');
-  };
-
-  const handleDetailsClick = (title: string, details: string) => {
-    // Displays full deal details to the user
-    alert(`${title}\n\n${details}`);
-  };
+  const [selectedPromo, setSelectedPromo] = useState<PromoItem | null>(null);
 
   return (
     <section id="promotions" className="max-w-7xl mx-auto px-4 md:px-6 py-16 scroll-mt-[120px]">
@@ -102,22 +129,23 @@ export default function PromotionsSection() {
             </div>
 
             <div className="flex flex-col gap-3 mt-auto">
-              {/* Active Order Button */}
-              <button
-                type="button"
-                onClick={handleOrderClick}
-                className="w-full bg-gold hover:bg-gold-bright text-ink font-bold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer"
+              {/* Direct Order Button */}
+              <a
+                href={promo.orderUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full bg-gold hover:bg-gold-bright text-ink font-bold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer text-center"
               >
                 Order This Deal
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
-              </button>
+              </a>
 
-              {/* Active Details Button */}
+              {/* Modal Pop-up Trigger Button */}
               <button
                 type="button"
-                onClick={() => handleDetailsClick(promo.title, promo.details)}
+                onClick={() => setSelectedPromo(promo)}
                 className="w-full flex items-center justify-center gap-2 py-2 text-sm font-medium text-cream hover:text-gold transition-colors border border-transparent hover:border-panel-border rounded-lg cursor-pointer"
               >
                 <svg className="w-4 h-4 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -131,6 +159,68 @@ export default function PromotionsSection() {
           </div>
         ))}
       </div>
+
+      {/* Shared Popup Modal for Promotions */}
+      {selectedPromo && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+          <div className="relative w-full max-w-2xl bg-panel border border-panel-border rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row">
+            {/* Close Button */}
+            <button
+              type="button"
+              onClick={() => setSelectedPromo(null)}
+              className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-ink/80 text-stone hover:text-cream flex items-center justify-center border border-panel-border cursor-pointer"
+            >
+              ✕
+            </button>
+
+            {/* Modal Image */}
+            <div className="w-full md:w-1/2 h-48 md:h-auto relative bg-ink">
+              <img
+                src={selectedPromo.image}
+                alt={selectedPromo.title}
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            {/* Modal Content */}
+            <div className="w-full md:w-1/2 p-6 flex flex-col justify-between">
+              <div>
+                <div className="flex justify-between items-start mb-2 pr-6">
+                  <h3 className="text-xl font-bold text-cream">{selectedPromo.title}</h3>
+                  <span className="text-gold font-extrabold text-lg">{selectedPromo.price}</span>
+                </div>
+                <p className="text-xs text-stone mb-4">{selectedPromo.details}</p>
+
+                <div className="mb-6">
+                  <span className="text-[10px] font-bold text-gold uppercase tracking-wider block mb-2">
+                    Key Ingredients & Terms
+                  </span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {selectedPromo.ingredients.map((ing) => (
+                      <span key={ing} className="text-[11px] px-2 py-1 rounded bg-ink text-cream border border-panel-border">
+                        {ing}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Order Online Button */}
+              <a
+                href={selectedPromo.orderUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full bg-gold hover:bg-gold-bright text-ink font-bold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 text-center"
+              >
+                Order Online
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
