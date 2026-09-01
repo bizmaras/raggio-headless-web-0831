@@ -6,9 +6,9 @@ import HeroSlider from '../components/HeroSlider';
 import CategoryRail from '../components/CategoryRail';
 import PromotionsSection from '../components/PromotionsSection';
 import MenuItemCard from '../components/MenuItemCard';
-import CateringItemCard from '../components/CateringItemCard';
 import CateringSection from '../components/CateringSection';
 import Footer from '../components/Footer';
+import ScrollToTop from '../components/ScrollToTop';
 import { Download } from 'lucide-react';
 
 interface MenuItem {
@@ -20,7 +20,7 @@ interface MenuItem {
   Featured: string;
 }
 
-// Eksik olan Calzone çeşitleri
+// Additional Calzone items fallback
 const EXTRA_CALZONES: MenuItem[] = [
   {
     Category: 'Strombolis + Calzones',
@@ -28,8 +28,8 @@ const EXTRA_CALZONES: MenuItem[] = [
     Price: '15.99',
     Description: 'Folded pizza dough stuffed with Grande Mozzarella, creamy Ricotta cheese, and served with a side of homemade marinara sauce.',
     Slug: 'cheese-calzone',
-    Featured: 'false'
-  }
+    Featured: 'false',
+  },
 ];
 
 async function getMenuItems(): Promise<MenuItem[]> {
@@ -41,7 +41,7 @@ async function getMenuItems(): Promise<MenuItem[]> {
     skipEmptyLines: true,
   });
 
-  // CSV verileri ile eksik Calzone'ları birleştiriyoruz
+  // Combine CSV menu data with extra Calzone fallbacks
   return [...parsed.data, ...EXTRA_CALZONES];
 }
 
@@ -49,14 +49,14 @@ export default async function HomePage() {
   const menuItems = await getMenuItems();
   const categories = Array.from(new Set(menuItems.map((item) => item.Category))).filter(Boolean);
 
-  // 100/100 Google SEO, GEO & Rich Snippets JSON-LD Schema
+  // Optimized JSON-LD Structured Schema for Local SEO & Rich Snippets
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Restaurant',
     name: 'Raggio Gourmet & Pizza',
-    image: 'https://raggio.pizza/images/raggio-logo.png',
-    '@id': 'https://raggio.pizza/#restaurant',
-    url: 'https://raggio.pizza',
+    image: 'https://www.raggiogourmetpizza.com/images/raggio-logo.png',
+    '@id': 'https://www.raggiogourmetpizza.com/#restaurant',
+    url: 'https://www.raggiogourmetpizza.com',
     telephone: '+13023690553',
     priceRange: '$$',
     address: {
@@ -112,7 +112,7 @@ export default async function HomePage() {
         },
       ],
     },
-    menu: 'https://raggio.pizza/#menu',
+    menu: 'https://www.raggiogourmetpizza.com/#menu',
   };
 
   return (
@@ -177,6 +177,7 @@ export default async function HomePage() {
       </main>
 
       <Footer />
+      <ScrollToTop />
     </>
   );
 }
