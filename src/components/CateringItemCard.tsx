@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useCartStore } from '../store/useCartStore';
 import { Info, X, BookOpen, ExternalLink } from 'lucide-react';
 
 interface CateringItemCardProps {
@@ -13,6 +12,8 @@ interface CateringItemCardProps {
   servesFull?: string;
 }
 
+const FOODTEC_URL = 'https://phillystyleexpress.foodtecsolutions.com/';
+
 export default function CateringItemCard({
   name,
   desc,
@@ -21,8 +22,6 @@ export default function CateringItemCard({
   servesHalf = '8-10',
   servesFull = '15-20',
 }: CateringItemCardProps) {
-  const addToCart = useCartStore((state) => state.addToCart);
-  const [addedSize, setAddedSize] = useState<'half' | 'full' | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const parsePrice = (priceVal: string | number): number => {
@@ -33,17 +32,8 @@ export default function CateringItemCard({
   const numericHalf = parsePrice(half);
   const numericFull = parsePrice(full);
 
-  const handleAdd = (size: 'half' | 'full') => {
-    const price = size === 'half' ? numericHalf : numericFull;
-    const label = size === 'half' ? 'Half Tray' : 'Full Tray';
-    addToCart({ name: `${name} (${label})`, price });
-    setAddedSize(size);
-    setTimeout(() => setAddedSize(null), 1200);
-  };
-
   return (
     <>
-      {/* MAIN CATERING CARD */}
       <div className="bg-panel border border-panel-border hover:border-gold/50 rounded-xl p-5 transition-all flex flex-col justify-between shadow-lg">
         <div>
           <div className="flex justify-between items-start mb-2">
@@ -55,54 +45,37 @@ export default function CateringItemCard({
         </div>
 
         <div className="mt-auto space-y-3 pt-2">
-          {/* Half & Full Tray Order Buttons */}
+          {/* Direct External Links to FoodTec Ordering */}
           <div className="grid grid-cols-2 gap-2">
-            <button
-              type="button"
-              onClick={() => handleAdd('half')}
-              className={`py-2 px-3 rounded-lg border transition-all text-center cursor-pointer ${addedSize === 'half'
-                  ? 'bg-gold border-gold font-extrabold'
-                  : 'bg-ink border-panel-border hover:border-gold'
-                }`}
+            <a
+              href={FOODTEC_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="py-2.5 px-3 rounded-lg border bg-ink border-panel-border hover:border-gold hover:bg-gold/10 transition-all text-center cursor-pointer group"
             >
-              <div
-                className={`text-[10px] font-bold uppercase tracking-wider ${addedSize === 'half' ? 'text-ink' : 'text-stone'
-                  }`}
-              >
-                {addedSize === 'half' ? 'Added!' : `HALF (${servesHalf})`}
+              <div className="text-[10px] font-bold text-stone group-hover:text-gold uppercase tracking-wider">
+                HALF ({servesHalf})
               </div>
-              <div
-                className={`text-sm font-extrabold ${addedSize === 'half' ? 'text-ink' : 'text-gold'
-                  }`}
-              >
+              <div className="text-sm font-extrabold text-gold">
                 ${numericHalf.toFixed(2)}
               </div>
-            </button>
+            </a>
 
-            <button
-              type="button"
-              onClick={() => handleAdd('full')}
-              className={`py-2 px-3 rounded-lg border transition-all text-center cursor-pointer ${addedSize === 'full'
-                  ? 'bg-gold border-gold font-extrabold'
-                  : 'bg-ink border-panel-border hover:border-gold'
-                }`}
+            <a
+              href={FOODTEC_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="py-2.5 px-3 rounded-lg border bg-ink border-panel-border hover:border-gold hover:bg-gold/10 transition-all text-center cursor-pointer group"
             >
-              <div
-                className={`text-[10px] font-bold uppercase tracking-wider ${addedSize === 'full' ? 'text-ink' : 'text-stone'
-                  }`}
-              >
-                {addedSize === 'full' ? 'Added!' : `FULL (${servesFull})`}
+              <div className="text-[10px] font-bold text-stone group-hover:text-gold uppercase tracking-wider">
+                FULL ({servesFull})
               </div>
-              <div
-                className={`text-sm font-extrabold ${addedSize === 'full' ? 'text-ink' : 'text-gold'
-                  }`}
-              >
+              <div className="text-sm font-extrabold text-gold">
                 ${numericFull.toFixed(2)}
               </div>
-            </button>
+            </a>
           </div>
 
-          {/* View Details & Ingredients Trigger */}
           <button
             type="button"
             onClick={() => setIsModalOpen(true)}
@@ -114,12 +87,10 @@ export default function CateringItemCard({
         </div>
       </div>
 
-      {/* DETAILS & INGREDIENTS MODAL */}
+      {/* Details Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
           <div className="relative w-full max-w-2xl bg-[#1c2127] border border-panel-border rounded-2xl overflow-hidden shadow-2xl grid grid-cols-1 md:grid-cols-12">
-
-            {/* Modal Left Branding Side */}
             <div className="md:col-span-5 bg-[#14181d] p-8 flex flex-col items-center justify-center text-center border-b md:border-b-0 md:border-r border-panel-border">
               <BookOpen className="w-12 h-12 text-gold mb-3 opacity-90" />
               <h5 className="text-xs font-mono font-bold tracking-widest text-gold uppercase">
@@ -128,7 +99,6 @@ export default function CateringItemCard({
               <p className="text-[11px] text-stone mt-1">Freshly Prepared</p>
             </div>
 
-            {/* Modal Right Content Side */}
             <div className="md:col-span-7 p-6 md:p-8 flex flex-col justify-between relative">
               <button
                 type="button"
@@ -154,43 +124,18 @@ export default function CateringItemCard({
                 </p>
               </div>
 
-              {/* Order Buttons Inside Modal */}
-              <div className="space-y-3 pt-4 border-t border-panel-border/50">
-                <div className="grid grid-cols-2 gap-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      handleAdd('half');
-                      setIsModalOpen(false);
-                    }}
-                    className="bg-gold hover:bg-gold-bright text-ink font-bold py-3 rounded-xl text-xs uppercase tracking-wider transition-all cursor-pointer"
-                  >
-                    Order Half (${numericHalf.toFixed(2)})
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      handleAdd('full');
-                      setIsModalOpen(false);
-                    }}
-                    className="bg-gold hover:bg-gold-bright text-ink font-bold py-3 rounded-xl text-xs uppercase tracking-wider transition-all cursor-pointer"
-                  >
-                    Order Full (${numericFull.toFixed(2)})
-                  </button>
-                </div>
-
+              <div className="pt-4 border-t border-panel-border/50">
                 <a
-                  href="https://phillystyleexpress.foodtecsolutions.com/"
+                  href={FOODTEC_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full flex items-center justify-center gap-2 bg-panel hover:bg-black border border-gold/40 text-cream font-bold py-2.5 rounded-xl text-xs transition-all cursor-pointer"
+                  className="w-full flex items-center justify-center gap-2 bg-gold hover:bg-gold-bright text-ink font-extrabold py-3 rounded-xl text-xs uppercase tracking-wider transition-all cursor-pointer shadow-lg"
                 >
-                  <span>Order Online</span>
-                  <ExternalLink className="w-3.5 h-3.5 text-gold" />
+                  <span>Order Online via FoodTec</span>
+                  <ExternalLink className="w-4 h-4 text-ink" />
                 </a>
               </div>
             </div>
-
           </div>
         </div>
       )}
