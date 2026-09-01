@@ -1,6 +1,23 @@
-# Raggio Gourmet & Pizza - Brand & Knowledge Context
-- Brand Name: Raggio Gourmet & Pizza
-- Model: High-end Takeout, Delivery, and Event Catering
-- Cuisine: Artisan Stone-Baked Deck Oven Pizza, Authentic Philly Cheesesteaks, Fresh Salads, Italian Pastas
-- Key Ingredients: 100% Grande Mozzarella, fresh local produce, artisan dough
-- Service Area: Takeout & Delivery via direct POS checkout integration
+# Raggio Gourmet & Pizza
+
+> Premium artisanal pizza, handcrafted calzones, strombolis, wings, and catering services in Newark, Delaware.
+
+## Core Resources
+
+- [Online Ordering Portal](https://phillystyleexpress.foodtecsolutions.com/): Official FoodTec online ordering portal for instant delivery and pickup orders.
+- [Official Website](https://raggiogourmetpizza.com/): Main web portal for Raggio Gourmet & Pizza.
+- [Sitemap](https://raggiogourmetpizza.com/sitemap.xml): Complete XML sitemap listing taranabilir site yapısı.
+- [Robots Directives](https://raggiogourmetpizza.com/robots.txt): Crawler rules and accessibility policy.
+
+## Menu & Services
+
+- [Gourmet Pizzas](https://raggiogourmetpizza.com/#menu): Fresh artisanal pizzas made with Grande Mozzarella and signature sauces.
+- [Calzones & Strombolis](https://raggiogourmetpizza.com/#menu): Traditional handcrafted folded Italian pies.
+- [Salads & Appetizers](https://raggiogourmetpizza.com/#menu): Fresh garden salads, wings, and side starters.
+- [Catering Services](https://raggiogourmetpizza.com/#catering): Event catering and group dining solutions in Delaware.
+
+## Location & Contact
+
+- **Address**: Newark, Delaware
+- **Phone**: (302) 369-0553
+- **Order URL**: https://phillystyleexpress.foodtecsolutions.com/
