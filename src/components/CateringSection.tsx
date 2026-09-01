@@ -6,15 +6,15 @@ const cateringCategories = [
     {
         category: "Subs & Trays",
         items: [
-            { name: 'Sub Tray', tag: 'SUBS', description: 'Assortment of fresh subs prepared for group events.', image: '/images/cat-subs.jpg' },
-            { name: 'Wrap Tray', tag: 'SUBS', description: 'Assortment of fresh wraps perfect for any gathering.', image: '/images/cat-wraps.jpg' },
+            { name: 'Sub Tray', tag: 'SUBS', description: 'Assortment of fresh subs prepared for group events.' },
+            { name: 'Wrap Tray', tag: 'SUBS', description: 'Assortment of fresh wraps perfect for any gathering.' },
         ]
     },
     {
         category: "Appetizers",
         items: [
-            { name: 'Cinnamon Bites', tag: 'APPETIZERS', description: 'Sweet and delicious cinnamon bites.', image: '/images/cat-cinnamon.jpg' },
-            { name: 'Jalapeno Poppers', tag: 'APPETIZERS', description: 'Served with Ranch Dressing.', image: '/images/cat-jalapeno.jpg' },
+            { name: 'Cinnamon Bites', tag: 'APPETIZERS', description: 'Sweet and delicious cinnamon bites.' },
+            { name: 'Jalapeno Poppers', tag: 'APPETIZERS', description: 'Served with Ranch Dressing.' },
         ]
     }
 ];
@@ -24,22 +24,24 @@ export default function CateringSection() {
         <section id="catering" className="bg-ink border-t border-panel-border pt-24 pb-32 px-6 scroll-mt-20">
             <div className="max-w-7xl mx-auto">
 
+                {/* Section Header (Heading Hierarchy Fix: span tag before h2) */}
                 <div className="text-center mb-20 max-w-2xl mx-auto">
                     <div className="flex items-center justify-center gap-1.5 text-gold-bright mb-4 opacity-90">
                         <MapPin className="w-4 h-4" />
                         <span className="text-xs font-bold tracking-widest uppercase">Newark, Delaware</span>
                     </div>
-                    <h2 className="text-sm font-mono tracking-widest text-gold bg-black/50 border border-gold/30 px-3.5 py-1 rounded-full mb-3 uppercase inline-block">
+                    <span className="inline-block text-xs font-mono tracking-widest text-gold bg-black/50 border border-gold/30 px-3.5 py-1 rounded-full mb-3 uppercase">
                         EVENTS & GROUP ORDERS
-                    </h2>
-                    <h1 className="text-4xl md:text-5xl font-extrabold text-cream mb-4 drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
+                    </span>
+                    <h2 className="text-4xl md:text-5xl font-extrabold text-cream mb-4 drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
                         Catering by <span className="text-gold">Raggio</span>
-                    </h1>
+                    </h2>
                     <p className="text-cream text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
                         Feeding a crowd in Newark? All catering trays are available in Half or Full sizes.
                     </p>
                 </div>
 
+                {/* Categories Loop */}
                 {cateringCategories.map((cat, catIdx) => (
                     <div key={catIdx} className="mb-20">
                         <h3 className="text-2xl font-bold text-cream mb-8 border-b border-panel-border pb-3">
@@ -52,7 +54,6 @@ export default function CateringSection() {
                                     key={itemIdx}
                                     className="flex flex-col justify-between p-8 rounded-3xl bg-panel border border-gold/10 shadow-[0_5px_40px_rgba(0,0,0,0.6)] hover:shadow-[0_10px_60px_rgba(201,161,92,0.3)] hover:-translate-y-1 transition-all duration-300"
                                 >
-                                    {/* HATA VEREN BÖLÜMÜN DÜZELTİLMİŞ HALİ */}
                                     <div>
                                         <div className="flex items-center justify-between gap-4 mb-4">
                                             <h4 className="text-2xl font-bold text-cream">{item.name}</h4>
@@ -65,16 +66,17 @@ export default function CateringSection() {
                                         </p>
                                     </div>
 
+                                    {/* Pricing Footer (Contrast Fix: text-stone replaces text-stone-dim) */}
                                     <div className="border-t border-panel-border pt-8 mt-auto">
                                         <div className="flex items-center justify-between gap-4">
                                             <span className="text-sm font-bold text-cream">Starting from:</span>
                                             <div className="flex items-end gap-2">
                                                 <span className="text-sm text-stone line-through">$100.00</span>
                                                 <span className="text-3xl font-extrabold text-gold">$90.00</span>
-                                                <span className="text-xs text-stone-dim">Full Tray</span>
+                                                <span className="text-xs text-stone font-medium">Full Tray</span>
                                             </div>
                                         </div>
-                                        <button className="w-full mt-6 flex items-center justify-center gap-2 text-gold font-bold text-sm bg-panel border-2 border-gold/40 hover:bg-gold hover:text-ink px-6 py-3 rounded-full transition-all duration-300">
+                                        <button className="w-full mt-6 flex items-center justify-center gap-2 text-gold font-bold text-sm bg-panel border-2 border-gold/40 hover:bg-gold hover:text-ink px-6 py-3 rounded-full transition-all duration-300 cursor-pointer">
                                             View Details & Ingredients
                                         </button>
                                     </div>
@@ -85,7 +87,7 @@ export default function CateringSection() {
                 ))}
 
                 <div className="text-center mt-20">
-                    <button className="bg-gold hover:bg-gold-bright text-ink font-extrabold px-10 py-4 rounded-full shadow-lg transition-all hover:scale-105">
+                    <button className="bg-gold hover:bg-gold-bright text-ink font-extrabold px-10 py-4 rounded-full shadow-lg transition-all hover:scale-105 cursor-pointer">
                         Download Catering Menu
                     </button>
                 </div>
