@@ -7,7 +7,7 @@ import CategoryRail from '../components/CategoryRail';
 import PromotionsSection from '../components/PromotionsSection';
 import MenuItemCard from '../components/MenuItemCard';
 import CateringItemCard from '../components/CateringItemCard';
-import CateringSection from '../components/CateringSection'; // Added this import
+import CateringSection from '../components/CateringSection';
 import Footer from '../components/Footer';
 import { Download } from 'lucide-react';
 
@@ -20,6 +20,18 @@ interface MenuItem {
   Featured: string;
 }
 
+// Eksik olan Calzone çeşitleri
+const EXTRA_CALZONES: MenuItem[] = [
+  {
+    Category: 'Strombolis + Calzones',
+    'Product Name': 'Cheese Calzone',
+    Price: '15.99',
+    Description: 'Folded pizza dough stuffed with Grande Mozzarella, creamy Ricotta cheese, and served with a side of homemade marinara sauce.',
+    Slug: 'cheese-calzone',
+    Featured: 'false'
+  }
+];
+
 async function getMenuItems(): Promise<MenuItem[]> {
   const filePath = path.join(process.cwd(), 'public', 'data', 'raggio_menu.csv');
   const fileContent = fs.readFileSync(filePath, 'utf8');
@@ -29,7 +41,8 @@ async function getMenuItems(): Promise<MenuItem[]> {
     skipEmptyLines: true,
   });
 
-  return parsed.data;
+  // CSV verileri ile eksik Calzone'ları birleştiriyoruz
+  return [...parsed.data, ...EXTRA_CALZONES];
 }
 
 export default async function HomePage() {
@@ -73,7 +86,6 @@ export default async function HomePage() {
         closes: '22:00',
       },
     ],
-    // High-Intent GEO & Search Engine OfferCatalog Schema
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
       name: 'Weekly Pizza & Catering Specials',
@@ -108,7 +120,6 @@ export default async function HomePage() {
       <Header />
 
       <main className="min-h-screen bg-ink text-cream">
-        {/* SEO Structured Data */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -118,14 +129,12 @@ export default async function HomePage() {
         <CategoryRail />
         <PromotionsSection />
 
-        {/* Dynamic Digital Menu Section */}
         <section id="menu" className="max-w-7xl mx-auto px-6 py-12 scroll-mt-[210px]">
           <div className="flex flex-col sm:flex-row items-center justify-between mb-12 gap-4">
             <h2 className="text-3xl md:text-4xl font-extrabold text-gold-bright">
               Our Menu
             </h2>
 
-            {/* Downloadable PDF Menu Link for UX + Fast Performance */}
             <a
               href="/raggio-full-menu.pdf"
               download
@@ -164,7 +173,6 @@ export default async function HomePage() {
           })}
         </section>
 
-        {/* Dynamic Catering Section */}
         <CateringSection />
       </main>
 
