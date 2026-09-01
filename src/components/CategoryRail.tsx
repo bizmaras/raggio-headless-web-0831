@@ -1,4 +1,4 @@
-\'use client';
+'use client';
 
 const CATEGORIES = [
   'Deals & Specials', 'Pizza', 'Gourmet Pizza', 'Sicilian Pizza', 'Chicken Wings',
@@ -13,10 +13,10 @@ export default function CategoryRail() {
     <div className="sticky top-[72px] z-40 bg-ink/95 backdrop-blur-md border-b border-panel-border py-4">
       <div className="flex flex-wrap justify-center gap-2 px-4 md:px-6 max-w-7xl mx-auto">
         {CATEGORIES.map((category) => {
-          // Normal bağlantı linkini oluştur
+          // Generate standard anchor link format
           let targetId = category.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and');
 
-          // ÇÖZÜM: Çalışmayan butonların gideceği yerleri CSV dosyasındaki isimlere manuel olarak yönlendiriyoruz!
+          // Map UI category names to strictly match the CSV dataset IDs
           if (category === 'Subs & Grinders') targetId = 'subs';
           if (category === 'Strombolis & Calzones') targetId = 'stromboli';
           if (category === 'Side Orders') targetId = 'sides';
