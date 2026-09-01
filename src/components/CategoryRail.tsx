@@ -1,33 +1,57 @@
 'use client';
 
-// Kategori hedefleri PDF menüdeki orijinal yazımlara (+) göre ayarlandı
 const CATEGORIES = [
-  { label: 'Deals & Specials', target: 'deals-and-specials', dotColor: 'bg-red-500' },
-  { label: 'Pizza', target: 'pizza', dotColor: 'bg-orange-500' },
-  { label: 'Gourmet Pizza', target: 'gourmet-pizza', dotColor: 'bg-amber-500' },
-  { label: 'Sicilian Pizza', target: 'sicilian-pizza', dotColor: 'bg-yellow-500' },
-  { label: 'Chicken Wings', target: 'chicken-wings', dotColor: 'bg-lime-500' },
-  { label: 'Cheesesteaks', target: 'cheesesteaks', dotColor: 'bg-green-500' },
-  { label: 'Fresh Burgers', target: 'fresh-burgers', dotColor: 'bg-emerald-500' },
-  { label: 'Appetizers', target: 'appetizer', dotColor: 'bg-teal-500' },
-  { label: 'Fresh Salads', target: 'fresh-salads', dotColor: 'bg-cyan-500' },
-  { label: 'Pasta', target: 'pasta', dotColor: 'bg-sky-500' },
-  { label: 'Complete Dinners', target: 'complete-dinners', dotColor: 'bg-blue-500' },
-  { label: 'Seafood', target: 'seafood', dotColor: 'bg-indigo-500' },
-  { label: 'Quesadillas', target: 'quesadillas', dotColor: 'bg-violet-500' },
-  { label: 'Latin Food', target: 'latin-food', dotColor: 'bg-purple-500' },
-  { label: 'Subs + Grinders', target: 'subs-+-grinders', dotColor: 'bg-fuchsia-500' },
-  { label: 'Strombolis + Calzones', target: 'strombolis-+-calzones', dotColor: 'bg-pink-500' },
-  { label: 'Breakfast', target: 'breakfast', dotColor: 'bg-rose-500' },
-  { label: 'Hot Sandwiches', target: 'hot-sandwiches', dotColor: 'bg-red-400' },
-  { label: 'Desserts', target: 'desserts', dotColor: 'bg-orange-400' },
-  { label: 'Soups', target: 'soups', dotColor: 'bg-amber-400' },
-  { label: 'Drinks', target: 'drinks', dotColor: 'bg-yellow-400' },
-  { label: 'Side Orders', target: 'side-orders', dotColor: 'bg-lime-400' },
-  { label: 'Catering', target: 'catering', dotColor: 'bg-purple-600' }
+  { label: 'Deals & Specials', searchId: 'promotions', dotColor: 'bg-red-500' },
+  { label: 'Pizza', searchId: 'pizza', dotColor: 'bg-orange-500' },
+  { label: 'Gourmet Pizza', searchId: 'gourmet', dotColor: 'bg-amber-500' },
+  { label: 'Sicilian Pizza', searchId: 'sicilian', dotColor: 'bg-yellow-500' },
+  { label: 'Chicken Wings', searchId: 'wing', dotColor: 'bg-lime-500' },
+  { label: 'Cheesesteaks', searchId: 'cheesesteak', dotColor: 'bg-green-500' },
+  { label: 'Fresh Burgers', searchId: 'burger', dotColor: 'bg-emerald-500' },
+  { label: 'Appetizers', searchId: 'appetizer', dotColor: 'bg-teal-500' },
+  { label: 'Fresh Salads', searchId: 'salad', dotColor: 'bg-cyan-500' },
+  { label: 'Pasta', searchId: 'pasta', dotColor: 'bg-sky-500' },
+  { label: 'Complete Dinners', searchId: 'dinner', dotColor: 'bg-blue-500' },
+  { label: 'Seafood', searchId: 'seafood', dotColor: 'bg-indigo-500' },
+  { label: 'Quesadillas', searchId: 'quesadilla', dotColor: 'bg-violet-500' },
+  { label: 'Latin Food', searchId: 'latin', dotColor: 'bg-purple-500' },
+  { label: 'Subs & Grinders', searchId: 'subs', dotColor: 'bg-fuchsia-500' },
+  { label: 'Strombolis & Calzones', searchId: 'stromboli', dotColor: 'bg-pink-500' },
+  { label: 'Breakfast', searchId: 'breakfast', dotColor: 'bg-rose-500' },
+  { label: 'Hot Sandwiches', searchId: 'sandwiches', dotColor: 'bg-red-400' },
+  { label: 'Desserts', searchId: 'dessert', dotColor: 'bg-orange-400' },
+  { label: 'Soups', searchId: 'soup', dotColor: 'bg-amber-400' },
+  { label: 'Drinks', searchId: 'drink', dotColor: 'bg-yellow-400' },
+  { label: 'Side Orders', searchId: 'side', dotColor: 'bg-lime-400' },
+  { label: 'Catering', searchId: 'catering', dotColor: 'bg-purple-600' }
 ];
 
 export default function CategoryRail() {
+  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, searchId: string) => {
+    // ÇÖZÜM: Deals (promotions) butonuna tıklandığında JS müdahalesini iptal et.
+    // Tıpkı Header'daki hardal butonu gibi doğal HTML linki olarak çalışsın.
+    if (searchId === 'promotions') {
+      return;
+    }
+
+    e.preventDefault();
+
+    let targetElement = document.getElementById(searchId);
+
+    if (!targetElement) {
+      const elements = Array.from(document.querySelectorAll('section, div, h1, h2, h3'));
+      targetElement = elements.find(el => {
+        const elId = el.id ? el.id.toLowerCase() : '';
+        return elId.includes(searchId);
+      }) as HTMLElement | null;
+    }
+
+    if (targetElement) {
+      const topPosition = targetElement.getBoundingClientRect().top + window.scrollY - 180;
+      window.scrollTo({ top: topPosition, behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="sticky top-[72px] z-40 bg-ink/95 backdrop-blur-md border-b border-panel-border py-4">
       <div className="flex overflow-x-auto md:flex-wrap md:justify-center gap-2 px-4 md:px-6 max-w-7xl mx-auto no-scrollbar">
@@ -37,7 +61,8 @@ export default function CategoryRail() {
           return (
             <a
               key={cat.label}
-              href={`#${cat.target}`}
+              href={`#${cat.searchId}`}
+              onClick={(e) => handleScroll(e, cat.searchId)}
               className={`flex-none flex items-center gap-2 px-4 py-2 rounded-full border transition-all duration-300 text-sm font-medium whitespace-nowrap ${isSpecial
                   ? 'border-gold bg-panel text-cream hover:bg-gold/10'
                   : 'border-panel-border bg-panel text-stone hover:text-cream hover:border-gold'
