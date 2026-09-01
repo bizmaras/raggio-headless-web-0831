@@ -1,49 +1,54 @@
 'use client';
 
-const CATEGORIES = [
-  { label: 'Deals & Specials', target: 'deals-and-specials', dotColor: 'bg-red-500' },
-  { label: 'Pizza', target: 'pizza', dotColor: 'bg-orange-500' },
-  { label: 'Gourmet Pizza', target: 'gourmet-pizza', dotColor: 'bg-amber-500' },
-  { label: 'Sicilian Pizza', target: 'sicilian-pizza', dotColor: 'bg-yellow-500' },
-  { label: 'Chicken Wings', target: 'chicken-wings', dotColor: 'bg-lime-500' },
-  { label: 'Cheesesteaks', target: 'cheesesteaks', dotColor: 'bg-green-500' },
-  { label: 'Fresh Burgers', target: 'fresh-burgers', dotColor: 'bg-emerald-500' },
-  { label: 'Appetizers', target: 'appetizers', dotColor: 'bg-teal-500' },
-  { label: 'Fresh Salads', target: 'fresh-salads', dotColor: 'bg-cyan-500' },
-  { label: 'Pasta', target: 'pasta', dotColor: 'bg-sky-500' },
-  { label: 'Complete Dinners', target: 'complete-dinners', dotColor: 'bg-blue-500' },
-  { label: 'Seafood', target: 'seafood', dotColor: 'bg-indigo-500' },
-  { label: 'Quesadillas', target: 'quesadillas', dotColor: 'bg-violet-500' },
-  { label: 'Latin Food', target: 'latin-food', dotColor: 'bg-purple-500' },
-  { label: 'Subs & Grinders', target: 'subs-and-grinders', dotColor: 'bg-fuchsia-500' },
-  { label: 'Strombolis & Calzones', target: 'strombolis-and-calzones', dotColor: 'bg-pink-500' },
-  { label: 'Breakfast', target: 'breakfast', dotColor: 'bg-rose-500' },
-  { label: 'Hot Sandwiches', target: 'hot-sandwiches', dotColor: 'bg-red-400' },
-  { label: 'Desserts', target: 'desserts', dotColor: 'bg-orange-400' },
-  { label: 'Soups', target: 'soups', dotColor: 'bg-amber-400' },
-  { label: 'Drinks', target: 'drinks', dotColor: 'bg-yellow-400' },
-  { label: 'Side Orders', target: 'side-orders', dotColor: 'bg-lime-400' },
-  { label: 'Catering', target: 'catering', dotColor: 'bg-purple-600' }
-];
+interface CategoryRailProps {
+  categories: string[];
+}
 
-export default function CategoryRail() {
+export default function CategoryRail({ categories = [] }: CategoryRailProps) {
+  // Ensure Catering is always at the end
+  const displayCategories = categories.includes('Catering')
+    ? categories
+    : [...categories, 'Catering'];
+
+  // Automatically assign colors based on category keywords
+  const getDotColor = (label: string) => {
+    const lower = label.toLowerCase();
+    if (lower.includes('special')) return 'bg-red-500';
+    if (lower.includes('pizza')) return 'bg-orange-500';
+    if (lower.includes('wing')) return 'bg-lime-500';
+    if (lower.includes('steak')) return 'bg-green-500';
+    if (lower.includes('burger')) return 'bg-emerald-500';
+    if (lower.includes('salad')) return 'bg-cyan-500';
+    if (lower.includes('pasta')) return 'bg-sky-500';
+    if (lower.includes('sub') || lower.includes('grinder')) return 'bg-fuchsia-500';
+    if (lower.includes('stromboli') || lower.includes('calzone')) return 'bg-pink-500';
+    if (lower.includes('side')) return 'bg-lime-400';
+    if (lower.includes('catering')) return 'bg-purple-600';
+    if (lower.includes('appetizer')) return 'bg-teal-500';
+    if (lower.includes('drink')) return 'bg-yellow-400';
+    return 'bg-blue-500';
+  };
+
   return (
     <div className="sticky top-[72px] z-40 bg-ink/95 backdrop-blur-md border-b border-panel-border py-4">
       <div className="flex overflow-x-auto md:flex-wrap md:justify-center gap-2 px-4 md:px-6 max-w-7xl mx-auto no-scrollbar">
-        {CATEGORIES.map((cat) => {
-          const isSpecial = cat.label === 'Deals & Specials';
+        {displayCategories.map((category) => {
+          // This generates the EXACT same ID as page.tsx because it uses the real CSV string
+          const targetId = category.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and');
+          const isSpecial = category.toLowerCase().includes('special');
+          const dotColor = getDotColor(category);
 
           return (
             <a
-              key={cat.label}
-              href={`#${cat.target}`}
+              key={category}
+              href={`#${targetId}`}
               className={`flex-none flex items-center gap-2 px-4 py-2 rounded-full border transition-all duration-300 text-sm font-medium whitespace-nowrap ${isSpecial
                   ? 'border-gold bg-panel text-cream hover:bg-gold/10'
                   : 'border-panel-border bg-panel text-stone hover:text-cream hover:border-gold'
                 }`}
             >
-              <span className={`w-2 h-2 rounded-full ${cat.dotColor}`}></span>
-              {cat.label}
+              <span className={`w-2 h-2 rounded-full ${dotColor}`}></span>
+              {category}
             </a>
           );
         })}
