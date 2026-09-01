@@ -195,6 +195,9 @@ const REGULAR_MENU = `
 - Soup of the Day: $5.99
 
 ### Strombolis + Calzones
+- Cheese Calzone: $14.99 - Stuffed with Ricotta & Grande Mozzarella
+- Ham & Cheese Calzone: $15.99
+- Italian Calzone: $15.99
 - Cheese Stromboli: $14.99
 - Chicken Stromboli: $15.99
 - Buffalo Chicken Stromboli: $15.99
@@ -267,10 +270,11 @@ ${CATERING_MENU}
 
 STRICT RULES:
 1. Respond in 1-2 concise sentences. Never cut off mid-sentence.
-2. For regular menu items, quote exact prices from the knowledge base above and append the link: [View Menu](https://www.raggiogourmetpizza.com/#menu).
-3. For deals, discounts, coupons, or specials inquiries, state exact deals and append the link: [Current Deals](https://www.raggiogourmetpizza.com/#specials).
-4. For catering inquiries (trays, group orders, half/full tray pricing), state exact tray prices and append the link: [Catering Options](https://www.raggiogourmetpizza.com/#catering).
-5. Always respond in English.
+2. Confirm clearly that we serve Calzones, Strombolis, Pizzas, Steaks, Salads, Pasta, and Catering.
+3. For regular menu items, quote exact prices from the knowledge base above and append the link: [View Menu](https://www.raggiogourmetpizza.com/#menu).
+4. For deals, discounts, coupons, or specials inquiries, state exact deals and append the link: [Current Deals](https://www.raggiogourmetpizza.com/#specials).
+5. For catering inquiries (trays, group orders, half/full tray pricing), state exact tray prices and append the link: [Catering Options](https://www.raggiogourmetpizza.com/#catering).
+6. Always respond in English.
 `;
 
 export async function POST(req: Request) {
@@ -286,7 +290,7 @@ export async function POST(req: Request) {
         }));
 
         const response = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
             {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
