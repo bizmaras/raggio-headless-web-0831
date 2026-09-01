@@ -47,10 +47,9 @@ export default function HeroSlider() {
   const [current, setCurrent] = useState(0);
 
   useEffect(() => {
-    // 8 second delay prevents Lighthouse Speed Index animation conflict
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % slides.length);
-    }, 8000);
+    }, 4500);
     return () => clearInterval(timer);
   }, []);
 
@@ -69,7 +68,7 @@ export default function HeroSlider() {
         return (
           <div
             key={index}
-            className={`absolute inset-0 transition-opacity duration-500 ease-linear will-change-opacity ${isActive ? 'opacity-100 z-0' : 'opacity-0 -z-10 pointer-events-none'
+            className={`absolute inset-0 transition-opacity duration-500 ease-in-out ${isActive ? 'opacity-100 z-0' : 'opacity-0 -z-10 pointer-events-none'
               }`}
           >
             <Image
@@ -78,8 +77,9 @@ export default function HeroSlider() {
               title={slide.seoAlt}
               fill
               priority={index === 0}
-              quality={75}
-              sizes="(max-width: 768px) 100vw, 1200px"
+              loading={index === 0 ? 'eager' : 'lazy'}
+              quality={60}
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 1200px"
               className="object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#121417] via-[#121417]/50 to-transparent" />
@@ -98,11 +98,11 @@ export default function HeroSlider() {
           <Image
             src="/images/raggio-logo.png"
             alt="Raggio Gourmet & Pizza - Newark, DE"
-            fill
+            width={256}
+            height={64}
             priority
             quality={80}
-            sizes="256px"
-            className="object-contain opacity-80 drop-shadow-md"
+            className="object-contain opacity-80 drop-shadow-md w-auto h-16 mx-auto"
           />
         </div>
 
