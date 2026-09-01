@@ -3,7 +3,6 @@
 import { useState } from 'react';
 
 interface MenuItemCardProps {
-  // Hem doğrudan prop hem de nesne prop alabilmesi için esnek tip
   item?: {
     id?: string;
     name?: string;
@@ -24,19 +23,21 @@ interface MenuItemCardProps {
 export default function MenuItemCard(props: MenuItemCardProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  // Prop veya item nesnesi üzerinden gelen verileri birleştir
   const itemName = props.name || props.item?.name || 'Menu Item';
   const rawPrice = props.price ?? props.item?.price ?? '0.00';
   const itemPrice = typeof rawPrice === 'number' ? `$${rawPrice.toFixed(2)}` : rawPrice;
-  const itemDescription = props.description || props.item?.description || 'Prepared fresh with premium artisanal ingredients.';
+  const itemDescription = props.description || props.item?.description || 'Prepared fresh to order with premium ingredients.';
 
-  const defaultOrderUrl = props.orderUrl || props.item?.orderUrl || 'https://phillystyleexpress.foodtecsolutions.com/';
-  const defaultIngredients = props.ingredients || props.item?.ingredients || ['Grande Mozzarella', 'Fresh Garlic', 'Signature House Sauce'];
-  const defaultImage = props.image || props.item?.image || 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80';
+  const itemOrderUrl = props.orderUrl || props.item?.orderUrl || 'https://phillystyleexpress.foodtecsolutions.com/';
+
+  // Sahte pizza malzemeleri tamamen kaldırıldı
+  const itemIngredients = props.ingredients || props.item?.ingredients || [];
+
+  // Sahte pizza fotoğrafı tamamen kaldırıldı
+  const itemImage = props.image || props.item?.image;
 
   return (
     <>
-      {/* Standart Menü Kartı */}
       <div className="bg-panel border border-panel-border rounded-xl p-5 hover:border-gold/50 transition-all flex flex-col justify-between">
         <div>
           <div className="flex justify-between items-start mb-2">
@@ -62,7 +63,6 @@ export default function MenuItemCard(props: MenuItemCardProps) {
         </button>
       </div>
 
-      {/* Pop-up Modal (Genişletilmiş max-w-4xl Görünüm) */}
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 bg-black/85 backdrop-blur-md">
           <div className="relative w-full max-w-4xl bg-panel border border-panel-border rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh] md:max-h-[80vh]">
@@ -74,14 +74,30 @@ export default function MenuItemCard(props: MenuItemCardProps) {
               ✕
             </button>
 
-            <div className="w-full md:w-1/2 h-56 md:h-auto relative bg-ink flex-shrink-0">
-              <img
-                src={defaultImage}
-                alt={itemName}
-                className="w-full h-full object-cover"
-              />
+            {/* Resim Varsa Resim, Yoksa Zarif Marka İkonu */}
+            <div className="w-full md:w-1/2 h-56 md:h-auto relative bg-ink border-b md:border-b-0 md:border-r border-panel-border/50 flex-shrink-0 flex items-center justify-center">
+              {itemImage ? (
+                <img
+                  src={itemImage}
+                  alt={itemName}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="flex flex-col items-center justify-center p-8 text-center opacity-50">
+                  <svg className="w-16 h-16 text-gold mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  </svg>
+                  <span className="text-gold font-extrabold tracking-[0.2em] uppercase text-xs">
+                    Raggio Gourmet
+                  </span>
+                  <span className="text-stone text-[11px] mt-1 tracking-wider">
+                    Freshly Prepared
+                  </span>
+                </div>
+              )}
             </div>
 
+            {/* Detay Bilgisi */}
             <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between overflow-y-auto">
               <div>
                 <div className="flex justify-between items-start mb-4 pr-8">
@@ -93,22 +109,25 @@ export default function MenuItemCard(props: MenuItemCardProps) {
                   {itemDescription}
                 </p>
 
-                <div className="mb-8">
-                  <span className="text-xs font-bold text-gold uppercase tracking-wider block mb-3">
-                    Key Ingredients
-                  </span>
-                  <div className="flex flex-wrap gap-2">
-                    {defaultIngredients.map((ing) => (
-                      <span key={ing} className="text-xs md:text-sm px-3 py-1.5 rounded-md bg-ink text-cream border border-panel-border font-medium">
-                        {ing}
-                      </span>
-                    ))}
+                {/* Yalnızca Malzeme Varsa Göster */}
+                {itemIngredients.length > 0 && (
+                  <div className="mb-8">
+                    <span className="text-xs font-bold text-gold uppercase tracking-wider block mb-3">
+                      Key Ingredients
+                    </span>
+                    <div className="flex flex-wrap gap-2">
+                      {itemIngredients.map((ing) => (
+                        <span key={ing} className="text-xs md:text-sm px-3 py-1.5 rounded-md bg-ink text-cream border border-panel-border font-medium">
+                          {ing}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
 
               <a
-                href={defaultOrderUrl}
+                href={itemOrderUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full bg-gold hover:bg-gold-bright text-ink font-extrabold py-4 px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 text-center text-base md:text-lg shadow-lg hover:shadow-gold/20"
