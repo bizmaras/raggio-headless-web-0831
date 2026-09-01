@@ -25,7 +25,6 @@ export default function AIChatBot() {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [messages, loading]);
 
-    // Link [Metin](URL) ve Kalın Metin **Metin** formatlarını işleyen yardımcı fonksiyon
     const renderFormattedMessage = (text: string): React.ReactNode => {
         const regex = /(\[([^\]]+)\]\((https?:\/\/[^\s)]+)\))|(\*\*([^*]+)\*\*)/g;
         const parts: React.ReactNode[] = [];
@@ -38,7 +37,6 @@ export default function AIChatBot() {
             }
 
             if (match[1]) {
-                // Tıklanabilir Link
                 parts.push(
                     <a
                         key={match.index}
@@ -51,7 +49,6 @@ export default function AIChatBot() {
                     </a>
                 );
             } else if (match[4]) {
-                // Kalın Yazı
                 parts.push(
                     <strong key={match.index} className="font-bold text-cream">
                         {match[5]}
@@ -105,6 +102,7 @@ export default function AIChatBot() {
             {!isOpen && (
                 <button
                     onClick={() => setIsOpen(true)}
+                    aria-label="Ask Raggio AI Assistant"
                     className="bg-gradient-to-r from-gold via-gold-bright to-gold text-ink p-4 rounded-full shadow-[0_4px_20px_rgba(201,161,92,0.5)] hover:scale-110 transition-all cursor-pointer flex items-center gap-2 font-bold text-xs uppercase tracking-wider"
                 >
                     <Bot className="w-6 h-6 stroke-[2.5]" />
@@ -126,6 +124,7 @@ export default function AIChatBot() {
                         </div>
                         <button
                             onClick={() => setIsOpen(false)}
+                            aria-label="Close Chat Window"
                             className="p-1.5 rounded-full text-stone hover:text-cream hover:bg-black/40 transition-colors"
                         >
                             <X className="w-5 h-5" />
@@ -158,7 +157,12 @@ export default function AIChatBot() {
                             placeholder="Ask a question..."
                             className="flex-1 bg-ink border border-panel-border rounded-xl px-3.5 py-2 text-xs text-cream focus:outline-none focus:border-gold"
                         />
-                        <button type="submit" disabled={loading || !input.trim()} className="bg-gold hover:bg-gold-bright text-ink p-2.5 rounded-xl disabled:opacity-50 transition-all cursor-pointer">
+                        <button
+                            type="submit"
+                            disabled={loading || !input.trim()}
+                            aria-label="Send Message"
+                            className="bg-gold hover:bg-gold-bright text-ink p-2.5 rounded-xl disabled:opacity-50 transition-all cursor-pointer"
+                        >
                             <Send className="w-4 h-4 stroke-[2.5]" />
                         </button>
                     </form>
