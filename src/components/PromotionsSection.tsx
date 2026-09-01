@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { BookOpen } from 'lucide-react'; // İkonu içeri aktarıyoruz
 
 interface PromoItem {
   id: string;
@@ -10,12 +11,12 @@ interface PromoItem {
   price: string;
   details: string;
   ingredients: string[];
-  image: string;
   orderUrl: string;
 }
 
 const FOODTEC_BASE_URL = 'https://phillystyleexpress.foodtecsolutions.com/';
 
+// Resim satırlarını sildik
 const PROMOTIONS: PromoItem[] = [
   {
     id: 'promo-1',
@@ -25,7 +26,6 @@ const PROMOTIONS: PromoItem[] = [
     price: '$32.99',
     details: 'Includes 2 Extra Large Cheese Pizzas with 1 topping of your choice on each. Valid for Take-Out & Delivery only.',
     ingredients: ['Grande Mozzarella', 'Signature Sauce', 'Choice of 1 Topping per Pizza'],
-    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80',
     orderUrl: FOODTEC_BASE_URL
   },
   {
@@ -36,7 +36,6 @@ const PROMOTIONS: PromoItem[] = [
     price: '$37.99',
     details: 'Includes 1 Large Pizza with 1 topping and 20 Jumbo Wings (Traditional or Boneless) with ranch or blue cheese.',
     ingredients: ['Grande Mozzarella', 'Jumbo Chicken Wings', 'Choice of Wing Sauce'],
-    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80',
     orderUrl: FOODTEC_BASE_URL
   },
   {
@@ -47,7 +46,6 @@ const PROMOTIONS: PromoItem[] = [
     price: '$52.99',
     details: 'Includes 2 Large 1-Topping Pizzas, 20 Jumbo Wings, and one 2-Liter Soda of choice.',
     ingredients: ['Grande Mozzarella', 'Jumbo Wings', '2-Liter Soda'],
-    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80',
     orderUrl: FOODTEC_BASE_URL
   },
   {
@@ -58,7 +56,6 @@ const PROMOTIONS: PromoItem[] = [
     price: '$29.99',
     details: 'Includes 1 Large 1-Topping Pizza and 10 Jumbo Wings with celery and choice of dipping sauce.',
     ingredients: ['Grande Mozzarella', 'Jumbo Wings', 'Dipping Sauce'],
-    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80',
     orderUrl: FOODTEC_BASE_URL
   },
   {
@@ -69,7 +66,6 @@ const PROMOTIONS: PromoItem[] = [
     price: '$19.99',
     details: 'Includes 1 Large Cheese Pizza with up to 3 standard toppings of your choice.',
     ingredients: ['Grande Mozzarella', 'Choice of 3 Toppings', 'Signature Sauce'],
-    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80',
     orderUrl: FOODTEC_BASE_URL
   },
   {
@@ -80,7 +76,6 @@ const PROMOTIONS: PromoItem[] = [
     price: '$64.99',
     details: 'Includes 2 Extra Large Plain Cheese Pizzas and 20 Jumbo Wings.',
     ingredients: ['Grande Mozzarella', 'Jumbo Wings', 'Fresh Garlic'],
-    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80',
     orderUrl: FOODTEC_BASE_URL
   },
   {
@@ -91,7 +86,6 @@ const PROMOTIONS: PromoItem[] = [
     price: 'SAVE $5',
     details: 'Get $5 off your total order when spending $40 or more before taxes and delivery fees.',
     ingredients: ['Applies to Any Order $40+'],
-    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80',
     orderUrl: FOODTEC_BASE_URL
   }
 ];
@@ -162,7 +156,6 @@ export default function PromotionsSection() {
 
       {selectedPromo && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 bg-black/85 backdrop-blur-md">
-          {/* Genişletilmiş Modal Kapsayıcısı: max-w-4xl */}
           <div className="relative w-full max-w-4xl bg-panel border border-panel-border rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh] md:max-h-[80vh]">
             <button
               type="button"
@@ -172,12 +165,15 @@ export default function PromotionsSection() {
               ✕
             </button>
 
-            <div className="w-full md:w-1/2 h-56 md:h-auto relative bg-ink flex-shrink-0">
-              <img
-                src={selectedPromo.image}
-                alt={selectedPromo.title}
-                className="w-full h-full object-cover"
-              />
+            {/* Yeni Placeholder Alanı */}
+            <div className="w-full md:w-1/2 h-56 md:h-auto relative bg-[#14181d] flex-shrink-0 flex flex-col items-center justify-center p-6 border-b md:border-b-0 md:border-r border-panel-border">
+              <BookOpen className="w-12 h-12 text-[#D4AF37] mb-4" strokeWidth={1.5} />
+              <span className="text-[#D4AF37] font-bold text-xs tracking-[0.2em] uppercase text-center">
+                Raggio Gourmet
+              </span>
+              <span className="text-gray-400 text-xs mt-1 text-center">
+                Freshly Prepared
+              </span>
             </div>
 
             <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between overflow-y-auto">
