@@ -1,9 +1,16 @@
 'use client';
 
+import { useState } from 'react';
 import { CATERING_ITEMS } from '@/data/cateringData';
-import { PlusCircle } from 'lucide-react';
+import { PlusCircle, Info } from 'lucide-react';
+import ItemDetailModal from './ItemDetailModal';
 
 export default function CateringSection() {
+    const [selectedItem, setSelectedItem] = useState<any>(null);
+
+    // FoodTec Catering Sipariş Linki
+    const orderUrl = "https://order.foodtecsolutions.com/ordering/phillystyleexpress/menu/Catering";
+
     return (
         <section id="catering" className="border-t border-panel-border bg-ink-2 px-6 py-20 scroll-mt-[210px]">
             <div className="max-w-7xl mx-auto text-center mb-14">
@@ -31,16 +38,30 @@ export default function CateringSection() {
                                     {item.category}
                                 </span>
                             </div>
-                            <p className="text-stone text-sm leading-relaxed">
+                            <p className="text-stone text-sm leading-relaxed mb-5">
                                 {item.description}
                             </p>
+
+                            {/* View Details Butonu (Tıklanınca Modal Açılır) */}
+                            <button
+                                onClick={() => setSelectedItem(item)}
+                                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-full border border-panel-border hover:border-gold bg-transparent transition-all duration-300 group mb-6"
+                                aria-label={`View details for ${item.name}`}
+                            >
+                                <Info className="w-4 h-4 text-gold group-hover:text-gold-bright transition-colors" />
+                                <span className="text-sm font-medium text-cream group-hover:text-gold-bright transition-colors">
+                                    View Details & Ingredients
+                                </span>
+                            </button>
                         </div>
 
-                        {/* Clickable Action Buttons (Matches Main Menu Style) */}
-                        <div className="mt-6 pt-5 border-t border-panel-border/50 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <button
+                        {/* Fiyat ve Sipariş Butonları (Doğrudan FoodTec'e Yönlendirir) */}
+                        <div className="pt-5 border-t border-panel-border/50 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <a
+                                href={orderUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="group flex items-center justify-between px-4 py-2.5 rounded-full border border-panel-border bg-transparent hover:border-gold transition-colors duration-300"
-                                aria-label={`Order Half Tray of ${item.name}`}
                             >
                                 <div className="flex items-center gap-2">
                                     <PlusCircle className="w-4 h-4 text-stone group-hover:text-gold transition-colors" />
@@ -51,11 +72,13 @@ export default function CateringSection() {
                                 <span className="text-sm font-bold text-gold-bright">
                                     {item.halfTrayPrice}
                                 </span>
-                            </button>
+                            </a>
 
-                            <button
+                            <a
+                                href={orderUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="group flex items-center justify-between px-4 py-2.5 rounded-full border border-panel-border bg-transparent hover:border-gold transition-colors duration-300"
-                                aria-label={`Order Full Tray of ${item.name}`}
                             >
                                 <div className="flex items-center gap-2">
                                     <PlusCircle className="w-4 h-4 text-stone group-hover:text-gold transition-colors" />
@@ -66,7 +89,7 @@ export default function CateringSection() {
                                 <span className="text-sm font-bold text-gold-bright">
                                     {item.fullTrayPrice}
                                 </span>
-                            </button>
+                            </a>
                         </div>
                     </div>
                 ))}
@@ -78,7 +101,7 @@ export default function CateringSection() {
                     We accommodate special event requests, corporate lunches, and custom portions.
                 </p>
                 <a
-                    href="https://order.foodtecsolutions.com/ordering/phillystyleexpress/menu/Catering"
+                    href={orderUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center px-8 py-3 text-sm font-bold rounded-full bg-gold text-ink hover:bg-gold-bright transition-colors duration-300"
@@ -86,6 +109,17 @@ export default function CateringSection() {
                     Order Catering Online via FoodTec
                 </a>
             </div>
+
+            {/* Tıklanan Öğenin Detay Penceresi (Modal) */}
+            {selectedItem && (
+                <ItemDetailModal
+                    isOpen={!!selectedItem}
+                    onClose={() => setSelectedItem(null)}
+                    name={selectedItem.name}
+                    price={parseFloat(selectedItem.halfTrayPrice.replace(/[^0-9.]/g, '')) || 0}
+                    description={selectedItem.description}
+                />
+            )}
         </section>
     );
 }
