@@ -1,32 +1,38 @@
 'use client';
 
 import { MapPin } from 'lucide-react';
+import * as cateringModule from '@/data/cateringData';
+import CateringItemCard from '@/components/CateringItemCard';
 
-const cateringCategories = [
-    {
-        category: "Subs & Trays",
-        items: [
-            { name: 'Sub Tray', tag: 'SUBS', description: 'Assortment of fresh subs prepared for group events.' },
-            { name: 'Wrap Tray', tag: 'SUBS', description: 'Assortment of fresh wraps perfect for any gathering.' },
-        ]
-    },
-    {
-        category: "Appetizers",
-        items: [
-            { name: 'Cinnamon Bites', tag: 'APPETIZERS', description: 'Sweet and delicious cinnamon bites.' },
-            { name: 'Jalapeno Poppers', tag: 'APPETIZERS', description: 'Served with Ranch Dressing.' },
-        ]
-    }
-];
+interface CateringItem {
+    name?: string;
+    desc?: string;
+    description?: string;
+    half?: number | string;
+    full?: number | string;
+}
+
+interface CateringCategory {
+    category?: string;
+    name?: string;
+    items?: CateringItem[];
+}
 
 export default function CateringSection() {
+    // Support named exports (cateringCategories, cateringData) or default export
+    const rawCategories: CateringCategory[] =
+        (cateringModule as { cateringCategories?: CateringCategory[] }).cateringCategories ||
+        (cateringModule as { cateringData?: CateringCategory[] }).cateringData ||
+        (cateringModule as { default?: CateringCategory[] }).default ||
+        [];
+
     return (
         <section id="catering" className="bg-ink border-t border-panel-border pt-24 pb-32 px-6 scroll-mt-20">
             <div className="max-w-7xl mx-auto">
 
-                {/* Section Header (Heading Hierarchy Fix: span tag before h2) */}
-                <div className="text-center mb-20 max-w-2xl mx-auto">
-                    <div className="flex items-center justify-center gap-1.5 text-gold-bright mb-4 opacity-90">
+                {/* Section Header */}
+                <div className="text-center mb-16 max-w-2xl mx-auto">
+                    <div className="flex items-center justify-center gap-1.5 text-gold mb-3 opacity-90">
                         <MapPin className="w-4 h-4" />
                         <span className="text-xs font-bold tracking-widest uppercase">Newark, Delaware</span>
                     </div>
@@ -36,60 +42,61 @@ export default function CateringSection() {
                     <h2 className="text-4xl md:text-5xl font-extrabold text-cream mb-4 drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
                         Catering by <span className="text-gold">Raggio</span>
                     </h2>
-                    <p className="text-cream text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-                        Feeding a crowd in Newark? All catering trays are available in Half or Full sizes.
+                    <p className="text-stone text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+                        Feeding a crowd in Newark? All catering trays are available in Half or Full sizes with direct online ordering.
                     </p>
                 </div>
 
-                {/* Categories Loop */}
-                {cateringCategories.map((cat, catIdx) => (
-                    <div key={catIdx} className="mb-20">
-                        <h3 className="text-2xl font-bold text-cream mb-8 border-b border-panel-border pb-3">
-                            {cat.category}
-                        </h3>
+                {/* Dynamic Catering Categories Loop */}
+                {rawCategories.map((cat: CateringCategory, catIdx: number) => {
+                    const categoryName = cat.category || cat.name || 'Catering';
+                    const itemsList = cat.items || [];
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            {cat.items.map((item, itemIdx) => (
-                                <div
-                                    key={itemIdx}
-                                    className="flex flex-col justify-between p-8 rounded-3xl bg-panel border border-gold/10 shadow-[0_5px_40px_rgba(0,0,0,0.6)] hover:shadow-[0_10px_60px_rgba(201,161,92,0.3)] hover:-translate-y-1 transition-all duration-300"
-                                >
-                                    <div>
-                                        <div className="flex items-center justify-between gap-4 mb-4">
-                                            <h4 className="text-2xl font-bold text-cream">{item.name}</h4>
-                                            <span className="text-xs font-mono font-bold text-gold bg-ink/50 px-3 py-1 rounded-full border border-gold/40">
-                                                {item.tag}
-                                            </span>
-                                        </div>
-                                        <p className="text-stone text-sm md:text-base mb-12 leading-relaxed">
-                                            {item.description}
-                                        </p>
-                                    </div>
+                    return (
+                        <div key={catIdx} className="mb-16">
+                            <h3 className="text-2xl font-bold text-cream mb-6 border-b border-panel-border pb-3 flex items-center justify-between">
+                                <span>{categoryName}</span>
+                                <span className="text-xs font-mono text-gold font-normal">Half / Full Tray</span>
+                            </h3>
 
-                                    {/* Pricing Footer (Contrast Fix: text-stone replaces text-stone-dim) */}
-                                    <div className="border-t border-panel-border pt-8 mt-auto">
-                                        <div className="flex items-center justify-between gap-4">
-                                            <span className="text-sm font-bold text-cream">Starting from:</span>
-                                            <div className="flex items-end gap-2">
-                                                <span className="text-sm text-stone line-through">$100.00</span>
-                                                <span className="text-3xl font-extrabold text-gold">$90.00</span>
-                                                <span className="text-xs text-stone font-medium">Full Tray</span>
-                                            </div>
-                                        </div>
-                                        <button className="w-full mt-6 flex items-center justify-center gap-2 text-gold font-bold text-sm bg-panel border-2 border-gold/40 hover:bg-gold hover:text-ink px-6 py-3 rounded-full transition-all duration-300 cursor-pointer">
-                                            View Details & Ingredients
-                                        </button>
-                                    </div>
-                                </div>
-                            ))}
+                            {/* Dynamic Catering Items Grid with Safe Type Parsing */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {itemsList.map((item: CateringItem, itemIdx: number) => {
+                                    const itemDescription = item.desc || item.description || '';
+                                    const halfPrice =
+                                        typeof item.half === 'number'
+                                            ? item.half
+                                            : parseFloat(String(item.half || 0)) || 0;
+                                    const fullPrice =
+                                        typeof item.full === 'number'
+                                            ? item.full
+                                            : parseFloat(String(item.full || 0)) || 0;
+
+                                    return (
+                                        <CateringItemCard
+                                            key={itemIdx}
+                                            name={item.name || 'Catering Item'}
+                                            desc={itemDescription}
+                                            half={halfPrice}
+                                            full={fullPrice}
+                                        />
+                                    );
+                                })}
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    );
+                })}
 
-                <div className="text-center mt-20">
-                    <button className="bg-gold hover:bg-gold-bright text-ink font-extrabold px-10 py-4 rounded-full shadow-lg transition-all hover:scale-105 cursor-pointer">
-                        Download Catering Menu
-                    </button>
+                {/* Full Menu PDF Download CTA */}
+                <div className="text-center mt-16">
+                    <a
+                        href="/raggio-full-menu.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block bg-gold hover:bg-gold-bright text-ink font-extrabold px-10 py-4 rounded-full shadow-lg transition-all hover:scale-105 cursor-pointer text-sm uppercase tracking-wider"
+                    >
+                        Download Full Menu PDF
+                    </a>
                 </div>
 
             </div>
