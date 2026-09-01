@@ -7,6 +7,7 @@ import CategoryRail from '../components/CategoryRail';
 import PromotionsSection from '../components/PromotionsSection';
 import MenuItemCard from '../components/MenuItemCard';
 import CateringItemCard from '../components/CateringItemCard';
+import CateringSection from '../components/CateringSection'; // Added this import
 import Footer from '../components/Footer';
 import { Download } from 'lucide-react';
 
@@ -163,20 +164,8 @@ export default async function HomePage() {
           })}
         </section>
 
-        {/* Catering Section */}
-        <section id="catering" className="border-t border-panel-border bg-ink-2 px-6 py-20 scroll-mt-[210px]">
-          <div className="max-w-7xl mx-auto text-center mb-14">
-            <span className="text-xs font-bold tracking-[0.25em] text-gold uppercase mb-3 block">
-              Events &amp; Group Orders
-            </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-cream mb-4">
-              Catering by <span className="text-gold-bright">Raggio</span>
-            </h2>
-            <p className="text-stone text-lg max-w-2xl mx-auto">
-              Feeding a crowd? All trays available in Half or Full size. Order online or call us.
-            </p>
-          </div>
-        </section>
+        {/* Dynamic Catering Section */}
+        <CateringSection />
       </main>
 
       <Footer />
