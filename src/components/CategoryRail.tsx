@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 
 const CATEGORIES = [
   { label: 'Deals & Specials', searchId: 'promotions' },
@@ -29,7 +29,13 @@ const CATEGORIES = [
 ];
 
 export default function CategoryRail() {
+  // Track currently active category state
+  const [activeCategory, setActiveCategory] = useState<string>('promotions');
+
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, searchId: string) => {
+    // Persist active state selection
+    setActiveCategory(searchId);
+
     // Skip smooth scroll handling for promotions deal link
     if (searchId === 'promotions') {
       return;
@@ -57,7 +63,7 @@ export default function CategoryRail() {
     <div className="sticky top-[72px] z-40 bg-ink/95 backdrop-blur-md border-b border-panel-border py-4">
       <div className="flex overflow-x-auto md:flex-wrap md:justify-center gap-2 px-4 md:px-6 max-w-7xl mx-auto no-scrollbar">
         {CATEGORIES.map((cat) => {
-          const isSpecial = cat.label === 'Deals & Specials';
+          const isActive = activeCategory === cat.searchId;
 
           return (
             <a
@@ -66,17 +72,16 @@ export default function CategoryRail() {
               onClick={(e) => handleScroll(e, cat.searchId)}
               className={`
                 flex-none flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-medium whitespace-nowrap
-                transition-all duration-150 touch-manipulation select-none cursor-pointer
-                active:scale-95 active:border-gold active:bg-gold/20 active:ring-2 active:ring-gold/60
-                focus:outline-none focus:ring-2 focus:ring-gold/50
-                ${isSpecial
-                  ? 'border-gold bg-panel text-cream hover:bg-gold/10'
+                transition-all duration-200 touch-manipulation select-none cursor-pointer
+                active:scale-95 focus:outline-none
+                ${isActive
+                  ? 'border-gold text-gold bg-gold/15 shadow-[0_0_15px_rgba(201,161,92,0.35)] ring-1 ring-gold/40'
                   : 'border-panel-border bg-panel text-stone hover:text-cream hover:border-gold'
                 }
               `}
             >
-              {/* Standardized Red Indicator Dot */}
-              <span className="w-2 h-2 rounded-full bg-red-500 shrink-0"></span>
+              {/* Animated indicator dot for active category */}
+              <span className={`w-2 h-2 rounded-full shrink-0 ${isActive ? 'bg-gold animate-pulse' : 'bg-red-500'}`} />
               {cat.label}
             </a>
           );
