@@ -1,5 +1,7 @@
 'use client';
 
+import React from 'react';
+
 const CATEGORIES = [
   { label: 'Deals & Specials', searchId: 'promotions' },
   { label: 'Pizza', searchId: 'pizza' },
@@ -28,7 +30,7 @@ const CATEGORIES = [
 
 export default function CategoryRail() {
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, searchId: string) => {
-    // Deals (promotions) butonuna tıklandığında JS müdahalesini iptal et.
+    // Skip smooth scroll handling for promotions deal link
     if (searchId === 'promotions') {
       return;
     }
@@ -62,13 +64,19 @@ export default function CategoryRail() {
               key={cat.label}
               href={`#${cat.searchId}`}
               onClick={(e) => handleScroll(e, cat.searchId)}
-              className={`flex-none flex items-center gap-2 px-4 py-2 rounded-full border transition-all duration-300 text-sm font-medium whitespace-nowrap ${isSpecial
+              className={`
+                flex-none flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-medium whitespace-nowrap
+                transition-all duration-150 touch-manipulation select-none cursor-pointer
+                active:scale-95 active:border-gold active:bg-gold/20 active:ring-2 active:ring-gold/60
+                focus:outline-none focus:ring-2 focus:ring-gold/50
+                ${isSpecial
                   ? 'border-gold bg-panel text-cream hover:bg-gold/10'
                   : 'border-panel-border bg-panel text-stone hover:text-cream hover:border-gold'
-                }`}
+                }
+              `}
             >
-              {/* Tüm butonlarda standart kırmızı nokta kullanıldı */}
-              <span className="w-2 h-2 rounded-full bg-red-500"></span>
+              {/* Standardized Red Indicator Dot */}
+              <span className="w-2 h-2 rounded-full bg-red-500 shrink-0"></span>
               {cat.label}
             </a>
           );
