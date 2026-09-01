@@ -1,33 +1,49 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import type { Metadata } from 'next';
+import './globals.css';
 
 export const metadata: Metadata = {
-  title: "Raggio Gourmet & Pizza | Newark, DE",
-  description: "Authentic gourmet pizza, catering, and daily specials in Newark, Delaware.",
+  metadataBase: new URL('https://raggio.pizza'),
+  title: 'Raggio Gourmet & Pizza | Authentic Pizza & Catering in Newark, DE',
+  description: 'Order fresh gourmet pizzas, strombolis, calzones, wings, and catering online directly via FoodTec. Fast delivery and pickup in Newark, DE.',
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: 'Raggio Gourmet & Pizza | Newark, DE',
+    description: 'Fresh gourmet pizzas, handcrafted strombolis, wings, and full catering services.',
+    url: 'https://raggio.pizza',
+    siteName: 'Raggio Gourmet & Pizza',
+    images: [
+      {
+        url: '/images/raggio-logo.png',
+        width: 1200,
+        height: 630,
+        alt: 'Raggio Gourmet & Pizza Logo',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Raggio Gourmet & Pizza',
+    description: 'Fresh gourmet pizzas, calzones, and catering in Newark, DE.',
+    images: ['/images/raggio-logo.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="en">
+      <body className="bg-ink text-cream antialiased">{children}</body>
     </html>
   );
 }
