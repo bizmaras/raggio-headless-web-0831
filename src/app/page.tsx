@@ -9,6 +9,7 @@ import MenuItemCard from '../components/MenuItemCard';
 import CateringSection from '../components/CateringSection';
 import Footer from '../components/Footer';
 import ScrollToTop from '../components/ScrollToTop';
+import AIChatBot from '../components/AIChatBot';
 import { Download } from 'lucide-react';
 
 interface MenuItem {
@@ -178,6 +179,7 @@ export default async function HomePage() {
 
       <Footer />
       <ScrollToTop />
+      <AIChatBot />
     </>
   );
 }
