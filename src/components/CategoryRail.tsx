@@ -1,21 +1,21 @@
 'use client';
 
-// Categorized items with their respective target IDs and dot colors
+// Map your UI display labels exactly to the simplified IDs generated from your CSV data
 const CATEGORIES = [
-  { label: 'Deals & Specials', target: 'deals-and-specials', dotColor: 'bg-red-500' },
+  { label: 'Deals & Specials', target: 'specials', dotColor: 'bg-red-500' },
   { label: 'Pizza', target: 'pizza', dotColor: 'bg-orange-500' },
   { label: 'Gourmet Pizza', target: 'gourmet-pizza', dotColor: 'bg-amber-500' },
   { label: 'Sicilian Pizza', target: 'sicilian-pizza', dotColor: 'bg-yellow-500' },
-  { label: 'Chicken Wings', target: 'chicken-wings', dotColor: 'bg-lime-500' },
-  { label: 'Cheesesteaks', target: 'cheesesteaks', dotColor: 'bg-green-500' },
-  { label: 'Fresh Burgers', target: 'fresh-burgers', dotColor: 'bg-emerald-500' },
+  { label: 'Chicken Wings', target: 'wings', dotColor: 'bg-lime-500' },
+  { label: 'Cheesesteaks', target: 'steaks', dotColor: 'bg-green-500' },
+  { label: 'Fresh Burgers', target: 'burgers', dotColor: 'bg-emerald-500' },
   { label: 'Appetizers', target: 'appetizers', dotColor: 'bg-teal-500' },
-  { label: 'Fresh Salads', target: 'fresh-salads', dotColor: 'bg-cyan-500' },
+  { label: 'Fresh Salads', target: 'salad', dotColor: 'bg-cyan-500' },
   { label: 'Pasta', target: 'pasta', dotColor: 'bg-sky-500' },
-  { label: 'Complete Dinners', target: 'complete-dinners', dotColor: 'bg-blue-500' },
+  { label: 'Complete Dinners', target: 'dinner', dotColor: 'bg-blue-500' },
   { label: 'Seafood', target: 'seafood', dotColor: 'bg-indigo-500' },
   { label: 'Quesadillas', target: 'quesadillas', dotColor: 'bg-violet-500' },
-  { label: 'Latin Food', target: 'latin-food', dotColor: 'bg-purple-500' },
+  { label: 'Latin Food', target: 'latin', dotColor: 'bg-purple-500' },
   { label: 'Subs & Grinders', target: 'subs', dotColor: 'bg-fuchsia-500' },
   { label: 'Strombolis & Calzones', target: 'stromboli', dotColor: 'bg-pink-500' },
   { label: 'Breakfast', target: 'breakfast', dotColor: 'bg-rose-500' },
@@ -23,7 +23,7 @@ const CATEGORIES = [
   { label: 'Desserts', target: 'desserts', dotColor: 'bg-orange-400' },
   { label: 'Soups', target: 'soups', dotColor: 'bg-amber-400' },
   { label: 'Drinks', target: 'drinks', dotColor: 'bg-yellow-400' },
-  { label: 'Side Orders', target: 'side-orders', dotColor: 'bg-lime-400' },
+  { label: 'Side Orders', target: 'sides', dotColor: 'bg-lime-400' },
   { label: 'Catering', target: 'catering', dotColor: 'bg-purple-600' }
 ];
 
@@ -32,7 +32,6 @@ export default function CategoryRail() {
     <div className="sticky top-[72px] z-40 bg-ink/95 backdrop-blur-md border-b border-panel-border py-4">
       <div className="flex overflow-x-auto md:flex-wrap md:justify-center gap-2 px-4 md:px-6 max-w-7xl mx-auto no-scrollbar">
         {CATEGORIES.map((cat) => {
-          // Add special styling for Deals & Specials to match the provided image
           const isSpecial = cat.label === 'Deals & Specials';
 
           return (
