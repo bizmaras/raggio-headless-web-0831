@@ -63,7 +63,7 @@ export default function HeroSlider() {
       className="relative h-[520px] md:h-[580px] w-full overflow-hidden border-b border-panel-border bg-ink"
       aria-label="Raggio Gourmet Pizza Specials in Newark, DE"
     >
-      {/* Görseller: next/image LCP ve Speed Index Optimizasyonu */}
+      {/* Background Images Layer (Optimized with next/image for sub-1.5s LCP) */}
       {slides.map((slide, index) => {
         const isActive = index === current;
         return (
@@ -83,14 +83,14 @@ export default function HeroSlider() {
                 }`}
             />
 
-            {/* Karartma Katmanları */}
+            {/* Dark Overlay Gradients for Enhanced Contrast */}
             <div className="absolute inset-0 bg-gradient-to-t from-[#121417] via-[#121417]/50 to-transparent" />
             <div className="absolute inset-0 bg-black/10" />
           </div>
         );
       })}
 
-      {/* İçerik Katmanı */}
+      {/* Hero Content Layer */}
       <div className="relative z-10 max-w-5xl mx-auto h-full px-6 flex flex-col items-center justify-center text-center">
         {/* GEO Location Badge */}
         <div className="flex items-center gap-1.5 text-gold-bright mb-4 opacity-90 drop-shadow-md">
@@ -98,7 +98,7 @@ export default function HeroSlider() {
           <span className="text-xs font-bold tracking-widest uppercase">Newark, Delaware</span>
         </div>
 
-        {/* Logo (Optimized with next/image) */}
+        {/* Brand Logo */}
         <div className="relative w-48 md:w-64 h-16 mb-4">
           <Image
             src="/images/raggio-logo.png"
@@ -133,7 +133,7 @@ export default function HeroSlider() {
           </a>
         </div>
 
-        {/* Sol / Sağ Oklar */}
+        {/* Navigation Arrow Controls */}
         <button
           onClick={prevSlide}
           aria-label="Previous image"
@@ -149,16 +149,20 @@ export default function HeroSlider() {
           <ChevronRight className="w-6 h-6" />
         </button>
 
-        {/* Alt Nokta Göstergeleri */}
-        <div className="absolute bottom-6 flex gap-2">
+        {/* Pagination Dots (Optimized Touch Targets for WCAG Accessibility Standards) */}
+        <div className="absolute bottom-4 flex gap-1 z-20">
           {slides.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrent(index)}
               aria-label={`View slide ${index + 1}`}
-              className={`h-2 rounded-full transition-all duration-500 cursor-pointer ${current === index ? 'w-8 bg-gold-bright' : 'w-2 bg-white/40 hover:bg-white/80'
-                }`}
-            />
+              className="p-3 flex items-center justify-center cursor-pointer focus:outline-none"
+            >
+              <span
+                className={`h-2 rounded-full transition-all duration-500 ${current === index ? 'w-8 bg-gold-bright' : 'w-2 bg-white/60 hover:bg-white'
+                  }`}
+              />
+            </button>
           ))}
         </div>
       </div>
