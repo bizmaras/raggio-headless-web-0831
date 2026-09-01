@@ -6,53 +6,70 @@ const PROMOTIONS = [
     tag: 'COUPON SPECIAL',
     title: '2 XL Pizzas 1 Topping Each',
     description: 'Present coupon when receiving your order. Not to be combined with any other offer. For take-out & delivery only.',
-    price: '$32.99'
+    price: '$32.99',
+    details: 'Includes 2 Extra Large Cheese Pizzas with 1 topping of your choice on each. Valid for Take-Out & Delivery only.'
   },
   {
     id: 'promo-2',
     tag: 'COUPON SPECIAL',
     title: 'Large 1 Topping Pizza & 20 Wings',
     description: 'Present coupon when receiving your order. Not to be combined with any other offer. For take-out & delivery only.',
-    price: '$37.99'
+    price: '$37.99',
+    details: 'Includes 1 Large Pizza with 1 topping and 20 Jumbo Wings (Traditional or Boneless) with ranch or blue cheese.'
   },
   {
     id: 'promo-3',
     tag: 'COUPON SPECIAL',
     title: '2 Lrg 1 Topping Pizza, 20 Wings & Soda',
     description: 'Present coupon when receiving your order. Not to be combined with any other offer. For take-out & delivery only.',
-    price: '$52.99'
+    price: '$52.99',
+    details: 'Includes 2 Large 1-Topping Pizzas, 20 Jumbo Wings, and one 2-Liter Soda of choice.'
   },
   {
     id: 'promo-4',
     tag: 'COUPON SPECIAL',
     title: 'Large 1 Topping Pizza & 10 Wings',
     description: 'Present coupon when receiving your order. Not to be combined with any other offer. For take-out & delivery only.',
-    price: '$29.99'
+    price: '$29.99',
+    details: 'Includes 1 Large 1-Topping Pizza and 10 Jumbo Wings with celery and choice of dipping sauce.'
   },
   {
     id: 'promo-5',
     tag: 'COUPON SPECIAL',
     title: 'Large Cheese Pizza with 3 Toppings',
     description: 'Present coupon when receiving your order. Not to be combined with any other offer. For take-out & delivery only.',
-    price: '$19.99'
+    price: '$19.99',
+    details: 'Includes 1 Large Cheese Pizza with up to 3 standard toppings of your choice.'
   },
   {
     id: 'promo-6',
     tag: 'COUPON SPECIAL',
     title: '2 XL Cheese Pizzas & 20 Wings',
     description: 'Present coupon when receiving your order. Not to be combined with any other offer. For take-out & delivery only.',
-    price: '$64.99'
+    price: '$64.99',
+    details: 'Includes 2 Extra Large Plain Cheese Pizzas and 20 Jumbo Wings.'
   },
   {
     id: 'promo-7',
     tag: 'COUPON SPECIAL',
     title: '$5 OFF with Purchase of $40 or more',
     description: 'Present coupon when receiving your order. Not to be combined with any other offer.',
-    price: 'SAVE $5'
+    price: 'SAVE $5',
+    details: 'Get $5 off your total order when spending $40 or more before taxes and delivery fees.'
   }
 ];
 
 export default function PromotionsSection() {
+  const handleOrderClick = () => {
+    // Redirects directly to the online ordering portal
+    window.open('https://phillystylepizzeria.com', '_blank', 'noopener,noreferrer');
+  };
+
+  const handleDetailsClick = (title: string, details: string) => {
+    // Displays full deal details to the user
+    alert(`${title}\n\n${details}`);
+  };
+
   return (
     <section id="promotions" className="max-w-7xl mx-auto px-4 md:px-6 py-16 scroll-mt-[120px]">
       <div className="text-center mb-12">
@@ -85,14 +102,24 @@ export default function PromotionsSection() {
             </div>
 
             <div className="flex flex-col gap-3 mt-auto">
-              <button className="w-full bg-gold hover:bg-gold-bright text-ink font-bold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2">
+              {/* Active Order Button */}
+              <button
+                type="button"
+                onClick={handleOrderClick}
+                className="w-full bg-gold hover:bg-gold-bright text-ink font-bold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer"
+              >
                 Order This Deal
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
               </button>
 
-              <button className="w-full flex items-center justify-center gap-2 py-2 text-sm font-medium text-cream hover:text-gold transition-colors border border-transparent hover:border-panel-border rounded-lg">
+              {/* Active Details Button */}
+              <button
+                type="button"
+                onClick={() => handleDetailsClick(promo.title, promo.details)}
+                className="w-full flex items-center justify-center gap-2 py-2 text-sm font-medium text-cream hover:text-gold transition-colors border border-transparent hover:border-panel-border rounded-lg cursor-pointer"
+              >
                 <svg className="w-4 h-4 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <circle cx="12" cy="12" r="10" strokeWidth="2"></circle>
                   <path d="M12 16v-4" strokeWidth="2" strokeLinecap="round"></path>
