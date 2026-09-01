@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -18,11 +19,15 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
 
-          {/* Logo & Live GEO Badge */}
+          {/* Next.js Optimized Compressed Logo */}
           <a href="#" className="flex items-center gap-3">
-            <img
+            <Image
               src="/images/raggio-logo.png"
               alt="Raggio Gourmet & Pizza"
+              width={160}
+              height={40}
+              priority
+              quality={80}
               className="h-10 md:h-12 w-auto object-contain"
             />
           </a>
@@ -58,9 +63,8 @@ export default function Header() {
             </a>
           </div>
 
-          {/* MOBILE ONLY ENHANCED CONTROLS (Utilizing Empty Space) */}
+          {/* MOBILE CONTROLS */}
           <div className="flex lg:hidden items-center gap-2">
-            {/* Quick Call Button */}
             <a
               href="tel:3023690553"
               aria-label="Call Raggio Gourmet Pizza"
@@ -71,7 +75,6 @@ export default function Header() {
               </svg>
             </a>
 
-            {/* Quick Order Button */}
             <a
               href="https://phillystyleexpress.foodtecsolutions.com/"
               target="_blank"
@@ -81,7 +84,6 @@ export default function Header() {
               Order
             </a>
 
-            {/* Hamburger Button */}
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -103,7 +105,7 @@ export default function Header() {
         </div>
       </div>
 
-      {/* MOBILE DRAWER MENU */}
+      {/* MOBILE DRAWER */}
       {isMobileMenuOpen && (
         <div className="lg:hidden border-t border-panel-border bg-panel px-4 pt-3 pb-6 space-y-2 shadow-2xl">
           {navLinks.map((link) => (
