@@ -33,11 +33,11 @@ export default function Header() {
               />
             </a>
 
-            {/* Sadece Mobilde Görünen Home (Başa Dön) Butonu */}
+            {/* Sadece Mobilde Görünen Home (Başa Dön) Butonu - Altın Renkli */}
             <a
               href="#"
               aria-label="Back to Home"
-              className="lg:hidden flex items-center justify-center p-2 rounded-xl bg-panel border border-panel-border text-cream hover:text-gold hover:border-gold/50 transition-all cursor-pointer active:scale-95"
+              className="lg:hidden flex items-center justify-center p-2 rounded-xl bg-[#14181d] border border-gold text-gold shadow-[0_0_10px_rgba(212,175,55,0.15)] hover:bg-gold/20 transition-all cursor-pointer active:scale-95"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -46,7 +46,7 @@ export default function Header() {
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                strokeWidth="2"
+                strokeWidth="2.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               >
