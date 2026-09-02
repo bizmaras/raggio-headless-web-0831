@@ -29,12 +29,11 @@ const CATEGORIES = [
 ];
 
 export default function CategoryRail() {
-  // Track currently active category state
   const [activeCategory, setActiveCategory] = useState<string>('promotions');
 
-  // Otomatik kaydırma için referanslar
   const scrollRef = useRef<HTMLDivElement>(null);
   const isInteracting = useRef(false);
+  const exactScroll = useRef(0); // Mobilde takılmayı önlemek için kesin pozisyon tutucu
 
   useEffect(() => {
     const container = scrollRef.current;
@@ -43,12 +42,14 @@ export default function CategoryRail() {
     let animationFrameId: number;
 
     const autoScroll = () => {
-      // Sadece kullanıcı dokunmuyorsa VE içerik ekrandan taşıyorsa (mobildeyse) kaydır
+      // Sadece kullanıcı dokunmuyorsa ve mobildeysek (taşma varsa)
       if (!isInteracting.current && container.scrollWidth > container.clientWidth) {
-        container.scrollLeft += 0.6; // Kayma hızını buradan değiştirebilirsiniz (Örn: 1 daha hızlı, 0.5 daha yavaş)
+        exactScroll.current += 1; // Artık 1 piksel (tam sayı) ilerletiyoruz, mobil tarayıcılar hata vermez.
+        container.scrollLeft = exactScroll.current;
 
-        // En sona geldiğinde başa sarsıntısız dön
+        // En sona geldiğinde başa dön
         if (container.scrollLeft >= container.scrollWidth - container.clientWidth - 1) {
+          exactScroll.current = 0;
           container.scrollLeft = 0;
         }
       }
@@ -60,14 +61,17 @@ export default function CategoryRail() {
     return () => cancelAnimationFrame(animationFrameId);
   }, []);
 
+  // Kullanıcı eliyle kaydırdığında (swipe) bizim animasyon pozisyonumuzu eşitliyoruz
+  const syncScroll = () => {
+    if (scrollRef.current && isInteracting.current) {
+      exactScroll.current = scrollRef.current.scrollLeft;
+    }
+  };
+
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, searchId: string) => {
-    // Persist active state selection
     setActiveCategory(searchId);
 
-    // Skip smooth scroll handling for promotions deal link
-    if (searchId === 'promotions') {
-      return;
-    }
+    if (searchId === 'promotions') return;
 
     e.preventDefault();
 
@@ -92,10 +96,11 @@ export default function CategoryRail() {
       <div
         ref={scrollRef}
         onMouseEnter={() => (isInteracting.current = true)}
-        onMouseLeave={() => (isInteracting.current = false)}
+        onMouseLeave={() => { isInteracting.current = false; syncScroll(); }}
         onTouchStart={() => (isInteracting.current = true)}
-        onTouchEnd={() => (isInteracting.current = false)}
-        className="flex overflow-x-auto md:flex-wrap md:justify-center gap-2 px-4 md:px-6 max-w-7xl mx-auto no-scrollbar"
+        onTouchEnd={() => { isInteracting.current = false; syncScroll(); }}
+        onScroll={syncScroll}
+        className="flex overflow-x-auto md:flex-wrap md:justify-center gap-2 px-4 md:px-6 max-w-7xl mx-auto no-scrollbar scroll-smooth"
       >
         {CATEGORIES.map((cat) => {
           const isActive = activeCategory === cat.searchId;
@@ -115,7 +120,6 @@ export default function CategoryRail() {
                 }
               `}
             >
-              {/* Animated indicator dot for active category */}
               <span className={`w-2 h-2 rounded-full shrink-0 ${isActive ? 'bg-gold animate-pulse' : 'bg-red-500'}`} />
               {cat.label}
             </a>
