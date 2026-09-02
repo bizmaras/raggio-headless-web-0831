@@ -18,18 +18,18 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
 
-          {/* LEFT: LOGO (Büyütüldü) & MOBILE HOME BUTTON */}
+          {/* LEFT: LOGO (Lighthouse Optimized) & MOBILE HOME BUTTON */}
           <div className="flex items-center gap-5 sm:gap-6">
             <a href="#" className="flex items-center shrink-0" aria-label="Raggio Gourmet Pizza Home">
               <Image
                 src="/images/raggio-logo.png"
                 alt="Raggio Gourmet & Pizza"
-                width={200}
-                height={64}
+                width={180}
+                height={50}
                 priority
-                quality={90}
-                /* h-10'dan h-14 (mobil) ve h-16 (masaüstü) seviyesine çıkarıldı */
-                className="h-14 md:h-16 w-auto object-contain drop-shadow-md"
+                quality={75}
+                sizes="(max-width: 640px) 130px, (max-width: 1024px) 160px, 200px"
+                className="h-12 md:h-15 w-auto object-contain drop-shadow-md"
               />
             </a>
 
