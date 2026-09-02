@@ -114,6 +114,7 @@ export default function HeroSlider() {
       })}
 
       <div className="relative z-10 max-w-5xl mx-auto h-full px-6 flex flex-col items-center justify-center text-center">
+        {/* Location Tag */}
         <div className="flex items-center gap-1.5 text-gold-bright mb-4 opacity-90 drop-shadow-md">
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -122,16 +123,11 @@ export default function HeroSlider() {
           <span className="text-xs font-bold tracking-widest uppercase">Newark, Delaware</span>
         </div>
 
-        <div className="relative w-48 md:w-64 h-16 mb-4">
-          <Image
-            src="/images/raggio-logo.png"
-            alt="Raggio Gourmet & Pizza - Newark, DE"
-            width={256}
-            height={64}
-            quality={60}
-            sizes="(max-width: 640px) 180px, 256px"
-            className="object-contain opacity-80 drop-shadow-md w-auto h-16 mx-auto"
-          />
+        {/* Typography Gold Badge (Replaces Duplicate Logo Image for Performance) */}
+        <div className="mb-4">
+          <span className="text-[#D4AF37] font-extrabold text-sm md:text-base tracking-[0.25em] uppercase drop-shadow-md">
+            RAGGIO GOURMET PIZZA
+          </span>
         </div>
 
         <div key={current} className="transition-all duration-300">
@@ -158,6 +154,7 @@ export default function HeroSlider() {
           </a>
         </div>
 
+        {/* Navigation Arrows */}
         <button
           onClick={prevSlide}
           aria-label="Previous image"
@@ -177,6 +174,7 @@ export default function HeroSlider() {
           </svg>
         </button>
 
+        {/* Slide Pagination Dots */}
         <div className="absolute bottom-4 flex gap-1 z-20">
           {slides.map((_, index) => (
             <button

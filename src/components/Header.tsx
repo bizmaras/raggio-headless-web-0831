@@ -33,7 +33,7 @@ export default function Header() {
               />
             </a>
 
-            {/* Sadece Mobilde Görünen Home Butonu */}
+            {/* Mobile Only Home Button */}
             <a
               href="#"
               aria-label="Back to Home"
