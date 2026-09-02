@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { ChevronLeft, ChevronRight, MapPin } from 'lucide-react';
 
 const slides = [
   {
@@ -45,6 +44,10 @@ const slides = [
 
 export default function HeroSlider() {
   const [current, setCurrent] = useState(0);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+  const minSwipeDistance = 50;
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -56,11 +59,33 @@ export default function HeroSlider() {
   const prevSlide = () => setCurrent((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
   const nextSlide = () => setCurrent((prev) => (prev + 1) % slides.length);
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.touches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    if (distance > minSwipeDistance) {
+      nextSlide();
+    } else if (distance < -minSwipeDistance) {
+      prevSlide();
+    }
+  };
+
   const activeSlide = slides[current] || slides[0];
 
   return (
     <section
-      className="relative h-[520px] md:h-[580px] w-full overflow-hidden border-b border-panel-border bg-ink"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      className="relative h-[520px] md:h-[580px] w-full overflow-hidden border-b border-panel-border bg-ink touch-pan-y"
       aria-label="Raggio Gourmet Pizza Specials in Newark, DE"
     >
       {slides.map((slide, index) => {
@@ -78,7 +103,7 @@ export default function HeroSlider() {
               fill
               priority={index === 0}
               loading={index === 0 ? 'eager' : 'lazy'}
-              quality={60}
+              quality={index === 0 ? 75 : 60}
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 1200px"
               className="object-cover"
             />
@@ -90,7 +115,10 @@ export default function HeroSlider() {
 
       <div className="relative z-10 max-w-5xl mx-auto h-full px-6 flex flex-col items-center justify-center text-center">
         <div className="flex items-center gap-1.5 text-gold-bright mb-4 opacity-90 drop-shadow-md">
-          <MapPin className="w-4 h-4" />
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
           <span className="text-xs font-bold tracking-widest uppercase">Newark, Delaware</span>
         </div>
 
@@ -100,8 +128,8 @@ export default function HeroSlider() {
             alt="Raggio Gourmet & Pizza - Newark, DE"
             width={256}
             height={64}
-            priority
-            quality={80}
+            quality={60}
+            sizes="(max-width: 640px) 180px, 256px"
             className="object-contain opacity-80 drop-shadow-md w-auto h-16 mx-auto"
           />
         </div>
@@ -124,7 +152,7 @@ export default function HeroSlider() {
             target="_blank"
             rel="noopener noreferrer"
             title={`Order ${activeSlide.title} Online`}
-            className="inline-block bg-gradient-to-br from-gold-bright via-gold to-gold-deep text-[#1c1408] font-extrabold px-8 py-3.5 rounded-full shadow-[0_4px_25px_rgba(201,161,92,0.6)] hover:scale-105 transition-all duration-300 cursor-pointer"
+            className="inline-block bg-gradient-to-br from-gold-bright via-gold to-gold-deep text-[#1c1408] font-extrabold px-8 py-3.5 rounded-full shadow-[0_4px_25px_rgba(201,161,92,0.6)] hover:scale-105 transition-all duration-300 cursor-pointer active:scale-95"
           >
             {activeSlide.ctaText}
           </a>
@@ -133,16 +161,20 @@ export default function HeroSlider() {
         <button
           onClick={prevSlide}
           aria-label="Previous image"
-          className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-black/40 border border-white/10 text-white hover:bg-black/60 transition-all cursor-pointer"
+          className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-black/40 border border-white/10 text-white hover:bg-black/60 transition-all cursor-pointer active:scale-95"
         >
-          <ChevronLeft className="w-6 h-6" />
+          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
         </button>
         <button
           onClick={nextSlide}
           aria-label="Next image"
-          className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-black/40 border border-white/10 text-white hover:bg-black/60 transition-all cursor-pointer"
+          className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-black/40 border border-white/10 text-white hover:bg-black/60 transition-all cursor-pointer active:scale-95"
         >
-          <ChevronRight className="w-6 h-6" />
+          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
         </button>
 
         <div className="absolute bottom-4 flex gap-1 z-20">
