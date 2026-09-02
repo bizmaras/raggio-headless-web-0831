@@ -7,7 +7,6 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { name: 'Home', href: '#' },
     { name: 'Menu', href: '#menu' },
     { name: 'Deals & Specials', href: '#deals' },
     { name: 'Catering', href: '#catering' },
@@ -19,8 +18,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
 
-          {/* Next.js Optimized Compressed Logo & Mobile Home Button Container */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             <a href="#" className="flex items-center">
               <Image
                 src="/images/raggio-logo.png"
@@ -33,30 +31,18 @@ export default function Header() {
               />
             </a>
 
-            {/* Sadece Mobilde Görünen Home (Başa Dön) Butonu - Altın Renkli */}
             <a
               href="#"
               aria-label="Back to Home"
-              className="lg:hidden flex items-center justify-center p-2 rounded-xl bg-[#14181d] border border-gold text-gold shadow-[0_0_10px_rgba(212,175,55,0.15)] hover:bg-gold/20 transition-all cursor-pointer active:scale-95"
+              className="flex items-center justify-center p-2.5 rounded-xl bg-[#14181d] border border-gold text-gold shadow-[0_0_10px_rgba(212,175,55,0.15)] hover:bg-gold/20 transition-all cursor-pointer active:scale-95"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
                 <polyline points="9 22 9 12 15 12 15 22" />
               </svg>
             </a>
           </div>
 
-          {/* DESKTOP NAV */}
           <nav className="hidden lg:flex items-center gap-1 xl:gap-3">
             {navLinks.map((link) => (
               <a
@@ -69,13 +55,15 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* DESKTOP ACTIONS */}
           <div className="hidden lg:flex items-center gap-4">
             <a
               href="tel:3023690553"
               className="text-sm font-bold text-cream hover:text-gold transition-colors flex items-center gap-2"
             >
-              📞 (302) 369-0553
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gold">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+              </svg>
+              (302) 369-0553
             </a>
             <a
               href="https://phillystyleexpress.foodtecsolutions.com/"
@@ -87,7 +75,6 @@ export default function Header() {
             </a>
           </div>
 
-          {/* MOBILE CONTROLS */}
           <div className="flex lg:hidden items-center gap-2">
             <a
               href="tel:3023690553"
@@ -129,7 +116,6 @@ export default function Header() {
         </div>
       </div>
 
-      {/* MOBILE DRAWER */}
       {isMobileMenuOpen && (
         <div className="lg:hidden border-t border-panel-border bg-panel px-4 pt-3 pb-6 space-y-2 shadow-2xl">
           {navLinks.map((link) => (
@@ -147,7 +133,10 @@ export default function Header() {
               href="tel:3023690553"
               className="flex items-center justify-center gap-2 py-3 rounded-lg bg-ink text-gold font-bold text-sm border border-gold/30"
             >
-              📞 Call (302) 369-0553
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gold">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+              </svg>
+              Call (302) 369-0553
             </a>
           </div>
         </div>
