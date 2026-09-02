@@ -19,18 +19,42 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
 
-          {/* Next.js Optimized Compressed Logo */}
-          <a href="#" className="flex items-center gap-3">
-            <Image
-              src="/images/raggio-logo.png"
-              alt="Raggio Gourmet & Pizza"
-              width={160}
-              height={40}
-              priority
-              quality={80}
-              className="h-10 md:h-12 w-auto object-contain"
-            />
-          </a>
+          {/* Next.js Optimized Compressed Logo & Mobile Home Button Container */}
+          <div className="flex items-center gap-3">
+            <a href="#" className="flex items-center">
+              <Image
+                src="/images/raggio-logo.png"
+                alt="Raggio Gourmet & Pizza"
+                width={160}
+                height={40}
+                priority
+                quality={80}
+                className="h-10 md:h-12 w-auto object-contain"
+              />
+            </a>
+
+            {/* Sadece Mobilde Görünen Home (Başa Dön) Butonu */}
+            <a
+              href="#"
+              aria-label="Back to Home"
+              className="lg:hidden flex items-center justify-center p-2 rounded-xl bg-panel border border-panel-border text-cream hover:text-gold hover:border-gold/50 transition-all cursor-pointer active:scale-95"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
+              </svg>
+            </a>
+          </div>
 
           {/* DESKTOP NAV */}
           <nav className="hidden lg:flex items-center gap-1 xl:gap-3">
