@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { BookOpen } from 'lucide-react'; // İkonu içeri aktarıyoruz
+import { BookOpen } from 'lucide-react';
 
 interface PromoItem {
   id: string;
@@ -16,7 +16,6 @@ interface PromoItem {
 
 const FOODTEC_BASE_URL = 'https://phillystyleexpress.foodtecsolutions.com/';
 
-// Resim satırlarını sildik
 const PROMOTIONS: PromoItem[] = [
   {
     id: 'promo-1',
@@ -95,7 +94,7 @@ export default function PromotionsSection() {
 
   return (
     <section id="promotions" className="max-w-7xl mx-auto px-4 md:px-6 py-16 scroll-mt-[120px]">
-      <div className="text-center mb-12">
+      <div className="text-center mb-10 md:mb-12">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-panel-border bg-panel text-stone text-xs font-bold uppercase tracking-wider mb-4">
           <svg className="w-4 h-4 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
@@ -103,14 +102,18 @@ export default function PromotionsSection() {
           Weekly POS Specials
         </div>
         <h2 className="text-3xl md:text-5xl font-extrabold text-cream mb-4">Featured Deals & Online Offers</h2>
-        <p className="text-stone max-w-2xl mx-auto">
+        <p className="text-stone max-w-2xl mx-auto text-sm md:text-base">
           Select your deal to order online directly through our FoodTec portal for instant delivery or pickup.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* MOBILDE YATAY KAYDIRMALI CAROUSEL / MASAÜSTÜNDE GRID CONTAINER */}
+      <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory pb-6 md:pb-0 no-scrollbar -mx-4 px-4 md:mx-0 md:px-0">
         {PROMOTIONS.map((promo) => (
-          <div key={promo.id} className="flex flex-col bg-panel border border-panel-border rounded-xl p-6 hover:border-gold/50 transition-colors duration-300">
+          <div
+            key={promo.id}
+            className="snap-center shrink-0 w-[85vw] max-w-[340px] md:w-auto md:max-w-none flex flex-col bg-panel border border-panel-border rounded-xl p-6 hover:border-gold/50 transition-colors duration-300"
+          >
             <div className="flex justify-between items-start mb-4">
               <span className="text-[10px] font-bold text-stone uppercase tracking-wider px-2 py-1 bg-ink rounded border border-panel-border">
                 {promo.tag}
@@ -129,7 +132,7 @@ export default function PromotionsSection() {
                 href={promo.orderUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full bg-gold hover:bg-gold-bright text-ink font-bold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer text-center"
+                className="w-full bg-gold hover:bg-gold-bright text-ink font-bold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer text-center active:scale-[0.98]"
               >
                 Order This Deal
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -165,7 +168,6 @@ export default function PromotionsSection() {
               ✕
             </button>
 
-            {/* Yeni Placeholder Alanı */}
             <div className="w-full md:w-1/2 h-56 md:h-auto relative bg-[#14181d] flex-shrink-0 flex flex-col items-center justify-center p-6 border-b md:border-b-0 md:border-r border-panel-border">
               <BookOpen className="w-12 h-12 text-[#D4AF37] mb-4" strokeWidth={1.5} />
               <span className="text-[#D4AF37] font-bold text-xs tracking-[0.2em] uppercase text-center">
