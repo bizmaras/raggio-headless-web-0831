@@ -33,8 +33,42 @@ export default function CategoryRail() {
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const isInteracting = useRef(false);
-  const exactScroll = useRef(0); // Mobilde takılmayı önlemek için kesin pozisyon tutucu
+  const exactScroll = useRef(0);
 
+  // IntersectionObserver for ScrollSpy (Detect active section)
+  useEffect(() => {
+    // Defines where the "trigger" line is on the screen (slightly below header)
+    const observerOptions = {
+      root: null,
+      rootMargin: '-100px 0px -70% 0px',
+      threshold: 0
+    };
+
+    const observerCallback: IntersectionObserverCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveCategory(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    // Initial delay ensures the DOM elements are fully loaded before observing
+    const timer = setTimeout(() => {
+      CATEGORIES.forEach((cat) => {
+        const el = document.getElementById(cat.searchId);
+        if (el) observer.observe(el);
+      });
+    }, 500);
+
+    return () => {
+      clearTimeout(timer);
+      observer.disconnect();
+    };
+  }, []);
+
+  // Endless auto-scroll logic when user is not interacting
   useEffect(() => {
     const container = scrollRef.current;
     if (!container) return;
@@ -42,12 +76,10 @@ export default function CategoryRail() {
     let animationFrameId: number;
 
     const autoScroll = () => {
-      // Sadece kullanıcı dokunmuyorsa ve mobildeysek (taşma varsa)
       if (!isInteracting.current && container.scrollWidth > container.clientWidth) {
-        exactScroll.current += 1; // Artık 1 piksel (tam sayı) ilerletiyoruz, mobil tarayıcılar hata vermez.
+        exactScroll.current += 1;
         container.scrollLeft = exactScroll.current;
 
-        // En sona geldiğinde başa dön
         if (container.scrollLeft >= container.scrollWidth - container.clientWidth - 1) {
           exactScroll.current = 0;
           container.scrollLeft = 0;
@@ -61,7 +93,6 @@ export default function CategoryRail() {
     return () => cancelAnimationFrame(animationFrameId);
   }, []);
 
-  // Kullanıcı eliyle kaydırdığında (swipe) bizim animasyon pozisyonumuzu eşitliyoruz
   const syncScroll = () => {
     if (scrollRef.current && isInteracting.current) {
       exactScroll.current = scrollRef.current.scrollLeft;
@@ -120,7 +151,7 @@ export default function CategoryRail() {
                 }
               `}
             >
-              <span className={`w-2 h-2 rounded-full shrink-0 ${isActive ? 'bg-gold animate-pulse' : 'bg-red-500'}`} />
+              <span className={`w-2 h-2 rounded-full shrink-0 transition-colors duration-300 ${isActive ? 'bg-gold animate-pulse' : 'bg-red-500/80'}`} />
               {cat.label}
             </a>
           );
