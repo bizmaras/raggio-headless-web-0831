@@ -18,7 +18,8 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
 
-          <div className="flex items-center gap-4">
+          {/* LEFT: LOGO & HOME BUTTON (Perfect Gap & Symmetry) */}
+          <div className="flex items-center gap-3.5 sm:gap-5">
             <a href="#" className="flex items-center">
               <Image
                 src="/images/raggio-logo.png"
@@ -34,15 +35,25 @@ export default function Header() {
             <a
               href="#"
               aria-label="Back to Home"
-              className="flex items-center justify-center p-2.5 rounded-xl bg-[#14181d] border border-gold text-gold shadow-[0_0_10px_rgba(212,175,55,0.15)] hover:bg-gold/20 transition-all cursor-pointer active:scale-95"
+              className="flex items-center justify-center p-2.5 rounded-xl bg-[#14181d] border border-gold/60 text-gold shadow-[0_0_8px_rgba(212,175,55,0.12)] hover:bg-gold/20 transition-all cursor-pointer active:scale-95"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-5 h-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
                 <polyline points="9 22 9 12 15 12 15 22" />
               </svg>
             </a>
           </div>
 
+          {/* DESKTOP NAV */}
           <nav className="hidden lg:flex items-center gap-1 xl:gap-3">
             {navLinks.map((link) => (
               <a
@@ -55,6 +66,7 @@ export default function Header() {
             ))}
           </nav>
 
+          {/* DESKTOP ACTIONS */}
           <div className="hidden lg:flex items-center gap-4">
             <a
               href="tel:3023690553"
@@ -75,11 +87,12 @@ export default function Header() {
             </a>
           </div>
 
+          {/* RIGHT: MOBILE CONTROLS (Fully Mirrored Geometric Symmetry) */}
           <div className="flex lg:hidden items-center gap-2">
             <a
               href="tel:3023690553"
               aria-label="Call Raggio Gourmet Pizza"
-              className="p-2 rounded-xl bg-panel border border-gold/40 text-gold hover:bg-gold hover:text-ink transition-all flex items-center justify-center cursor-pointer"
+              className="flex items-center justify-center p-2.5 rounded-xl bg-[#14181d] border border-gold/60 text-gold shadow-[0_0_8px_rgba(212,175,55,0.12)] hover:bg-gold hover:text-ink transition-all cursor-pointer active:scale-95"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -90,7 +103,7 @@ export default function Header() {
               href="https://phillystyleexpress.foodtecsolutions.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-gold text-ink font-extrabold text-xs px-3.5 py-2 rounded-xl shadow-md"
+              className="bg-gold hover:bg-gold-bright text-ink font-extrabold text-xs px-3.5 py-2.5 rounded-xl shadow-md transition-all active:scale-95 flex items-center justify-center"
             >
               Order
             </a>
@@ -98,15 +111,15 @@ export default function Header() {
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 rounded-xl bg-panel border border-panel-border text-cream hover:text-gold transition-colors cursor-pointer"
+              className="flex items-center justify-center p-2.5 rounded-xl bg-[#14181d] border border-panel-border text-cream hover:text-gold hover:border-gold/60 transition-colors cursor-pointer active:scale-95"
               aria-label="Toggle Menu"
             >
               {isMobileMenuOpen ? (
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               ) : (
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
               )}
@@ -116,6 +129,7 @@ export default function Header() {
         </div>
       </div>
 
+      {/* MOBILE DRAWER */}
       {isMobileMenuOpen && (
         <div className="lg:hidden border-t border-panel-border bg-panel px-4 pt-3 pb-6 space-y-2 shadow-2xl">
           {navLinks.map((link) => (
