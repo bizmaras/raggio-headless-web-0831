@@ -7,7 +7,6 @@ export default function ScrollToTop() {
 
     useEffect(() => {
         const toggleVisibility = () => {
-            // Mobilde ekran boyu daha kısa olduğu için 250px'den sonra butonu gösteriyoruz
             if (window.scrollY > 250) {
                 setIsVisible(true);
             } else {
@@ -31,8 +30,8 @@ export default function ScrollToTop() {
             onClick={scrollToTop}
             aria-label="Scroll to top"
             className={`
-                md:hidden /* Sadece mobilde görünmesini sağlar */
-                fixed bottom-8 right-4 z-50 p-3 rounded-full 
+                md:hidden 
+                fixed bottom-8 left-4 z-50 p-3 rounded-full 
                 bg-[#14181d] border border-gold text-gold
                 shadow-[0_0_15px_rgba(212,175,55,0.25)] 
                 transition-all duration-300 ease-in-out touch-manipulation
