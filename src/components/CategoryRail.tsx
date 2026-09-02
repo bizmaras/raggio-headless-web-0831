@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const CATEGORIES = [
   { label: 'Deals & Specials', searchId: 'promotions' },
@@ -32,6 +32,34 @@ export default function CategoryRail() {
   // Track currently active category state
   const [activeCategory, setActiveCategory] = useState<string>('promotions');
 
+  // Otomatik kaydırma için referanslar
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const isInteracting = useRef(false);
+
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (!container) return;
+
+    let animationFrameId: number;
+
+    const autoScroll = () => {
+      // Sadece kullanıcı dokunmuyorsa VE içerik ekrandan taşıyorsa (mobildeyse) kaydır
+      if (!isInteracting.current && container.scrollWidth > container.clientWidth) {
+        container.scrollLeft += 0.6; // Kayma hızını buradan değiştirebilirsiniz (Örn: 1 daha hızlı, 0.5 daha yavaş)
+
+        // En sona geldiğinde başa sarsıntısız dön
+        if (container.scrollLeft >= container.scrollWidth - container.clientWidth - 1) {
+          container.scrollLeft = 0;
+        }
+      }
+      animationFrameId = requestAnimationFrame(autoScroll);
+    };
+
+    animationFrameId = requestAnimationFrame(autoScroll);
+
+    return () => cancelAnimationFrame(animationFrameId);
+  }, []);
+
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, searchId: string) => {
     // Persist active state selection
     setActiveCategory(searchId);
@@ -61,7 +89,14 @@ export default function CategoryRail() {
 
   return (
     <div className="sticky top-[72px] z-40 bg-ink/95 backdrop-blur-md border-b border-panel-border py-4">
-      <div className="flex overflow-x-auto md:flex-wrap md:justify-center gap-2 px-4 md:px-6 max-w-7xl mx-auto no-scrollbar">
+      <div
+        ref={scrollRef}
+        onMouseEnter={() => (isInteracting.current = true)}
+        onMouseLeave={() => (isInteracting.current = false)}
+        onTouchStart={() => (isInteracting.current = true)}
+        onTouchEnd={() => (isInteracting.current = false)}
+        className="flex overflow-x-auto md:flex-wrap md:justify-center gap-2 px-4 md:px-6 max-w-7xl mx-auto no-scrollbar"
+      >
         {CATEGORIES.map((cat) => {
           const isActive = activeCategory === cat.searchId;
 
