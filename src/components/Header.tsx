@@ -18,18 +18,18 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
 
-          {/* LEFT: LOGO (Fully Compressed for 100/100 Score) & MOBILE HOME BUTTON */}
+          {/* LEFT: LOGO (Exact 120px WebP Preset for 100 Score) & MOBILE HOME BUTTON */}
           <div className="flex items-center gap-5 sm:gap-6">
             <a href="#" className="flex items-center shrink-0" aria-label="Raggio Gourmet Pizza Home">
               <Image
                 src="/images/raggio-logo.png"
                 alt="Raggio Gourmet & Pizza"
-                width={180}
-                height={50}
+                width={120}
+                height={33}
                 priority
-                quality={65}
-                sizes="(max-width: 640px) 120px, 180px"
-                className="h-12 md:h-15 w-auto object-contain drop-shadow-md"
+                quality={60}
+                sizes="120px"
+                className="h-10 sm:h-12 w-auto object-contain drop-shadow-md"
               />
             </a>
 
