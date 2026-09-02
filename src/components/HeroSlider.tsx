@@ -103,7 +103,7 @@ export default function HeroSlider() {
               fill
               priority={index === 0}
               loading={index === 0 ? 'eager' : 'lazy'}
-              quality={index === 0 ? 75 : 60}
+              quality={index === 0 ? 65 : 55}
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 1200px"
               className="object-cover"
             />
@@ -123,7 +123,7 @@ export default function HeroSlider() {
           <span className="text-xs font-bold tracking-widest uppercase">Newark, Delaware</span>
         </div>
 
-        {/* Typography Gold Badge (Replaces Duplicate Logo Image for Performance) */}
+        {/* Typography Gold Badge */}
         <div className="mb-4">
           <span className="text-[#D4AF37] font-extrabold text-sm md:text-base tracking-[0.25em] uppercase drop-shadow-md">
             RAGGIO GOURMET PIZZA
