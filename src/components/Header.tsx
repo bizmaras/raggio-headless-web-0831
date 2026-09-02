@@ -18,24 +18,26 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
 
-          {/* LEFT: LOGO & HOME BUTTON (Perfect Gap & Symmetry) */}
-          <div className="flex items-center gap-3.5 sm:gap-5">
-            <a href="#" className="flex items-center">
+          {/* LEFT: LOGO (Büyütüldü) & MOBILE HOME BUTTON */}
+          <div className="flex items-center gap-5 sm:gap-6">
+            <a href="#" className="flex items-center shrink-0" aria-label="Raggio Gourmet Pizza Home">
               <Image
                 src="/images/raggio-logo.png"
                 alt="Raggio Gourmet & Pizza"
-                width={160}
-                height={40}
+                width={200}
+                height={64}
                 priority
-                quality={80}
-                className="h-10 md:h-12 w-auto object-contain"
+                quality={90}
+                /* h-10'dan h-14 (mobil) ve h-16 (masaüstü) seviyesine çıkarıldı */
+                className="h-14 md:h-16 w-auto object-contain drop-shadow-md"
               />
             </a>
 
+            {/* Sadece Mobilde Görünen Home Butonu */}
             <a
               href="#"
               aria-label="Back to Home"
-              className="flex items-center justify-center p-2.5 rounded-xl bg-[#14181d] border border-gold/60 text-gold shadow-[0_0_8px_rgba(212,175,55,0.12)] hover:bg-gold/20 transition-all cursor-pointer active:scale-95"
+              className="flex lg:hidden items-center justify-center p-2.5 rounded-xl bg-[#14181d] border border-gold/60 text-gold shadow-[0_0_8px_rgba(212,175,55,0.12)] hover:bg-gold/20 transition-all cursor-pointer active:scale-95 shrink-0"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +56,7 @@ export default function Header() {
           </div>
 
           {/* DESKTOP NAV */}
-          <nav className="hidden lg:flex items-center gap-1 xl:gap-3">
+          <nav className="hidden lg:flex items-center gap-1 xl:gap-4">
             {navLinks.map((link) => (
               <a
                 key={link.name}
@@ -67,7 +69,7 @@ export default function Header() {
           </nav>
 
           {/* DESKTOP ACTIONS */}
-          <div className="hidden lg:flex items-center gap-4">
+          <div className="hidden lg:flex items-center gap-5">
             <a
               href="tel:3023690553"
               className="text-sm font-bold text-cream hover:text-gold transition-colors flex items-center gap-2"
@@ -87,7 +89,7 @@ export default function Header() {
             </a>
           </div>
 
-          {/* RIGHT: MOBILE CONTROLS (Fully Mirrored Geometric Symmetry) */}
+          {/* RIGHT: MOBILE CONTROLS */}
           <div className="flex lg:hidden items-center gap-2">
             <a
               href="tel:3023690553"
