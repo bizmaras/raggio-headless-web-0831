@@ -67,7 +67,7 @@ export default function CategoryRail() {
     };
   }, []);
 
-  // Continuous Auto-scroll loop
+  // Kesintisiz ve Hızlı Auto-scroll motoru (Self-sabotaj kaldırıldı)
   useEffect(() => {
     const container = scrollRef.current;
     if (!container) return;
@@ -78,12 +78,12 @@ export default function CategoryRail() {
     const step = () => {
       if (!isPaused.current) {
         if (container.scrollWidth > container.clientWidth) {
-          // Birikimli kaydırma
-          exactScroll.current += 0.5;
+          // Hız 0.5'ten 1.5'e çıkarıldı (çok daha hızlı ve akıcı)
+          exactScroll.current += 1.5;
           container.scrollLeft = exactScroll.current;
 
-          // Sona gelince başa dön
-          if (container.scrollLeft >= container.scrollWidth - container.clientWidth - 1) {
+          // Sona gelince pürüzsüzce başa dön
+          if (container.scrollLeft >= container.scrollWidth - container.clientWidth - 2) {
             exactScroll.current = 0;
             container.scrollLeft = 0;
           }
@@ -96,24 +96,21 @@ export default function CategoryRail() {
     return () => cancelAnimationFrame(animId);
   }, []);
 
-  // Tüm kullanıcı etkileşimlerini (dokunma, kaydırma, momentum) tek bir fonksiyonda yönetiyoruz
-  const handleInteraction = () => {
+  // SADECE fiziksel dokunuşta durdur (onScroll dinleyicisi silindi)
+  const handleInteractionStart = () => {
     isPaused.current = true;
-
-    if (scrollRef.current) {
-      exactScroll.current = scrollRef.current.scrollLeft;
-    }
-
-    // Var olan geri sayımı iptal et (böylece momentum sürdükçe süre sıfırlanır)
     if (resumeTimer.current) clearTimeout(resumeTimer.current);
+  };
 
-    // Kaydırma eylemi TAMAMEN bittikten 1 saniye sonra akışı tekrar başlat
+  // Dokunma bittikten 1.5 saniye sonra son pozisyonu alıp akmaya devam et
+  const handleInteractionEnd = () => {
+    if (resumeTimer.current) clearTimeout(resumeTimer.current);
     resumeTimer.current = setTimeout(() => {
       if (scrollRef.current) {
         exactScroll.current = scrollRef.current.scrollLeft;
       }
       isPaused.current = false;
-    }, 1000);
+    }, 1500);
   };
 
   const handleCategoryClick = (e: React.MouseEvent<HTMLAnchorElement>, searchId: string) => {
@@ -140,13 +137,12 @@ export default function CategoryRail() {
     <div className="sticky top-20 z-40 bg-ink/95 backdrop-blur-md border-b border-panel-border py-4">
       <div
         ref={scrollRef}
-        onTouchStart={handleInteraction}
-        onTouchMove={handleInteraction}
-        onScroll={handleInteraction}
-        onWheel={handleInteraction}
-        onMouseEnter={handleInteraction}
+        onPointerDown={handleInteractionStart}
+        onPointerUp={handleInteractionEnd}
+        onPointerCancel={handleInteractionEnd}
+        onPointerLeave={handleInteractionEnd}
         className="flex overflow-x-auto md:flex-wrap md:justify-center gap-2 px-4 md:px-6 max-w-7xl mx-auto no-scrollbar"
-        style={{ WebkitOverflowScrolling: 'touch' }}
+        style={{ WebkitOverflowScrolling: 'touch', willChange: 'scroll-position' }}
       >
         {CATEGORIES.map((cat) => {
           const isActive = activeCategory === cat.searchId;
