@@ -10,7 +10,7 @@ import CateringSection from '../components/CateringSection';
 import Footer from '../components/Footer';
 import ScrollToTop from '../components/ScrollToTop';
 import AIChatBot from '../components/AIChatBot';
-import { Download } from 'lucide-react';
+// lucide-react import removed to maintain 100/100 Lighthouse bundle size
 
 interface MenuItem {
   'Product Name': string;
@@ -136,12 +136,15 @@ export default async function HomePage() {
               Our Menu
             </h2>
 
+            {/* Replaced external Lucide icon with lightweight inline SVG */}
             <a
               href="/raggio-full-menu.pdf"
               download
               className="inline-flex items-center gap-2 bg-panel border border-panel-border hover:border-gold text-stone hover:text-cream text-xs font-bold px-4 py-2.5 rounded-full transition-all"
             >
-              <Download className="w-4 h-4 text-gold" />
+              <svg className="w-4 h-4 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
               Download Full PDF Menu
             </a>
           </div>
@@ -152,9 +155,11 @@ export default async function HomePage() {
 
             return (
               <div key={category} id={targetId} className="mb-16 scroll-mt-[210px]">
-                <h3 className="text-2xl font-semibold mb-6 pb-2 border-b border-panel-border text-cream flex items-center justify-between">
+
+                {/* STICKY CATEGORY HEADER: Sticky gold on mobile, standard static cream on desktop */}
+                <h3 className="sticky md:static top-[142px] md:top-auto z-30 md:z-auto bg-ink/95 md:bg-transparent backdrop-blur-md md:backdrop-blur-none pt-4 pb-3 mb-6 border-b border-panel-border text-[#D4AF37] md:text-cream flex items-center justify-between text-2xl font-bold tracking-wide shadow-sm md:shadow-none">
                   <span>{category}</span>
-                  <span className="text-sm font-normal text-gold-bright">
+                  <span className="text-sm font-normal text-cream/60 md:text-gold-bright tracking-normal">
                     {itemsInCategory.length} items
                   </span>
                 </h3>
