@@ -32,11 +32,11 @@ export default function CategoryRail() {
   const [activeCategory, setActiveCategory] = useState<string>('deals');
 
   const scrollRef = useRef<HTMLDivElement>(null);
-  const isInteracting = useRef(false);
-  const lastTimeRef = useRef<number | null>(null);
-  const interactionTimeout = useRef<NodeJS.Timeout | null>(null);
+  const isPaused = useRef(false);
+  const exactScroll = useRef(0); // Ondalık değerleri biriktireceğimiz kumbara
+  const resumeTimer = useRef<NodeJS.Timeout | null>(null);
 
-  // IntersectionObserver for ScrollSpy (Detect active section accurately based on scroll position)
+  // IntersectionObserver for ScrollSpy
   useEffect(() => {
     const observerOptions = {
       root: null,
@@ -67,55 +67,53 @@ export default function CategoryRail() {
     };
   }, []);
 
-  // Ultra-smooth GPU-accelerated linear auto-scroll logic
+  // Continuous Auto-scroll loop
   useEffect(() => {
     const container = scrollRef.current;
     if (!container) return;
 
-    let animationFrameId: number;
-    // Speed constant: pixels per millisecond (30 pixels per second)
-    const SPEED = 0.03;
+    let animId: number;
+    exactScroll.current = container.scrollLeft; // Başlangıç pozisyonunu al
 
-    const autoScroll = (currentTime: number) => {
-      if (lastTimeRef.current !== null && !isInteracting.current) {
-        const deltaTime = currentTime - lastTimeRef.current;
+    const step = () => {
+      if (!isPaused.current) {
         if (container.scrollWidth > container.clientWidth) {
-          container.scrollLeft += deltaTime * SPEED;
+          // Ondalık değeri ref içinde biriktirip container'a basıyoruz
+          exactScroll.current += 0.5;
+          container.scrollLeft = exactScroll.current;
 
-          // Infinite smooth loop reset when reaching the end
+          // Sona gelince başa dön
           if (container.scrollLeft >= container.scrollWidth - container.clientWidth - 1) {
+            exactScroll.current = 0;
             container.scrollLeft = 0;
           }
         }
       }
-      lastTimeRef.current = currentTime;
-      animationFrameId = requestAnimationFrame(autoScroll);
+      animId = requestAnimationFrame(step);
     };
 
-    animationFrameId = requestAnimationFrame(autoScroll);
-
-    return () => cancelAnimationFrame(animationFrameId);
+    animId = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(animId);
   }, []);
 
-  // Pause auto-scroll immediately on user touch/drag
-  const pauseAutoScroll = () => {
-    isInteracting.current = true;
-    lastTimeRef.current = null;
-    if (interactionTimeout.current) clearTimeout(interactionTimeout.current);
+  // Parmağımızla dokunduğumuzda veya kaydırdığımızda durdur
+  const handleUserInteraction = () => {
+    isPaused.current = true;
+    if (scrollRef.current) {
+      exactScroll.current = scrollRef.current.scrollLeft; // Kumbarayı parmağımızın olduğu yere eşitle
+    }
+    if (resumeTimer.current) clearTimeout(resumeTimer.current);
   };
 
-  // Resume smooth auto-scroll 1.2s after user interaction stops
-  const resumeAutoScroll = () => {
-    if (interactionTimeout.current) clearTimeout(interactionTimeout.current);
-    interactionTimeout.current = setTimeout(() => {
-      isInteracting.current = false;
-      lastTimeRef.current = null;
-    }, 1200);
-  };
-
-  const handleScrollEvent = () => {
-    pauseAutoScroll();
-    resumeAutoScroll();
+  // Parmağımızı çektikten 1.5 saniye sonra akmaya devam etsin
+  const handleInteractionEnd = () => {
+    if (resumeTimer.current) clearTimeout(resumeTimer.current);
+    resumeTimer.current = setTimeout(() => {
+      if (scrollRef.current) {
+        exactScroll.current = scrollRef.current.scrollLeft; // Telefonun kendi kayma ivmesi bitince son konumu al
+      }
+      isPaused.current = false;
+    }, 1500);
   };
 
   const handleCategoryClick = (e: React.MouseEvent<HTMLAnchorElement>, searchId: string) => {
@@ -142,11 +140,12 @@ export default function CategoryRail() {
     <div className="sticky top-20 z-40 bg-ink/95 backdrop-blur-md border-b border-panel-border py-4">
       <div
         ref={scrollRef}
-        onMouseEnter={pauseAutoScroll}
-        onMouseLeave={resumeAutoScroll}
-        onTouchStart={pauseAutoScroll}
-        onTouchEnd={resumeAutoScroll}
-        onScroll={handleScrollEvent}
+        onTouchStart={handleUserInteraction}
+        onTouchEnd={handleInteractionEnd}
+        onMouseDown={handleUserInteraction}
+        onMouseUp={handleInteractionEnd}
+        onScroll={handleUserInteraction}
+        onWheel={handleUserInteraction}
         className="flex overflow-x-auto md:flex-wrap md:justify-center gap-2 px-4 md:px-6 max-w-7xl mx-auto no-scrollbar"
         style={{ WebkitOverflowScrolling: 'touch' }}
       >
