@@ -159,8 +159,8 @@ export default async function HomePage() {
             return (
               <div key={category} id={targetId} className="mb-16 scroll-mt-[210px]">
 
-                {/* STICKY CATEGORY HEADER: Sticky gold on mobile, standard static cream on desktop */}
-                <h3 className="sticky md:static top-[142px] md:top-auto z-30 md:z-auto bg-ink/95 md:bg-transparent backdrop-blur-md md:backdrop-blur-none pt-4 pb-3 mb-6 border-b border-panel-border text-[#D4AF37] md:text-cream flex items-center justify-between text-2xl font-bold tracking-wide shadow-sm md:shadow-none">
+                {/* STICKY CATEGORY HEADER: Mustard Gold on mobile for main menu categories */}
+                <h3 className="sticky md:static top-[142px] md:top-auto z-30 md:z-auto bg-ink/95 md:bg-transparent backdrop-blur-md md:backdrop-blur-none pt-4 pb-3 mb-6 border-b border-panel-border text-gold md:text-cream flex items-center justify-between text-2xl font-bold tracking-wide shadow-sm md:shadow-none">
                   <span>{category}</span>
                   <span className="text-sm font-normal text-cream/60 md:text-gold-bright tracking-normal">
                     {itemsInCategory.length} items
