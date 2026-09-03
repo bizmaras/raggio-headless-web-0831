@@ -24,17 +24,32 @@ export default function AIChatBot() {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [messages, loading]);
 
-    // Prevent background scroll when chat is open on mobile
+    // Handle body scroll locking and viewport reset on close
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden';
         } else {
-            document.body.style.overflow = 'unset';
+            document.body.style.overflow = '';
         }
+
         return () => {
-            document.body.style.overflow = 'unset';
+            document.body.style.overflow = '';
         };
     }, [isOpen]);
+
+    // Clean close handler that drops keyboard focus and resets page scale/zoom
+    const handleClose = () => {
+        if (document.activeElement instanceof HTMLElement) {
+            document.activeElement.blur();
+        }
+        document.body.style.overflow = '';
+        setIsOpen(false);
+
+        // Reset any iOS Safari viewport shift
+        setTimeout(() => {
+            window.scrollTo({ top: window.scrollY, behavior: 'instant' });
+        }, 50);
+    };
 
     const renderFormattedMessage = (text: string): React.ReactNode => {
         const regex = /(\[([^\]]+)\]\((https?:\/\/[^\s)]+)\))|(\*\*([^*]+)\*\*)/g;
@@ -105,7 +120,7 @@ export default function AIChatBot() {
             } else {
                 setMessages((prev) => [...prev, { role: 'assistant', content: 'I am sorry, I could not process that request right now.' }]);
             }
-        } catch (err) {
+        } catch (err: any) {
             setMessages((prev) => [...prev, { role: 'assistant', content: 'Gemini API Error. Please check API Key or quota.' }]);
         } finally {
             setLoading(false);
@@ -114,7 +129,7 @@ export default function AIChatBot() {
 
     return (
         <>
-            {/* Floating Launcher Button */}
+            {/* Launcher Button */}
             {!isOpen && (
                 <div className="fixed bottom-24 right-4 sm:bottom-6 sm:right-6 z-50">
                     <button
@@ -130,10 +145,15 @@ export default function AIChatBot() {
                 </div>
             )}
 
-            {/* Chat Modal Window */}
+            {/* Chat Full Modal */}
             {isOpen && (
-                <div className="fixed inset-0 sm:inset-auto sm:bottom-6 sm:right-6 z-[100] flex flex-col justify-end sm:justify-start items-center sm:items-end bg-black/60 sm:bg-transparent backdrop-blur-xs sm:backdrop-blur-none">
-                    <div className="w-full h-[100dvh] sm:h-[500px] sm:w-[380px] bg-[#14181d] border-t sm:border border-panel-border sm:rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-fadeIn">
+                <div
+                    className="fixed inset-0 z-[100] flex flex-col justify-end sm:justify-center items-center bg-black/70 backdrop-blur-xs sm:p-4"
+                    onClick={(e) => {
+                        if (e.target === e.currentTarget) handleClose();
+                    }}
+                >
+                    <div className="w-full h-[100dvh] sm:h-[520px] sm:w-[380px] bg-[#14181d] border-t sm:border border-panel-border sm:rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-fadeIn">
                         {/* Header */}
                         <div className="bg-[#1c2127] p-3.5 sm:p-4 border-b border-panel-border flex items-center justify-between shrink-0">
                             <div className="flex items-center gap-2.5">
@@ -148,7 +168,7 @@ export default function AIChatBot() {
                                 </div>
                             </div>
                             <button
-                                onClick={() => setIsOpen(false)}
+                                onClick={handleClose}
                                 aria-label="Close Chat Window"
                                 className="p-2 rounded-full text-stone hover:text-cream bg-black/20 hover:bg-black/50 transition-colors cursor-pointer"
                             >
@@ -158,8 +178,8 @@ export default function AIChatBot() {
                             </button>
                         </div>
 
-                        {/* Messages Container */}
-                        <div className="flex-1 p-3 sm:p-4 overflow-y-auto space-y-3 bg-ink/50">
+                        {/* Messages */}
+                        <div className="flex-1 p-3.5 sm:p-4 overflow-y-auto space-y-3 bg-ink/50">
                             {messages.map((msg, idx) => (
                                 <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                                     <div className={`max-w-[85%] p-3 rounded-2xl text-xs sm:text-xs leading-relaxed whitespace-pre-wrap ${msg.role === 'user' ? 'bg-gold text-ink font-semibold rounded-br-none' : 'bg-[#1c2127] text-cream border border-panel-border rounded-bl-none'}`}>
@@ -184,7 +204,8 @@ export default function AIChatBot() {
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
                                 placeholder="Ask a question..."
-                                className="flex-1 bg-ink border border-panel-border rounded-xl px-3.5 py-2.5 text-base sm:text-xs text-cream focus:outline-none focus:border-gold"
+                                style={{ fontSize: '16px' }} // 16px strictly prevents iOS Safari auto-zoom
+                                className="flex-1 bg-ink border border-panel-border rounded-xl px-3.5 py-2.5 text-[16px] sm:text-xs text-cream focus:outline-none focus:border-gold"
                             />
                             <button
                                 type="submit"
