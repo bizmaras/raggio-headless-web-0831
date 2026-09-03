@@ -33,12 +33,11 @@ export default function CategoryRail() {
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const isInteracting = useRef(false);
-  const exactScroll = useRef(0);
+  const lastTimeRef = useRef<number | null>(null);
   const interactionTimeout = useRef<NodeJS.Timeout | null>(null);
 
   // IntersectionObserver for ScrollSpy (Detect active section accurately based on scroll position)
   useEffect(() => {
-    // Adjusted rootMargin to perfectly account for the combined height of Header and CategoryRail
     const observerOptions = {
       root: null,
       rootMargin: '-150px 0px -60% 0px',
@@ -68,25 +67,28 @@ export default function CategoryRail() {
     };
   }, []);
 
-  // Smooth Auto-Scroll Logic
+  // Ultra-smooth GPU-accelerated linear auto-scroll logic
   useEffect(() => {
     const container = scrollRef.current;
     if (!container) return;
 
     let animationFrameId: number;
+    // Speed constant: pixels per millisecond (30 pixels per second)
+    const SPEED = 0.03;
 
-    const autoScroll = () => {
-      if (!isInteracting.current && container.scrollWidth > container.clientWidth) {
-        // Increment by a small decimal for ultra-smooth, reasonable speed (0.5px per frame)
-        exactScroll.current += 0.5;
-        container.scrollLeft = exactScroll.current;
+    const autoScroll = (currentTime: number) => {
+      if (lastTimeRef.current !== null && !isInteracting.current) {
+        const deltaTime = currentTime - lastTimeRef.current;
+        if (container.scrollWidth > container.clientWidth) {
+          container.scrollLeft += deltaTime * SPEED;
 
-        // Loop back to start smoothly when reaching the end
-        if (container.scrollLeft >= container.scrollWidth - container.clientWidth - 1) {
-          exactScroll.current = 0;
-          container.scrollLeft = 0;
+          // Infinite smooth loop reset when reaching the end
+          if (container.scrollLeft >= container.scrollWidth - container.clientWidth - 1) {
+            container.scrollLeft = 0;
+          }
         }
       }
+      lastTimeRef.current = currentTime;
       animationFrameId = requestAnimationFrame(autoScroll);
     };
 
@@ -95,26 +97,23 @@ export default function CategoryRail() {
     return () => cancelAnimationFrame(animationFrameId);
   }, []);
 
-  // Pause auto-scroll immediately on user interaction
+  // Pause auto-scroll immediately on user touch/drag
   const pauseAutoScroll = () => {
     isInteracting.current = true;
+    lastTimeRef.current = null;
     if (interactionTimeout.current) clearTimeout(interactionTimeout.current);
   };
 
-  // Resume auto-scroll 1.5 seconds after interaction (and native momentum) completely stops
+  // Resume smooth auto-scroll 1.2s after user interaction stops
   const resumeAutoScroll = () => {
     if (interactionTimeout.current) clearTimeout(interactionTimeout.current);
     interactionTimeout.current = setTimeout(() => {
       isInteracting.current = false;
-    }, 1500);
+      lastTimeRef.current = null;
+    }, 1200);
   };
 
-  // Sync virtual scroll position with actual native scroll to prevent jumping
   const handleScrollEvent = () => {
-    if (scrollRef.current) {
-      exactScroll.current = scrollRef.current.scrollLeft;
-    }
-    // Keep resetting the timer as long as native momentum scrolling is happening
     pauseAutoScroll();
     resumeAutoScroll();
   };
@@ -134,7 +133,6 @@ export default function CategoryRail() {
     }
 
     if (targetElement) {
-      // Offset precisely matches the combined height of the sticky Header and CategoryRail
       const topPosition = targetElement.getBoundingClientRect().top + window.scrollY - 150;
       window.scrollTo({ top: topPosition, behavior: 'smooth' });
     }
@@ -149,7 +147,7 @@ export default function CategoryRail() {
         onTouchStart={pauseAutoScroll}
         onTouchEnd={resumeAutoScroll}
         onScroll={handleScrollEvent}
-        className="flex overflow-x-auto md:flex-wrap md:justify-center gap-2 px-4 md:px-6 max-w-7xl mx-auto no-scrollbar scroll-smooth"
+        className="flex overflow-x-auto md:flex-wrap md:justify-center gap-2 px-4 md:px-6 max-w-7xl mx-auto no-scrollbar"
         style={{ WebkitOverflowScrolling: 'touch' }}
       >
         {CATEGORIES.map((cat) => {
