@@ -10,7 +10,6 @@ import CateringSection from '../components/CateringSection';
 import Footer from '../components/Footer';
 import ScrollToTop from '../components/ScrollToTop';
 import AIChatBot from '../components/AIChatBot';
-// lucide-react import removed to maintain 100/100 Lighthouse bundle size
 
 interface MenuItem {
   'Product Name': string;
@@ -128,7 +127,11 @@ export default async function HomePage() {
 
         <HeroSlider />
         <CategoryRail />
-        <PromotionsSection />
+
+        {/* ADDED: id="deals" and scroll-margin so the category rail anchors correctly */}
+        <div id="deals" className="scroll-mt-[190px]">
+          <PromotionsSection />
+        </div>
 
         <section id="menu" className="max-w-7xl mx-auto px-6 py-12 scroll-mt-[210px]">
           <div className="flex flex-col sm:flex-row items-center justify-between mb-12 gap-4">

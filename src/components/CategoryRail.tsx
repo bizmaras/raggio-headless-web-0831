@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 const CATEGORIES = [
-  { label: 'Deals & Specials', searchId: 'promotions' },
+  { label: 'Deals & Specials', searchId: 'deals' },
   { label: 'Pizza', searchId: 'pizza' },
   { label: 'Gourmet Pizza', searchId: 'gourmet' },
   { label: 'Sicilian Pizza', searchId: 'sicilian' },
@@ -29,7 +29,7 @@ const CATEGORIES = [
 ];
 
 export default function CategoryRail() {
-  const [activeCategory, setActiveCategory] = useState<string>('promotions');
+  const [activeCategory, setActiveCategory] = useState<string>('deals');
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const isInteracting = useRef(false);
@@ -38,7 +38,6 @@ export default function CategoryRail() {
   // IntersectionObserver for ScrollSpy (Detect active section accurately based on scroll position)
   useEffect(() => {
     // Adjusted rootMargin to perfectly account for the combined height of Header (80px) and CategoryRail (~70px)
-    // -150px top margin ensures the category activates exactly when it clears the sticky navigation
     const observerOptions = {
       root: null,
       rootMargin: '-150px 0px -60% 0px',
@@ -102,9 +101,6 @@ export default function CategoryRail() {
 
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, searchId: string) => {
     setActiveCategory(searchId);
-
-    if (searchId === 'promotions') return;
-
     e.preventDefault();
 
     let targetElement = document.getElementById(searchId);
