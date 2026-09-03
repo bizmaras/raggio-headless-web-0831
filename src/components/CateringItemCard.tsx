@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { Info, X, BookOpen, ExternalLink } from 'lucide-react';
 
 interface CateringItemCardProps {
   name: string;
@@ -81,7 +80,10 @@ export default function CateringItemCard({
             onClick={() => setIsModalOpen(true)}
             className="w-full flex items-center justify-center gap-2 bg-black/40 hover:bg-black/70 border border-panel-border hover:border-gold/50 text-gold hover:text-gold-bright py-2.5 rounded-lg text-xs font-semibold transition-all cursor-pointer"
           >
-            <Info className="w-4 h-4 text-gold" />
+            {/* Inline Info Icon */}
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-gold">
+              <circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" />
+            </svg>
             <span>View Details & Ingredients</span>
           </button>
         </div>
@@ -92,7 +94,10 @@ export default function CateringItemCard({
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
           <div className="relative w-full max-w-2xl bg-[#1c2127] border border-panel-border rounded-2xl overflow-hidden shadow-2xl grid grid-cols-1 md:grid-cols-12">
             <div className="md:col-span-5 bg-[#14181d] p-8 flex flex-col items-center justify-center text-center border-b md:border-b-0 md:border-r border-panel-border">
-              <BookOpen className="w-12 h-12 text-gold mb-3 opacity-90" />
+              {/* Inline BookOpen Icon */}
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12 text-gold mb-3 opacity-90">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+              </svg>
               <h5 className="text-xs font-mono font-bold tracking-widest text-gold uppercase">
                 Raggio Gourmet
               </h5>
@@ -105,7 +110,10 @@ export default function CateringItemCard({
                 onClick={() => setIsModalOpen(false)}
                 className="absolute top-4 right-4 p-1.5 rounded-full bg-black/40 text-stone hover:text-cream border border-panel-border hover:border-gold transition-all cursor-pointer"
               >
-                <X className="w-5 h-5" />
+                {/* Inline X Icon */}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                  <path d="M18 6 6 18" /><path d="m6 6 12 12" />
+                </svg>
               </button>
 
               <div>
@@ -132,7 +140,10 @@ export default function CateringItemCard({
                   className="w-full flex items-center justify-center gap-2 bg-gold hover:bg-gold-bright text-ink font-extrabold py-3 rounded-xl text-xs uppercase tracking-wider transition-all cursor-pointer shadow-lg"
                 >
                   <span>Order Online via FoodTec</span>
-                  <ExternalLink className="w-4 h-4 text-ink" />
+                  {/* Inline ExternalLink Icon */}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-ink">
+                    <path d="M15 3h6v6" /><path d="M10 14 21 3" /><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                  </svg>
                 </a>
               </div>
             </div>

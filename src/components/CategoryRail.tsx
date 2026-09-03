@@ -34,10 +34,11 @@ export default function CategoryRail() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const isInteracting = useRef(false);
   const exactScroll = useRef(0);
+  const interactionTimeout = useRef<NodeJS.Timeout | null>(null);
 
   // IntersectionObserver for ScrollSpy (Detect active section accurately based on scroll position)
   useEffect(() => {
-    // Adjusted rootMargin to perfectly account for the combined height of Header (80px) and CategoryRail (~70px)
+    // Adjusted rootMargin to perfectly account for the combined height of Header and CategoryRail
     const observerOptions = {
       root: null,
       rootMargin: '-150px 0px -60% 0px',
@@ -54,7 +55,6 @@ export default function CategoryRail() {
 
     const observer = new IntersectionObserver(observerCallback, observerOptions);
 
-    // Initial delay ensures the DOM elements are fully loaded before observing
     const timer = setTimeout(() => {
       CATEGORIES.forEach((cat) => {
         const el = document.getElementById(cat.searchId);
@@ -68,7 +68,7 @@ export default function CategoryRail() {
     };
   }, []);
 
-  // Endless auto-scroll logic when user is not interacting with the category rail
+  // Smooth Auto-Scroll Logic
   useEffect(() => {
     const container = scrollRef.current;
     if (!container) return;
@@ -77,9 +77,11 @@ export default function CategoryRail() {
 
     const autoScroll = () => {
       if (!isInteracting.current && container.scrollWidth > container.clientWidth) {
-        exactScroll.current += 1;
+        // Increment by a small decimal for ultra-smooth, reasonable speed (0.5px per frame)
+        exactScroll.current += 0.5;
         container.scrollLeft = exactScroll.current;
 
+        // Loop back to start smoothly when reaching the end
         if (container.scrollLeft >= container.scrollWidth - container.clientWidth - 1) {
           exactScroll.current = 0;
           container.scrollLeft = 0;
@@ -93,13 +95,31 @@ export default function CategoryRail() {
     return () => cancelAnimationFrame(animationFrameId);
   }, []);
 
-  const syncScroll = () => {
-    if (scrollRef.current && isInteracting.current) {
-      exactScroll.current = scrollRef.current.scrollLeft;
-    }
+  // Pause auto-scroll immediately on user interaction
+  const pauseAutoScroll = () => {
+    isInteracting.current = true;
+    if (interactionTimeout.current) clearTimeout(interactionTimeout.current);
   };
 
-  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, searchId: string) => {
+  // Resume auto-scroll 1.5 seconds after interaction (and native momentum) completely stops
+  const resumeAutoScroll = () => {
+    if (interactionTimeout.current) clearTimeout(interactionTimeout.current);
+    interactionTimeout.current = setTimeout(() => {
+      isInteracting.current = false;
+    }, 1500);
+  };
+
+  // Sync virtual scroll position with actual native scroll to prevent jumping
+  const handleScrollEvent = () => {
+    if (scrollRef.current) {
+      exactScroll.current = scrollRef.current.scrollLeft;
+    }
+    // Keep resetting the timer as long as native momentum scrolling is happening
+    pauseAutoScroll();
+    resumeAutoScroll();
+  };
+
+  const handleCategoryClick = (e: React.MouseEvent<HTMLAnchorElement>, searchId: string) => {
     setActiveCategory(searchId);
     e.preventDefault();
 
@@ -121,16 +141,16 @@ export default function CategoryRail() {
   };
 
   return (
-    // top-20 perfectly aligns with the 80px height of the main Header component
     <div className="sticky top-20 z-40 bg-ink/95 backdrop-blur-md border-b border-panel-border py-4">
       <div
         ref={scrollRef}
-        onMouseEnter={() => (isInteracting.current = true)}
-        onMouseLeave={() => { isInteracting.current = false; syncScroll(); }}
-        onTouchStart={() => (isInteracting.current = true)}
-        onTouchEnd={() => { isInteracting.current = false; syncScroll(); }}
-        onScroll={syncScroll}
+        onMouseEnter={pauseAutoScroll}
+        onMouseLeave={resumeAutoScroll}
+        onTouchStart={pauseAutoScroll}
+        onTouchEnd={resumeAutoScroll}
+        onScroll={handleScrollEvent}
         className="flex overflow-x-auto md:flex-wrap md:justify-center gap-2 px-4 md:px-6 max-w-7xl mx-auto no-scrollbar scroll-smooth"
+        style={{ WebkitOverflowScrolling: 'touch' }}
       >
         {CATEGORIES.map((cat) => {
           const isActive = activeCategory === cat.searchId;
@@ -139,7 +159,7 @@ export default function CategoryRail() {
             <a
               key={cat.label}
               href={`#${cat.searchId}`}
-              onClick={(e) => handleScroll(e, cat.searchId)}
+              onClick={(e) => handleCategoryClick(e, cat.searchId)}
               className={`
                 flex-none flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-medium whitespace-nowrap
                 transition-all duration-200 touch-manipulation select-none cursor-pointer
