@@ -35,12 +35,13 @@ export default function CategoryRail() {
   const isInteracting = useRef(false);
   const exactScroll = useRef(0);
 
-  // IntersectionObserver for ScrollSpy (Detect active section)
+  // IntersectionObserver for ScrollSpy (Detect active section accurately based on scroll position)
   useEffect(() => {
-    // Defines where the "trigger" line is on the screen (slightly below header)
+    // Adjusted rootMargin to perfectly account for the combined height of Header (80px) and CategoryRail (~70px)
+    // -150px top margin ensures the category activates exactly when it clears the sticky navigation
     const observerOptions = {
       root: null,
-      rootMargin: '-100px 0px -70% 0px',
+      rootMargin: '-150px 0px -60% 0px',
       threshold: 0
     };
 
@@ -68,7 +69,7 @@ export default function CategoryRail() {
     };
   }, []);
 
-  // Endless auto-scroll logic when user is not interacting
+  // Endless auto-scroll logic when user is not interacting with the category rail
   useEffect(() => {
     const container = scrollRef.current;
     if (!container) return;
@@ -117,13 +118,15 @@ export default function CategoryRail() {
     }
 
     if (targetElement) {
-      const topPosition = targetElement.getBoundingClientRect().top + window.scrollY - 180;
+      // Offset precisely matches the combined height of the sticky Header and CategoryRail
+      const topPosition = targetElement.getBoundingClientRect().top + window.scrollY - 150;
       window.scrollTo({ top: topPosition, behavior: 'smooth' });
     }
   };
 
   return (
-    <div className="sticky top-[72px] z-40 bg-ink/95 backdrop-blur-md border-b border-panel-border py-4">
+    // top-20 perfectly aligns with the 80px height of the main Header component
+    <div className="sticky top-20 z-40 bg-ink/95 backdrop-blur-md border-b border-panel-border py-4">
       <div
         ref={scrollRef}
         onMouseEnter={() => (isInteracting.current = true)}
