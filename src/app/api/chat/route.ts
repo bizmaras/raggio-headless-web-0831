@@ -231,29 +231,62 @@ const SPECIALS_MENU = `
 `;
 
 const CATERING_MENU = `
-### Catering Menu (Half Tray / Full Tray)
-- Sub Tray & Wrap Tray: Half $50.00 (Serves 8-10) | Full $90.00 (Serves 15-20)
+### Catering Subs & Wraps (Serves Half: 8-10, Full: 15-20)
+- Sub Tray: Half $50.00 | Full $90.00 - Assortment of fresh subs
+- Wrap Tray: Half $50.00 | Full $90.00 - Assortment of fresh wraps
+
+### Catering Appetizers (Serves Half: 8-10, Full: 15-20)
 - Cinnamon Bites: Half $45.00 | Full $90.00
-- Jalapeno Poppers: Half $80.00 | Full $170.00
-- Onion Rings, Mac & Cheese Bites, Mozzarella Bread: Half $34.99 | Full $84.99
-- Mozzarella Sticks: Half $110.00 | Full $220.00
-- Buffalo Mozzarella Sticks: Half $120.00 | Full $230.00
-- Garlic Knots: Half $60.00 | Full $90.00
-- Bread Sticks: Half $60.00 | Full $110.00
-- Buffalo Tenders, Plain/Buffalo Shrimp Basket: Half $80.00 | Full $180.00
-- Fried Calamari: Half $120.00 | Full $210.00
-- Jumbo Shrimp: Half $80.00 | Full $200.00
-- Traditional / Boneless Wings / Tenders Tray: Half $59.99 | Full $134.99
-- French Fries / Curly Fries: Half $45.00 | Full $84.99
-- Cheese / Old Bay / Steak / Mega / Pizza Fries: Half $34.99 | Full $84.99
-- Cheese Steak / Chicken / Buffalo Chx Fries: Half $60.00 | Full $100.00 / $110.00
-- Garden / Caesar Salad: Half $40.00 | Full $80.00
-- Chicken / Chef / Greek / Tuna / Antipasto Salad: Half $49.99 | Full $99.99
-- Shrimp / Salmon Salad: Half $85.00 | Full $190.00 / $200.00
-- Pasta Trays (CYO, Penne, Marsala, Parmigiana, Lasagna, Baked Ziti): Half $49.95 | Full $89.99
-- Tacos & Fajitas: Half $60.00 | Full $140.00
-- Burritos & Papusas: Half $80.00 | Full $160.00 / $180.00
-- Empanadas & Carne Asada: Half $100.00 | Full $200.00
+- Jalapeno Poppers: Half $80.00 | Full $170.00 - Served with Ranch
+- Onion Rings: Half $34.99 | Full $84.99 - Served with Texas Sauce
+- Mac & Cheese Bites: Half $34.99 | Full $84.99 - Served with Marinara
+- Mozzarella Sticks: Half $110.00 | Full $220.00 - Served with Marinara
+- Buffalo Mozzarella Sticks: Half $120.00 | Full $230.00 - Spicy buffalo-style
+- Garlic Knots: Half $60.00 | Full $90.00 - Served with Marinara
+- Bread Sticks: Half $60.00 | Full $110.00 - Served with Marinara
+- Buffalo Tenders: Half $80.00 | Full $180.00 - Tossed in buffalo sauce
+- Mozzarella Bread: Half $34.99 | Full $84.99 - Served with Marinara
+- Broccoli Bites: Half $80.00 | Full $120.00 - Served with Ranch
+- Fried Mushrooms: Half $60.00 | Full $120.00 - Served with Ranch
+- Buffalo Calamari: Half $120.00 | Full $235.00 - Served with Ranch
+- Fried Calamari: Half $120.00 | Full $210.00 - Served with Texas Sauce
+- Jumbo Shrimp: Half $80.00 | Full $200.00 - Served with Cocktail Sauce
+- Plain Shrimp Basket: Half $80.00 | Full $180.00 - Served with Cocktail Sauce
+- Buffalo Shrimp Basket: Half $80.00 | Full $190.00 - Tossed in buffalo sauce
+- Sampler Platter: Half $59.99 | Full $120.00 - Served with Honey Mustard, Ranch, Marinara
+
+### Catering Wings (Serves Half: 8-10, Full: 15-20)
+- Traditional Wings: Half $59.99 | Full $134.99
+- Breaded Wings: Half $59.99 | Full $134.99
+- Boneless Wings: Half $59.99 | Full $134.99
+- Chicken Tenders: Half $59.99 | Full $134.99
+
+### Catering Fries (Serves Half: 8-10, Full: 15-20)
+- French Fries / Cheese Fries / Old Bay Fries / Steak Fries / Mega Fries / Pizza Fries / Philly's Fries: Half $34.99 - $45.00 | Full $84.99
+- Cheese Steak Fries / Chicken Fries / Buffalo Chx Fries: Half $60.00 | Full $100.00 - $110.00
+- Curly Fries: Half $45.00 | Full $84.99
+
+### Catering Salads (Serves Half: 8-10, Full: 15-20)
+- Garden Salad / Caesar Salad: Half $40.00 | Full $80.00
+- Chicken Salad / Buff Grlld Chx / Chx Caesar / Chef / Greek / Greek Grlld Chx / Tuna / Antipasto Salad: Half $49.99 | Full $99.99
+- Shrimp Salad: Half $85.00 | Full $200.00
+- Salmon Salad: Half $85.00 | Full $190.00
+- Steak Salad: Half $59.99 | Full $119.99
+
+### Catering Pasta (Serves Half: 8-10, Full: 15-20)
+- CYO Pasta / Penne Primavera / Chicken Marsala / Chicken Parmigiana / Lasagna / Baked Ravioli / Stuffed Shells / Baked Ziti / Spaghetti Meat Sauce: Half $49.95 | Full $89.99
+- Seafood Pasta: Half $80.00 | Full $200.00
+- Shrimp & Scallop Scampi: Half $85.00 | Full $190.00
+- Shrimp Parmigiana: Half $80.00 | Full $160.00
+- Lobster Ravioli: Half $80.00 | Full $120.00
+
+### Catering Latin (Serves Half: 8-10, Full: 15-20)
+- Tacos / Fajitas: Half $60.00 | Full $140.00
+- Burritos: Half $80.00 | Full $160.00
+- Papusas / Quesadillas: Half $80.00 - $85.00 | Full $180.00
+- Empanadas / Carne Asada: Half $100.00 | Full $200.00
+- Pollo Ranchero / Pollo Rostizado: Half $85.00 | Full $200.00
+- Nachos: Half $60.00 | Full $90.00
 `;
 
 const SYSTEM_PROMPT = `
@@ -282,7 +315,12 @@ export async function POST(req: Request) {
         const { messages } = await req.json();
         const apiKey = process.env.GEMINI_API_KEY;
 
-        if (!apiKey) return NextResponse.json({ reply: 'API Key missing.' }, { status: 500 });
+        if (!apiKey) {
+            return NextResponse.json(
+                { reply: 'API key is not configured on server (.env.local).' },
+                { status: 500 }
+            );
+        }
 
         const contents = messages.map((m: any) => ({
             role: m.role === 'user' ? 'user' : 'model',
@@ -290,23 +328,41 @@ export async function POST(req: Request) {
         }));
 
         const response = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
             {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     contents,
-                    systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
-                    generationConfig: { temperature: 0.2, maxOutputTokens: 400 },
+                    system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
+                    generationConfig: {
+                        temperature: 0.2,
+                        maxOutputTokens: 400,
+                    },
                 }),
             }
         );
 
+        if (!response.ok) {
+            const errText = await response.text();
+            console.error('Gemini API Response Error:', errText);
+            return NextResponse.json(
+                { reply: 'Gemini API Error. Please check API Key or quota.' },
+                { status: response.status }
+            );
+        }
+
         const data = await response.json();
         const botReply = data.candidates?.[0]?.content?.parts?.[0]?.text;
 
-        return NextResponse.json({ reply: botReply || 'I am sorry, I could not process that request.' });
-    } catch (error) {
-        return NextResponse.json({ reply: 'Server error.' }, { status: 500 });
+        return NextResponse.json({
+            reply: botReply || 'I am sorry, I could not process that request.',
+        });
+    } catch (error: any) {
+        console.error('Chat Route Catch Error:', error);
+        return NextResponse.json(
+            { reply: 'Server internal error.' },
+            { status: 500 }
+        );
     }
 }
