@@ -205,7 +205,7 @@ const REGULAR_MENU = `
 - Meat Lovers Stromboli: $15.99
 - Vegetable Stromboli: $14.99
 - Philly Special Stromboli: $18.99 - Cheese, peppers, onions & mushrooms
-- Philly Special Chicken Stromboli: $18.99 - Chicken, green peppers, onions, pepperoni & mushrooms
+- Philly Special Chicken Stromboli: $18.99 - Cheese, peppers, onions & mushrooms
 
 ### Subs + Grinders
 - Italian Sub: $12.99 - Ham, capicola, Genoa salami, and American cheese
@@ -317,7 +317,7 @@ export async function POST(req: Request) {
 
         if (!apiKey) {
             return NextResponse.json(
-                { reply: 'API key is not configured on server (.env.local).' },
+                { reply: 'API key is missing in Vercel environment (GEMINI_API_KEY).' },
                 { status: 500 }
             );
         }
@@ -327,8 +327,9 @@ export async function POST(req: Request) {
             parts: [{ text: m.content }],
         }));
 
+        // Standard gemini-1.5-flash REST endpoint
         const response = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
             {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -343,25 +344,24 @@ export async function POST(req: Request) {
             }
         );
 
+        const data = await response.json();
+
         if (!response.ok) {
-            const errText = await response.text();
-            console.error('Gemini API Response Error:', errText);
+            const googleErr = data?.error?.message || JSON.stringify(data);
             return NextResponse.json(
-                { reply: 'Gemini API Error. Please check API Key or quota.' },
+                { reply: `Google API Error (${response.status}): ${googleErr}` },
                 { status: response.status }
             );
         }
 
-        const data = await response.json();
         const botReply = data.candidates?.[0]?.content?.parts?.[0]?.text;
 
         return NextResponse.json({
             reply: botReply || 'I am sorry, I could not process that request.',
         });
     } catch (error: any) {
-        console.error('Chat Route Catch Error:', error);
         return NextResponse.json(
-            { reply: 'Server internal error.' },
+            { reply: `Server catch error: ${error?.message || 'Unknown error'}` },
             { status: 500 }
         );
     }
