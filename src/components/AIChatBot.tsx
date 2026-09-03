@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { X, Send, Bot } from 'lucide-react';
 
 interface Message {
     role: 'user' | 'assistant';
@@ -84,38 +83,48 @@ export default function AIChatBot() {
                 body: JSON.stringify({ messages: updatedMessages }),
             });
 
+            if (!res.ok) {
+                throw new Error(`API response failed with status ${res.status}`);
+            }
+
             const data = await res.json();
-            if (data.reply) {
+            if (data && data.reply) {
                 setMessages((prev) => [...prev, { role: 'assistant', content: data.reply }]);
             } else {
-                setMessages((prev) => [...prev, { role: 'assistant', content: 'I am sorry, I could not process that request.' }]);
+                setMessages((prev) => [...prev, { role: 'assistant', content: 'I am sorry, I could not process that request right now.' }]);
             }
         } catch (err) {
-            setMessages((prev) => [...prev, { role: 'assistant', content: 'Something went wrong. Please try again.' }]);
+            setMessages((prev) => [...prev, { role: 'assistant', content: 'Gemini API Error. Please check API Key or quota.' }]);
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <div className="fixed bottom-6 right-6 z-50">
+        // Flex-col ve items-end ile sağa hizalamayı garantiye alıyoruz
+        <div className="fixed bottom-24 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col items-end">
             {!isOpen && (
                 <button
                     onClick={() => setIsOpen(true)}
                     aria-label="Ask Raggio AI Assistant"
-                    className="bg-gradient-to-r from-gold via-gold-bright to-gold text-ink p-4 rounded-full shadow-[0_4px_20px_rgba(201,161,92,0.5)] hover:scale-110 transition-all cursor-pointer flex items-center gap-2 font-bold text-xs uppercase tracking-wider"
+                    className="bg-gradient-to-r from-gold via-gold-bright to-gold text-ink p-3.5 sm:p-4 rounded-full shadow-[0_4px_20px_rgba(201,161,92,0.5)] hover:scale-105 active:scale-95 transition-all cursor-pointer flex items-center gap-2 font-bold text-xs uppercase tracking-wider"
                 >
-                    <Bot className="w-6 h-6 stroke-[2.5]" />
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 sm:w-6 sm:h-6">
+                        <path d="M12 8V4H8" /><rect width="16" height="12" x="4" y="8" rx="2" /><path d="M2 14h2" /><path d="M20 14h2" /><path d="M15 13v2" /><path d="M9 13v2" />
+                    </svg>
                     <span className="hidden sm:inline">Ask Raggio AI</span>
                 </button>
             )}
 
             {isOpen && (
-                <div className="w-[340px] sm:w-[380px] h-[500px] bg-[#14181d] border border-panel-border rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-fadeIn">
-                    <div className="bg-[#1c2127] p-4 border-b border-panel-border flex items-center justify-between">
+                // Genişliği viewport eksi margin (calc(100vw - 2rem)) olarak ayarladık, mobilde asla taşmaz
+                <div className="w-[calc(100vw-2rem)] sm:w-[380px] h-[450px] sm:h-[500px] bg-[#14181d] border border-panel-border rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-fadeIn origin-bottom-right">
+                    <div className="bg-[#1c2127] p-3 sm:p-4 border-b border-panel-border flex items-center justify-between">
                         <div className="flex items-center gap-2.5">
-                            <div className="p-2 rounded-xl bg-gold/10 border border-gold/30">
-                                <Bot className="w-5 h-5 text-gold" />
+                            <div className="p-2 rounded-xl bg-gold/10 border border-gold/30 hidden sm:block">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-gold">
+                                    <path d="M12 8V4H8" /><rect width="16" height="12" x="4" y="8" rx="2" /><path d="M2 14h2" /><path d="M20 14h2" /><path d="M15 13v2" /><path d="M9 13v2" />
+                                </svg>
                             </div>
                             <div>
                                 <h4 className="text-sm font-extrabold text-cream">Raggio AI</h4>
@@ -127,11 +136,13 @@ export default function AIChatBot() {
                             aria-label="Close Chat Window"
                             className="p-1.5 rounded-full text-stone hover:text-cream hover:bg-black/40 transition-colors"
                         >
-                            <X className="w-5 h-5" />
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                                <path d="M18 6 6 18" /><path d="m6 6 12 12" />
+                            </svg>
                         </button>
                     </div>
 
-                    <div className="flex-1 p-4 overflow-y-auto space-y-3 bg-ink/50">
+                    <div className="flex-1 p-3 sm:p-4 overflow-y-auto space-y-3 bg-ink/50">
                         {messages.map((msg, idx) => (
                             <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                                 <div className={`max-w-[85%] p-3 rounded-2xl text-xs leading-relaxed whitespace-pre-wrap ${msg.role === 'user' ? 'bg-gold text-ink font-semibold rounded-br-none' : 'bg-[#1c2127] text-cream border border-panel-border rounded-bl-none'}`}>
@@ -149,7 +160,7 @@ export default function AIChatBot() {
                         <div ref={messagesEndRef} />
                     </div>
 
-                    <form onSubmit={handleSend} className="p-3 bg-[#1c2127] border-t border-panel-border flex gap-2">
+                    <form onSubmit={handleSend} className="p-2.5 sm:p-3 bg-[#1c2127] border-t border-panel-border flex gap-2">
                         <input
                             type="text"
                             value={input}
@@ -163,7 +174,9 @@ export default function AIChatBot() {
                             aria-label="Send Message"
                             className="bg-gold hover:bg-gold-bright text-ink p-2.5 rounded-xl disabled:opacity-50 transition-all cursor-pointer"
                         >
-                            <Send className="w-4 h-4 stroke-[2.5]" />
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                                <path d="m22 2-7 20-4-9-9-4Z" /><path d="M22 2 11 13" />
+                            </svg>
                         </button>
                     </form>
                 </div>
