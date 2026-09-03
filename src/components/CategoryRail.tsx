@@ -33,7 +33,7 @@ export default function CategoryRail() {
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const isPaused = useRef(false);
-  const exactScroll = useRef(0); // Ondalık değerleri biriktireceğimiz kumbara
+  const exactScroll = useRef(0);
   const resumeTimer = useRef<NodeJS.Timeout | null>(null);
 
   // IntersectionObserver for ScrollSpy
@@ -73,12 +73,12 @@ export default function CategoryRail() {
     if (!container) return;
 
     let animId: number;
-    exactScroll.current = container.scrollLeft; // Başlangıç pozisyonunu al
+    exactScroll.current = container.scrollLeft;
 
     const step = () => {
       if (!isPaused.current) {
         if (container.scrollWidth > container.clientWidth) {
-          // Ondalık değeri ref içinde biriktirip container'a basıyoruz
+          // Birikimli kaydırma
           exactScroll.current += 0.5;
           container.scrollLeft = exactScroll.current;
 
@@ -96,24 +96,24 @@ export default function CategoryRail() {
     return () => cancelAnimationFrame(animId);
   }, []);
 
-  // Parmağımızla dokunduğumuzda veya kaydırdığımızda durdur
-  const handleUserInteraction = () => {
+  // Tüm kullanıcı etkileşimlerini (dokunma, kaydırma, momentum) tek bir fonksiyonda yönetiyoruz
+  const handleInteraction = () => {
     isPaused.current = true;
-    if (scrollRef.current) {
-      exactScroll.current = scrollRef.current.scrollLeft; // Kumbarayı parmağımızın olduğu yere eşitle
-    }
-    if (resumeTimer.current) clearTimeout(resumeTimer.current);
-  };
 
-  // Parmağımızı çektikten 1.5 saniye sonra akmaya devam etsin
-  const handleInteractionEnd = () => {
+    if (scrollRef.current) {
+      exactScroll.current = scrollRef.current.scrollLeft;
+    }
+
+    // Var olan geri sayımı iptal et (böylece momentum sürdükçe süre sıfırlanır)
     if (resumeTimer.current) clearTimeout(resumeTimer.current);
+
+    // Kaydırma eylemi TAMAMEN bittikten 1 saniye sonra akışı tekrar başlat
     resumeTimer.current = setTimeout(() => {
       if (scrollRef.current) {
-        exactScroll.current = scrollRef.current.scrollLeft; // Telefonun kendi kayma ivmesi bitince son konumu al
+        exactScroll.current = scrollRef.current.scrollLeft;
       }
       isPaused.current = false;
-    }, 1500);
+    }, 1000);
   };
 
   const handleCategoryClick = (e: React.MouseEvent<HTMLAnchorElement>, searchId: string) => {
@@ -140,12 +140,11 @@ export default function CategoryRail() {
     <div className="sticky top-20 z-40 bg-ink/95 backdrop-blur-md border-b border-panel-border py-4">
       <div
         ref={scrollRef}
-        onTouchStart={handleUserInteraction}
-        onTouchEnd={handleInteractionEnd}
-        onMouseDown={handleUserInteraction}
-        onMouseUp={handleInteractionEnd}
-        onScroll={handleUserInteraction}
-        onWheel={handleUserInteraction}
+        onTouchStart={handleInteraction}
+        onTouchMove={handleInteraction}
+        onScroll={handleInteraction}
+        onWheel={handleInteraction}
+        onMouseEnter={handleInteraction}
         className="flex overflow-x-auto md:flex-wrap md:justify-center gap-2 px-4 md:px-6 max-w-7xl mx-auto no-scrollbar"
         style={{ WebkitOverflowScrolling: 'touch' }}
       >
