@@ -67,7 +67,7 @@ export default function CategoryRail() {
     };
   }, []);
 
-  // Kesintisiz ve Hızlı Auto-scroll motoru (Self-sabotaj kaldırıldı)
+  // Auto-scroll loop (Hız 1.1 olarak ayarlandı)
   useEffect(() => {
     const container = scrollRef.current;
     if (!container) return;
@@ -78,11 +78,9 @@ export default function CategoryRail() {
     const step = () => {
       if (!isPaused.current) {
         if (container.scrollWidth > container.clientWidth) {
-          // Hız 0.5'ten 1.5'e çıkarıldı (çok daha hızlı ve akıcı)
-          exactScroll.current += 1.5;
+          exactScroll.current += 1.1; // Hız 1.1
           container.scrollLeft = exactScroll.current;
 
-          // Sona gelince pürüzsüzce başa dön
           if (container.scrollLeft >= container.scrollWidth - container.clientWidth - 2) {
             exactScroll.current = 0;
             container.scrollLeft = 0;
@@ -96,13 +94,11 @@ export default function CategoryRail() {
     return () => cancelAnimationFrame(animId);
   }, []);
 
-  // SADECE fiziksel dokunuşta durdur (onScroll dinleyicisi silindi)
   const handleInteractionStart = () => {
     isPaused.current = true;
     if (resumeTimer.current) clearTimeout(resumeTimer.current);
   };
 
-  // Dokunma bittikten 1.5 saniye sonra son pozisyonu alıp akmaya devam et
   const handleInteractionEnd = () => {
     if (resumeTimer.current) clearTimeout(resumeTimer.current);
     resumeTimer.current = setTimeout(() => {
