@@ -101,7 +101,6 @@ export default function AIChatBot() {
     };
 
     return (
-        // Flex-col ve items-end ile sağa hizalamayı garantiye alıyoruz
         <div className="fixed bottom-24 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col items-end">
             {!isOpen && (
                 <button
@@ -117,7 +116,6 @@ export default function AIChatBot() {
             )}
 
             {isOpen && (
-                // Genişliği viewport eksi margin (calc(100vw - 2rem)) olarak ayarladık, mobilde asla taşmaz
                 <div className="w-[calc(100vw-2rem)] sm:w-[380px] h-[450px] sm:h-[500px] bg-[#14181d] border border-panel-border rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-fadeIn origin-bottom-right">
                     <div className="bg-[#1c2127] p-3 sm:p-4 border-b border-panel-border flex items-center justify-between">
                         <div className="flex items-center gap-2.5">
