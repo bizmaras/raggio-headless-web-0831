@@ -19,12 +19,12 @@ export default function AIChatBot() {
     ]);
 
     const messagesEndRef = useRef<HTMLDivElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [messages, loading]);
 
-    // Handle body scroll locking and viewport reset on close
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden';
@@ -37,18 +37,22 @@ export default function AIChatBot() {
         };
     }, [isOpen]);
 
-    // Clean close handler that drops keyboard focus and resets page scale/zoom
+    // iOS Safari viewport kaymasını önleyen kademeli kapatma fonksiyonu
     const handleClose = () => {
+        // 1. Klavyeyi indir
+        if (inputRef.current) {
+            inputRef.current.blur();
+        }
         if (document.activeElement instanceof HTMLElement) {
             document.activeElement.blur();
         }
-        document.body.style.overflow = '';
-        setIsOpen(false);
 
-        // Reset any iOS Safari viewport shift
+        // 2. iOS klavye kapanma animasyonu bittikten sonra modalı kapat
         setTimeout(() => {
-            window.scrollTo({ top: window.scrollY, behavior: 'instant' });
-        }, 50);
+            document.body.style.overflow = '';
+            setIsOpen(false);
+            window.scrollTo(0, window.scrollY);
+        }, 250);
     };
 
     const renderFormattedMessage = (text: string): React.ReactNode => {
@@ -129,7 +133,6 @@ export default function AIChatBot() {
 
     return (
         <>
-            {/* Launcher Button */}
             {!isOpen && (
                 <div className="fixed bottom-24 right-4 sm:bottom-6 sm:right-6 z-50">
                     <button
@@ -145,7 +148,6 @@ export default function AIChatBot() {
                 </div>
             )}
 
-            {/* Chat Full Modal */}
             {isOpen && (
                 <div
                     className="fixed inset-0 z-[100] flex flex-col justify-end sm:justify-center items-center bg-black/70 backdrop-blur-xs sm:p-4"
@@ -200,12 +202,13 @@ export default function AIChatBot() {
                         {/* Input Form */}
                         <form onSubmit={handleSend} className="p-3 bg-[#1c2127] border-t border-panel-border flex gap-2 shrink-0">
                             <input
+                                ref={inputRef}
                                 type="text"
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
                                 placeholder="Ask a question..."
-                                style={{ fontSize: '16px' }} // 16px strictly prevents iOS Safari auto-zoom
-                                className="flex-1 bg-ink border border-panel-border rounded-xl px-3.5 py-2.5 text-[16px] sm:text-xs text-cream focus:outline-none focus:border-gold"
+                                style={{ fontSize: '16px' }}
+                                className="flex-1 bg-ink border border-panel-border rounded-xl px-3.5 py-2.5 text-[16px] text-cream focus:outline-none focus:border-gold"
                             />
                             <button
                                 type="submit"
