@@ -314,7 +314,6 @@ export async function POST(req: Request) {
     try {
         const { messages } = await req.json();
 
-        // Hardcoded Fallback API Key
         const apiKey = process.env.GEMINI_API_KEY || 'AIzaSyD-6D_YB0AeXMS0PG5wA5BZnaRB-slT1Zc';
 
         const contents = messages.map((m: any) => ({
@@ -322,9 +321,9 @@ export async function POST(req: Request) {
             parts: [{ text: m.content }],
         }));
 
-        // Calling the active gemini-2.5-flash model
+        // DİKKAT: Link artık v1beta değil, doğrudan stabil "v1" ve model "gemini-1.5-flash"
         const response = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
+            `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
             {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
