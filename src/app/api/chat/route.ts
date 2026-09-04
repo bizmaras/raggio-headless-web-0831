@@ -313,21 +313,16 @@ STRICT RULES:
 export async function POST(req: Request) {
     try {
         const { messages } = await req.json();
-        const apiKey = process.env.GEMINI_API_KEY;
 
-        if (!apiKey) {
-            return NextResponse.json(
-                { reply: 'API key is missing in Vercel environment (GEMINI_API_KEY).' },
-                { status: 500 }
-            );
-        }
+        // Explicit API Key with environment variable fallback
+        const apiKey = process.env.GEMINI_API_KEY || 'AIzaSyD-6D_YB0AeXMS0PG5wA5BZnaRB-slT1Zc';
 
         const contents = messages.map((m: any) => ({
             role: m.role === 'user' ? 'user' : 'model',
             parts: [{ text: m.content }],
         }));
 
-        // Standard gemini-1.5-flash REST endpoint
+        // Call Google Gemini API v1beta endpoint
         const response = await fetch(
             `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
             {
