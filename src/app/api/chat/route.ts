@@ -1,3 +1,4 @@
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import { NextResponse } from 'next/server';
 
 export const runtime = 'edge';
@@ -290,7 +291,7 @@ const CATERING_MENU = `
 `;
 
 const SYSTEM_PROMPT = `
-You are Raggio AI, the official digital assistant for Raggio Gourmet & Pizza in Newark, DE (681 E Chestnut Hill Rd).
+You are Raggio AI, the official digital assistant for Raggio Gourmet & Pizza in Newark, DE.
 
 FULL REGULAR MENU KNOWLEDGE BASE:
 ${REGULAR_MENU}
@@ -314,48 +315,42 @@ export async function POST(req: Request) {
     try {
         const { messages } = await req.json();
 
+        // 1. Resmi Google SDK'yı Başlat
         const apiKey = process.env.GEMINI_API_KEY || 'AIzaSyD-6D_YB0AeXMS0PG5wA5BZnaRB-slT1Zc';
+        const genAI = new GoogleGenerativeAI(apiKey);
 
-        const contents = messages.map((m: any) => ({
+        // 2. Modeli Seç (SDK, en stabil endpoint'i kendisi bulur)
+        const model = genAI.getGenerativeModel({
+            model: 'gemini-1.5-flash',
+            systemInstruction: SYSTEM_PROMPT,
+        });
+
+        // 3. Mesaj geçmişini Google'ın istediği formata çevir
+        const history = messages.slice(0, -1).map((m: any) => ({
             role: m.role === 'user' ? 'user' : 'model',
             parts: [{ text: m.content }],
         }));
 
-        // DİKKAT: Link artık v1beta değil, doğrudan stabil "v1" ve model "gemini-1.5-flash"
-        const response = await fetch(
-            `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    contents,
-                    system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
-                    generationConfig: {
-                        temperature: 0.2,
-                        maxOutputTokens: 400,
-                    },
-                }),
-            }
-        );
+        const lastMessage = messages[messages.length - 1].content;
 
-        const data = await response.json();
-
-        if (!response.ok) {
-            const googleErr = data?.error?.message || JSON.stringify(data);
-            return NextResponse.json(
-                { reply: `Google API Error (${response.status}): ${googleErr}` },
-                { status: response.status }
-            );
-        }
-
-        const botReply = data.candidates?.[0]?.content?.parts?.[0]?.text;
-
-        return NextResponse.json({
-            reply: botReply || 'I am sorry, I could not process that request.',
+        // 4. Sohbeti başlat ve hızlı yanıt al
+        const chat = model.startChat({
+            history: history,
+            generationConfig: {
+                temperature: 0.2,
+                maxOutputTokens: 400,
+            },
         });
+
+        const result = await chat.sendMessage(lastMessage);
+        const text = result.response.text();
+
+        return NextResponse.json({ reply: text });
+
     } catch (error: any) {
+        console.error("AI Error:", error);
         return NextResponse.json(
-            { reply: `Server catch error: ${error?.message || 'Unknown error'}` },
+            { reply: `Sistem Hatası: ${error.message || 'Bilinmeyen bağlantı hatası.'}` },
             { status: 500 }
         );
     }

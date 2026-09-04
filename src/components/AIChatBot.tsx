@@ -26,26 +26,13 @@ export default function AIChatBot() {
     }, [messages, loading]);
 
     useEffect(() => {
-        if (isOpen) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
-        }
-
-        return () => {
-            document.body.style.overflow = '';
-        };
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+        return () => { document.body.style.overflow = ''; };
     }, [isOpen]);
 
-    // Handle clean focus removal and delayed unmount for smooth iOS Safari viewport restoration
     const handleClose = () => {
-        if (inputRef.current) {
-            inputRef.current.blur();
-        }
-        if (document.activeElement instanceof HTMLElement) {
-            document.activeElement.blur();
-        }
-
+        inputRef.current?.blur();
+        (document.activeElement as HTMLElement)?.blur();
         setTimeout(() => {
             document.body.style.overflow = '';
             setIsOpen(false);
@@ -63,34 +50,22 @@ export default function AIChatBot() {
             if (match.index > lastIndex) {
                 parts.push(text.substring(lastIndex, match.index));
             }
-
             if (match[1]) {
                 parts.push(
-                    <a
-                        key={match.index}
-                        href={match[3]}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="font-bold underline text-gold hover:text-gold-bright transition-colors break-all"
-                    >
+                    <a key={match.index} href={match[3]} target="_blank" rel="noopener noreferrer" className="font-bold underline text-gold hover:text-gold-bright transition-colors break-all">
                         {match[2]}
                     </a>
                 );
             } else if (match[4]) {
                 parts.push(
-                    <strong key={match.index} className="font-bold text-cream">
+                    <strong key={match.index} className="font-bold text-white">
                         {match[5]}
                     </strong>
                 );
             }
-
             lastIndex = regex.lastIndex;
         }
-
-        if (lastIndex < text.length) {
-            parts.push(text.substring(lastIndex));
-        }
-
+        if (lastIndex < text.length) parts.push(text.substring(lastIndex));
         return parts;
     };
 
@@ -113,25 +88,9 @@ export default function AIChatBot() {
             });
 
             const data = await res.json();
-
-            if (!res.ok) {
-                setMessages((prev) => [
-                    ...prev,
-                    { role: 'assistant', content: `API Error (${res.status}): ${data.reply || 'Unknown error'}` },
-                ]);
-                return;
-            }
-
-            if (data && data.reply) {
-                setMessages((prev) => [...prev, { role: 'assistant', content: data.reply }]);
-            } else {
-                setMessages((prev) => [...prev, { role: 'assistant', content: 'No response received from model.' }]);
-            }
+            setMessages((prev) => [...prev, { role: 'assistant', content: data.reply || 'No response.' }]);
         } catch (err: any) {
-            setMessages((prev) => [
-                ...prev,
-                { role: 'assistant', content: `Network/Client Error: ${err?.message || 'Failed to fetch'}` },
-            ]);
+            setMessages((prev) => [...prev, { role: 'assistant', content: `Bağlantı Hatası: Lütfen tekrar deneyin.` }]);
         } finally {
             setLoading(false);
         }
@@ -140,13 +99,12 @@ export default function AIChatBot() {
     return (
         <>
             {!isOpen && (
-                <div className="fixed bottom-24 right-4 sm:bottom-6 sm:right-6 z-50">
+                <div className="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-50 animate-bounce">
                     <button
                         onClick={() => setIsOpen(true)}
-                        aria-label="Ask Raggio AI Assistant"
-                        className="bg-gradient-to-r from-gold via-gold-bright to-gold text-ink p-3.5 sm:p-4 rounded-full shadow-[0_4px_20px_rgba(201,161,92,0.5)] hover:scale-105 active:scale-95 transition-all cursor-pointer flex items-center gap-2 font-bold text-xs sm:text-sm uppercase tracking-wider"
+                        className="bg-gold hover:bg-gold-bright text-ink p-4 rounded-full shadow-[0_8px_30px_rgb(201,161,92,0.4)] hover:scale-105 active:scale-95 transition-all flex items-center gap-2 font-black uppercase tracking-wider"
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 sm:w-6 sm:h-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
                             <path d="M12 8V4H8" /><rect width="16" height="12" x="4" y="8" rx="2" /><path d="M2 14h2" /><path d="M20 14h2" /><path d="M15 13v2" /><path d="M9 13v2" />
                         </svg>
                         <span className="hidden sm:inline">Ask Raggio AI</span>
@@ -155,51 +113,43 @@ export default function AIChatBot() {
             )}
 
             {isOpen && (
-                <div
-                    className="fixed inset-0 z-[100] flex flex-col justify-end sm:justify-center items-center bg-black/70 backdrop-blur-xs sm:p-6"
-                    onClick={(e) => {
-                        if (e.target === e.currentTarget) handleClose();
-                    }}
-                >
-                    {/* Mobile: 100dvh, Desktop (sm): 480px width & 620px height */}
-                    <div className="w-full h-[100dvh] sm:h-[620px] sm:w-[480px] bg-[#14181d] border-t sm:border border-panel-border sm:rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-fadeIn">
-                        {/* Header */}
-                        <div className="bg-[#1c2127] p-4 sm:p-5 border-b border-panel-border flex items-center justify-between shrink-0">
+                <div className="fixed inset-0 z-[100] flex flex-col justify-end sm:justify-center items-center bg-black/80 backdrop-blur-md sm:p-6 transition-opacity" onClick={(e) => { if (e.target === e.currentTarget) handleClose(); }}>
+                    <div className="w-full h-[100dvh] sm:h-[650px] sm:w-[480px] bg-[#0d1117] border border-gray-800 sm:rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-fadeIn">
+                        {/* Modern Header */}
+                        <div className="bg-[#161b22] p-4 border-b border-gray-800 flex items-center justify-between shrink-0">
                             <div className="flex items-center gap-3">
-                                <div className="p-2.5 rounded-xl bg-gold/10 border border-gold/30">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6 text-gold">
+                                <div className="p-2.5 rounded-full bg-gold text-ink">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
                                         <path d="M12 8V4H8" /><rect width="16" height="12" x="4" y="8" rx="2" /><path d="M2 14h2" /><path d="M20 14h2" /><path d="M15 13v2" /><path d="M9 13v2" />
                                     </svg>
                                 </div>
                                 <div>
-                                    <h4 className="text-base font-extrabold text-cream">Raggio AI</h4>
-                                    <p className="text-xs text-stone">Menu & Catering Assistant</p>
+                                    <h4 className="text-md font-bold text-white tracking-wide">Raggio AI</h4>
+                                    <p className="text-xs text-gray-400">Smart Assistant</p>
                                 </div>
                             </div>
-                            <button
-                                onClick={handleClose}
-                                aria-label="Close Chat Window"
-                                className="p-2 rounded-full text-stone hover:text-cream bg-black/20 hover:bg-black/50 transition-colors cursor-pointer"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6 sm:w-5 sm:h-5">
+                            <button onClick={handleClose} className="p-2 rounded-full text-gray-400 hover:text-white bg-white/5 hover:bg-white/10 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
                                     <path d="M18 6 6 18" /><path d="m6 6 12 12" />
                                 </svg>
                             </button>
                         </div>
 
-                        {/* Messages */}
-                        <div className="flex-1 p-4 sm:p-5 overflow-y-auto space-y-4 bg-ink/50">
+                        {/* Chat Area */}
+                        <div className="flex-1 p-5 overflow-y-auto space-y-5 bg-[#0d1117]">
                             {messages.map((msg, idx) => (
                                 <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                                    <div className={`max-w-[85%] p-3.5 sm:p-4 rounded-2xl text-xs sm:text-sm leading-relaxed whitespace-pre-wrap ${msg.role === 'user' ? 'bg-gold text-ink font-semibold rounded-br-none' : 'bg-[#1c2127] text-cream border border-panel-border rounded-bl-none'}`}>
+                                    <div className={`max-w-[85%] p-4 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap shadow-sm ${msg.role === 'user' ? 'bg-gold text-ink font-semibold rounded-br-sm' : 'bg-[#161b22] text-gray-200 border border-gray-800 rounded-bl-sm'}`}>
                                         {renderFormattedMessage(msg.content)}
                                     </div>
                                 </div>
                             ))}
                             {loading && (
                                 <div className="flex justify-start">
-                                    <div className="bg-[#1c2127] text-gold text-xs sm:text-sm p-3.5 rounded-2xl border border-panel-border animate-pulse">
-                                        Raggio AI is thinking...
+                                    <div className="bg-[#161b22] text-gold text-sm p-4 rounded-2xl border border-gray-800 rounded-bl-sm flex items-center gap-2">
+                                        <div className="w-2 h-2 bg-gold rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                                        <div className="w-2 h-2 bg-gold rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                                        <div className="w-2 h-2 bg-gold rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
                                     </div>
                                 </div>
                             )}
@@ -207,23 +157,22 @@ export default function AIChatBot() {
                         </div>
 
                         {/* Input Form */}
-                        <form onSubmit={handleSend} className="p-3.5 sm:p-4 bg-[#1c2127] border-t border-panel-border flex gap-2.5 shrink-0">
+                        <form onSubmit={handleSend} className="p-4 bg-[#161b22] border-t border-gray-800 flex gap-3 shrink-0">
                             <input
                                 ref={inputRef}
                                 type="text"
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
-                                placeholder="Ask a question..."
+                                placeholder="Type your message..."
                                 style={{ fontSize: '16px' }}
-                                className="flex-1 bg-ink border border-panel-border rounded-xl px-4 py-3 text-[16px] sm:text-sm text-cream focus:outline-none focus:border-gold"
+                                className="flex-1 bg-[#0d1117] border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-gold transition-colors shadow-inner"
                             />
                             <button
                                 type="submit"
                                 disabled={loading || !input.trim()}
-                                aria-label="Send Message"
-                                className="bg-gold hover:bg-gold-bright text-ink px-5 py-3 rounded-xl disabled:opacity-50 transition-all cursor-pointer flex items-center justify-center shrink-0 font-bold"
+                                className="bg-gold hover:bg-gold-bright text-ink w-12 h-12 rounded-xl disabled:opacity-50 transition-all flex items-center justify-center shrink-0 shadow-md"
                             >
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 ml-1">
                                     <path d="m22 2-7 20-4-9-9-4Z" /><path d="M22 2 11 13" />
                                 </svg>
                             </button>
