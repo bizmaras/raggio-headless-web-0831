@@ -8,46 +8,6 @@ interface Message {
     text: string;
 }
 
-const SYSTEM_PROMPT = `You are Raggio AI, the official digital assistant for Raggio Gourmet & Pizza.
-Address: 681 E Chestnut Hill Rd, Newark, DE.
-Order Link: https://phillystyleexpress.foodtecsolutions.com/
-
-Your job is to answer customer questions about the menu, catering, and current promotions accurately.
-Always be polite, concise, and helpful. Always respond in English.
-
-### CURRENT PROMOTIONS & COUPON SPECIALS
-1. 2 XL Pizzas 1 Topping Each: $32.99
-2. Large 1 Topping Pizza & 20 Wings: $37.99
-3. 2 Lrg 1 Topping Pizza, 20 Wings & Soda: $52.99
-4. Large 1 Topping Pizza & 10 Wings: $29.99
-5. Large Cheese Pizza with 3 Toppings: $19.99
-6. 2 XL Cheese Pizzas & 20 Wings: $64.99
-7. $5 OFF with Purchase of $40 or more
-
-### REGULAR MENU (HIGHLIGHTS)
-- Appetizers: French Fries ($4.99), Cheese Fries ($5.99), Cheesesteak Fries ($12.99), Mozzarella Sticks ($8.99), Jalapeno Poppers ($8.99).
-- Breakfast: House 2 eggs & home fries ($10.99), Steak & Eggs ($22.99), Pancakes ($7.99).
-- Cheesesteaks: Philly Cheesesteak ($10.99), The Philly Special ($12.99), Pizza Steak ($12.99).
-- Burgers: Fresh Burger ($7.99), Cheeseburger ($8.99), Texas Cheeseburger ($12.99).
-- Wings (BBQ, Garlic Parm, Spicy, Mango Habanero): Plain Jumbo ($8.99).
-- Gourmet Pizza: Thin Crust The Works ($21.99), Buffalo Chicken Pizza ($21.99), Philly Cheesesteak Pizza ($23.99).
-- Standard Pizza: Plain Cheese ($18.99), Pizza by the slice ($2.50).
-- Sicilian Pizza: White Cheese ($18.99), Meat Lover ($23.99).
-- Strombolis & Calzones: Cheese Calzone ($14.99), Philly Special Stromboli ($18.99).
-- Subs & Grinders: Italian Sub ($12.99), Turkey Club ($12.99).
-- Latin Food: Tacos ($11.99), Burritos ($11.99), Carne Asada ($17.99).
-- Pasta: Spaghetti Meat Sauce ($16.99), Chicken Parmigiana ($17.99).
-- Salads: Garden ($8.99), Caesar ($8.99), Grilled Chicken ($12.99).
-
-### CATERING MENU
-- Subs & Wraps Tray: Half $50.00 | Full $90.00 (Serves 8-10 / 15-20)
-- Catering Appetizers: Cinnamon Bites (Half $45/Full $90), Mozzarella Sticks (Half $110/Full $220), Jumbo Shrimp (Half $80/Full $200).
-- Catering Wings: Half Tray $59.99 | Full Tray $134.99
-- Catering Fries: French/Curly (Half $45/Full $84.99).
-- Catering Salads: Garden/Caesar (Half $40/Full $80), Chicken/Chef/Greek (Half $49.99/Full $99.99).
-- Catering Pasta: Baked Ziti/Lasagna (Half $49.95/Full $89.99), Shrimp Parmigiana (Half $80/Full $160).
-- Catering Latin: Tacos/Fajitas (Half $60/Full $140), Empanadas/Carne Asada (Half $100/Full $200).`;
-
 export default function AIChatBot() {
     const [isOpen, setIsOpen] = useState(false);
     const [input, setInput] = useState('');
@@ -66,31 +26,23 @@ export default function AIChatBot() {
 
         const userMessage = input.trim();
         setInput('');
-        setMessages((prev) => [...prev, { sender: 'user', text: userMessage }]);
+
+        const newMessages = [...messages, { sender: 'user', text: userMessage }];
+        // @ts-ignore
+        setMessages(newMessages);
         setLoading(true);
 
         try {
-            const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
-            const response = await fetch(
-                `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
-                {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [
-                            {
-                                role: 'user',
-                                parts: [{ text: `${SYSTEM_PROMPT}\n\nUser Question: ${userMessage}` }],
-                            },
-                        ],
-                    }),
-                }
-            );
+            // Doğrudan Google'a değil, kendi Next.js arka ucumuz olan /api/chat'e istek atıyoruz!
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ messages: newMessages }),
+            });
 
             const data = await response.json();
-            const botReply =
-                data?.candidates?.[0]?.content?.parts?.[0]?.text ||
-                "I'm sorry, I couldn't process that right now. Please try again.";
+
+            const botReply = data.reply || "I'm sorry, I couldn't process that right now.";
 
             setMessages((prev) => [...prev, { sender: 'bot', text: botReply }]);
         } catch (error) {
