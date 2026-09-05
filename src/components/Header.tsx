@@ -18,7 +18,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
 
-          {/* LEFT: LOGO (Exact 120px WebP Preset for 100 Score) & MOBILE HOME BUTTON */}
+          {/* LEFT: LOGO & MOBILE HOME BUTTON */}
           <div className="flex items-center gap-5 sm:gap-6">
             <a href="#" className="flex items-center shrink-0" aria-label="Raggio Gourmet Pizza Home">
               <Image
@@ -55,26 +55,26 @@ export default function Header() {
             </a>
           </div>
 
-          {/* DESKTOP NAV */}
-          <nav className="hidden lg:flex items-center gap-1 xl:gap-4">
+          {/* DESKTOP NAV - Font boyutu text-base (16px) ve kalınlığı font-semibold yapıldı */}
+          <nav className="hidden lg:flex items-center gap-2 xl:gap-5">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                className="px-3 py-2 rounded-lg text-sm font-medium text-stone hover:text-gold hover:bg-panel transition-all"
+                className="px-4 py-2 rounded-lg text-base font-semibold text-cream hover:text-gold hover:bg-panel transition-all"
               >
                 {link.name}
               </a>
             ))}
           </nav>
 
-          {/* DESKTOP ACTIONS */}
-          <div className="hidden lg:flex items-center gap-5">
+          {/* DESKTOP ACTIONS - Telefon numarasının fontu text-base yapıldı */}
+          <div className="hidden lg:flex items-center gap-6">
             <a
               href="tel:3023690553"
-              className="text-sm font-bold text-cream hover:text-gold transition-colors flex items-center gap-2"
+              className="text-base font-bold text-cream hover:text-gold transition-colors flex items-center gap-2"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gold">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-gold">
                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
               </svg>
               (302) 369-0553
@@ -83,7 +83,7 @@ export default function Header() {
               href="https://phillystyleexpress.foodtecsolutions.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-gold hover:bg-gold-bright text-ink font-extrabold px-5 py-2.5 rounded-xl text-sm transition-all shadow-md"
+              className="bg-gold hover:bg-gold-bright text-ink font-extrabold px-6 py-3 rounded-xl text-base transition-all shadow-md"
             >
               Order Online
             </a>
@@ -139,7 +139,7 @@ export default function Header() {
               key={link.name}
               href={link.href}
               onClick={() => setIsMobileMenuOpen(false)}
-              className="block px-4 py-3 rounded-lg text-base font-semibold text-cream hover:text-gold hover:bg-ink transition-colors"
+              className="block px-4 py-3 rounded-lg text-lg font-bold text-cream hover:text-gold hover:bg-ink transition-colors"
             >
               {link.name}
             </a>
@@ -147,9 +147,9 @@ export default function Header() {
           <div className="pt-4 border-t border-panel-border/50">
             <a
               href="tel:3023690553"
-              className="flex items-center justify-center gap-2 py-3 rounded-lg bg-ink text-gold font-bold text-sm border border-gold/30"
+              className="flex items-center justify-center gap-2 py-3 rounded-lg bg-ink text-gold font-bold text-base border border-gold/30"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gold">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-gold">
                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
               </svg>
               Call (302) 369-0553
