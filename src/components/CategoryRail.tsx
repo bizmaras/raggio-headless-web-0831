@@ -2,29 +2,30 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 
+// DÜZELTME: Sitenin ana sayfasının ürettiği orijinal ID'lerle (s takıları ve tireler dahil) birebir eşleştirildi.
 const CATEGORIES = [
   { label: 'Deals & Specials', searchId: 'deals' },
   { label: 'Pizza', searchId: 'pizza' },
-  { label: 'Gourmet Pizza', searchId: 'gourmet' },
-  { label: 'Sicilian Pizza', searchId: 'sicilian' },
-  { label: 'Chicken Wings', searchId: 'wing' },
-  { label: 'Cheesesteaks', searchId: 'cheesesteak' },
-  { label: 'Fresh Burgers', searchId: 'burger' },
-  { label: 'Appetizers', searchId: 'appetizer' },
-  { label: 'Fresh Salads', searchId: 'salad' },
+  { label: 'Gourmet Pizza', searchId: 'gourmet-pizza' },
+  { label: 'Sicilian Pizza', searchId: 'sicilian-pizza' },
+  { label: 'Chicken Wings', searchId: 'chicken-wings' },
+  { label: 'Cheesesteaks', searchId: 'cheesesteaks' },
+  { label: 'Fresh Burgers', searchId: 'fresh-burgers' },
+  { label: 'Appetizers', searchId: 'appetizers' },
+  { label: 'Fresh Salads', searchId: 'fresh-salads' },
   { label: 'Pasta', searchId: 'pasta' },
-  { label: 'Complete Dinners', searchId: 'dinner' },
+  { label: 'Complete Dinners', searchId: 'complete-dinners' },
   { label: 'Seafood', searchId: 'seafood' },
-  { label: 'Quesadillas', searchId: 'quesadilla' },
-  { label: 'Latin Food', searchId: 'latin' },
-  { label: 'Subs & Grinders', searchId: 'subs' },
-  { label: 'Strombolis & Calzones', searchId: 'stromboli' },
+  { label: 'Quesadillas', searchId: 'quesadillas' },
+  { label: 'Latin Food', searchId: 'latin-food' },
+  { label: 'Subs & Grinders', searchId: 'subs-and-grinders' },
+  { label: 'Strombolis & Calzones', searchId: 'strombolis-and-calzones' },
   { label: 'Breakfast', searchId: 'breakfast' },
-  { label: 'Hot Sandwiches', searchId: 'sandwiches' },
-  { label: 'Desserts', searchId: 'dessert' },
-  { label: 'Soups', searchId: 'soup' },
-  { label: 'Drinks', searchId: 'drink' },
-  { label: 'Side Orders', searchId: 'side' },
+  { label: 'Hot Sandwiches', searchId: 'hot-sandwiches' },
+  { label: 'Desserts', searchId: 'desserts' },
+  { label: 'Soups', searchId: 'soups' },
+  { label: 'Drinks', searchId: 'drinks' },
+  { label: 'Side Orders', searchId: 'side-orders' },
   { label: 'Catering', searchId: 'catering' }
 ];
 
@@ -40,14 +41,17 @@ export default function CategoryRail() {
   useEffect(() => {
     const observerOptions = {
       root: null,
-      rootMargin: '-150px 0px -60% 0px',
+      // DÜZELTME: Yeni yapışkan menülerin toplam yüksekliği kadar (-230px) pay bırakıldı, böylece başlık ezilmeden ışık yanacak
+      rootMargin: '-230px 0px -60% 0px',
       threshold: 0
     };
 
     const observerCallback: IntersectionObserverCallback = (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          setActiveCategory(entry.target.id);
+          // Sayfada birden fazla id eşleşmesini önlemek için doğrudan gözlemlenen elementi referans alıyoruz
+          const catId = entry.target.getAttribute('data-rail-id') || entry.target.id;
+          setActiveCategory(catId);
         }
       });
     };
@@ -56,10 +60,20 @@ export default function CategoryRail() {
 
     const timer = setTimeout(() => {
       CATEGORIES.forEach((cat) => {
-        const el = document.getElementById(cat.searchId);
-        if (el) observer.observe(el);
+        let el = document.getElementById(cat.searchId);
+
+        // Güvenlik ağı: Eğer tam isimle bulamazsa benzer ismi bulmaya çalış
+        if (!el) {
+          const elements = Array.from(document.querySelectorAll('div[id], section[id]'));
+          el = elements.find(e => e.id && e.id.toLowerCase().includes(cat.searchId.replace('-and-', ''))) as HTMLElement | null;
+        }
+
+        if (el) {
+          el.setAttribute('data-rail-id', cat.searchId);
+          observer.observe(el);
+        }
       });
-    }, 500);
+    }, 800);
 
     return () => {
       clearTimeout(timer);
@@ -67,7 +81,7 @@ export default function CategoryRail() {
     };
   }, []);
 
-  // Auto-scroll loop (Hız 1.1 olarak ayarlandı)
+  // Auto-scroll loop
   useEffect(() => {
     const container = scrollRef.current;
     if (!container) return;
@@ -78,7 +92,7 @@ export default function CategoryRail() {
     const step = () => {
       if (!isPaused.current) {
         if (container.scrollWidth > container.clientWidth) {
-          exactScroll.current += 1.1; // Hız 1.1
+          exactScroll.current += 1.1;
           container.scrollLeft = exactScroll.current;
 
           if (container.scrollLeft >= container.scrollWidth - container.clientWidth - 2) {
@@ -119,12 +133,15 @@ export default function CategoryRail() {
       const elements = Array.from(document.querySelectorAll('section, div, h1, h2, h3'));
       targetElement = elements.find(el => {
         const elId = el.id ? el.id.toLowerCase() : '';
-        return elId.includes(searchId);
+        return elId.includes(searchId.replace('-and-', ''));
       }) as HTMLElement | null;
     }
 
     if (targetElement) {
-      const topPosition = targetElement.getBoundingClientRect().top + window.scrollY - 150;
+      // DÜZELTME: Chatbottaki zeki kaydırma ayarının (mobil -180, masaüstü -220) aynısını menüye ekledik.
+      const isMobile = window.innerWidth < 640;
+      const yOffset = isMobile ? -180 : -220;
+      const topPosition = targetElement.getBoundingClientRect().top + window.scrollY + yOffset;
       window.scrollTo({ top: topPosition, behavior: 'smooth' });
     }
   };
