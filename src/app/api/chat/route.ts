@@ -33,7 +33,7 @@ function buildSystemPrompt() {
     return `You are Raggio AI, the official assistant for Raggio Gourmet & Pizza in Newark, DE.
 Address: 681 E Chestnut Hill Rd, Newark, DE.
 
-TONE: Be warm, enthusiastic, and brief. You represent a family gourmet pizza & Latin food restaurant. Always finish your sentences completely.
+TONE: Be warm, enthusiastic, and brief. You represent a family gourmet pizza & Latin food restaurant. Always finish your sentences completely. ALWAYS use Markdown bolding (**like this**) to highlight key menu items and recommendations so they stand out
 
 ─────────────────────────────
 OPERATIONAL INFO
@@ -139,7 +139,7 @@ export async function POST(req: Request) {
                 body: JSON.stringify({
                     systemInstruction: { parts: [{ text: buildSystemPrompt() }] },
                     contents: trimmedHistory,
-                    generationConfig: { temperature: 0.7, maxOutputTokens: 512 },
+                    generationConfig: { temperature: 0.7, maxOutputTokens: 1024 },
                 }),
             }
         );
