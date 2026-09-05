@@ -51,7 +51,9 @@ export default function AIChatBot() {
     }, [messages, isOpen, loading]);
 
     useEffect(() => {
-        if (isOpen) inputRef.current?.focus();
+        if (isOpen && window.innerWidth >= 640) {
+            inputRef.current?.focus();
+        }
     }, [isOpen]);
 
     const sendMessage = async (text: string) => {
@@ -106,24 +108,25 @@ export default function AIChatBot() {
 
             if (element) {
                 setTimeout(() => {
-                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }, 100);
+                    // DÜZELTME: Mobilde üst menü + kayan kategori butonlarının toplam yüksekliği için -180px pay
+                    const isMobile = window.innerWidth < 640;
+                    const yOffset = isMobile ? -180 : -140;
+                    const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
+                    window.scrollTo({ top: y, behavior: 'smooth' });
+                }, 250);
             } else {
                 window.location.hash = id;
             }
         }
     };
 
-    // YENİ: Gelişmiş Markdown ve Link Algılayıcı (Artık linkleri bozmaz!)
     const formatMessage = (text: string) => {
-        // [Metin](URL) VEYA çıplak http URL VEYA **kalın yazı** arar
         const regex = /(\[[^\]]+\]\(https?:\/\/[^\s)]+\)|https?:\/\/[^\s]+|\*\*.*?\*\*)/g;
         const parts = text.split(regex);
 
         return parts.map((part, index) => {
             if (!part) return null;
 
-            // 1. Durum: Markdown Linki [Tıklanacak Yazı](https://...)
             const mdLinkMatch = part.match(/^\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)$/);
             if (mdLinkMatch) {
                 const linkText = mdLinkMatch[1];
@@ -143,7 +146,6 @@ export default function AIChatBot() {
                 );
             }
 
-            // 2. Durum: Çıplak Link (https://...)
             if (part.startsWith('http')) {
                 const isInternal = part.includes('#');
                 return (
@@ -160,7 +162,6 @@ export default function AIChatBot() {
                 );
             }
 
-            // 3. Durum: Altın Varaklı Kalın Yazı (**Kelime**)
             if (part.startsWith('**') && part.endsWith('**')) {
                 return (
                     <strong key={index} className="text-[#c9a15c] font-semibold">
@@ -169,7 +170,6 @@ export default function AIChatBot() {
                 );
             }
 
-            // 4. Durum: Normal düz metin
             return <span key={index}>{part}</span>;
         });
     };
@@ -189,10 +189,9 @@ export default function AIChatBot() {
             )}
 
             {isOpen && (
-                <div className="fixed inset-0 z-50 flex flex-col bg-[#1c2127] sm:bottom-6 sm:right-5 sm:inset-auto sm:h-[75vh] sm:max-h-[800px] sm:min-h-[450px] sm:w-[400px] sm:rounded-xl sm:border sm:border-[#252b34] sm:shadow-2xl">
+                <div className="fixed inset-0 z-50 flex flex-col bg-[#1c2127] h-[100dvh] sm:h-[75vh] sm:bottom-6 sm:right-5 sm:inset-auto sm:max-h-[800px] sm:min-h-[450px] sm:w-[400px] sm:rounded-xl sm:border sm:border-[#252b34] sm:shadow-2xl">
 
-                    {/* HEADER */}
-                    <div className="flex items-center justify-between border-b border-[#252b34] bg-[#14181d] p-4 text-[#f8f6f0] sm:rounded-t-xl">
+                    <div className="flex items-center justify-between border-b border-[#252b34] bg-[#14181d] p-4 text-[#f8f6f0] sm:rounded-t-xl shrink-0">
                         <div className="flex items-center gap-3">
                             <div className="flex h-8 w-8 items-center justify-center rounded-full border border-[#c9a15c] bg-[#232932]">
                                 <Bot className="h-5 w-5 text-[#c9a15c]" />
@@ -221,7 +220,6 @@ export default function AIChatBot() {
                         </div>
                     </div>
 
-                    {/* MESSAGES */}
                     <div className="flex-1 overflow-y-auto p-4 space-y-4">
                         {messages.map((msg, idx) => (
                             <div
@@ -262,7 +260,7 @@ export default function AIChatBot() {
                                     <button
                                         key={qr.label}
                                         onClick={() => handleQuickReply(qr.message)}
-                                        className="rounded-full border border-[#38414e] bg-[#232932] px-3 py-1.5 text-xs font-medium text-[#f8f6f0] hover:border-[#c9a15c] hover:text-[#c9a15c] transition-colors"
+                                        className="rounded-full border border-[#38414e] bg-[#232932] px-3 py-1.5 text-xs font-medium text-[#f8f6f0] hover:border-[#c9a15c] hover:text-[#c9a15c] transition-colors text-left"
                                     >
                                         {qr.label}
                                     </button>
@@ -282,8 +280,7 @@ export default function AIChatBot() {
                         <div ref={chatEndRef} />
                     </div>
 
-                    {/* INPUT */}
-                    <div className="border-t border-[#252b34] bg-[#14181d] p-4 pb-safe sm:rounded-b-xl">
+                    <div className="border-t border-[#252b34] bg-[#14181d] p-4 pb-safe sm:rounded-b-xl shrink-0">
                         <form
                             onSubmit={(e) => {
                                 e.preventDefault();
