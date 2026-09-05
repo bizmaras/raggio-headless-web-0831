@@ -103,19 +103,23 @@ export default function AIChatBot() {
             e.preventDefault();
             setIsOpen(false);
 
-            const id = url.split('#')[1];
-            const element = document.getElementById(id);
+            // Stromboli gibi ID uyumsuzluklarını önlemek için linkin sonunu temizliyoruz
+            const id = url.split('#')[1].toLowerCase().replace(/[^a-z0-9]/g, '');
 
-            if (element) {
+            // Sayfadaki tüm elementleri tarayıp ID'si buna benzeyen elementi bul
+            const elements = Array.from(document.querySelectorAll('[id]'));
+            const targetElement = elements.find(el => el.id.toLowerCase().replace(/[^a-z0-9]/g, '').includes(id));
+
+            if (targetElement) {
                 setTimeout(() => {
-                    // DÜZELTME: Mobilde üst menü + kayan kategori butonlarının toplam yüksekliği için -180px pay
+                    // DÜZELTME: Masaüstünde başlığın ezilmesini önlemek için -220 pay verdik
                     const isMobile = window.innerWidth < 640;
-                    const yOffset = isMobile ? -180 : -140;
-                    const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
+                    const yOffset = isMobile ? -180 : -220;
+                    const y = targetElement.getBoundingClientRect().top + window.scrollY + yOffset;
                     window.scrollTo({ top: y, behavior: 'smooth' });
                 }, 250);
             } else {
-                window.location.hash = id;
+                window.location.hash = url.split('#')[1];
             }
         }
     };
