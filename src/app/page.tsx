@@ -155,18 +155,19 @@ export default async function HomePage() {
           {categories.map((category) => {
             const itemsInCategory = menuItems.filter((item) => item.Category === category);
 
-            // DÜZELTME: "+" ve "&" işaretlerini düzgün URL yapısına (ID) çeviren gelişmiş filtre
+            // DÜZELTME 1: Tüm kategori isimleri (Özellikle Strombolis + Calzones) standart ID formatına zorlanıyor.
             const targetId = category
               .toLowerCase()
-              .replace(/&|\+/g, 'and')
-              .replace(/[^a-z0-9]+/g, '-')
-              .replace(/(^-|-$)/g, '');
+              .replace(/\s*\+\s*|\s*&\s*/g, '-and-') // + ve & işaretlerini "-and-" kelimesine çevir.
+              .replace(/[^a-z0-9\-]+/g, '-') // Harf, rakam ve tire dışındakileri tireye çevir.
+              .replace(/-+/g, '-') // Yan yana gelen tireleri tek tireye indir.
+              .replace(/^-|-$/g, ''); // Baştaki ve sondaki tireleri sil.
 
             return (
-              <div key={category} id={targetId} className="mb-16 scroll-mt-[210px]">
+              <div key={category} id={targetId} className="mb-16 scroll-mt-[250px]">
 
-                {/* DÜZELTME: Artık masaüstünde de (md) yapışkan (sticky) ve hep altın rengi (text-gold-bright) */}
-                <h3 className="sticky top-[138px] md:top-[185px] z-20 bg-ink/95 backdrop-blur-md pt-4 pb-3 mb-6 border-b border-panel-border text-gold-bright flex items-center justify-between text-2xl md:text-3xl font-bold tracking-wide shadow-sm">
+                {/* DÜZELTME 2: Masaüstünde (md) yapışkan (sticky) noktasını 140px'e ayarladık ve z-index'i güçlendirdik. */}
+                <h3 className="sticky top-[138px] md:top-[140px] z-[35] bg-ink/95 backdrop-blur-md pt-4 pb-3 mb-6 border-b border-panel-border text-gold-bright flex items-center justify-between text-2xl md:text-3xl font-bold tracking-wide shadow-sm">
                   <span>{category}</span>
                   <span className="text-sm font-normal text-cream/60 md:text-gold-bright tracking-normal">
                     {itemsInCategory.length} items
