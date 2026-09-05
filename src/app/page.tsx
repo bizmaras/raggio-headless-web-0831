@@ -10,6 +10,7 @@ import CateringSection from '../components/CateringSection';
 import Footer from '../components/Footer';
 import ScrollToTop from '../components/ScrollToTop';
 import AIChatBot from '../components/AIChatBot';
+import WelcomePopup from '../components/WelcomePopup';
 
 interface MenuItem {
   'Product Name': string;
@@ -119,6 +120,7 @@ export default async function HomePage() {
       <Footer />
       <ScrollToTop />
       <AIChatBot />
+      <WelcomePopup /> {/* İŞTE YENİ FORMUMUZ BURADA */}
     </>
   );
 }
