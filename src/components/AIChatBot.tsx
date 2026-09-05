@@ -37,7 +37,7 @@ export default function AIChatBot() {
             setMessages([
                 {
                     sender: 'bot',
-                    text: "Hey there! 🍕 Craving a fresh-out-of-the-oven gourmet pizza or a sizzling Latin favorite? You're in the right place — what can I get started for you today?",
+                    text: "Hey there! 🍕 Craving a fresh-out-of-the-oven **gourmet pizza**, **authentic Latin food**, **wings**, or **cheesesteaks**? You're in the right place — what can I get started for you today?",
                 },
             ]);
         }
@@ -96,45 +96,80 @@ export default function AIChatBot() {
         );
     };
 
-    // KESİN ÇÖZÜM: Sayfa içi linke tıklandığında doğrudan o ID'yi bulup oraya kaydırır
     const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, url: string) => {
         if (url.includes('#')) {
-            e.preventDefault(); // Varsayılan tıklama davranışını engelle
-            setIsOpen(false); // Chat kutusunu kapat
+            e.preventDefault();
+            setIsOpen(false);
 
             const id = url.split('#')[1];
             const element = document.getElementById(id);
 
             if (element) {
-                // Kutu kapanma animasyonunun bitmesi için çok kısa bir süre bekleyip kaydırıyoruz
                 setTimeout(() => {
                     element.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }, 100);
             } else {
-                // Element bulunamazsa normal link gibi davran
                 window.location.hash = id;
             }
         }
     };
 
+    // YENİ: Gelişmiş Markdown ve Link Algılayıcı (Artık linkleri bozmaz!)
     const formatMessage = (text: string) => {
-        const urlRegex = /(https?:\/\/[^\s]+)/g;
-        return text.split(urlRegex).map((part, index) => {
-            if (part.match(urlRegex)) {
-                const isInternalAnchor = part.includes('#');
+        // [Metin](URL) VEYA çıplak http URL VEYA **kalın yazı** arar
+        const regex = /(\[[^\]]+\]\(https?:\/\/[^\s)]+\)|https?:\/\/[^\s]+|\*\*.*?\*\*)/g;
+        const parts = text.split(regex);
+
+        return parts.map((part, index) => {
+            if (!part) return null;
+
+            // 1. Durum: Markdown Linki [Tıklanacak Yazı](https://...)
+            const mdLinkMatch = part.match(/^\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)$/);
+            if (mdLinkMatch) {
+                const linkText = mdLinkMatch[1];
+                const url = mdLinkMatch[2];
+                const isInternal = url.includes('#');
+                return (
+                    <a
+                        key={index}
+                        href={url}
+                        target={isInternal ? "_self" : "_blank"}
+                        rel="noopener noreferrer"
+                        onClick={(e) => isInternal ? handleLinkClick(e, url) : undefined}
+                        className="font-bold underline text-[#c9a15c] hover:text-white transition-colors cursor-pointer"
+                    >
+                        {linkText}
+                    </a>
+                );
+            }
+
+            // 2. Durum: Çıplak Link (https://...)
+            if (part.startsWith('http')) {
+                const isInternal = part.includes('#');
                 return (
                     <a
                         key={index}
                         href={part}
-                        target={isInternalAnchor ? "_self" : "_blank"}
+                        target={isInternal ? "_self" : "_blank"}
                         rel="noopener noreferrer"
-                        onClick={(e) => isInternalAnchor ? handleLinkClick(e, part) : undefined}
+                        onClick={(e) => isInternal ? handleLinkClick(e, part) : undefined}
                         className="font-bold underline text-[#c9a15c] hover:text-white transition-colors break-all cursor-pointer"
                     >
                         {part}
                     </a>
                 );
             }
+
+            // 3. Durum: Altın Varaklı Kalın Yazı (**Kelime**)
+            if (part.startsWith('**') && part.endsWith('**')) {
+                return (
+                    <strong key={index} className="text-[#c9a15c] font-semibold">
+                        {part.slice(2, -2)}
+                    </strong>
+                );
+            }
+
+            // 4. Durum: Normal düz metin
             return <span key={index}>{part}</span>;
         });
     };
