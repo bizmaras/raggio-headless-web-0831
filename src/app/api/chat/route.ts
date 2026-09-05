@@ -315,25 +315,37 @@ export async function POST(req: Request) {
     try {
         const { messages } = await req.json();
 
-        // 1. Resmi Google SDK'yı Başlat
-        const apiKey = process.env.GEMINI_API_KEY || 'AIzaSyD-6D_YB0AeXMS0PG5wA5BZnaRB-slT1Zc';
+        const apiKey =
+            process.env.GEMINI_API_KEY ||
+            process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+
+        if (!apiKey) {
+            return NextResponse.json(
+                { reply: 'System Error: API Key is not configured.' },
+                { status: 500 }
+            );
+        }
+
         const genAI = new GoogleGenerativeAI(apiKey);
 
-        // 2. Modeli Seç (SDK, en stabil endpoint'i kendisi bulur)
         const model = genAI.getGenerativeModel({
             model: 'gemini-1.5-flash',
             systemInstruction: SYSTEM_PROMPT,
         });
 
-        // 3. Mesaj geçmişini Google'ın istediği formata çevir
-        const history = messages.slice(0, -1).map((m: any) => ({
-            role: m.role === 'user' ? 'user' : 'model',
-            parts: [{ text: m.content }],
+        // Filtering out initial assistant welcome messages to ensure history starts with 'user'
+        const validMessages = (messages || []).filter(
+            (m: any, idx: number) => !(idx === 0 && (m.role === 'model' || m.sender === 'bot'))
+        );
+
+        const history = validMessages.slice(0, -1).map((m: any) => ({
+            role: m.role === 'user' || m.sender === 'user' ? 'user' : 'model',
+            parts: [{ text: m.content || m.text }],
         }));
 
-        const lastMessage = messages[messages.length - 1].content;
+        const lastMessageObj = validMessages[validMessages.length - 1];
+        const lastMessage = lastMessageObj ? (lastMessageObj.content || lastMessageObj.text) : '';
 
-        // 4. Sohbeti başlat ve hızlı yanıt al
         const chat = model.startChat({
             history: history,
             generationConfig: {
@@ -346,11 +358,10 @@ export async function POST(req: Request) {
         const text = result.response.text();
 
         return NextResponse.json({ reply: text });
-
     } catch (error: any) {
-        console.error("AI Error:", error);
+        console.error('AI Error:', error);
         return NextResponse.json(
-            { reply: `Sistem Hatası: ${error.message || 'Bilinmeyen bağlantı hatası.'}` },
+            { reply: `System Error: ${error.message || 'Unknown connection error.'}` },
             { status: 500 }
         );
     }

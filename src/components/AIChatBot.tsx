@@ -1,185 +1,192 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
+import { MessageSquare, X, Send, Bot } from 'lucide-react';
 
 interface Message {
-    role: 'user' | 'assistant';
-    content: string;
+    sender: 'user' | 'bot';
+    text: string;
 }
+
+const SYSTEM_PROMPT = `You are Raggio AI, the official digital assistant for Raggio Gourmet & Pizza.
+Address: 681 E Chestnut Hill Rd, Newark, DE.
+Order Link: https://phillystyleexpress.foodtecsolutions.com/
+
+Your job is to answer customer questions about the menu, catering, and current promotions accurately.
+Always be polite, concise, and helpful. Always respond in English.
+
+### CURRENT PROMOTIONS & COUPON SPECIALS
+1. 2 XL Pizzas 1 Topping Each: $32.99
+2. Large 1 Topping Pizza & 20 Wings: $37.99
+3. 2 Lrg 1 Topping Pizza, 20 Wings & Soda: $52.99
+4. Large 1 Topping Pizza & 10 Wings: $29.99
+5. Large Cheese Pizza with 3 Toppings: $19.99
+6. 2 XL Cheese Pizzas & 20 Wings: $64.99
+7. $5 OFF with Purchase of $40 or more
+
+### REGULAR MENU (HIGHLIGHTS)
+- Appetizers: French Fries ($4.99), Cheese Fries ($5.99), Cheesesteak Fries ($12.99), Mozzarella Sticks ($8.99), Jalapeno Poppers ($8.99).
+- Breakfast: House 2 eggs & home fries ($10.99), Steak & Eggs ($22.99), Pancakes ($7.99).
+- Cheesesteaks: Philly Cheesesteak ($10.99), The Philly Special ($12.99), Pizza Steak ($12.99).
+- Burgers: Fresh Burger ($7.99), Cheeseburger ($8.99), Texas Cheeseburger ($12.99).
+- Wings (BBQ, Garlic Parm, Spicy, Mango Habanero): Plain Jumbo ($8.99).
+- Gourmet Pizza: Thin Crust The Works ($21.99), Buffalo Chicken Pizza ($21.99), Philly Cheesesteak Pizza ($23.99).
+- Standard Pizza: Plain Cheese ($18.99), Pizza by the slice ($2.50).
+- Sicilian Pizza: White Cheese ($18.99), Meat Lover ($23.99).
+- Strombolis & Calzones: Cheese Calzone ($14.99), Philly Special Stromboli ($18.99).
+- Subs & Grinders: Italian Sub ($12.99), Turkey Club ($12.99).
+- Latin Food: Tacos ($11.99), Burritos ($11.99), Carne Asada ($17.99).
+- Pasta: Spaghetti Meat Sauce ($16.99), Chicken Parmigiana ($17.99).
+- Salads: Garden ($8.99), Caesar ($8.99), Grilled Chicken ($12.99).
+
+### CATERING MENU
+- Subs & Wraps Tray: Half $50.00 | Full $90.00 (Serves 8-10 / 15-20)
+- Catering Appetizers: Cinnamon Bites (Half $45/Full $90), Mozzarella Sticks (Half $110/Full $220), Jumbo Shrimp (Half $80/Full $200).
+- Catering Wings: Half Tray $59.99 | Full Tray $134.99
+- Catering Fries: French/Curly (Half $45/Full $84.99).
+- Catering Salads: Garden/Caesar (Half $40/Full $80), Chicken/Chef/Greek (Half $49.99/Full $99.99).
+- Catering Pasta: Baked Ziti/Lasagna (Half $49.95/Full $89.99), Shrimp Parmigiana (Half $80/Full $160).
+- Catering Latin: Tacos/Fajitas (Half $60/Full $140), Empanadas/Carne Asada (Half $100/Full $200).`;
 
 export default function AIChatBot() {
     const [isOpen, setIsOpen] = useState(false);
     const [input, setInput] = useState('');
-    const [loading, setLoading] = useState(false);
     const [messages, setMessages] = useState<Message[]>([
-        {
-            role: 'assistant',
-            content: 'Hello! I am Raggio AI. How can I help you with our menu or catering options today?',
-        },
+        { sender: 'bot', text: 'Hello! Welcome to Raggio Gourmet & Pizza. How can I help you today?' },
     ]);
-
-    const messagesEndRef = useRef<HTMLDivElement>(null);
-    const inputRef = useRef<HTMLInputElement>(null);
-
-    useEffect(() => {
-        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [messages, loading]);
+    const [loading, setLoading] = useState(false);
+    const chatEndRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        document.body.style.overflow = isOpen ? 'hidden' : '';
-        return () => { document.body.style.overflow = ''; };
-    }, [isOpen]);
+        chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [messages, isOpen]);
 
-    const handleClose = () => {
-        inputRef.current?.blur();
-        (document.activeElement as HTMLElement)?.blur();
-        setTimeout(() => {
-            document.body.style.overflow = '';
-            setIsOpen(false);
-            window.scrollTo(0, window.scrollY);
-        }, 250);
-    };
-
-    const renderFormattedMessage = (text: string): React.ReactNode => {
-        const regex = /(\[([^\]]+)\]\((https?:\/\/[^\s)]+)\))|(\*\*([^*]+)\*\*)/g;
-        const parts: React.ReactNode[] = [];
-        let lastIndex = 0;
-        let match;
-
-        while ((match = regex.exec(text)) !== null) {
-            if (match.index > lastIndex) {
-                parts.push(text.substring(lastIndex, match.index));
-            }
-            if (match[1]) {
-                parts.push(
-                    <a key={match.index} href={match[3]} target="_blank" rel="noopener noreferrer" className="font-bold underline text-gold hover:text-gold-bright transition-colors break-all">
-                        {match[2]}
-                    </a>
-                );
-            } else if (match[4]) {
-                parts.push(
-                    <strong key={match.index} className="font-bold text-white">
-                        {match[5]}
-                    </strong>
-                );
-            }
-            lastIndex = regex.lastIndex;
-        }
-        if (lastIndex < text.length) parts.push(text.substring(lastIndex));
-        return parts;
-    };
-
-    const handleSend = async (e: React.FormEvent) => {
-        e.preventDefault();
+    const handleSend = async () => {
         if (!input.trim() || loading) return;
 
-        const userMessage: Message = { role: 'user', content: input };
-        const updatedMessages = [...messages, userMessage];
-
-        setMessages(updatedMessages);
+        const userMessage = input.trim();
         setInput('');
+        setMessages((prev) => [...prev, { sender: 'user', text: userMessage }]);
         setLoading(true);
 
         try {
-            const res = await fetch('/api/chat', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ messages: updatedMessages }),
-            });
+            const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+            const response = await fetch(
+                `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [
+                            {
+                                role: 'user',
+                                parts: [{ text: `${SYSTEM_PROMPT}\n\nUser Question: ${userMessage}` }],
+                            },
+                        ],
+                    }),
+                }
+            );
 
-            const data = await res.json();
-            setMessages((prev) => [...prev, { role: 'assistant', content: data.reply || 'No response.' }]);
-        } catch (err: any) {
-            setMessages((prev) => [...prev, { role: 'assistant', content: `Bağlantı Hatası: Lütfen tekrar deneyin.` }]);
+            const data = await response.json();
+            const botReply =
+                data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+                "I'm sorry, I couldn't process that right now. Please try again.";
+
+            setMessages((prev) => [...prev, { sender: 'bot', text: botReply }]);
+        } catch (error) {
+            setMessages((prev) => [
+                ...prev,
+                { sender: 'bot', text: 'Connection error. Please check your network and try again.' },
+            ]);
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <>
+        <div className="fixed bottom-6 right-5 z-50">
             {!isOpen && (
-                <div className="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-50 animate-bounce">
-                    <button
-                        onClick={() => setIsOpen(true)}
-                        className="bg-gold hover:bg-gold-bright text-ink p-4 rounded-full shadow-[0_8px_30px_rgb(201,161,92,0.4)] hover:scale-105 active:scale-95 transition-all flex items-center gap-2 font-black uppercase tracking-wider"
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
-                            <path d="M12 8V4H8" /><rect width="16" height="12" x="4" y="8" rx="2" /><path d="M2 14h2" /><path d="M20 14h2" /><path d="M15 13v2" /><path d="M9 13v2" />
-                        </svg>
-                        <span className="hidden sm:inline">Ask Raggio AI</span>
-                    </button>
-                </div>
+                <button
+                    onClick={() => setIsOpen(true)}
+                    className="flex h-14 w-14 items-center justify-center rounded-full bg-[#14181d] border-2 border-[#c9a15c] text-[#c9a15c] shadow-[0_4px_16px_rgba(201,161,92,0.22)] transition-transform hover:scale-105 active:scale-95"
+                    aria-label="Open Chat"
+                >
+                    <MessageSquare className="h-6 w-6" />
+                </button>
             )}
 
             {isOpen && (
-                <div className="fixed inset-0 z-[100] flex flex-col justify-end sm:justify-center items-center bg-black/80 backdrop-blur-md sm:p-6 transition-opacity" onClick={(e) => { if (e.target === e.currentTarget) handleClose(); }}>
-                    <div className="w-full h-[100dvh] sm:h-[650px] sm:w-[480px] bg-[#0d1117] border border-gray-800 sm:rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-fadeIn">
-                        {/* Modern Header */}
-                        <div className="bg-[#161b22] p-4 border-b border-gray-800 flex items-center justify-between shrink-0">
-                            <div className="flex items-center gap-3">
-                                <div className="p-2.5 rounded-full bg-gold text-ink">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-                                        <path d="M12 8V4H8" /><rect width="16" height="12" x="4" y="8" rx="2" /><path d="M2 14h2" /><path d="M20 14h2" /><path d="M15 13v2" /><path d="M9 13v2" />
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h4 className="text-md font-bold text-white tracking-wide">Raggio AI</h4>
-                                    <p className="text-xs text-gray-400">Smart Assistant</p>
+                <div className="flex h-[520px] w-[360px] flex-col rounded-xl border border-[#252b34] bg-[#1c2127] shadow-2xl sm:w-[400px]">
+                    <div className="flex items-center justify-between border-b border-[#252b34] bg-[#14181d] p-4 text-[#f8f6f0]">
+                        <div className="flex items-center gap-3">
+                            <div className="flex h-8 w-8 items-center justify-center rounded-full border border-[#c9a15c] bg-[#232932]">
+                                <Bot className="h-5 w-5 text-[#c9a15c]" />
+                            </div>
+                            <div>
+                                <h3 className="font-semibold text-[#f8f6f0]">Raggio AI</h3>
+                                <p className="text-xs text-[#9e9b93]">Gourmet Assistant</p>
+                            </div>
+                        </div>
+                        <button
+                            onClick={() => setIsOpen(false)}
+                            className="text-[#9e9b93] hover:text-[#f8f6f0]"
+                        >
+                            <X className="h-5 w-5" />
+                        </button>
+                    </div>
+
+                    <div className="flex-1 overflow-y-auto p-4 space-y-3">
+                        {messages.map((msg, idx) => (
+                            <div
+                                key={idx}
+                                className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                            >
+                                <div
+                                    className={`max-w-[80%] rounded-lg p-3 text-sm leading-relaxed ${msg.sender === 'user'
+                                            ? 'bg-[#c9a15c] text-[#14181d] font-medium'
+                                            : 'bg-[#232932] text-[#f8f6f0] border border-[#38414e]'
+                                        }`}
+                                >
+                                    {msg.text}
                                 </div>
                             </div>
-                            <button onClick={handleClose} className="p-2 rounded-full text-gray-400 hover:text-white bg-white/5 hover:bg-white/10 transition-colors">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
-                                    <path d="M18 6 6 18" /><path d="m6 6 12 12" />
-                                </svg>
-                            </button>
-                        </div>
-
-                        {/* Chat Area */}
-                        <div className="flex-1 p-5 overflow-y-auto space-y-5 bg-[#0d1117]">
-                            {messages.map((msg, idx) => (
-                                <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                                    <div className={`max-w-[85%] p-4 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap shadow-sm ${msg.role === 'user' ? 'bg-gold text-ink font-semibold rounded-br-sm' : 'bg-[#161b22] text-gray-200 border border-gray-800 rounded-bl-sm'}`}>
-                                        {renderFormattedMessage(msg.content)}
-                                    </div>
+                        ))}
+                        {loading && (
+                            <div className="flex justify-start">
+                                <div className="rounded-lg bg-[#232932] p-3 text-sm text-[#9e9b93] border border-[#38414e]">
+                                    Raggio AI is typing...
                                 </div>
-                            ))}
-                            {loading && (
-                                <div className="flex justify-start">
-                                    <div className="bg-[#161b22] text-gold text-sm p-4 rounded-2xl border border-gray-800 rounded-bl-sm flex items-center gap-2">
-                                        <div className="w-2 h-2 bg-gold rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                                        <div className="w-2 h-2 bg-gold rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                                        <div className="w-2 h-2 bg-gold rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
-                                    </div>
-                                </div>
-                            )}
-                            <div ref={messagesEndRef} />
-                        </div>
+                            </div>
+                        )}
+                        <div ref={chatEndRef} />
+                    </div>
 
-                        {/* Input Form */}
-                        <form onSubmit={handleSend} className="p-4 bg-[#161b22] border-t border-gray-800 flex gap-3 shrink-0">
+                    <div className="border-t border-[#252b34] bg-[#14181d] p-3">
+                        <form
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                handleSend();
+                            }}
+                            className="flex items-center gap-2"
+                        >
                             <input
-                                ref={inputRef}
                                 type="text"
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
-                                placeholder="Type your message..."
-                                style={{ fontSize: '16px' }}
-                                className="flex-1 bg-[#0d1117] border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-gold transition-colors shadow-inner"
+                                placeholder="Ask about menu, specials..."
+                                className="flex-1 rounded-lg border border-[#38414e] bg-[#232932] px-3 py-2 text-sm text-[#f8f6f0] placeholder-[#9e9b93] focus:border-[#c9a15c] focus:outline-none"
                             />
                             <button
                                 type="submit"
-                                disabled={loading || !input.trim()}
-                                className="bg-gold hover:bg-gold-bright text-ink w-12 h-12 rounded-xl disabled:opacity-50 transition-all flex items-center justify-center shrink-0 shadow-md"
+                                disabled={loading}
+                                className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#c9a15c] text-[#14181d] transition-opacity hover:opacity-90 disabled:opacity-50"
                             >
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 ml-1">
-                                    <path d="m22 2-7 20-4-9-9-4Z" /><path d="M22 2 11 13" />
-                                </svg>
+                                <Send className="h-4 w-4" />
                             </button>
                         </form>
                     </div>
                 </div>
             )}
-        </>
+        </div>
     );
 }
