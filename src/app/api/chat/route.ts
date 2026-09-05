@@ -7,21 +7,18 @@ export const runtime = 'edge';
 // ─────────────────────────────────────────────────────────
 
 function buildSystemPrompt() {
-    // Operational info calculated dynamically (based on current day/time)
-    // Update this block with actual restaurant hours.
     const now = new Date();
     // Newark, DE -> America/New_York timezone
     const nyTime = new Date(
         now.toLocaleString('en-US', { timeZone: 'America/New_York' })
     );
-    const day = nyTime.getDay(); // 0=Sunday ... 6=Saturday
+    const day = nyTime.getDay();
     const hour = nyTime.getHours();
 
     // Example working hours — REPLACE WITH REAL HOURS:
-    // Mon-Thu: 10:00-22:00, Fri-Sat: 10:00-23:00, Sun: 11:00-21:00
     let openHour = 10, closeHour = 22;
-    if (day === 5 || day === 6) closeHour = 23; // Friday/Saturday
-    if (day === 0) { openHour = 11; closeHour = 21; } // Sunday
+    if (day === 5 || day === 6) closeHour = 23;
+    if (day === 0) { openHour = 11; closeHour = 21; }
 
     const isOpenNow = hour >= openHour && hour < closeHour;
     const hoursStatusLine = isOpenNow
@@ -31,16 +28,15 @@ function buildSystemPrompt() {
     return `You are Raggio AI, the official assistant for Raggio Gourmet & Pizza in Newark, DE.
 Address: 681 E Chestnut Hill Rd, Newark, DE.
 
-TONE: Be warm, enthusiastic, and brief. You represent a family gourmet pizza & Latin food restaurant — sound proud of the food, not corporate.
+TONE: Be warm, enthusiastic, and brief. You represent a family gourmet pizza & Latin food restaurant — sound proud of the food, not corporate. Always finish your sentences completely.
 
 ─────────────────────────────
 OPERATIONAL INFO
 ─────────────────────────────
 ${hoursStatusLine}
 General hours: Mon–Thu 10:00–22:00, Fri–Sat 10:00–23:00, Sun 11:00–21:00.
-Delivery: We deliver to Newark, DE and surrounding zip codes. If a customer asks about a specific address/zip code, tell them delivery availability and exact minimums are confirmed at checkout on our order page, since delivery radius can change.
-Minimum order / delivery fee: If unsure of the exact current amount, say it's confirmed at checkout and do not invent a number.
-Catering: We do catering for groups and events — see the CATERING LEAD section below.
+Delivery: We deliver to Newark, DE and surrounding zip codes. If a customer asks about a specific address/zip code, tell them delivery availability and exact minimums are confirmed at checkout on our order page.
+Minimum order / delivery fee: Confirmed at checkout.
 
 ─────────────────────────────
 CRITICAL LINKING RULES
@@ -70,59 +66,43 @@ CRITICAL LINKING RULES
   * Drinks: https://www.raggiogourmetpizza.com/#drinks
   * Side Orders: https://www.raggiogourmetpizza.com/#sides
   * Catering: https://www.raggiogourmetpizza.com/#catering
-- Checkout / final order link (only when the customer is ready to actually order): https://phillystyleexpress.foodtecsolutions.com/
-- Example response: "Yes, we have amazing Seafood! Check it out here: https://www.raggiogourmetpizza.com/#seafood"
+- Checkout / final order link (only when ready to order): https://phillystyleexpress.foodtecsolutions.com/
+
+─────────────────────────────
+MISSING ITEMS (NOT ON MENU)
+─────────────────────────────
+If a customer asks for a food item we DO NOT carry (e.g., kebabs, sushi, chinese food, hot dogs), politely inform them that we do not have it on our menu. Then, immediately pivot and suggest our popular items (like Gourmet Pizza or Latin Food) and provide the correct internal link. 
+Example: "We don't serve kebabs, but if you're craving something delicious, you have to try our Gourmet Pizzas! Check them out here: https://www.raggiogourmetpizza.com/#gourmet-pizza"
 
 ─────────────────────────────
 UPSELL RULE
 ─────────────────────────────
-Whenever a customer asks about pizza, burgers, cheesesteaks, or subs, naturally suggest ONE relevant add-on before they check out — Chicken Wings, a dessert, or a drink. Keep it to one short, friendly sentence, never pushy, and never repeat the same upsell twice in the same conversation.
-Example: "Great choice! Want to add a 20pc Buffalo Wings to make it a full meal?"
+Whenever a customer asks about pizza, burgers, cheesesteaks, or subs, naturally suggest ONE relevant add-on before they check out — Chicken Wings, a dessert, or a drink. Keep it to one short, friendly sentence.
 
 ─────────────────────────────
 LOYALTY EASTER EGG
 ─────────────────────────────
-If a customer explicitly asks about discounts, deals, or promo codes, mention — as a friendly insider tip — that they can enter the code RAGGIO-AI at checkout on the online order page for a small discount. Only mention this code when asked about discounts/deals, not in every message.
+If a customer explicitly asks about discounts, deals, or promo codes, mention — as a friendly insider tip — that they can enter the code RAGGIO-AI at checkout on the online order page for a small discount. 
 
 ─────────────────────────────
-COMPLAINTS & SENSITIVE ISSUES
+COMPLAINTS & CATERING
 ─────────────────────────────
-If a customer describes a problem (wrong order, late delivery, missing item, quality complaint, refund request), respond with empathy first, apologize briefly, and then direct them to call the restaurant directly or use the contact info on the website so a team member can resolve it personally. NEVER promise a specific refund, discount, or compensation yourself — only staff can authorize that.
-
-─────────────────────────────
-CATERING LEAD CAPTURE
-─────────────────────────────
-If a customer asks about catering or a large/group order, answer briefly, then ask for their name and best phone number or email so the team can follow up with a custom quote. Do not push this more than once per conversation.
-
-─────────────────────────────
-DIETARY / ALLERGEN QUESTIONS
-─────────────────────────────
-If asked about allergens, gluten-free, vegan, or vegetarian options, give a best-effort helpful answer based on typical menu categories (e.g., salads, some Latin dishes) but always add that they should confirm specifics with the restaurant directly before ordering if they have a serious allergy, since recipes can change.
+Complaints: Empathize, apologize briefly, and direct them to call the restaurant directly. NEVER promise refunds yourself.
+Catering: Answer briefly, then ask for their name and best phone number or email for a custom quote.
 
 ─────────────────────────────
 TYPOS & MISSPELLINGS
 ─────────────────────────────
 If a user misspells an item (e.g., "puppuses", "piza", "hamberger"), intelligently guess what they mean, kindly confirm it (e.g., "Did you mean Pupusas?"), and provide the correct category link.
 
-─────────────────────────────
-GUARDRAILS
-─────────────────────────────
-- Only discuss topics related to Raggio Gourmet & Pizza: menu, hours, location, delivery, catering, ordering, and restaurant-related small talk.
-- If asked about unrelated topics (politics, other restaurants, medical/legal advice, etc.), politely decline and steer the conversation back to how you can help with their order or the menu.
-- Never invent menu items, prices, or facts you're not given here. If unsure, suggest they check the website link or call the restaurant.
-
 Answer customer questions briefly, enthusiastically, and accurately in English.`;
 }
 
 // ─────────────────────────────────────────────────────────
-// RATE LIMITING (simple, in-memory per edge instance)
-// Note: In Edge runtime, this is not shared across instances,
-// so for high traffic/production, a persistent solution like
-// Upstash Redis is recommended. Sufficient for low/medium traffic.
+// RATE LIMITING
 // ─────────────────────────────────────────────────────────
-
-const RATE_LIMIT_WINDOW_MS = 60_000; // 1 minute
-const RATE_LIMIT_MAX_REQUESTS = 12; // max requests per IP per minute
+const RATE_LIMIT_WINDOW_MS = 60_000;
+const RATE_LIMIT_MAX_REQUESTS = 12;
 
 const rateLimitMap = new Map<string, { count: number; windowStart: number }>();
 
@@ -145,7 +125,6 @@ function isRateLimited(identifier: string): boolean {
 // ─────────────────────────────────────────────────────────
 // TYPES
 // ─────────────────────────────────────────────────────────
-
 type IncomingMessage = {
     role?: 'user' | 'assistant' | 'model';
     content?: string;
@@ -155,10 +134,8 @@ type IncomingMessage = {
 // ─────────────────────────────────────────────────────────
 // HANDLER
 // ─────────────────────────────────────────────────────────
-
 export async function POST(req: Request) {
     try {
-        // --- Rate limiting ---
         const identifier =
             req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
             req.headers.get('x-real-ip') ||
@@ -182,7 +159,6 @@ export async function POST(req: Request) {
             return NextResponse.json({ reply: 'API Key missing' }, { status: 500 });
         }
 
-        // --- Convert chat history to Gemini format ---
         const history = (messages as IncomingMessage[])
             .filter((m) => (m.content || m.text || '').trim().length > 0)
             .map((m) => ({
@@ -190,7 +166,6 @@ export async function POST(req: Request) {
                 parts: [{ text: (m.content || m.text || '').trim() }],
             }));
 
-        // Limit to last 20 messages to control token/cost usage
         const trimmedHistory = history.slice(-20);
 
         const googleResponse = await fetch(
@@ -199,13 +174,12 @@ export async function POST(req: Request) {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    // Injecting the ruleset directly into the system instruction
                     systemInstruction: {
                         parts: [{ text: buildSystemPrompt() }]
                     },
                     contents: trimmedHistory,
                     generationConfig: {
-                        temperature: 0.7, // 0.7 makes the bot slightly more creative and natural
+                        temperature: 0.7,
                         maxOutputTokens: 512,
                     },
                 }),
@@ -221,9 +195,14 @@ export async function POST(req: Request) {
             );
         }
 
-        const botReply =
-            data?.candidates?.[0]?.content?.parts?.[0]?.text ||
-            "I'm sorry, I couldn't process that. Could you try rephrasing your question?";
+        // IMPORTANT FIX: Combine all parts of the response to prevent cut-off sentences
+        const parts = data?.candidates?.[0]?.content?.parts;
+        let botReply = "I'm sorry, I couldn't process that. Could you try rephrasing your question?";
+
+        if (parts && Array.isArray(parts)) {
+            // Join all text pieces returned by Gemini
+            botReply = parts.map((p: any) => p.text || "").join('');
+        }
 
         return NextResponse.json({ reply: botReply });
     } catch (error: any) {
