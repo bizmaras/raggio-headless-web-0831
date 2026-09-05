@@ -28,7 +28,6 @@ export default function AIChatBot() {
     const chatEndRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
-    // 1. CHAT HAFIZASI: Sayfa yüklendiğinde eski mesajları getir
     useEffect(() => {
         const savedHistory = sessionStorage.getItem(SESSION_KEY);
         if (savedHistory) {
@@ -44,7 +43,6 @@ export default function AIChatBot() {
         }
     }, []);
 
-    // 2. CHAT HAFIZASI: Her yeni mesajda hafızayı (SessionStorage) güncelle
     useEffect(() => {
         if (messages.length > 0) {
             sessionStorage.setItem(SESSION_KEY, JSON.stringify(messages));
@@ -98,10 +96,24 @@ export default function AIChatBot() {
         );
     };
 
-    // 3. LİNK YÖNETİMİ: Tıklanan link bir menü kategorisiyse chat'i kapatıp oraya odaklansın
-    const handleLinkClick = (url: string) => {
+    // KESİN ÇÖZÜM: Sayfa içi linke tıklandığında doğrudan o ID'yi bulup oraya kaydırır
+    const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, url: string) => {
         if (url.includes('#')) {
-            setIsOpen(false);
+            e.preventDefault(); // Varsayılan tıklama davranışını engelle
+            setIsOpen(false); // Chat kutusunu kapat
+
+            const id = url.split('#')[1];
+            const element = document.getElementById(id);
+
+            if (element) {
+                // Kutu kapanma animasyonunun bitmesi için çok kısa bir süre bekleyip kaydırıyoruz
+                setTimeout(() => {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+            } else {
+                // Element bulunamazsa normal link gibi davran
+                window.location.hash = id;
+            }
         }
     };
 
@@ -116,8 +128,8 @@ export default function AIChatBot() {
                         href={part}
                         target={isInternalAnchor ? "_self" : "_blank"}
                         rel="noopener noreferrer"
-                        onClick={() => handleLinkClick(part)}
-                        className="font-bold underline text-[#c9a15c] hover:text-white transition-colors break-all"
+                        onClick={(e) => isInternalAnchor ? handleLinkClick(e, part) : undefined}
+                        className="font-bold underline text-[#c9a15c] hover:text-white transition-colors break-all cursor-pointer"
                     >
                         {part}
                     </a>
@@ -142,7 +154,6 @@ export default function AIChatBot() {
             )}
 
             {isOpen && (
-                // MOBİL İÇİN TAM EKRAN (inset-0, w-full, h-full), MASAÜSTÜ İÇİN KUTU (sm:w-[400px] vb.)
                 <div className="fixed inset-0 z-50 flex flex-col bg-[#1c2127] sm:bottom-6 sm:right-5 sm:inset-auto sm:h-[75vh] sm:max-h-[800px] sm:min-h-[450px] sm:w-[400px] sm:rounded-xl sm:border sm:border-[#252b34] sm:shadow-2xl">
 
                     {/* HEADER */}
