@@ -1,200 +1,316 @@
-import fs from 'fs';
-import path from 'path';
-import Papa from 'papaparse';
-import Header from '../components/Header';
-import HeroSlider from '../components/HeroSlider';
-import CategoryRail from '../components/CategoryRail';
-import PromotionsSection from '../components/PromotionsSection';
-import MenuItemCard from '../components/MenuItemCard';
-import CateringSection from '../components/CateringSection';
-import Footer from '../components/Footer';
-import ScrollToTop from '../components/ScrollToTop';
-import AIChatBot from '../components/AIChatBot';
+'use client';
 
-interface MenuItem {
-  'Product Name': string;
-  Description: string;
-  Price: string;
-  Category: string;
-  Slug: string;
-  Featured: string;
+import React, { useState, useRef, useEffect } from 'react';
+import { MessageSquare, X, Send, Bot, ThumbsUp, ThumbsDown, ExternalLink } from 'lucide-react';
+
+interface Message {
+  sender: 'user' | 'bot';
+  text: string;
+  feedback?: 'up' | 'down' | null;
 }
 
-// Additional Calzone items fallback
-const EXTRA_CALZONES: MenuItem[] = [
-  {
-    Category: 'Strombolis + Calzones',
-    'Product Name': 'Cheese Calzone',
-    Price: '15.99',
-    Description: 'Folded pizza dough stuffed with Grande Mozzarella, creamy Ricotta cheese, and served with a side of homemade marinara sauce.',
-    Slug: 'cheese-calzone',
-    Featured: 'false',
-  },
+const ORDER_URL = 'https://phillystyleexpress.foodtecsolutions.com/';
+const SESSION_KEY = 'raggio_chat_history';
+
+const QUICK_REPLIES = [
+  { label: '🍕 Deals', message: "What are today's deals and specials?" },
+  { label: '🛵 Hours & Delivery', message: 'What are your hours and do you deliver to my area?' },
+  { label: '🌮 Latin Menu', message: 'Tell me about your Latin food menu — pupusas, tacos, etc.' },
+  { label: '🎉 Catering', message: 'I want to ask about catering for a group event.' },
 ];
 
-async function getMenuItems(): Promise<MenuItem[]> {
-  const filePath = path.join(process.cwd(), 'public', 'data', 'raggio_menu.csv');
-  const fileContent = fs.readFileSync(filePath, 'utf8');
+export default function AIChatBot() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [input, setInput] = useState('');
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [showQuickReplies, setShowQuickReplies] = useState(true);
+  const chatEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const parsed = Papa.parse<MenuItem>(fileContent, {
-    header: true,
-    skipEmptyLines: true,
-  });
-
-  // Combine CSV menu data with extra Calzone fallbacks
-  return [...parsed.data, ...EXTRA_CALZONES];
-}
-
-export default async function HomePage() {
-  const menuItems = await getMenuItems();
-  const categories = Array.from(new Set(menuItems.map((item) => item.Category))).filter(Boolean);
-
-  // Optimized JSON-LD Structured Schema for Local SEO & Rich Snippets
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Restaurant',
-    name: 'Raggio Gourmet & Pizza',
-    image: 'https://www.raggiogourmetpizza.com/images/raggio-logo.png',
-    '@id': 'https://www.raggiogourmetpizza.com/#restaurant',
-    url: 'https://www.raggiogourmetpizza.com',
-    telephone: '+13023690553',
-    priceRange: '$$',
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: '681 E Chestnut Hill Rd',
-      addressLocality: 'Newark',
-      addressRegion: 'DE',
-      postalCode: '19713',
-      addressCountry: 'US',
-    },
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: 39.6385108,
-      longitude: -75.7289352,
-    },
-    openingHoursSpecification: [
-      {
-        '@type': 'OpeningHoursSpecification',
-        dayOfWeek: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'],
-        opens: '09:00',
-        closes: '21:00',
-      },
-      {
-        '@type': 'OpeningHoursSpecification',
-        dayOfWeek: ['Friday', 'Saturday'],
-        opens: '09:00',
-        closes: '22:00',
-      },
-    ],
-    hasOfferCatalog: {
-      '@type': 'OfferCatalog',
-      name: 'Weekly Pizza & Catering Specials',
-      itemListElement: [
+  useEffect(() => {
+    const savedHistory = sessionStorage.getItem(SESSION_KEY);
+    if (savedHistory) {
+      setMessages(JSON.parse(savedHistory));
+      setShowQuickReplies(false);
+    } else {
+      setMessages([
         {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'MenuItem',
-            name: '2 Large Plain Cheese Pizzas Special',
-            description: 'Two 16" stone-baked deck-oven cheese pizzas with 100% Grande Mozzarella.',
-          },
-          price: '29.99',
-          priceCurrency: 'USD',
+          sender: 'bot',
+          text: "Hey there! 🍕 Craving a fresh-out-of-the-oven **gourmet pizza**, **authentic Latin food**, **wings**, or **cheesesteaks**? You're in the right place — what can I get started for you today?",
         },
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'MenuItem',
-            name: 'Delaware Family Bundle',
-            description: '16" 1-topping pizza, 10 wings, and 2-liter soda.',
-          },
-          price: '31.99',
-          priceCurrency: 'USD',
-        },
-      ],
-    },
-    menu: 'https://www.raggiogourmetpizza.com/#menu',
+      ]);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (messages.length > 0) {
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify(messages));
+    }
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages, isOpen, loading]);
+
+  useEffect(() => {
+    if (isOpen && window.innerWidth >= 640) {
+      inputRef.current?.focus();
+    }
+  }, [isOpen]);
+
+  const sendMessage = async (text: string) => {
+    if (!text.trim() || loading) return;
+
+    setShowQuickReplies(false);
+    setInput('');
+
+    const newMessages: Message[] = [...messages, { sender: 'user', text }];
+    setMessages(newMessages);
+    setLoading(true);
+
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: newMessages }),
+      });
+
+      const data = await response.json();
+      const botReply = data.reply || "I'm sorry, I couldn't process that right now.";
+
+      setMessages((prev) => [...prev, { sender: 'bot', text: botReply, feedback: null }]);
+    } catch (error) {
+      setMessages((prev) => [
+        ...prev,
+        { sender: 'bot', text: 'Connection error. Please check your network and try again.', feedback: null },
+      ]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSend = () => sendMessage(input);
+  const handleQuickReply = (message: string) => sendMessage(message);
+
+  const handleFeedback = (idx: number, value: 'up' | 'down') => {
+    setMessages((prev) =>
+      prev.map((msg, i) =>
+        i === idx ? { ...msg, feedback: msg.feedback === value ? null : value } : msg
+      )
+    );
+  };
+
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, url: string) => {
+    if (url.includes('#')) {
+      e.preventDefault();
+      setIsOpen(false);
+
+      const id = url.split('#')[1].toLowerCase().replace(/[^a-z0-9]/g, '');
+      const elements = Array.from(document.querySelectorAll('[id]'));
+      const targetElement = elements.find(el => el.id.toLowerCase().replace(/[^a-z0-9]/g, '').includes(id));
+
+      if (targetElement) {
+        setTimeout(() => {
+          const isMobile = window.innerWidth < 640;
+          const yOffset = isMobile ? -180 : -220;
+          const y = targetElement.getBoundingClientRect().top + window.scrollY + yOffset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }, 250);
+      } else {
+        window.location.hash = url.split('#')[1];
+      }
+    }
+  };
+
+  // DÜZELTME 1: Link filtresi (Regex) çok daha güçlü hale getirildi. Hata payı sıfırlandı.
+  const formatMessage = (text: string) => {
+    const regex = /(\[[^\]]+\]\([^)]+\)|https?:\/\/[^\s]+|\*\*.*?\*\*)/g;
+    const parts = text.split(regex);
+
+    return parts.map((part, index) => {
+      if (!part) return null;
+
+      const mdLinkMatch = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+      if (mdLinkMatch) {
+        const linkText = mdLinkMatch[1];
+        const url = mdLinkMatch[2];
+        const isInternal = url.includes('#');
+        return (
+          <a
+            key={index}
+            href={url}
+            target={isInternal ? "_self" : "_blank"}
+            rel="noopener noreferrer"
+            onClick={(e) => isInternal ? handleLinkClick(e, url) : undefined}
+            // DÜZELTME 2: break-all eklendi ki link uzunsa alt satıra kırılsın
+            className="font-bold underline text-[#c9a15c] hover:text-white transition-colors cursor-pointer break-all"
+          >
+            {linkText}
+          </a>
+        );
+      }
+
+      if (part.startsWith('http')) {
+        const isInternal = part.includes('#');
+        return (
+          <a
+            key={index}
+            href={part}
+            target={isInternal ? "_self" : "_blank"}
+            rel="noopener noreferrer"
+            onClick={(e) => isInternal ? handleLinkClick(e, part) : undefined}
+            className="font-bold underline text-[#c9a15c] hover:text-white transition-colors break-all cursor-pointer"
+          >
+            {part}
+          </a>
+        );
+      }
+
+      if (part.startsWith('**') && part.endsWith('**')) {
+        return (
+          <strong key={index} className="text-[#c9a15c] font-semibold">
+            {part.slice(2, -2)}
+          </strong>
+        );
+      }
+
+      return <span key={index}>{part}</span>;
+    });
   };
 
   return (
     <>
-      <Header />
-
-      <main className="min-h-screen bg-ink text-cream">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-
-        <HeroSlider />
-        <CategoryRail />
-
-        {/* ADDED: id="deals" and scroll-margin so the category rail anchors correctly */}
-        <div id="deals" className="scroll-mt-[190px]">
-          <PromotionsSection />
+      {!isOpen && (
+        <div className="fixed bottom-6 right-5 z-50">
+          <button
+            onClick={() => setIsOpen(true)}
+            className="flex h-14 w-14 items-center justify-center rounded-full bg-[#14181d] border-2 border-[#c9a15c] text-[#c9a15c] shadow-[0_4px_16px_rgba(201,161,92,0.22)] transition-transform hover:scale-105 active:scale-95"
+            aria-label="Open Chat"
+          >
+            <MessageSquare className="h-6 w-6" />
+          </button>
         </div>
+      )}
 
-        <section id="menu" className="max-w-7xl mx-auto px-6 py-12 scroll-mt-[210px]">
-          <div className="flex flex-col sm:flex-row items-center justify-between mb-12 gap-4">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-gold-bright">
-              Our Menu
-            </h2>
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex flex-col bg-[#1c2127] h-[100dvh] sm:h-[75vh] sm:bottom-6 sm:right-5 sm:inset-auto sm:max-h-[800px] sm:min-h-[450px] sm:w-[400px] sm:rounded-xl sm:border sm:border-[#252b34] sm:shadow-2xl">
 
-            {/* Replaced external Lucide icon with lightweight inline SVG */}
-            <a
-              href="/raggio-full-menu.pdf"
-              download
-              className="inline-flex items-center gap-2 bg-panel border border-panel-border hover:border-gold text-stone hover:text-cream text-xs font-bold px-4 py-2.5 rounded-full transition-all"
-            >
-              <svg className="w-4 h-4 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-              </svg>
-              Download Full PDF Menu
-            </a>
+          <div className="flex items-center justify-between border-b border-[#252b34] bg-[#14181d] p-4 text-[#f8f6f0] sm:rounded-t-xl shrink-0">
+            <div className="flex items-center gap-3">
+              <div className="flex h-8 w-8 items-center justify-center rounded-full border border-[#c9a15c] bg-[#232932]">
+                <Bot className="h-5 w-5 text-[#c9a15c]" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-[#f8f6f0]">Raggio AI</h3>
+                <p className="text-xs text-[#9e9b93]">Gourmet Assistant</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <a
+                href={ORDER_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden sm:flex items-center gap-1 rounded-lg border border-[#c9a15c] px-3 py-1.5 text-xs font-semibold text-[#c9a15c] hover:bg-[#c9a15c] hover:text-[#14181d] transition-colors"
+              >
+                Order Now <ExternalLink className="h-3 w-3" />
+              </a>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="text-[#9e9b93] hover:text-[#f8f6f0] transition-colors"
+                aria-label="Close Chat"
+              >
+                <X className="h-6 w-6" />
+              </button>
+            </div>
           </div>
 
-          {categories.map((category) => {
-            const itemsInCategory = menuItems.filter((item) => item.Category === category);
+          {/* DÜZELTME 3: overflow-x-hidden eklendi. Artık sağa sola kayma çubuğu ASLA çıkamaz. */}
+          <div className="flex-1 overflow-y-auto overflow-x-hidden p-4 space-y-4">
+            {messages.map((msg, idx) => (
+              <div
+                key={idx}
+                className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}
+              >
+                {/* DÜZELTME 4: break-words ve whitespace-pre-wrap eklendi. Uzun yazılar zorla alt satıra atılacak. */}
+                <div
+                  className={`max-w-[85%] rounded-lg p-3 text-[15px] leading-relaxed break-words whitespace-pre-wrap ${msg.sender === 'user'
+                    ? 'bg-[#c9a15c] text-[#14181d] font-medium'
+                    : 'bg-[#232932] text-[#f8f6f0] border border-[#38414e]'
+                    }`}
+                >
+                  {formatMessage(msg.text)}
+                </div>
 
-            // DÜZELTME 1: Tüm kategori isimleri (Özellikle Strombolis + Calzones) standart ID formatına zorlanıyor.
-            const targetId = category
-              .toLowerCase()
-              .replace(/\s*\+\s*|\s*&\s*/g, '-and-') // + ve & işaretlerini "-and-" kelimesine çevir.
-              .replace(/[^a-z0-9\-]+/g, '-') // Harf, rakam ve tire dışındakileri tireye çevir.
-              .replace(/-+/g, '-') // Yan yana gelen tireleri tek tireye indir.
-              .replace(/^-|-$/g, ''); // Baştaki ve sondaki tireleri sil.
+                {msg.sender === 'bot' && idx !== 0 && (
+                  <div className="mt-1 flex items-center gap-1 px-1">
+                    <button
+                      onClick={() => handleFeedback(idx, 'up')}
+                      className={`rounded p-1 transition-colors ${msg.feedback === 'up' ? 'text-[#c9a15c]' : 'text-[#5a6270] hover:text-[#9e9b93]'}`}
+                    >
+                      <ThumbsUp className="h-3.5 w-3.5" />
+                    </button>
+                    <button
+                      onClick={() => handleFeedback(idx, 'down')}
+                      className={`rounded p-1 transition-colors ${msg.feedback === 'down' ? 'text-[#c9a15c]' : 'text-[#5a6270] hover:text-[#9e9b93]'}`}
+                    >
+                      <ThumbsDown className="h-3.5 w-3.5" />
+                    </button>
+                  </div>
+                )}
+              </div>
+            ))}
 
-            return (
-              <div key={category} id={targetId} className="mb-16 scroll-mt-[250px]">
+            {showQuickReplies && !loading && (
+              <div className="flex flex-wrap gap-2 pt-1">
+                {QUICK_REPLIES.map((qr) => (
+                  <button
+                    key={qr.label}
+                    onClick={() => handleQuickReply(qr.message)}
+                    className="rounded-full border border-[#38414e] bg-[#232932] px-3 py-1.5 text-xs font-medium text-[#f8f6f0] hover:border-[#c9a15c] hover:text-[#c9a15c] transition-colors text-left"
+                  >
+                    {qr.label}
+                  </button>
+                ))}
+              </div>
+            )}
 
-                {/* DÜZELTME 2: Masaüstünde (md) yapışkan (sticky) noktasını 140px'e ayarladık ve z-index'i güçlendirdik. */}
-                <h3 className="sticky top-[138px] md:top-[140px] z-[35] bg-ink/95 backdrop-blur-md pt-4 pb-3 mb-6 border-b border-panel-border text-gold-bright flex items-center justify-between text-2xl md:text-3xl font-bold tracking-wide shadow-sm">
-                  <span>{category}</span>
-                  <span className="text-sm font-normal text-cream/60 md:text-gold-bright tracking-normal">
-                    {itemsInCategory.length} items
-                  </span>
-                </h3>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {itemsInCategory.map((item, idx) => (
-                    <MenuItemCard
-                      key={idx}
-                      name={item['Product Name']}
-                      price={parseFloat(item.Price) || 0}
-                      description={item.Description}
-                    />
-                  ))}
+            {loading && (
+              <div className="flex justify-start">
+                <div className="flex items-center gap-1 rounded-lg bg-[#232932] px-4 py-3 border border-[#38414e]">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#9e9b93] animate-bounce [animation-delay:-0.3s]" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#9e9b93] animate-bounce [animation-delay:-0.15s]" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#9e9b93] animate-bounce" />
                 </div>
               </div>
-            );
-          })}
-        </section>
+            )}
+            <div ref={chatEndRef} />
+          </div>
 
-        <CateringSection />
-      </main>
-
-      <Footer />
-      <ScrollToTop />
-      <AIChatBot />
+          <div className="border-t border-[#252b34] bg-[#14181d] p-4 pb-safe sm:rounded-b-xl shrink-0">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSend();
+              }}
+              className="flex items-center gap-3"
+            >
+              <input
+                ref={inputRef}
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Ask about menu, specials..."
+                className="flex-1 rounded-lg border border-[#38414e] bg-[#232932] px-4 py-3 text-[15px] text-[#f8f6f0] placeholder-[#9e9b93] focus:border-[#c9a15c] focus:outline-none transition-colors"
+              />
+              <button
+                type="submit"
+                disabled={loading}
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-[#c9a15c] text-[#14181d] transition-transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:hover:scale-100"
+              >
+                <Send className="h-5 w-5" />
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </>
   );
 }
