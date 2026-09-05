@@ -12,8 +12,7 @@ export default function WelcomePopup() {
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
 
-    // Google Apps Script Web App URL'nizi buraya yapıştıracaksınız
-    const GOOGLE_SCRIPT_URL = 'BURAYA_GOOGLE_SCRIPT_LINKI_GELECEK';
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwe23dYVGbmlt56kJhIw7RV_8VO2EnqhdXRzqau3e65mYpDItW6ggp8YX-4rzxtdHIv/exec';
     const FOODTEC_ORDER_URL = 'https://phillystyleexpress.foodtecsolutions.com/';
 
     useEffect(() => {
@@ -36,21 +35,19 @@ export default function WelcomePopup() {
         setLoading(true);
 
         try {
-            // Google Sheets'e veri gönderme işlemi (Arka planda sessizce çalışır)
-            if (GOOGLE_SCRIPT_URL !== 'BURAYA_GOOGLE_SCRIPT_LINKI_GELECEK') {
-                await fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, email, phone })
-                });
-            }
+            await fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'text/plain'
+                },
+                body: JSON.stringify({ name, email, phone })
+            });
 
             setIsSubmitted(true);
             localStorage.setItem('raggio_welcome_seen', 'true');
         } catch (error) {
             console.error("Data submission error", error);
-            // Hata olsa bile müşteriyi bekletmemek için başarı ekranına geçiriyoruz
             setIsSubmitted(true);
         } finally {
             setLoading(false);
@@ -63,7 +60,6 @@ export default function WelcomePopup() {
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-[#0a0c0f]/80 backdrop-blur-sm animate-in fade-in duration-500">
             <div className="relative w-full max-w-4xl bg-[#1c2127] rounded-2xl shadow-[0_0_40px_rgba(201,161,92,0.15)] border border-[#c9a15c]/30 overflow-hidden flex flex-col md:flex-row animate-in zoom-in-95 duration-500">
 
-                {/* Sol Taraf (Masaüstü) */}
                 <div className="hidden md:flex md:w-1/2 bg-[#14181d] relative items-center justify-center p-8 overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-br from-[#c9a15c]/20 to-transparent z-0" />
                     <div className="relative z-10 text-center space-y-6">
@@ -81,7 +77,6 @@ export default function WelcomePopup() {
                     <Pizza className="absolute -bottom-12 -left-12 w-64 h-64 text-[#c9a15c]/5 -rotate-12" />
                 </div>
 
-                {/* Sağ Taraf: Form */}
                 <div className="w-full md:w-1/2 p-8 md:p-12 relative flex flex-col justify-center">
                     <button onClick={handleClose} className="absolute top-4 right-4 p-2 text-[#9e9b93] hover:text-[#c9a15c] transition-colors rounded-full hover:bg-[#232932]">
                         <X className="w-6 h-6" />
