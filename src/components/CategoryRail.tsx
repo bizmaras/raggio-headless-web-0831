@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 
-// DÜZELTME: Sitenin ana sayfasının ürettiği orijinal ID'lerle (s takıları ve tireler dahil) birebir eşleştirildi.
 const CATEGORIES = [
   { label: 'Deals & Specials', searchId: 'deals' },
   { label: 'Pizza', searchId: 'pizza' },
@@ -31,17 +30,16 @@ const CATEGORIES = [
 
 export default function CategoryRail() {
   const [activeCategory, setActiveCategory] = useState<string>('deals');
-
   const scrollRef = useRef<HTMLDivElement>(null);
   const isPaused = useRef(false);
   const exactScroll = useRef(0);
   const resumeTimer = useRef<NodeJS.Timeout | null>(null);
 
-  // IntersectionObserver for ScrollSpy
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     const observerOptions = {
       root: null,
-      // DÜZELTME: Yeni yapışkan menülerin toplam yüksekliği kadar (-230px) pay bırakıldı, böylece başlık ezilmeden ışık yanacak
       rootMargin: '-230px 0px -60% 0px',
       threshold: 0
     };
@@ -49,7 +47,6 @@ export default function CategoryRail() {
     const observerCallback: IntersectionObserverCallback = (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          // Sayfada birden fazla id eşleşmesini önlemek için doğrudan gözlemlenen elementi referans alıyoruz
           const catId = entry.target.getAttribute('data-rail-id') || entry.target.id;
           setActiveCategory(catId);
         }
@@ -59,20 +56,21 @@ export default function CategoryRail() {
     const observer = new IntersectionObserver(observerCallback, observerOptions);
 
     const timer = setTimeout(() => {
-      CATEGORIES.forEach((cat) => {
-        let el = document.getElementById(cat.searchId);
-
-        // Güvenlik ağı: Eğer tam isimle bulamazsa benzer ismi bulmaya çalış
-        if (!el) {
-          const elements = Array.from(document.querySelectorAll('div[id], section[id]'));
-          el = elements.find(e => e.id && e.id.toLowerCase().includes(cat.searchId.replace('-and-', ''))) as HTMLElement | null;
-        }
-
-        if (el) {
-          el.setAttribute('data-rail-id', cat.searchId);
-          observer.observe(el);
-        }
-      });
+      try {
+        CATEGORIES.forEach((cat) => {
+          let el = document.getElementById(cat.searchId);
+          if (!el) {
+            const elements = Array.from(document.querySelectorAll('div[id], section[id]'));
+            el = elements.find(e => e.id && e.id.toLowerCase().includes(cat.searchId.replace('-and-', ''))) as HTMLElement | null;
+          }
+          if (el) {
+            el.setAttribute('data-rail-id', cat.searchId);
+            observer.observe(el);
+          }
+        });
+      } catch (err) {
+        console.error("ScrollSpy error:", err);
+      }
     }, 800);
 
     return () => {
@@ -81,11 +79,9 @@ export default function CategoryRail() {
     };
   }, []);
 
-  // Auto-scroll loop
   useEffect(() => {
     const container = scrollRef.current;
     if (!container) return;
-
     let animId: number;
     exactScroll.current = container.scrollLeft;
 
@@ -94,7 +90,6 @@ export default function CategoryRail() {
         if (container.scrollWidth > container.clientWidth) {
           exactScroll.current += 1.1;
           container.scrollLeft = exactScroll.current;
-
           if (container.scrollLeft >= container.scrollWidth - container.clientWidth - 2) {
             exactScroll.current = 0;
             container.scrollLeft = 0;
@@ -103,7 +98,6 @@ export default function CategoryRail() {
       }
       animId = requestAnimationFrame(step);
     };
-
     animId = requestAnimationFrame(step);
     return () => cancelAnimationFrame(animId);
   }, []);
@@ -116,9 +110,7 @@ export default function CategoryRail() {
   const handleInteractionEnd = () => {
     if (resumeTimer.current) clearTimeout(resumeTimer.current);
     resumeTimer.current = setTimeout(() => {
-      if (scrollRef.current) {
-        exactScroll.current = scrollRef.current.scrollLeft;
-      }
+      if (scrollRef.current) exactScroll.current = scrollRef.current.scrollLeft;
       isPaused.current = false;
     }, 1500);
   };
@@ -126,9 +118,9 @@ export default function CategoryRail() {
   const handleCategoryClick = (e: React.MouseEvent<HTMLAnchorElement>, searchId: string) => {
     setActiveCategory(searchId);
     e.preventDefault();
+    if (typeof window === 'undefined') return;
 
     let targetElement = document.getElementById(searchId);
-
     if (!targetElement) {
       const elements = Array.from(document.querySelectorAll('section, div, h1, h2, h3'));
       targetElement = elements.find(el => {
@@ -138,7 +130,6 @@ export default function CategoryRail() {
     }
 
     if (targetElement) {
-      // DÜZELTME: Chatbottaki zeki kaydırma ayarının (mobil -180, masaüstü -220) aynısını menüye ekledik.
       const isMobile = window.innerWidth < 640;
       const yOffset = isMobile ? -180 : -220;
       const topPosition = targetElement.getBoundingClientRect().top + window.scrollY + yOffset;
@@ -159,21 +150,12 @@ export default function CategoryRail() {
       >
         {CATEGORIES.map((cat) => {
           const isActive = activeCategory === cat.searchId;
-
           return (
             <a
               key={cat.label}
               href={`#${cat.searchId}`}
               onClick={(e) => handleCategoryClick(e, cat.searchId)}
-              className={`
-                flex-none flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-medium whitespace-nowrap
-                transition-all duration-200 touch-manipulation select-none cursor-pointer
-                active:scale-95 focus:outline-none
-                ${isActive
-                  ? 'border-gold text-gold bg-gold/15 shadow-[0_0_15px_rgba(201,161,92,0.35)] ring-1 ring-gold/40'
-                  : 'border-panel-border bg-panel text-stone hover:text-cream hover:border-gold'
-                }
-              `}
+              className={`flex-none flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-medium whitespace-nowrap transition-all duration-200 touch-manipulation select-none cursor-pointer active:scale-95 focus:outline-none ${isActive ? 'border-gold text-gold bg-gold/15 shadow-[0_0_15px_rgba(201,161,92,0.35)] ring-1 ring-gold/40' : 'border-panel-border bg-panel text-stone hover:text-cream hover:border-gold'}`}
             >
               <span className={`w-2 h-2 rounded-full shrink-0 transition-colors duration-300 ${isActive ? 'bg-gold animate-pulse' : 'bg-red-500/80'}`} />
               {cat.label}
