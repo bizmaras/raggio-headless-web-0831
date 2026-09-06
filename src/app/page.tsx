@@ -11,9 +11,10 @@ import Footer from '../components/Footer';
 import ScrollToTop from '../components/ScrollToTop';
 
 // Lazy loading heavy bottom-page components for maximum performance
+// Removed { ssr: false } to comply with Next.js Server Component rules
 const CateringSection = dynamic(() => import('../components/CateringSection'));
-const AIChatBot = dynamic(() => import('../components/AIChatBot'), { ssr: false });
-const WelcomePopup = dynamic(() => import('../components/WelcomePopup'), { ssr: false });
+const AIChatBot = dynamic(() => import('../components/AIChatBot'));
+const WelcomePopup = dynamic(() => import('../components/WelcomePopup'));
 
 interface MenuItem {
   'Product Name': string;
