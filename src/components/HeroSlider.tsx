@@ -85,8 +85,8 @@ export default function HeroSlider() {
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
-      /* Shorter on mobile, near full-screen (85vh) on desktop */
-      className="relative h-[65vh] lg:h-[85vh] w-full flex flex-col justify-center overflow-hidden border-b border-panel-border bg-ink touch-pan-y"
+      /* Height set to 70vh so the category rail perfectly fits the screen */
+      className="relative h-[65vh] lg:h-[70vh] w-full flex flex-col justify-center overflow-hidden border-b border-panel-border bg-ink touch-pan-y"
       aria-label="Raggio Gourmet Pizza Specials in Newark, DE"
     >
       {/* Background Images */}
