@@ -103,9 +103,8 @@ export default function HeroSlider() {
               alt={slide.seoAlt}
               title={slide.seoAlt}
               fill
-              priority={index === 0}
-              loading={index === 0 ? 'eager' : 'lazy'}
-              quality={index === 0 ? 65 : 55}
+              priority // Automatically removes lazy-loading and ensures instant LCP delivery
+              quality={70}
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 1200px"
               className="object-cover"
             />
@@ -194,7 +193,6 @@ export default function HeroSlider() {
           <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
         </svg>
       </button>
-
     </section>
   );
 }
