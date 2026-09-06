@@ -10,7 +10,7 @@ const slides = [
     description: 'Crafted with savory beef pepperoni, 100% Grande Mozzarella, and homemade marinara on deck-oven stone-baked crust.',
     ctaText: 'Order Beef Pepperoni',
     ctaLink: 'https://phillystyleexpress.foodtecsolutions.com/',
-    image: '/images/hero-pepperoni.jpg',
+    image: '/images/hero-pepperoni.webp',
     seoAlt: 'Crispy Beef Pepperoni Pizza at Raggio Gourmet Newark DE',
   },
   {
@@ -19,7 +19,7 @@ const slides = [
     description: 'Packed with beef pepperoni, sausage, bacon, and ham on our deck-oven stone-baked crust for true meat lovers.',
     ctaText: 'Get the Meat Lover’s',
     ctaLink: 'https://phillystyleexpress.foodtecsolutions.com/',
-    image: '/images/hero-meatlover.jpg',
+    image: '/images/hero-meatlover.webp',
     seoAlt: 'Signature Meat Lovers Pizza Delivery in Newark, DE',
   },
   {
@@ -28,7 +28,7 @@ const slides = [
     description: 'Tender chicken tossed in fiery buffalo sauce with creamy ranch drizzle. A local favorite in Newark.',
     ctaText: 'Try Buffalo Chicken',
     ctaLink: 'https://phillystyleexpress.foodtecsolutions.com/',
-    image: '/images/hero-buffalo.jpg',
+    image: '/images/hero-buffalo.webp',
     seoAlt: 'Spicy Buffalo Chicken Pizza - Raggio Gourmet Newark',
   },
   {
@@ -37,7 +37,7 @@ const slides = [
     description: 'Sauteed fresh spinach, roasted garlic, ricotta, and extra virgin olive oil. Perfect for catering and family dining.',
     ctaText: 'Taste Spinach Gourmet',
     ctaLink: 'https://phillystyleexpress.foodtecsolutions.com/',
-    image: '/images/hero-spinach.jpg',
+    image: '/images/hero-spinach.webp',
     seoAlt: 'Fresh Spinach and Garlic Gourmet Pizza in Newark DE',
   },
 ];
@@ -145,8 +145,8 @@ export default function HeroSlider() {
                 priority={index === 0}
                 fetchPriority={index === 0 ? 'high' : 'low'}
                 loading={index === 0 ? 'eager' : 'lazy'}
-                quality={75}
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 1200px"
+                quality={index === 0 ? 68 : 72}
+                sizes="(max-width: 480px) 100vw, (max-width: 1024px) 100vw, 1920px"
                 className="object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/35 to-ink/50" />
