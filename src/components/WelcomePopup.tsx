@@ -78,7 +78,11 @@ export default function WelcomePopup() {
                 </div>
 
                 <div className="w-full md:w-1/2 p-8 md:p-12 relative flex flex-col justify-center">
-                    <button onClick={handleClose} className="absolute top-4 right-4 p-2 text-[#9e9b93] hover:text-[#c9a15c] transition-colors rounded-full hover:bg-[#232932]">
+                    <button
+                        onClick={handleClose}
+                        aria-label="Close popup"
+                        className="absolute top-4 right-4 p-2 text-[#9e9b93] hover:text-[#c9a15c] transition-colors rounded-full hover:bg-[#232932]"
+                    >
                         <X className="w-6 h-6" />
                     </button>
 

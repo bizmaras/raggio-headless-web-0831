@@ -108,6 +108,7 @@ export default function CateringItemCard({
               <button
                 type="button"
                 onClick={() => setIsModalOpen(false)}
+                aria-label="Close details" // SEO ve Lighthouse 100/100 için eklendi
                 className="absolute top-4 right-4 p-1.5 rounded-full bg-black/40 text-stone hover:text-cream border border-panel-border hover:border-gold transition-all cursor-pointer"
               >
                 {/* Inline X Icon */}
