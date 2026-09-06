@@ -9,6 +9,7 @@ import PromotionsSection from '../components/PromotionsSection';
 import MenuItemCard from '../components/MenuItemCard';
 import Footer from '../components/Footer';
 import ScrollToTop from '../components/ScrollToTop';
+import FAQ from '../components/FAQ'; // SEO & AEO FAQ Component Added Here
 
 // Lazy loading heavy bottom-page components for maximum performance
 // Removed { ssr: false } to comply with Next.js Server Component rules
@@ -95,7 +96,6 @@ export default async function HomePage() {
           </div>
 
           {categories.map((category) => {
-            /* Safe ID generator to prevent app crash on invalid characters */
             const targetId = String(category)
               .toLowerCase()
               .replace(/\s*\+\s*|\s*&\s*/g, '-and-')
@@ -107,7 +107,6 @@ export default async function HomePage() {
 
             return (
               <div key={category} id={targetId} className="mb-16 scroll-mt-[250px]">
-                {/* Adjusted sticky offsets for desktop (180px on md, 220px on lg) */}
                 <h3 className="sticky top-[138px] md:top-[180px] lg:top-[220px] z-[35] bg-ink/95 backdrop-blur-md pt-4 pb-3 mb-6 border-b border-panel-border text-gold-bright flex items-center justify-between text-2xl md:text-3xl font-bold tracking-wide shadow-sm">
                   <span>{category}</span>
                   <span className="text-sm font-normal text-cream/60 md:text-gold-bright tracking-normal">{itemsInCategory.length} items</span>
@@ -122,6 +121,9 @@ export default async function HomePage() {
           })}
         </section>
         <CateringSection />
+
+        {/* Render the FAQ section at the bottom of the main content */}
+        <FAQ />
       </main>
       <Footer />
       <ScrollToTop />

@@ -5,13 +5,14 @@ import Image from 'next/image';
 
 const slides = [
   {
-    tag: 'DECK OVEN CLASSIC',
-    title: 'Artisanal Pepperoni Pizza',
+    tag: 'RAGGIO GOURMET PIZZA',
+    // Option 2 chosen for the visual slider as it fits the UI perfectly
+    title: 'Authentic Stone-Baked Pizza in Newark, DE',
     description: 'Loaded with crispy pepperoni and 100% Grande Mozzarella on stone-baked crust. Best in Newark, DE.',
-    ctaText: 'Order Pepperoni Pizza',
+    ctaText: 'Order Now',
     ctaLink: 'https://phillystyleexpress.foodtecsolutions.com/',
     image: '/images/hero-pepperoni.jpg',
-    seoAlt: 'Artisanal Pepperoni Pizza at Raggio Gourmet in Newark, Delaware',
+    seoAlt: 'Authentic Stone-Baked Pizza at Raggio Gourmet in Newark, Delaware',
   },
   {
     tag: 'SPECIALTY PIZZA',
@@ -88,6 +89,11 @@ export default function HeroSlider() {
       className="relative h-[65vh] lg:h-[77vh] w-full flex flex-col justify-center overflow-hidden border-b border-panel-border bg-ink touch-pan-y"
       aria-label="Raggio Gourmet Pizza Specials in Newark, DE"
     >
+      {/* Option 1: Visually hidden but perfectly readable by Google for maximum Local SEO */}
+      <h1 className="sr-only">
+        Raggio Gourmet Pizza: Newark’s Top Choice for Pizza Delivery & Takeout
+      </h1>
+
       {/* Background Images */}
       {slides.map((slide, index) => {
         const isActive = index === current;
@@ -115,7 +121,6 @@ export default function HeroSlider() {
 
       {/* Center Content */}
       <div className="relative z-10 max-w-5xl mx-auto px-6 flex flex-col items-center justify-center text-center mt-12 lg:mt-0">
-        {/* Location Tag */}
         <div className="flex items-center gap-1.5 text-gold-bright mb-4 opacity-90 drop-shadow-md">
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -124,21 +129,15 @@ export default function HeroSlider() {
           <span className="text-xs font-bold tracking-widest uppercase">Newark, Delaware</span>
         </div>
 
-        {/* Typography Gold Badge */}
-        <div className="mb-4">
-          <span className="text-[#D4AF37] font-extrabold text-sm md:text-base tracking-[0.25em] uppercase drop-shadow-md">
-            RAGGIO GOURMET PIZZA
-          </span>
-        </div>
-
         <div key={current} className="transition-all duration-300">
           <span className="inline-block text-[11px] font-mono tracking-widest text-gold bg-black/50 border border-gold/30 px-3.5 py-1 rounded-full mb-3 uppercase shadow-lg">
             {activeSlide.tag}
           </span>
 
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-cream mb-3 drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
+          {/* Changed to H2 for SEO Best Practices (since dynamic H1s hurt scores) */}
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-cream mb-3 drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
             {activeSlide.title}
-          </h1>
+          </h2>
 
           <p className="text-cream/90 text-sm md:text-lg max-w-2xl mx-auto mb-8 font-medium leading-relaxed drop-shadow-[0_1px_5px_rgba(0,0,0,0.8)]">
             {activeSlide.description}
@@ -174,23 +173,11 @@ export default function HeroSlider() {
       </div>
 
       {/* Navigation Arrows */}
-      <button
-        onClick={prevSlide}
-        aria-label="Previous image"
-        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-black/40 border border-white/10 text-white hover:bg-black/60 transition-all cursor-pointer active:scale-95"
-      >
-        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-        </svg>
+      <button onClick={prevSlide} aria-label="Previous image" className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-black/40 border border-white/10 text-white hover:bg-black/60 transition-all cursor-pointer active:scale-95">
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
       </button>
-      <button
-        onClick={nextSlide}
-        aria-label="Next image"
-        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-black/40 border border-white/10 text-white hover:bg-black/60 transition-all cursor-pointer active:scale-95"
-      >
-        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-        </svg>
+      <button onClick={nextSlide} aria-label="Next image" className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-black/40 border border-white/10 text-white hover:bg-black/60 transition-all cursor-pointer active:scale-95">
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
       </button>
     </section>
   );
