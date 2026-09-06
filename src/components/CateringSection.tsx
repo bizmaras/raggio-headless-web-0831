@@ -25,7 +25,6 @@ export default function CateringSection() {
         <section id="catering" className="max-w-7xl mx-auto px-6 py-12 scroll-mt-[210px]">
             <div className="text-center mb-12 max-w-2xl mx-auto">
                 <div className="flex items-center justify-center gap-1.5 text-gold mb-2 opacity-90">
-                    {/* Replaced lucide-react MapPin with inline SVG for optimal performance */}
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
                         <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
                         <circle cx="12" cy="10" r="3" />
@@ -46,7 +45,6 @@ export default function CateringSection() {
                 return (
                     <div key={categoryName} className="mb-16 scroll-mt-[210px]">
 
-                        {/* Unified Sticky Category Header for all breakpoints matching main menu */}
                         <h3 className="sticky top-[138px] md:top-[180px] lg:top-[220px] z-[35] bg-ink/95 backdrop-blur-md pt-4 pb-3 mb-6 border-b border-panel-border text-gold-bright flex items-center justify-between text-2xl md:text-3xl font-bold tracking-wide shadow-sm">
                             <span>{categoryName}</span>
                             <span className="text-sm font-normal text-cream/60 md:text-gold-bright tracking-normal">
@@ -55,17 +53,28 @@ export default function CateringSection() {
                         </h3>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {items.map((item) => (
-                                <CateringItemCard
-                                    key={item.id || item.name}
-                                    name={item.name}
-                                    desc={item.description}
-                                    half={item.halfTrayPrice}
-                                    full={item.fullTrayPrice}
-                                    servesHalf={item.servesHalf}
-                                    servesFull={item.servesFull}
-                                />
-                            ))}
+                            {items.map((item, index) => {
+                                // Sistem 3'lü dizilim yaparken sona 1 tane artıyorsa (örn: 10 ürün) onu tespit et:
+                                const isLastItem = index === items.length - 1;
+                                const isSingleOrphanOnDesktop = isLastItem && items.length % 3 === 1;
+
+                                return (
+                                    <div
+                                        key={item.id || item.name}
+                                        // Eğer artan o son ürünse, onu 2. sütundan başlatarak tam ortaya al (lg:col-start-2)
+                                        className={isSingleOrphanOnDesktop ? 'lg:col-start-2' : ''}
+                                    >
+                                        <CateringItemCard
+                                            name={item.name}
+                                            desc={item.description}
+                                            half={item.halfTrayPrice}
+                                            full={item.fullTrayPrice}
+                                            servesHalf={item.servesHalf}
+                                            servesFull={item.servesFull}
+                                        />
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
                 );
