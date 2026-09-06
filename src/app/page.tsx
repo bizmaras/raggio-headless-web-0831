@@ -15,8 +15,7 @@ import StickyMobileBar from '../components/StickyMobileBar';
 // Lazy loading heavy bottom-page components for maximum performance
 // Removed { ssr: false } to comply with Next.js Server Component rules
 const CateringSection = dynamic(() => import('../components/CateringSection'));
-const AIChatBot = dynamic(() => import('../components/AIChatBot'));
-const WelcomePopup = dynamic(() => import('../components/WelcomePopup'));
+const DeferredWidgets = dynamic(() => import('../components/DeferredWidgets'));
 
 interface MenuItem {
   'Product Name': string;
@@ -170,10 +169,8 @@ export default async function HomePage() {
       </main>
       <Footer />
       <ScrollToTop />
-      <AIChatBot />
       <StickyMobileBar />
-      {/* Welcome Popup for email collection */}
-      <WelcomePopup />
+      <DeferredWidgets />
     </>
   );
 }

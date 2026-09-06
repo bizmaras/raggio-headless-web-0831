@@ -44,10 +44,16 @@ const slides = [
 
 export default function HeroSlider() {
   const [current, setCurrent] = useState(0);
+  const [isHydrated, setIsHydrated] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
   const minSwipeDistance = 50;
+
+  useEffect(() => {
+    const deferTimer = setTimeout(() => setIsHydrated(true), 1200);
+    return () => clearTimeout(deferTimer);
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -127,9 +133,10 @@ export default function HeroSlider() {
           </div>
         </div>
 
-        {/* Background Images with LCP Optimization (First slide high-priority preload, others lazy) */}
+        {/* Background Images with LCP Optimization (First slide high-priority preload, others deferred) */}
         {slides.map((slide, index) => {
           const isActive = index === current;
+          if (index !== 0 && !isHydrated && !isActive) return null;
           return (
             <div
               key={index}
