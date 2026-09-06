@@ -50,15 +50,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <head>
-        {/* Preload primary hero image to eliminate LCP delay and achieve 100/100 performance */}
-        <link
-          rel="preload"
-          href="/images/hero-pepperoni.jpg"
-          as="image"
-          type="image/jpeg"
-        />
-      </head>
       <body className="bg-ink text-cream antialiased">{children}</body>
     </html>
   );

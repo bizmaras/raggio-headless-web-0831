@@ -85,7 +85,6 @@ export default function HeroSlider() {
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
-      /* Height set to 77vh so the category rail perfectly fits the screen */
       className="relative h-[65vh] lg:h-[77vh] w-full flex flex-col justify-center overflow-hidden border-b border-panel-border bg-ink touch-pan-y"
       aria-label="Raggio Gourmet Pizza Specials in Newark, DE"
     >
@@ -103,7 +102,8 @@ export default function HeroSlider() {
               alt={slide.seoAlt}
               title={slide.seoAlt}
               fill
-              priority // Automatically removes lazy-loading and ensures instant LCP delivery
+              priority={index === 0}
+              fetchPriority={index === 0 ? "high" : "auto"}
               quality={70}
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 1200px"
               className="object-cover"
@@ -115,7 +115,6 @@ export default function HeroSlider() {
 
       {/* Center Content */}
       <div className="relative z-10 max-w-5xl mx-auto px-6 flex flex-col items-center justify-center text-center mt-12 lg:mt-0">
-
         {/* Location Tag */}
         <div className="flex items-center gap-1.5 text-gold-bright mb-4 opacity-90 drop-shadow-md">
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
