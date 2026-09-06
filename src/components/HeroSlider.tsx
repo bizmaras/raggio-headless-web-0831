@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import CategoryRail from './CategoryRail'; // Kategorileri Slider'ın içine çektik
 
 const slides = [
   {
@@ -85,9 +86,11 @@ export default function HeroSlider() {
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
-      className="relative h-[520px] md:h-[580px] w-full overflow-hidden border-b border-panel-border bg-ink touch-pan-y"
+      /* Mobilde ekranın %75'i, Masaüstünde tam ekran (min-h-screen) */
+      className="relative min-h-[75vh] lg:min-h-screen w-full flex flex-col justify-between overflow-hidden border-b border-panel-border bg-ink pt-16 pb-4 lg:pb-8 touch-pan-y"
       aria-label="Raggio Gourmet Pizza Specials in Newark, DE"
     >
+      {/* 1. Arka Plan Görselleri */}
       {slides.map((slide, index) => {
         const isActive = index === current;
         return (
@@ -108,12 +111,17 @@ export default function HeroSlider() {
               className="object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#121417] via-[#121417]/50 to-transparent" />
-            <div className="absolute inset-0 bg-black/10" />
+            <div className="absolute inset-0 bg-black/20" />
           </div>
         );
       })}
 
-      <div className="relative z-10 max-w-5xl mx-auto h-full px-6 flex flex-col items-center justify-center text-center">
+      {/* Üst boşluk itici */}
+      <div className="flex-none lg:flex-1"></div>
+
+      {/* 2. Merkez İçerik (Yazılar ve Buton) */}
+      <div className="relative z-10 max-w-5xl mx-auto px-6 flex flex-col items-center justify-center text-center my-auto">
+
         {/* Location Tag */}
         <div className="flex items-center gap-1.5 text-gold-bright mb-4 opacity-90 drop-shadow-md">
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -135,11 +143,11 @@ export default function HeroSlider() {
             {activeSlide.tag}
           </span>
 
-          <h1 className="text-3xl md:text-5xl font-extrabold text-cream mb-3 drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-cream mb-3 drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
             {activeSlide.title}
           </h1>
 
-          <p className="text-cream/90 text-sm md:text-base max-w-xl mx-auto mb-8 font-medium leading-relaxed drop-shadow-[0_1px_5px_rgba(0,0,0,0.8)]">
+          <p className="text-cream/90 text-sm md:text-lg max-w-2xl mx-auto mb-8 font-medium leading-relaxed drop-shadow-[0_1px_5px_rgba(0,0,0,0.8)]">
             {activeSlide.description}
           </p>
 
@@ -148,40 +156,27 @@ export default function HeroSlider() {
             target="_blank"
             rel="noopener noreferrer"
             title={`Order ${activeSlide.title} Online`}
-            className="inline-block bg-gradient-to-br from-gold-bright via-gold to-gold-deep text-[#1c1408] font-extrabold px-8 py-3.5 rounded-full shadow-[0_4px_25px_rgba(201,161,92,0.6)] hover:scale-105 transition-all duration-300 cursor-pointer active:scale-95"
+            className="inline-block bg-gradient-to-br from-gold-bright via-gold to-gold-deep text-[#1c1408] font-extrabold px-8 py-3.5 md:px-10 md:py-4 rounded-full shadow-[0_4px_25px_rgba(201,161,92,0.6)] hover:scale-105 transition-all duration-300 cursor-pointer active:scale-95"
           >
             {activeSlide.ctaText}
           </a>
         </div>
+      </div>
 
-        {/* Navigation Arrows */}
-        <button
-          onClick={prevSlide}
-          aria-label="Previous image"
-          className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-black/40 border border-white/10 text-white hover:bg-black/60 transition-all cursor-pointer active:scale-95"
-        >
-          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
-        <button
-          onClick={nextSlide}
-          aria-label="Next image"
-          className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-black/40 border border-white/10 text-white hover:bg-black/60 transition-all cursor-pointer active:scale-95"
-        >
-          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
+      {/* Alt boşluk itici */}
+      <div className="flex-none lg:flex-1"></div>
+
+      {/* 3. Alt Kısım: Noktalar ve Kategori Menüsü */}
+      <div className="relative z-10 w-full mt-auto flex flex-col items-center gap-6 pt-8">
 
         {/* Slide Pagination Dots */}
-        <div className="absolute bottom-4 flex gap-1 z-20">
+        <div className="flex gap-1">
           {slides.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrent(index)}
               aria-label={`View slide ${index + 1}`}
-              className="p-3 flex items-center justify-center cursor-pointer focus:outline-none"
+              className="p-2 flex items-center justify-center cursor-pointer focus:outline-none"
             >
               <span
                 className={`h-2 rounded-full transition-all duration-300 ${current === index ? 'w-8 bg-gold-bright' : 'w-2 bg-white/60 hover:bg-white'
@@ -190,7 +185,33 @@ export default function HeroSlider() {
             </button>
           ))}
         </div>
+
+        {/* Categories Rail (En alta sabitlendi) */}
+        <div className="w-full max-w-7xl mx-auto">
+          <CategoryRail />
+        </div>
       </div>
+
+      {/* Navigation Arrows (Merkezde kalmaya devam eder) */}
+      <button
+        onClick={prevSlide}
+        aria-label="Previous image"
+        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-black/40 border border-white/10 text-white hover:bg-black/60 transition-all cursor-pointer active:scale-95"
+      >
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <button
+        onClick={nextSlide}
+        aria-label="Next image"
+        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-black/40 border border-white/10 text-white hover:bg-black/60 transition-all cursor-pointer active:scale-95"
+      >
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+
     </section>
   );
 }
