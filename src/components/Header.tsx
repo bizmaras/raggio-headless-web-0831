@@ -55,7 +55,7 @@ export default function Header() {
             </a>
           </div>
 
-          {/* DESKTOP NAV - Font boyutu text-base (16px) ve kalınlığı font-semibold yapıldı */}
+          {/* DESKTOP NAV - Font size text-base (16px) and font-semibold applied */}
           <nav className="hidden lg:flex items-center gap-2 xl:gap-5">
             {navLinks.map((link) => (
               <a
@@ -68,7 +68,7 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* DESKTOP ACTIONS - Telefon numarasının fontu text-base yapıldı */}
+          {/* DESKTOP ACTIONS - Phone number font set to text-base */}
           <div className="hidden lg:flex items-center gap-6">
             <a
               href="tel:3023690553"

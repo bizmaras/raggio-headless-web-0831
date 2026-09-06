@@ -1,16 +1,19 @@
 import fs from 'fs';
 import path from 'path';
 import Papa from 'papaparse';
+import dynamic from 'next/dynamic';
 import Header from '../components/Header';
 import HeroSlider from '../components/HeroSlider';
 import CategoryRail from '../components/CategoryRail';
 import PromotionsSection from '../components/PromotionsSection';
 import MenuItemCard from '../components/MenuItemCard';
-import CateringSection from '../components/CateringSection';
 import Footer from '../components/Footer';
 import ScrollToTop from '../components/ScrollToTop';
-import AIChatBot from '../components/AIChatBot';
-import WelcomePopup from '../components/WelcomePopup';
+
+// Lazy loading heavy bottom-page components for maximum performance
+const CateringSection = dynamic(() => import('../components/CateringSection'));
+const AIChatBot = dynamic(() => import('../components/AIChatBot'), { ssr: false });
+const WelcomePopup = dynamic(() => import('../components/WelcomePopup'), { ssr: false });
 
 interface MenuItem {
   'Product Name': string;
