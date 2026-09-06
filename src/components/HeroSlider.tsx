@@ -85,11 +85,11 @@ export default function HeroSlider() {
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
-      /* Mobilde daha kısa, masaüstünde tam ekrana yakın (85vh) */
+      /* Shorter on mobile, near full-screen (85vh) on desktop */
       className="relative h-[65vh] lg:h-[85vh] w-full flex flex-col justify-center overflow-hidden border-b border-panel-border bg-ink touch-pan-y"
       aria-label="Raggio Gourmet Pizza Specials in Newark, DE"
     >
-      {/* Arka Plan Görselleri */}
+      {/* Background Images */}
       {slides.map((slide, index) => {
         const isActive = index === current;
         return (
@@ -114,7 +114,7 @@ export default function HeroSlider() {
         );
       })}
 
-      {/* Merkez İçerik */}
+      {/* Center Content */}
       <div className="relative z-10 max-w-5xl mx-auto px-6 flex flex-col items-center justify-center text-center mt-12 lg:mt-0">
 
         {/* Location Tag */}
@@ -158,7 +158,7 @@ export default function HeroSlider() {
         </div>
       </div>
 
-      {/* Noktalar */}
+      {/* Pagination Dots */}
       <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-1 z-20">
         {slides.map((_, index) => (
           <button
@@ -175,7 +175,7 @@ export default function HeroSlider() {
         ))}
       </div>
 
-      {/* Oklar */}
+      {/* Navigation Arrows */}
       <button
         onClick={prevSlide}
         aria-label="Previous image"
