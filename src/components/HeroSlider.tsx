@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import CategoryRail from './CategoryRail'; // Kategorileri Slider'ın içine çektik
 
 const slides = [
   {
@@ -86,11 +85,11 @@ export default function HeroSlider() {
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
-      /* Mobilde ekranın %75'i, Masaüstünde tam ekran (min-h-screen) */
-      className="relative min-h-[75vh] lg:min-h-screen w-full flex flex-col justify-between overflow-hidden border-b border-panel-border bg-ink pt-16 pb-4 lg:pb-8 touch-pan-y"
+      /* Mobilde daha kısa, masaüstünde tam ekrana yakın (85vh) */
+      className="relative h-[65vh] lg:h-[85vh] w-full flex flex-col justify-center overflow-hidden border-b border-panel-border bg-ink touch-pan-y"
       aria-label="Raggio Gourmet Pizza Specials in Newark, DE"
     >
-      {/* 1. Arka Plan Görselleri */}
+      {/* Arka Plan Görselleri */}
       {slides.map((slide, index) => {
         const isActive = index === current;
         return (
@@ -110,17 +109,13 @@ export default function HeroSlider() {
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 1200px"
               className="object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#121417] via-[#121417]/50 to-transparent" />
-            <div className="absolute inset-0 bg-black/20" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#121417] via-[#121417]/40 to-[#121417]/60" />
           </div>
         );
       })}
 
-      {/* Üst boşluk itici */}
-      <div className="flex-none lg:flex-1"></div>
-
-      {/* 2. Merkez İçerik (Yazılar ve Buton) */}
-      <div className="relative z-10 max-w-5xl mx-auto px-6 flex flex-col items-center justify-center text-center my-auto">
+      {/* Merkez İçerik */}
+      <div className="relative z-10 max-w-5xl mx-auto px-6 flex flex-col items-center justify-center text-center mt-12 lg:mt-0">
 
         {/* Location Tag */}
         <div className="flex items-center gap-1.5 text-gold-bright mb-4 opacity-90 drop-shadow-md">
@@ -163,36 +158,24 @@ export default function HeroSlider() {
         </div>
       </div>
 
-      {/* Alt boşluk itici */}
-      <div className="flex-none lg:flex-1"></div>
-
-      {/* 3. Alt Kısım: Noktalar ve Kategori Menüsü */}
-      <div className="relative z-10 w-full mt-auto flex flex-col items-center gap-6 pt-8">
-
-        {/* Slide Pagination Dots */}
-        <div className="flex gap-1">
-          {slides.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrent(index)}
-              aria-label={`View slide ${index + 1}`}
-              className="p-2 flex items-center justify-center cursor-pointer focus:outline-none"
-            >
-              <span
-                className={`h-2 rounded-full transition-all duration-300 ${current === index ? 'w-8 bg-gold-bright' : 'w-2 bg-white/60 hover:bg-white'
-                  }`}
-              />
-            </button>
-          ))}
-        </div>
-
-        {/* Categories Rail (En alta sabitlendi) */}
-        <div className="w-full max-w-7xl mx-auto">
-          <CategoryRail />
-        </div>
+      {/* Noktalar */}
+      <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-1 z-20">
+        {slides.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrent(index)}
+            aria-label={`View slide ${index + 1}`}
+            className="p-2 flex items-center justify-center cursor-pointer focus:outline-none"
+          >
+            <span
+              className={`h-2 rounded-full transition-all duration-300 ${current === index ? 'w-8 bg-gold-bright' : 'w-2 bg-white/60 hover:bg-white'
+                }`}
+            />
+          </button>
+        ))}
       </div>
 
-      {/* Navigation Arrows (Merkezde kalmaya devam eder) */}
+      {/* Oklar */}
       <button
         onClick={prevSlide}
         aria-label="Previous image"
