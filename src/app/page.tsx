@@ -91,8 +91,7 @@ export default async function HomePage() {
           </div>
 
           {categories.map((category) => {
-            const itemsInCategory = menuItems.filter((item) => item.Category === category);
-            // Sitenin çökmesini engelleyen güvenli ID oluşturucu
+            /* Safe ID generator to prevent app crash on invalid characters */
             const targetId = String(category)
               .toLowerCase()
               .replace(/\s*\+\s*|\s*&\s*/g, '-and-')
@@ -100,9 +99,12 @@ export default async function HomePage() {
               .replace(/-+/g, '-')
               .replace(/^-|-$/g, '');
 
+            const itemsInCategory = menuItems.filter((item) => item.Category === category);
+
             return (
               <div key={category} id={targetId} className="mb-16 scroll-mt-[250px]">
-                <h3 className="sticky top-[138px] md:top-[140px] z-[35] bg-ink/95 backdrop-blur-md pt-4 pb-3 mb-6 border-b border-panel-border text-gold-bright flex items-center justify-between text-2xl md:text-3xl font-bold tracking-wide shadow-sm">
+                {/* Adjusted sticky offsets for desktop (180px on md, 220px on lg) */}
+                <h3 className="sticky top-[138px] md:top-[180px] lg:top-[220px] z-[35] bg-ink/95 backdrop-blur-md pt-4 pb-3 mb-6 border-b border-panel-border text-gold-bright flex items-center justify-between text-2xl md:text-3xl font-bold tracking-wide shadow-sm">
                   <span>{category}</span>
                   <span className="text-sm font-normal text-cream/60 md:text-gold-bright tracking-normal">{itemsInCategory.length} items</span>
                 </h3>
@@ -120,7 +122,8 @@ export default async function HomePage() {
       <Footer />
       <ScrollToTop />
       <AIChatBot />
-      <WelcomePopup /> {/* İŞTE YENİ FORMUMUZ BURADA */}
+      {/* Welcome Popup for email collection */}
+      <WelcomePopup />
     </>
   );
 }
