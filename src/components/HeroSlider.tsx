@@ -103,8 +103,8 @@ export default function HeroSlider() {
               alt={slide.seoAlt}
               title={slide.seoAlt}
               fill
-              priority // Automatically removes lazy-loading and ensures instant LCP delivery
-              quality={70}
+              priority={index === 0} // ONLY the first slide gets priority to avoid network bottleneck
+              quality={60} // Optimized specifically for 100/100 mobile loading speed
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 1200px"
               className="object-cover"
             />
