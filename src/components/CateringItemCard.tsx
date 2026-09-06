@@ -11,7 +11,7 @@ interface CateringItemCardProps {
   servesFull?: string;
 }
 
-const FOODTEC_URL = 'https://phillystyleexpress.foodtecsolutions.com/';
+const FOODTEC_URL = 'https://order.foodtecsolutions.com/ordering/phillystyleexpress/menu/Catering';
 
 export default function CateringItemCard({
   name,

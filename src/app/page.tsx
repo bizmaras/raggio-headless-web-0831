@@ -10,6 +10,7 @@ import MenuItemCard from '../components/MenuItemCard';
 import Footer from '../components/Footer';
 import ScrollToTop from '../components/ScrollToTop';
 import FAQ from '../components/FAQ'; // SEO & AEO FAQ Component Added Here
+import StickyMobileBar from '../components/StickyMobileBar';
 
 // Lazy loading heavy bottom-page components for maximum performance
 // Removed { ssr: false } to comply with Next.js Server Component rules
@@ -62,13 +63,55 @@ export default async function HomePage() {
     url: 'https://www.raggiogourmetpizza.com',
     telephone: '+13023690553',
     priceRange: '$$',
-    address: { '@type': 'PostalAddress', streetAddress: '681 E Chestnut Hill Rd', addressLocality: 'Newark', addressRegion: 'DE', postalCode: '19713', addressCountry: 'US' },
-    geo: { '@type': 'GeoCoordinates', latitude: 39.6385108, longitude: -75.7289352 },
+    servesCuisine: ['Pizza', 'Italian', 'American', 'Wings', 'Latin American'],
+    acceptsReservations: 'false',
+    currenciesAccepted: 'USD',
+    paymentAccepted: 'Cash, Credit Card',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: '681 E Chestnut Hill Rd',
+      addressLocality: 'Newark',
+      addressRegion: 'DE',
+      postalCode: '19713',
+      addressCountry: 'US',
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: 39.6385108,
+      longitude: -75.7289352,
+    },
     openingHoursSpecification: [
-      { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'], opens: '09:00', closes: '21:00' },
-      { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Friday', 'Saturday'], opens: '09:00', closes: '22:00' },
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'],
+        opens: '09:00',
+        closes: '21:00',
+      },
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Friday', 'Saturday'],
+        opens: '09:00',
+        closes: '22:00',
+      },
     ],
     menu: 'https://www.raggiogourmetpizza.com/#menu',
+    hasMenu: 'https://www.raggiogourmetpizza.com/#menu',
+    potentialAction: {
+      '@type': 'OrderAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: 'https://phillystyleexpress.foodtecsolutions.com/',
+        inLanguage: 'en-US',
+        actionPlatform: [
+          'http://schema.org/DesktopWebPlatform',
+          'http://schema.org/MobileWebPlatform',
+        ],
+      },
+      deliveryMethod: [
+        'http://purl.org/goodrelations/v1#DeliveryModePickUp',
+        'http://purl.org/goodrelations/v1#DeliveryModeOwnFleet',
+      ],
+    },
   };
 
   return (
@@ -128,6 +171,7 @@ export default async function HomePage() {
       <Footer />
       <ScrollToTop />
       <AIChatBot />
+      <StickyMobileBar />
       {/* Welcome Popup for email collection */}
       <WelcomePopup />
     </>
