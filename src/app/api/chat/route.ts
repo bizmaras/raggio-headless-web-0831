@@ -1,7 +1,6 @@
-import Anthropic from '@anthropic-ai/sdk';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import { NextResponse } from 'next/server';
 
-// Next.js runtime: Node.js is recommended over deprecated edge runtime
 export const runtime = 'nodejs';
 
 // ─────────────────────────────────────────────────────────
@@ -14,17 +13,13 @@ function buildSystemPrompt() {
     const day = nyTime.getDay(); // 0 = Sunday, 1 = Monday ... 6 = Saturday
     const hour = nyTime.getHours();
 
-    // Gerçek çalışma saatleri: Pazar-Perşembe 09:00 - 21:00 (9 AM - 9 PM)
     let openHour = 9, closeHour = 21;
 
-    // Cuma (5) ve Cumartesi (6) 09:00 - 22:00 (9 AM - 10 PM)
     if (day === 5 || day === 6) {
         closeHour = 22;
     }
 
     const isOpenNow = hour >= openHour && hour < closeHour;
-
-    // Botun Amerikan AM/PM formatında konuşması için hazırlık
     const openAmPm = "9:00 AM";
     const closeAmPm = closeHour === 21 ? "9:00 PM" : "10:00 PM";
 
@@ -35,7 +30,7 @@ function buildSystemPrompt() {
     return `You are Raggio AI, the official assistant for Raggio Gourmet & Pizza in Newark, DE.
 Address: 681 E Chestnut Hill Rd, Newark, DE.
 
-TONE: Be warm, enthusiastic, and brief. You represent a family gourmet pizza & Latin food restaurant. Always finish your sentences completely. ALWAYS use Markdown bolding (**like this**) to highlight key menu items and recommendations so they stand out
+TONE: Be warm, enthusiastic, and brief. You represent a family gourmet pizza & Latin food restaurant. Always finish your sentences completely. ALWAYS use Markdown bolding (**like this**) to highlight key menu items and recommendations so they stand out.
 
 ─────────────────────────────
 OPERATIONAL INFO
@@ -117,11 +112,6 @@ type IncomingMessage = {
     text?: string;
 };
 
-// Claude API İstemcisi
-const anthropic = new Anthropic({
-    apiKey: process.env.ANTHROPIC_API_KEY,
-});
-
 export async function POST(req: Request) {
     try {
         const identifier = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || req.headers.get('x-real-ip') || 'unknown';
@@ -134,55 +124,57 @@ export async function POST(req: Request) {
             return NextResponse.json({ reply: 'No message provided.' }, { status: 400 });
         }
 
-        if (!process.env.ANTHROPIC_API_KEY) {
+        const apiKey = process.env.GEMINI_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+        if (!apiKey) {
             return NextResponse.json({ reply: 'API Key missing' }, { status: 500 });
         }
 
-        // 1. Mesaj geçmişini Claude formatına ('user' / 'assistant') çeviriyoruz
-        const rawHistory: Anthropic.MessageParam[] = (messages as IncomingMessage[])
+        const genAI = new GoogleGenerativeAI(apiKey);
+        const model = genAI.getGenerativeModel({
+            model: 'gemini-flash-latest',
+            systemInstruction: buildSystemPrompt(),
+        });
+
+        // 1. Mesaj geçmişini Gemini formatına dönüştür
+        const rawHistory = (messages as IncomingMessage[])
             .filter((m) => (m.content || m.text || '').trim().length > 0)
             .map((m) => ({
-                role: (m.role === 'assistant' || m.role === 'model' || m.sender === 'bot') ? ('assistant' as const) : ('user' as const),
-                content: (m.content || m.text || '').trim(),
+                role: (m.role === 'assistant' || m.role === 'model' || m.sender === 'bot') ? ('model' as const) : ('user' as const),
+                parts: [{ text: (m.content || m.text || '').trim() }],
             }));
 
-        // 2. Anthropic kuralı: İlk mesaj 'user' olmalı, başta bot karşılama mesajı varsa atlıyoruz
-        let startIndex = rawHistory.findIndex((m) => m.role === 'user');
-        if (startIndex === -1) {
+        // 2. İlk kullanıcı mesajını bul (baştaki bot karşılama mesajlarını atla)
+        const firstUserIndex = rawHistory.findIndex((m) => m.role === 'user');
+        if (firstUserIndex === -1) {
             return NextResponse.json({ reply: 'How can I assist you with your order today?' });
         }
 
-        const validHistory = rawHistory.slice(startIndex);
+        const validHistory = rawHistory.slice(firstUserIndex);
 
-        // 3. Anthropic kuralı: Ardışık aynı role sahip mesajları birleştiriyoruz (user + user veya assistant + assistant)
-        const consolidatedHistory: Anthropic.MessageParam[] = [];
-        for (const msg of validHistory) {
-            const last = consolidatedHistory[consolidatedHistory.length - 1];
-            if (last && last.role === msg.role) {
-                last.content = `${last.content}\n${msg.content}`;
-            } else {
-                consolidatedHistory.push({ role: msg.role, content: msg.content });
-            }
+        // 3. Son 20 mesajı alırken de ilk elemanın 'user' olmasını garantiye al
+        let trimmed = validHistory.slice(-20);
+        const firstUserInTrimmed = trimmed.findIndex((m) => m.role === 'user');
+        if (firstUserInTrimmed > 0) {
+            trimmed = trimmed.slice(firstUserInTrimmed);
         }
 
-        const trimmedHistory = consolidatedHistory.slice(-20);
+        const historyForChat = trimmed.slice(0, -1);
+        const lastMessage = trimmed[trimmed.length - 1].parts[0].text;
 
-        // Claude 3.5 Sonnet Çağrısı
-        const response = await anthropic.messages.create({
-            model: 'claude-3-5-sonnet-20241022',
-            max_tokens: 1024,
-            temperature: 0.7,
-            system: buildSystemPrompt(),
-            messages: trimmedHistory,
+        const chat = model.startChat({
+            history: historyForChat,
+            generationConfig: {
+                temperature: 0.7,
+                maxOutputTokens: 1024,
+            },
         });
 
-        // Yanıtı çıkar
-        const textContent = response.content.find((c) => c.type === 'text');
-        const botReply = textContent ? textContent.text : "I'm sorry, I couldn't process that. Could you try rephrasing your question?";
+        const result = await chat.sendMessage(lastMessage);
+        const responseText = result.response.text();
 
-        return NextResponse.json({ reply: botReply });
+        return NextResponse.json({ reply: responseText });
     } catch (error: any) {
-        console.error('Claude API Error:', error);
+        console.error('Gemini API Error:', error);
         return NextResponse.json({ reply: `System Error: ${error.message}` }, { status: 500 });
     }
 }
