@@ -123,9 +123,13 @@ export default function AIChatBot() {
     const formatMessage = (text: string) => {
         if (!text) return null;
 
+        // Markdown liste işaretlerini ("- " / "* ") görsel madde imine çevir.
+        // Kalın yazı regex'i "**" ile çakışmasın diye tek yıldızı sadece satır başında yakalıyoruz.
+        const normalized = text.replace(/^[ \t]*[-*][ \t]+/gm, '• ');
+
         // DÜZELTME: \s* eklendi (aradaki boşluk/enter'ları yutar) ve parantez hataları giderildi.
         const regex = /(\[[^\]]+\]\s*\([^)]+\)|https?:\/\/[^\s)]+|\*\*.*?\*\*)/g;
-        const parts = text.split(regex);
+        const parts = normalized.split(regex);
 
         return parts.map((part, index) => {
             if (!part) return null;
@@ -169,9 +173,13 @@ export default function AIChatBot() {
                 );
             }
 
-            // Kalın Yazı **Formatı**
+            // Kalın Yazı **Formatı** - sarı vurgu + biraz daha büyük punto
             if (part.startsWith('**') && part.endsWith('**')) {
-                return <strong key={index} className="text-[#c9a15c] font-semibold">{part.slice(2, -2)}</strong>;
+                return (
+                    <strong key={index} className="text-[#ffd54a] font-bold text-[1.08em]">
+                        {part.slice(2, -2)}
+                    </strong>
+                );
             }
 
             // Normal Metin
