@@ -144,7 +144,7 @@ export default function AIChatBot() {
                         target={isInternal ? "_self" : "_blank"}
                         rel="noopener noreferrer"
                         onClick={(e) => isInternal ? handleLinkClick(e, url) : undefined}
-                        className="font-bold underline text-[#c9a15c] hover:text-white transition-colors cursor-pointer break-all"
+                        className="font-bold underline text-[#c9a15c] hover:text-white transition-colors cursor-pointer break-words"
                     >
                         {linkText}
                     </a>
@@ -182,10 +182,10 @@ export default function AIChatBot() {
     return (
         <>
             {!isOpen && (
-                <div className="fixed bottom-20 right-4 sm:bottom-6 sm:right-5 z-40">
+                <div className="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 z-40">
                     <button
                         onClick={() => setIsOpen(true)}
-                        className="flex h-14 w-14 items-center justify-center rounded-full bg-[#14181d] border-2 border-[#c9a15c] text-[#c9a15c] shadow-[0_4px_16px_rgba(201,161,92,0.22)] transition-transform hover:scale-105 active:scale-95"
+                        className="flex h-14 w-14 items-center justify-center rounded-full bg-[#14181d] border-2 border-[#c9a15c] text-[#c9a15c] shadow-[0_6px_20px_rgba(201,161,92,0.28)] transition-transform hover:scale-105 active:scale-95"
                         aria-label="Open Chat"
                     >
                         <MessageSquare className="h-6 w-6" />
@@ -194,29 +194,29 @@ export default function AIChatBot() {
             )}
 
             {isOpen && (
-                <div className="fixed inset-0 z-50 flex flex-col bg-[#1c2127] h-[100dvh] sm:h-[75vh] sm:bottom-6 sm:right-5 sm:inset-auto sm:max-h-[800px] sm:min-h-[450px] sm:w-[400px] sm:rounded-xl sm:border sm:border-[#252b34] sm:shadow-2xl">
-                    <div className="flex items-center justify-between border-b border-[#252b34] bg-[#14181d] p-4 text-[#f8f6f0] sm:rounded-t-xl shrink-0">
+                <div className="fixed inset-0 z-50 flex flex-col bg-[#1c2127] h-[100dvh] sm:h-[80vh] sm:bottom-6 sm:right-6 sm:inset-auto sm:max-h-[760px] sm:min-h-[520px] sm:w-[450px] md:w-[470px] sm:rounded-2xl sm:border sm:border-[#252b34] sm:shadow-2xl overflow-hidden animate-in fade-in sm:zoom-in-95 duration-200">
+                    <div className="flex items-center justify-between border-b border-[#252b34] bg-[#14181d] px-4 py-3.5 sm:px-5 sm:py-4 text-[#f8f6f0] shrink-0">
                         <div className="flex items-center gap-3">
-                            <div className="flex h-8 w-8 items-center justify-center rounded-full border border-[#c9a15c] bg-[#232932]">
+                            <div className="flex h-9 w-9 items-center justify-center rounded-full border border-[#c9a15c] bg-[#232932]">
                                 <Bot className="h-5 w-5 text-[#c9a15c]" />
                             </div>
                             <div>
-                                <h3 className="font-semibold text-[#f8f6f0]">Raggio AI</h3>
+                                <h3 className="font-semibold text-base text-[#f8f6f0] leading-tight">Raggio AI</h3>
                                 <p className="text-xs text-[#9e9b93]">Gourmet Assistant</p>
                             </div>
                         </div>
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-2.5">
                             <a
                                 href={ORDER_URL}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="hidden sm:flex items-center gap-1 rounded-lg border border-[#c9a15c] px-3 py-1.5 text-xs font-semibold text-[#c9a15c] hover:bg-[#c9a15c] hover:text-[#14181d] transition-colors"
+                                className="flex items-center gap-1.5 rounded-lg border border-[#c9a15c] px-3 py-1.5 text-xs font-semibold text-[#c9a15c] hover:bg-[#c9a15c] hover:text-[#14181d] transition-colors"
                             >
                                 Order Now <ExternalLink className="h-3 w-3" />
                             </a>
                             <button
                                 onClick={() => setIsOpen(false)}
-                                className="text-[#9e9b93] hover:text-[#f8f6f0] transition-colors"
+                                className="p-1 text-[#9e9b93] hover:text-[#f8f6f0] transition-colors rounded-lg hover:bg-[#252b34]"
                                 aria-label="Close Chat"
                             >
                                 <X className="h-6 w-6" />
@@ -224,11 +224,11 @@ export default function AIChatBot() {
                         </div>
                     </div>
 
-                    <div className="flex-1 overflow-y-auto overflow-x-hidden p-4 space-y-4">
+                    <div className="flex-1 overflow-y-auto overflow-x-hidden p-4 sm:p-5 space-y-4 [scrollbar-width:thin] [scrollbar-color:#38414e_transparent] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-[#38414e] [&::-webkit-scrollbar-thumb]:rounded-full">
                         {messages.map((msg, idx) => (
                             <div key={idx} className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}>
                                 <div
-                                    className={`max-w-[85%] rounded-lg p-3 text-[15px] leading-relaxed break-words whitespace-pre-wrap ${msg.sender === 'user' ? 'bg-[#c9a15c] text-[#14181d] font-medium' : 'bg-[#232932] text-[#f8f6f0] border border-[#38414e]'}`}
+                                    className={`max-w-[92%] sm:max-w-[88%] rounded-2xl p-3.5 sm:p-4 text-[14.5px] sm:text-[15px] leading-relaxed break-words whitespace-pre-wrap ${msg.sender === 'user' ? 'bg-[#c9a15c] text-[#14181d] font-medium rounded-tr-sm' : 'bg-[#232932] text-[#f8f6f0] border border-[#38414e] rounded-tl-sm'}`}
                                 >
                                     {formatMessage(msg.text)}
                                 </div>
@@ -255,27 +255,27 @@ export default function AIChatBot() {
                         )}
                         {loading && (
                             <div className="flex justify-start">
-                                <div className="flex items-center gap-1 rounded-lg bg-[#232932] px-4 py-3 border border-[#38414e]">
-                                    <span className="h-1.5 w-1.5 rounded-full bg-[#9e9b93] animate-bounce [animation-delay:-0.3s]" />
-                                    <span className="h-1.5 w-1.5 rounded-full bg-[#9e9b93] animate-bounce [animation-delay:-0.15s]" />
-                                    <span className="h-1.5 w-1.5 rounded-full bg-[#9e9b93] animate-bounce" />
+                                <div className="flex items-center gap-1.5 rounded-2xl bg-[#232932] px-4 py-3 border border-[#38414e] rounded-tl-sm">
+                                    <span className="h-2 w-2 rounded-full bg-[#c9a15c] animate-bounce [animation-delay:-0.3s]" />
+                                    <span className="h-2 w-2 rounded-full bg-[#c9a15c] animate-bounce [animation-delay:-0.15s]" />
+                                    <span className="h-2 w-2 rounded-full bg-[#c9a15c] animate-bounce" />
                                 </div>
                             </div>
                         )}
                         <div ref={chatEndRef} />
                     </div>
 
-                    <div className="border-t border-[#252b34] bg-[#14181d] p-4 pb-safe sm:rounded-b-xl shrink-0">
-                        <form onSubmit={(e) => { e.preventDefault(); handleSend(); }} className="flex items-center gap-3">
+                    <div className="border-t border-[#252b34] bg-[#14181d] p-3.5 sm:p-4 shrink-0 pb-safe">
+                        <form onSubmit={(e) => { e.preventDefault(); handleSend(); }} className="flex items-center gap-2.5">
                             <input
                                 ref={inputRef}
                                 type="text"
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
                                 placeholder="Ask about menu, specials..."
-                                className="flex-1 rounded-lg border border-[#38414e] bg-[#232932] px-4 py-3 text-[15px] text-[#f8f6f0] placeholder-[#9e9b93] focus:border-[#c9a15c] focus:outline-none transition-colors"
+                                className="flex-1 rounded-xl border border-[#38414e] bg-[#232932] px-4 py-3 text-base sm:text-[15px] text-[#f8f6f0] placeholder-[#9e9b93] focus:border-[#c9a15c] focus:outline-none transition-colors"
                             />
-                            <button type="submit" disabled={loading} className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-[#c9a15c] text-[#14181d] transition-transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:hover:scale-100">
+                            <button type="submit" disabled={loading || !input.trim()} className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#c9a15c] text-[#14181d] transition-transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:hover:scale-100">
                                 <Send className="h-5 w-5" />
                             </button>
                         </form>
