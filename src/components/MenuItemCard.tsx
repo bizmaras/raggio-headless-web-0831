@@ -38,10 +38,10 @@ export default function MenuItemCard(props: MenuItemCardProps) {
 
   return (
     <>
-      <div className="bg-panel border border-panel-border rounded-xl p-5 hover:border-gold/50 transition-all flex flex-col justify-between">
+      <div className="bg-panel border border-panel-border rounded-xl p-5 hover:border-gold/60 hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(201,161,92,0.14)] transition-all duration-300 flex flex-col justify-between group">
         <div>
           <div className="flex justify-between items-start mb-2">
-            <h4 className="text-lg font-bold text-cream">{itemName}</h4>
+            <h4 className="text-lg font-bold text-cream group-hover:text-gold-bright transition-colors">{itemName}</h4>
             <span className="text-gold font-extrabold">{itemPrice}</span>
           </div>
           <p className="text-sm text-stone mb-4 line-clamp-2">

@@ -6,6 +6,8 @@ import type { Locale } from "./dictionaries";
 import Header from "../../components/Header";
 import HeroSlider from "../../components/HeroSlider";
 import CategoryRail from "../../components/CategoryRail";
+import StatsCounter from "../../components/StatsCounter";
+import ScrollReveal from "../../components/ScrollReveal";
 import PromotionsSection from "../../components/PromotionsSection";
 import MenuItemCard from "../../components/MenuItemCard";
 import Footer from "../../components/Footer";
@@ -100,25 +102,33 @@ export default async function HomePage({
         />
         <HeroSlider />
         <CategoryRail />
+        <StatsCounter />
+
         <div id="deals" className="scroll-mt-[190px]">
-          <PromotionsSection />
+          <ScrollReveal>
+            <PromotionsSection />
+          </ScrollReveal>
         </div>
+
         <section id="menu" className="max-w-7xl mx-auto px-6 py-12 scroll-mt-[210px]">
-          <div className="flex flex-col sm:flex-row items-center justify-between mb-12 gap-4">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-gold-bright">
-              {dict.menu.title}
-            </h2>
-            <a
-              href="/raggio-full-menu.pdf"
-              download
-              className="inline-flex items-center gap-2 bg-panel border border-panel-border hover:border-gold text-stone hover:text-cream text-xs font-bold px-4 py-2.5 rounded-full transition-all"
-            >
-              <svg className="w-4 h-4 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-              </svg>
-              {dict.menu.download_pdf}
-            </a>
-          </div>
+          <ScrollReveal>
+            <div className="flex flex-col sm:flex-row items-center justify-between mb-12 gap-4">
+              <h2 className="text-3xl md:text-4xl font-extrabold text-gold-bright">
+                {dict.menu.title}
+              </h2>
+              <a
+                href="/raggio-full-menu.pdf"
+                download
+                className="inline-flex items-center gap-2 bg-panel border border-panel-border hover:border-gold text-stone hover:text-cream text-xs font-bold px-4 py-2.5 rounded-full transition-all"
+              >
+                <svg className="w-4 h-4 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                {dict.menu.download_pdf}
+              </a>
+            </div>
+          </ScrollReveal>
+
           {categories.map((category) => {
             const targetId = String(category)
               .toLowerCase()
@@ -137,22 +147,28 @@ export default async function HomePage({
                     {itemsInCategory.length} {dict.menu.items_count}
                   </span>
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {itemsInCategory.map((item, idx) => (
-                    <MenuItemCard
-                      key={idx}
-                      name={item["Product Name"]}
-                      price={parseFloat(item.Price) || 0}
-                      description={item.Description}
-                    />
-                  ))}
-                </div>
+                <ScrollReveal>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {itemsInCategory.map((item, idx) => (
+                      <MenuItemCard
+                        key={idx}
+                        name={item["Product Name"]}
+                        price={parseFloat(item.Price) || 0}
+                        description={item.Description}
+                      />
+                    ))}
+                  </div>
+                </ScrollReveal>
               </div>
             );
           })}
         </section>
-        <CateringSection />
-        <FAQ />
+        <ScrollReveal>
+          <CateringSection />
+        </ScrollReveal>
+        <ScrollReveal>
+          <FAQ />
+        </ScrollReveal>
       </main>
       <Footer />
       <ScrollToTop />
