@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { hasLocale, getDictionary, supportedLocales } from "./dictionaries";
 import type { Locale } from "./dictionaries";
+import DatadogInit from "@/components/DatadogInit";
 import "../globals.css";
 
 export async function generateStaticParams() {
@@ -41,7 +42,10 @@ export default async function LangLayout({
 
   return (
     <html lang={lang} className="scroll-smooth">
-      <body className="bg-ink text-cream antialiased">{children}</body>
+      <body className="bg-ink text-cream antialiased">
+        <DatadogInit />
+        {children}
+      </body>
     </html>
   );
 }
