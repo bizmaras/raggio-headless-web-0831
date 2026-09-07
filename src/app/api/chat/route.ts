@@ -1,7 +1,8 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { NextResponse } from 'next/server';
 
-export const runtime = 'edge';
+// Next.js runtime: Node.js is recommended over deprecated edge runtime
+export const runtime = 'nodejs';
 
 // ─────────────────────────────────────────────────────────
 // SYSTEM PROMPT
@@ -137,22 +138,41 @@ export async function POST(req: Request) {
             return NextResponse.json({ reply: 'API Key missing' }, { status: 500 });
         }
 
-        // Mesaj geçmişini Claude'un beklediği formata ('user' / 'assistant') çeviriyoruz
-        const history: Anthropic.MessageParam[] = (messages as IncomingMessage[])
+        // 1. Mesaj geçmişini Claude formatına ('user' / 'assistant') çeviriyoruz
+        const rawHistory: Anthropic.MessageParam[] = (messages as IncomingMessage[])
             .filter((m) => (m.content || m.text || '').trim().length > 0)
             .map((m) => ({
-                role: (m.role === 'assistant' || m.role === 'model' || m.sender === 'bot') ? 'assistant' : 'user',
+                role: (m.role === 'assistant' || m.role === 'model' || m.sender === 'bot') ? ('assistant' as const) : ('user' as const),
                 content: (m.content || m.text || '').trim(),
             }));
 
-        const trimmedHistory = history.slice(-20);
+        // 2. Anthropic kuralı: İlk mesaj 'user' olmalı, başta bot karşılama mesajı varsa atlıyoruz
+        let startIndex = rawHistory.findIndex((m) => m.role === 'user');
+        if (startIndex === -1) {
+            return NextResponse.json({ reply: 'How can I assist you with your order today?' });
+        }
+
+        const validHistory = rawHistory.slice(startIndex);
+
+        // 3. Anthropic kuralı: Ardışık aynı role sahip mesajları birleştiriyoruz (user + user veya assistant + assistant)
+        const consolidatedHistory: Anthropic.MessageParam[] = [];
+        for (const msg of validHistory) {
+            const last = consolidatedHistory[consolidatedHistory.length - 1];
+            if (last && last.role === msg.role) {
+                last.content = `${last.content}\n${msg.content}`;
+            } else {
+                consolidatedHistory.push({ role: msg.role, content: msg.content });
+            }
+        }
+
+        const trimmedHistory = consolidatedHistory.slice(-20);
 
         // Claude 3.5 Sonnet Çağrısı
         const response = await anthropic.messages.create({
             model: 'claude-3-5-sonnet-20241022',
             max_tokens: 1024,
             temperature: 0.7,
-            system: buildSystemPrompt(), // Sistem komutunu özel parametre ile gönderiyoruz
+            system: buildSystemPrompt(),
             messages: trimmedHistory,
         });
 
