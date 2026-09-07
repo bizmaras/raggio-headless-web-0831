@@ -1,3 +1,4 @@
+import Anthropic from '@anthropic-ai/sdk';
 import { NextResponse } from 'next/server';
 
 export const runtime = 'edge';
@@ -89,6 +90,10 @@ If a user misspells an item (e.g., "puppuses"), guess what they mean, confirm it
 Answer briefly, enthusiastically, and accurately in English.`;
 }
 
+// ─────────────────────────────────────────────────────────
+// RATE LIMITING
+// ─────────────────────────────────────────────────────────
+
 const RATE_LIMIT_WINDOW_MS = 60_000;
 const RATE_LIMIT_MAX_REQUESTS = 12;
 const rateLimitMap = new Map<string, { count: number; windowStart: number }>();
@@ -111,50 +116,53 @@ type IncomingMessage = {
     text?: string;
 };
 
+// Claude API İstemcisi
+const anthropic = new Anthropic({
+    apiKey: process.env.ANTHROPIC_API_KEY,
+});
+
 export async function POST(req: Request) {
     try {
         const identifier = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || req.headers.get('x-real-ip') || 'unknown';
-        if (isRateLimited(identifier)) return NextResponse.json({ reply: "You're sending messages too fast!" }, { status: 429 });
+        if (isRateLimited(identifier)) {
+            return NextResponse.json({ reply: "You're sending messages too fast!" }, { status: 429 });
+        }
 
         const { messages } = await req.json();
-        if (!Array.isArray(messages) || messages.length === 0) return NextResponse.json({ reply: 'No message provided.' }, { status: 400 });
+        if (!Array.isArray(messages) || messages.length === 0) {
+            return NextResponse.json({ reply: 'No message provided.' }, { status: 400 });
+        }
 
-        const apiKey = process.env.GEMINI_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY;
-        if (!apiKey) return NextResponse.json({ reply: 'API Key missing' }, { status: 500 });
+        if (!process.env.ANTHROPIC_API_KEY) {
+            return NextResponse.json({ reply: 'API Key missing' }, { status: 500 });
+        }
 
-        const history = (messages as IncomingMessage[])
+        // Mesaj geçmişini Claude'un beklediği formata ('user' / 'assistant') çeviriyoruz
+        const history: Anthropic.MessageParam[] = (messages as IncomingMessage[])
             .filter((m) => (m.content || m.text || '').trim().length > 0)
             .map((m) => ({
-                role: (m.role === 'assistant' || m.role === 'model' || m.sender === 'bot') ? 'model' : 'user',
-                parts: [{ text: (m.content || m.text || '').trim() }],
+                role: (m.role === 'assistant' || m.role === 'model' || m.sender === 'bot') ? 'assistant' : 'user',
+                content: (m.content || m.text || '').trim(),
             }));
 
         const trimmedHistory = history.slice(-20);
 
-        const googleResponse = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${apiKey}`,
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    systemInstruction: { parts: [{ text: buildSystemPrompt() }] },
-                    contents: trimmedHistory,
-                    generationConfig: { temperature: 0.7, maxOutputTokens: 1024 },
-                }),
-            }
-        );
+        // Claude 3.5 Sonnet Çağrısı
+        const response = await anthropic.messages.create({
+            model: 'claude-3-5-sonnet-20241022',
+            max_tokens: 1024,
+            temperature: 0.7,
+            system: buildSystemPrompt(), // Sistem komutunu özel parametre ile gönderiyoruz
+            messages: trimmedHistory,
+        });
 
-        const data = await googleResponse.json();
-        if (data.error) return NextResponse.json({ reply: `Google API Error: ${data.error.message}` }, { status: 400 });
-
-        const parts = data?.candidates?.[0]?.content?.parts;
-        let botReply = "I'm sorry, I couldn't process that. Could you try rephrasing your question?";
-        if (parts && Array.isArray(parts)) {
-            botReply = parts.map((p: any) => p.text || "").join('');
-        }
+        // Yanıtı çıkar
+        const textContent = response.content.find((c) => c.type === 'text');
+        const botReply = textContent ? textContent.text : "I'm sorry, I couldn't process that. Could you try rephrasing your question?";
 
         return NextResponse.json({ reply: botReply });
     } catch (error: any) {
+        console.error('Claude API Error:', error);
         return NextResponse.json({ reply: `System Error: ${error.message}` }, { status: 500 });
     }
 }

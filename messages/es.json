@@ -1,0 +1,35 @@
+{
+  "nav": {
+    "menu": "Menu",
+    "deals": "Ofertas",
+    "catering": "Catering",
+    "order": "Ordenar Ahora"
+  },
+  "hero": {
+    "tagline": "Auténtica Pizza Gourmet",
+    "subtitle": "Elaborada con pasión, horneada a la perfección",
+    "cta": "Ver Menu",
+    "cta_order": "Ordenar en Línea"
+  },
+  "menu": {
+    "title": "Nuestro Menu",
+    "items_count": "artículos",
+    "download_pdf": "Descargar Menu PDF Completo"
+  },
+  "catering": {
+    "title": "Servicios de Catering",
+    "subtitle": "Perfecto para tu próximo evento"
+  },
+  "footer": {
+    "hours": "Horario",
+    "address": "Dirección",
+    "phone": "Teléfono",
+    "follow": "Síguenos"
+  },
+  "common": {
+    "add_to_cart": "Agregar al Carrito",
+    "close": "Cerrar",
+    "loading": "Cargando...",
+    "back_to_top": "Volver arriba"
+  }
+}

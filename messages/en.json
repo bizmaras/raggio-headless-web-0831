@@ -1,0 +1,35 @@
+{
+  "nav": {
+    "menu": "Menu",
+    "deals": "Deals",
+    "catering": "Catering",
+    "order": "Order Now"
+  },
+  "hero": {
+    "tagline": "Authentic Gourmet Pizza",
+    "subtitle": "Handcrafted with passion, baked to perfection",
+    "cta": "View Menu",
+    "cta_order": "Order Online"
+  },
+  "menu": {
+    "title": "Our Menu",
+    "items_count": "items",
+    "download_pdf": "Download Full PDF Menu"
+  },
+  "catering": {
+    "title": "Catering Services",
+    "subtitle": "Perfect for your next event"
+  },
+  "footer": {
+    "hours": "Hours",
+    "address": "Address",
+    "phone": "Phone",
+    "follow": "Follow Us"
+  },
+  "common": {
+    "add_to_cart": "Add to Cart",
+    "close": "Close",
+    "loading": "Loading...",
+    "back_to_top": "Back to top"
+  }
+}
