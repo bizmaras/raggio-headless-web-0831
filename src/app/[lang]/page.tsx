@@ -97,7 +97,7 @@ export default async function HomePage({
   return (
     <>
       <Header lang={lang} dict={dict} />
-      <main className="min-h-screen bg-ink text-cream">
+      <main className="min-h-screen bg-ink text-cream w-full max-w-full overflow-x-clip">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

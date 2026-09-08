@@ -79,7 +79,8 @@ export default function StatsCounter({ dict }: StatsCounterProps) {
     <>
       {/* MOBILE: Ultra-thin infinite marquee (unchanged, zero mobile footprint) */}
       <div
-        className="md:hidden relative overflow-hidden border-y border-panel-border/40 bg-ink/60 py-2"
+        className="md:hidden relative overflow-hidden border-y border-panel-border/40 bg-ink/60 py-2 w-full max-w-full"
+        style={{ overflow: 'clip', contain: 'paint' }}
         aria-hidden="true"
       >
         <div className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-ink/90 to-transparent z-10" />

@@ -93,8 +93,8 @@ export default async function LangLayout({
   if (!hasLocale(lang)) notFound();
 
   return (
-    <html lang={lang} className="scroll-smooth">
-      <body className="bg-ink text-cream antialiased">
+    <html lang={lang} className="scroll-smooth overflow-x-clip w-full max-w-full">
+      <body className="bg-ink text-cream antialiased overflow-x-clip w-full max-w-full relative">
         <RestaurantJsonLd />
         <DatadogInit />
         {children}
