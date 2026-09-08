@@ -198,19 +198,23 @@ export default function HeroSlider({ dict }: HeroSliderProps) {
             </div>
 
             {/* SLIDER DOTS */}
-            <div className="flex items-center gap-2 sm:gap-2.5 pt-1 sm:pt-4">
+            <div className="flex items-center gap-1 sm:gap-1.5 pt-1 sm:pt-4">
               {slides.map((_, dotIdx) => (
                 <button
                   key={dotIdx}
                   type="button"
                   onClick={() => setCurrent(dotIdx)}
                   aria-label={`Go to slide ${dotIdx + 1}`}
-                  className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                    current === dotIdx
-                      ? 'w-8 sm:w-10 bg-gold shadow-[0_0_10px_rgba(201,161,92,0.7)]'
-                  : 'w-2.5 bg-panel-border hover:bg-stone-dim'
-                  }`}
-                />
+                  className="p-3 min-w-[44px] min-h-[44px] flex items-center justify-center cursor-pointer -m-1 focus:outline-none touch-manipulation"
+                >
+                  <span
+                    className={`h-2 rounded-full transition-all duration-300 pointer-events-none block ${
+                      current === dotIdx
+                        ? 'w-8 sm:w-10 bg-gold shadow-[0_0_10px_rgba(201,161,92,0.7)]'
+                        : 'w-2.5 bg-panel-border hover:bg-stone-dim'
+                    }`}
+                  />
+                </button>
               ))}
             </div>
 
@@ -239,7 +243,8 @@ export default function HeroSlider({ dict }: HeroSliderProps) {
                     alt={slide.seoAlt}
                     fill
                     priority={index === 0}
-                    quality={85}
+                    loading={index === 0 ? "eager" : "lazy"}
+                    quality={75}
                     sizes="(max-width: 1024px) 100vw, 55vw"
                     className={`object-cover object-center transition-transform duration-[7000ms] ease-out ${
                       isCurrent ? 'scale-105' : 'scale-100'

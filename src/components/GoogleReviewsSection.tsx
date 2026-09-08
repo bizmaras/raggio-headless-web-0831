@@ -220,9 +220,9 @@ export default function GoogleReviewsSection({ dict }: GoogleReviewsSectionProps
                   )}
 
                   <div>
-                    <h4 className="text-sm font-bold text-cream group-hover:text-gold-bright transition-colors line-clamp-1">
+                    <p className="text-sm font-bold text-cream group-hover:text-gold-bright transition-colors line-clamp-1">
                       {review.author}
-                    </h4>
+                    </p>
                     <div className="flex items-center gap-1 text-[11px] text-stone">
                       <CheckCircle className="w-3 h-3 text-emerald-400 shrink-0" />
                       <span>{verifiedCustomerText}</span>
