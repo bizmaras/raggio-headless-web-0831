@@ -135,7 +135,7 @@ export default function HeroSlider({ dict }: HeroSliderProps) {
 
   return (
     <section
-      className="relative w-full overflow-hidden bg-ink py-2 sm:py-6 lg:py-10 select-none flex flex-col justify-center lg:block h-[calc(100dvh-138px)] max-h-[620px] min-h-[420px] lg:h-auto lg:max-h-none lg:min-h-0"
+      className="relative w-full overflow-hidden bg-ink py-2 sm:py-6 lg:py-8 select-none flex flex-col justify-center lg:block h-[calc(100dvh-138px)] max-h-[620px] min-h-[420px] lg:h-auto lg:max-h-none lg:min-h-0"
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
@@ -150,10 +150,10 @@ export default function HeroSlider({ dict }: HeroSliderProps) {
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full lg:h-auto">
         
         {/* CINEMATIC SPLIT-BLEED SHOWCASE CARD */}
-        <div className="w-full relative rounded-2xl sm:rounded-3xl overflow-hidden border border-panel-border bg-ink shadow-2xl flex flex-col-reverse lg:flex-row items-stretch h-full lg:h-auto min-h-0 lg:min-h-[540px]">
+        <div className="w-full relative rounded-2xl sm:rounded-3xl overflow-hidden border border-panel-border bg-ink shadow-2xl flex flex-col-reverse lg:flex-row items-stretch h-full lg:h-auto min-h-0 lg:min-h-[580px] xl:min-h-[620px]">
 
           {/* EDITORIAL TEXT & ACTIONS (Bottom on mobile, Left on desktop) */}
-          <div className="w-full lg:w-[46%] xl:w-[44%] flex flex-col justify-center p-3.5 xs:p-4 sm:p-8 lg:p-12 z-20 space-y-2 xs:space-y-2.5 sm:space-y-6 relative bg-ink lg:bg-gradient-to-r lg:from-ink lg:via-ink/95 lg:to-ink/60 shrink-0 lg:shrink">
+          <div className="w-full lg:w-[45%] xl:w-[43%] flex flex-col justify-center p-3.5 xs:p-4 sm:p-8 lg:p-12 xl:p-14 z-20 space-y-2 xs:space-y-2.5 sm:space-y-6 relative bg-ink lg:bg-gradient-to-r lg:from-ink lg:via-ink/95 lg:to-ink/60 shrink-0 lg:shrink">
             
             {/* Category Tag */}
             <div className="inline-flex items-center gap-2 self-start bg-gold/15 border border-gold/40 px-2.5 py-0.5 sm:px-3.5 sm:py-1.5 rounded-full shadow-sm">
@@ -164,7 +164,7 @@ export default function HeroSlider({ dict }: HeroSliderProps) {
             </div>
 
             {/* Product Title */}
-            <h2 className="text-xl xs:text-2xl sm:text-3xl lg:text-5xl font-extrabold text-cream tracking-tight drop-shadow-md leading-[1.15]">
+            <h2 className="text-xl xs:text-2xl sm:text-3xl lg:text-5xl xl:text-6xl font-extrabold text-cream tracking-tight drop-shadow-md leading-[1.12]">
               {activeSlide.title}
             </h2>
 
@@ -179,13 +179,13 @@ export default function HeroSlider({ dict }: HeroSliderProps) {
                 href={activeSlide.ctaLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto text-center bg-gradient-to-br from-gold-bright via-gold to-gold-deep text-ink font-extrabold px-3 sm:px-7 py-2.5 sm:py-3.5 rounded-full text-xs sm:text-base transition-all duration-300 shadow-[0_4px_20px_rgba(201,161,92,0.45)] hover:shadow-[0_4px_35px_rgba(201,161,92,0.65)] hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center"
+                className="w-full sm:w-auto text-center bg-gradient-to-br from-gold-bright via-gold to-gold-deep text-ink font-extrabold px-3 sm:px-8 py-2.5 sm:py-3.5 lg:py-4 rounded-full text-xs sm:text-base transition-all duration-300 shadow-[0_4px_25px_rgba(201,161,92,0.45)] hover:shadow-[0_4px_35px_rgba(201,161,92,0.65)] hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center"
               >
                 <span className="truncate">{activeSlide.ctaText}</span>
               </a>
               <a
                 href="#menu"
-                className="w-full sm:w-auto text-center border border-panel-border hover:border-gold text-cream hover:text-gold font-bold px-3 sm:px-5 py-2.5 sm:py-3.5 rounded-full text-xs sm:text-base transition-all duration-300 bg-panel/60 hover:bg-panel active:scale-95 cursor-pointer flex items-center justify-center"
+                className="w-full sm:w-auto text-center border border-panel-border hover:border-gold text-cream hover:text-gold font-bold px-3 sm:px-6 py-2.5 sm:py-3.5 lg:py-4 rounded-full text-xs sm:text-base transition-all duration-300 bg-panel/60 hover:bg-panel active:scale-95 cursor-pointer flex items-center justify-center"
               >
                 <span className="truncate">{dict?.hero?.cta || 'View Menu'}</span>
               </a>
@@ -217,7 +217,7 @@ export default function HeroSlider({ dict }: HeroSliderProps) {
           </div>
 
           {/* FULL-BLEED CINEMATIC PHOTOGRAPHY (Top on mobile, Right on desktop) */}
-          <div className="w-full lg:w-[54%] xl:w-[56%] relative flex-1 min-h-[190px] lg:h-auto lg:min-h-[540px] overflow-hidden bg-black">
+          <div className="w-full lg:w-[55%] xl:w-[57%] relative flex-1 min-h-[190px] lg:h-auto lg:min-h-[580px] xl:min-h-[620px] overflow-hidden bg-black">
             
             {/* Edge-to-Edge Pizza Images with Subtle Ken Burns Motion */}
             {slides.map((slide, index) => {
