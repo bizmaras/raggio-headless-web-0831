@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
-import { animate } from 'animejs';
 
 interface ScrollRevealProps {
   children: React.ReactNode;
@@ -42,16 +41,19 @@ export default function ScrollReveal({
             hasAnimated.current = true;
             observer.unobserve(el);
 
-            animate(el, {
-              opacity: [0, 1],
-              translateY: direction === 'up' ? [24, 0] : 0,
-              duration: 550,
-              delay: delay,
-              ease: 'outCubic',
-              complete: () => {
+            if (delay > 0) {
+              setTimeout(() => {
+                el.style.transition = 'opacity 500ms cubic-bezier(0.2, 0.8, 0.2, 1), transform 500ms cubic-bezier(0.2, 0.8, 0.2, 1)';
+                el.style.opacity = '1';
                 el.style.transform = 'none';
-              },
-            });
+              }, delay);
+            } else {
+              requestAnimationFrame(() => {
+                el.style.transition = 'opacity 500ms cubic-bezier(0.2, 0.8, 0.2, 1), transform 500ms cubic-bezier(0.2, 0.8, 0.2, 1)';
+                el.style.opacity = '1';
+                el.style.transform = 'none';
+              });
+            }
           }
         });
       },
