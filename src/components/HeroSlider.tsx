@@ -135,7 +135,7 @@ export default function HeroSlider({ dict }: HeroSliderProps) {
 
   return (
     <section
-      className="relative w-full overflow-hidden bg-ink py-2.5 sm:py-6 lg:py-10 select-none"
+      className="relative w-full overflow-hidden bg-ink py-2.5 sm:py-6 lg:py-10 select-none flex flex-col justify-center min-h-[calc(100dvh-4rem)] lg:min-h-0"
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
