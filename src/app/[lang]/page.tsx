@@ -170,13 +170,13 @@ export default async function HomePage({
           })}
         </section>
         <ScrollReveal>
-          <GoogleReviewsSection dict={dict} />
-        </ScrollReveal>
-        <ScrollReveal>
           <CateringSection dict={dict} lang={lang} />
         </ScrollReveal>
         <ScrollReveal>
           <FAQ dict={dict} />
+        </ScrollReveal>
+        <ScrollReveal>
+          <GoogleReviewsSection dict={dict} />
         </ScrollReveal>
       </main>
       <Footer dict={dict} />
