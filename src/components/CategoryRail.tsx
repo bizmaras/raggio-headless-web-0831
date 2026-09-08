@@ -6,7 +6,7 @@ interface CategoryRailProps {
   categoriesDict?: Record<string, string>;
 }
 
-const DEFAULT_CATEGORIES = [
+const CATEGORIES = [
   { label: 'Deals & Specials', searchId: 'deals' },
   { label: 'Pizza', searchId: 'pizza' },
   { label: 'Gourmet Pizza', searchId: 'gourmet-pizza' },
@@ -34,16 +34,13 @@ const DEFAULT_CATEGORIES = [
 
 export default function CategoryRail({ categoriesDict }: CategoryRailProps) {
   const [activeCategory, setActiveCategory] = useState<string>('deals');
+
   const scrollRef = useRef<HTMLDivElement>(null);
   const isPaused = useRef(false);
   const exactScroll = useRef(0);
   const resumeTimer = useRef<NodeJS.Timeout | null>(null);
 
-  const categories = DEFAULT_CATEGORIES.map((cat) => ({
-    ...cat,
-    displayLabel: categoriesDict?.[cat.label] || cat.label,
-  }));
-
+  // IntersectionObserver for ScrollSpy
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
@@ -66,101 +63,126 @@ export default function CategoryRail({ categoriesDict }: CategoryRailProps) {
 
     const timer = setTimeout(() => {
       try {
-        categories.forEach((cat) => {
-          const el = document.getElementById(cat.searchId);
-          if (el) observer.observe(el);
+        CATEGORIES.forEach((cat) => {
+          let el = document.getElementById(cat.searchId);
+          if (!el) {
+            const elements = Array.from(document.querySelectorAll('div[id], section[id]'));
+            el = elements.find(e => e.id && e.id.toLowerCase().includes(cat.searchId.replace('-and-', ''))) as HTMLElement | null;
+          }
+          if (el) {
+            el.setAttribute('data-rail-id', cat.searchId);
+            observer.observe(el);
+          }
         });
-      } catch (e) {
-        console.warn('CategoryRail observer setup error:', e);
+      } catch (err) {
+        console.error('ScrollSpy error:', err);
       }
-    }, 500);
+    }, 800);
 
     return () => {
       clearTimeout(timer);
       observer.disconnect();
     };
-  }, [categories]);
-
-  // Subtle continuous auto-scroll ticker for desktop and mobile discoverability
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (!el || typeof window === 'undefined') return;
-
-    let animationFrameId: number;
-
-    const scrollTicker = () => {
-      if (!isPaused.current && el) {
-        exactScroll.current += 0.45;
-        if (exactScroll.current >= el.scrollWidth - el.clientWidth) {
-          exactScroll.current = 0;
-        }
-        el.scrollLeft = exactScroll.current;
-      }
-      animationFrameId = requestAnimationFrame(scrollTicker);
-    };
-
-    animationFrameId = requestAnimationFrame(scrollTicker);
-
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-    };
   }, []);
 
-  const pauseTemporary = () => {
+  // Auto-scroll loop on mobile only
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (!container) return;
+
+    let animId: number;
+    exactScroll.current = container.scrollLeft;
+
+    const step = () => {
+      if (!isPaused.current && window.innerWidth < 768) {
+        if (container.scrollWidth > container.clientWidth) {
+          exactScroll.current += 1.1;
+          container.scrollLeft = exactScroll.current;
+
+          if (container.scrollLeft >= container.scrollWidth - container.clientWidth - 2) {
+            exactScroll.current = 0;
+            container.scrollLeft = 0;
+          }
+        }
+      }
+      animId = requestAnimationFrame(step);
+    };
+
+    animId = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(animId);
+  }, []);
+
+  const handleInteractionStart = () => {
     isPaused.current = true;
     if (resumeTimer.current) clearTimeout(resumeTimer.current);
-    resumeTimer.current = setTimeout(() => {
-      if (scrollRef.current) {
-        exactScroll.current = scrollRef.current.scrollLeft;
-      }
-      isPaused.current = false;
-    }, 2800);
   };
 
-  const handleCategoryClick = (searchId: string) => {
-    setActiveCategory(searchId);
-    isPaused.current = true;
+  const handleInteractionEnd = () => {
+    if (resumeTimer.current) clearTimeout(resumeTimer.current);
+    resumeTimer.current = setTimeout(() => {
+      if (scrollRef.current) exactScroll.current = scrollRef.current.scrollLeft;
+      isPaused.current = false;
+    }, 1500);
+  };
 
-    const targetEl = document.getElementById(searchId);
-    if (targetEl) {
-      targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const handleCategoryClick = (e: React.MouseEvent<HTMLAnchorElement>, searchId: string) => {
+    setActiveCategory(searchId);
+    e.preventDefault();
+    if (typeof window === 'undefined') return;
+
+    let targetElement = document.getElementById(searchId);
+    if (!targetElement) {
+      const elements = Array.from(document.querySelectorAll('section, div, h1, h2, h3'));
+      targetElement = elements.find(el => {
+        const elId = el.id ? el.id.toLowerCase() : '';
+        return elId.includes(searchId.replace('-and-', ''));
+      }) as HTMLElement | null;
+    }
+
+    if (targetElement) {
+      const isMobile = window.innerWidth < 640;
+      const yOffset = isMobile ? -180 : -220;
+      const topPosition = targetElement.getBoundingClientRect().top + window.scrollY + yOffset;
+      window.scrollTo({ top: topPosition, behavior: 'smooth' });
     }
   };
 
   return (
-    <nav
-      aria-label="Menu category quick jump"
-      className="sticky top-20 z-30 w-full bg-ink/95 backdrop-blur-md border-b border-panel-border py-3 px-4 shadow-sm"
-    >
+    <div className="sticky top-20 z-40 bg-ink/95 backdrop-blur-md border-b border-panel-border py-4">
       <div
         ref={scrollRef}
-        onMouseEnter={() => { isPaused.current = true; }}
-        onMouseLeave={() => {
-          if (scrollRef.current) exactScroll.current = scrollRef.current.scrollLeft;
-          isPaused.current = false;
-        }}
-        onTouchStart={pauseTemporary}
-        onWheel={pauseTemporary}
-        className="max-w-7xl mx-auto flex items-center gap-2 overflow-x-auto no-scrollbar scroll-smooth"
+        onPointerDown={handleInteractionStart}
+        onPointerUp={handleInteractionEnd}
+        onPointerCancel={handleInteractionEnd}
+        onPointerLeave={handleInteractionEnd}
+        className="flex overflow-x-auto md:flex-wrap md:justify-center gap-2 px-4 md:px-6 max-w-7xl mx-auto no-scrollbar"
+        style={{ WebkitOverflowScrolling: 'touch', willChange: 'scroll-position' }}
       >
-        {categories.map((cat) => {
+        {CATEGORIES.map((cat) => {
           const isActive = activeCategory === cat.searchId;
+          const label = categoriesDict?.[cat.label] || cat.label;
+
           return (
-            <button
-              key={cat.searchId}
-              type="button"
-              onClick={() => handleCategoryClick(cat.searchId)}
-              className={`whitespace-nowrap px-4 py-2 rounded-full text-xs md:text-sm font-bold transition-all duration-200 cursor-pointer shrink-0 ${
-                isActive
-                  ? 'bg-gold text-ink shadow-[0_0_12px_rgba(201,161,92,0.4)] scale-[1.02]'
-                  : 'bg-panel border border-panel-border text-cream/80 hover:text-gold hover:border-gold/50'
-              }`}
+            <a
+              key={cat.label}
+              href={`#${cat.searchId}`}
+              onClick={(e) => handleCategoryClick(e, cat.searchId)}
+              className={`
+                flex-none flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-medium whitespace-nowrap
+                transition-all duration-200 touch-manipulation select-none cursor-pointer
+                active:scale-95 focus:outline-none
+                ${isActive
+                  ? 'border-gold text-gold bg-gold/15 shadow-[0_0_15px_rgba(201,161,92,0.35)] ring-1 ring-gold/40'
+                  : 'border-panel-border bg-panel text-stone hover:text-cream hover:border-gold'
+                }
+              `}
             >
-              {cat.displayLabel}
-            </button>
+              <span className={`w-2 h-2 rounded-full shrink-0 transition-colors duration-300 ${isActive ? 'bg-gold animate-pulse' : 'bg-red-500/80'}`} />
+              {label}
+            </a>
           );
         })}
       </div>
-    </nav>
+    </div>
   );
 }
