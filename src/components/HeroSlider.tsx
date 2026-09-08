@@ -31,6 +31,7 @@ const DEFAULT_SLIDES = [
     ctaLink: 'https://phillystyleexpress.foodtecsolutions.com/',
     image: '/images/hero-pepperoni.webp',
     seoAlt: 'Crispy Beef Pepperoni Pizza at Raggio Gourmet Newark DE',
+    highlight: 'Grande Mozzarella & Crispy Crust',
   },
   {
     tag: 'SPECIALTY PIZZA',
@@ -40,6 +41,7 @@ const DEFAULT_SLIDES = [
     ctaLink: 'https://phillystyleexpress.foodtecsolutions.com/',
     image: '/images/hero-meatlover.webp',
     seoAlt: 'Signature Meat Lovers Pizza Delivery in Newark, DE',
+    highlight: 'Loaded with 4 Artisan Meats',
   },
   {
     tag: 'HOUSE FAVORITE',
@@ -49,6 +51,7 @@ const DEFAULT_SLIDES = [
     ctaLink: 'https://phillystyleexpress.foodtecsolutions.com/',
     image: '/images/hero-buffalo.webp',
     seoAlt: 'Spicy Buffalo Chicken Pizza - Raggio Gourmet Newark',
+    highlight: 'Fiery Buffalo & Creamy Ranch',
   },
   {
     tag: 'GOURMET SELECTION',
@@ -58,6 +61,7 @@ const DEFAULT_SLIDES = [
     ctaLink: 'https://phillystyleexpress.foodtecsolutions.com/',
     image: '/images/hero-spinach.webp',
     seoAlt: 'Fresh Spinach and Garlic Gourmet Pizza in Newark DE',
+    highlight: 'Roasted Garlic & Ricotta',
   },
 ];
 
@@ -120,62 +124,86 @@ export default function HeroSlider({ dict }: HeroSliderProps) {
 
   return (
     <section
-      className="relative w-full overflow-hidden bg-ink py-6 sm:py-10 lg:py-12 select-none"
+      className="relative w-full overflow-hidden bg-ink py-6 sm:py-10 select-none"
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
       aria-roledescription="carousel"
-      aria-label="Featured Gourmet Pizza Specials"
+      aria-label="Cinematic Featured Specials"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* SHOWCASE CARD CONTAINER */}
-        <div className="relative min-h-[500px] sm:min-h-[480px] md:min-h-[460px] lg:min-h-[500px] rounded-3xl overflow-hidden border border-panel-border bg-gradient-to-br from-panel/95 via-ink to-panel/85 shadow-[0_20px_60px_rgba(0,0,0,0.7)] flex flex-col lg:flex-row items-center justify-between p-6 sm:p-10 lg:p-14 gap-8 group">
-          
-          {/* AMBIENT WARMTH & GOLD BACKLIGHT (Appetizing visual glow behind the floating dish) */}
-          <div className="absolute -right-20 top-1/2 -translate-y-1/2 w-[340px] sm:w-[480px] h-[340px] sm:h-[480px] rounded-full bg-gold/10 blur-[100px] pointer-events-none transition-opacity duration-1000" />
-          <div className="absolute right-10 top-1/2 -translate-y-1/2 w-[220px] sm:w-[320px] h-[220px] sm:h-[320px] rounded-full bg-amber-500/10 blur-[70px] pointer-events-none" />
+        
+        {/* CINEMATIC SPLIT-BLEED SHOWCASE CARD */}
+        <div className="relative rounded-3xl overflow-hidden border border-panel-border bg-ink shadow-2xl flex flex-col-reverse lg:flex-row items-stretch min-h-[500px] lg:min-h-[540px]">
 
-          {/* LEFT: SLIDE TEXT & CALL TO ACTION */}
-          <div className="w-full lg:w-1/2 flex flex-col justify-center z-10 space-y-4 sm:space-y-6 text-center lg:text-left">
-            <div className="inline-flex items-center gap-2 self-center lg:self-start bg-gold/15 border border-gold/30 px-3.5 py-1.5 rounded-full shadow-sm">
+          {/* LEFT: EDITORIAL TEXT & ACTIONS */}
+          <div className="w-full lg:w-[46%] xl:w-[44%] flex flex-col justify-center p-6 sm:p-10 lg:p-12 z-20 space-y-4 sm:space-y-6 relative bg-gradient-to-b lg:bg-gradient-to-r from-ink via-ink/95 to-ink/60">
+            
+            {/* Category Tag */}
+            <div className="inline-flex items-center gap-2 self-start bg-gold/15 border border-gold/40 px-3.5 py-1.5 rounded-full shadow-sm">
               <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
               <span className="text-gold-bright text-xs font-bold tracking-wider uppercase font-mono">
                 {activeSlide.tag}
               </span>
             </div>
 
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-cream tracking-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)] leading-[1.15]">
+            {/* Product Title */}
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-cream tracking-tight drop-shadow-md leading-[1.12]">
               {activeSlide.title}
             </h2>
 
-            <p className="text-stone text-sm sm:text-base max-w-lg mx-auto lg:mx-0 leading-relaxed font-normal">
+            {/* Appetizing Description */}
+            <p className="text-stone text-sm sm:text-base leading-relaxed font-normal max-w-md">
               {activeSlide.description}
             </p>
 
-            <div className="pt-2 sm:pt-4 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+            {/* CTAs */}
+            <div className="pt-2 sm:pt-4 flex flex-col sm:flex-row items-center gap-4">
               <a
                 href={activeSlide.ctaLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto text-center bg-gradient-to-br from-gold-bright via-gold to-gold-deep text-ink font-extrabold px-8 py-3.5 rounded-full text-base transition-all duration-300 shadow-[0_4px_25px_rgba(201,161,92,0.4)] hover:shadow-[0_4px_30px_rgba(201,161,92,0.6)] hover:scale-105 active:scale-95 cursor-pointer"
+                className="w-full sm:w-auto text-center bg-gradient-to-br from-gold-bright via-gold to-gold-deep text-ink font-extrabold px-8 py-3.5 rounded-full text-base transition-all duration-300 shadow-[0_4px_25px_rgba(201,161,92,0.45)] hover:shadow-[0_4px_35px_rgba(201,161,92,0.65)] hover:scale-105 active:scale-95 cursor-pointer"
               >
                 {activeSlide.ctaText}
               </a>
               <a
                 href="#menu"
-                className="w-full sm:w-auto text-center border border-panel-border hover:border-gold text-cream hover:text-gold font-bold px-7 py-3.5 rounded-full text-base transition-all duration-300 bg-ink/40 hover:bg-panel cursor-pointer"
+                className="w-full sm:w-auto text-center border border-panel-border hover:border-gold text-cream hover:text-gold font-bold px-6 py-3.5 rounded-full text-base transition-all duration-300 bg-panel/60 hover:bg-panel cursor-pointer"
               >
                 {dict?.hero?.cta || 'View Menu'}
               </a>
             </div>
 
-            <p className="text-[11px] text-stone-dim uppercase tracking-wider font-semibold pt-1">
-              {dict?.hero?.badge || '100% Fresh Mozzarella • 48h Fermented Dough • Newark, DE'}
-            </p>
+            {/* Trust Footer */}
+            <div className="pt-2 flex items-center gap-2 text-xs text-stone-dim uppercase tracking-wider font-semibold">
+              <span className="w-1.5 h-1.5 rounded-full bg-gold/50" />
+              <span>{dict?.hero?.badge || '100% Fresh Mozzarella • Stone-Baked Crust • Newark, DE'}</span>
+            </div>
+
+            {/* SLIDER DOTS */}
+            <div className="flex items-center gap-2.5 pt-4">
+              {slides.map((_, dotIdx) => (
+                <button
+                  key={dotIdx}
+                  type="button"
+                  onClick={() => setCurrent(dotIdx)}
+                  aria-label={`Go to slide ${dotIdx + 1}`}
+                  className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                    current === dotIdx
+                      ? 'w-10 bg-gold shadow-[0_0_10px_rgba(201,161,92,0.7)]'
+                      : 'w-2.5 bg-panel-border hover:bg-stone-dim'
+                  }`}
+                />
+              ))}
+            </div>
+
           </div>
 
-          {/* RIGHT: FLOATING HERO DISH (40% larger, unboxed, elevated depth with warm 3D shadow) */}
-          <div className="w-full lg:w-1/2 flex items-center justify-center relative min-h-[260px] sm:min-h-[340px] lg:min-h-[420px]">
+          {/* RIGHT: FULL-BLEED CINEMATIC PHOTOGRAPHY (Zero borders, fills entire right side edge-to-edge) */}
+          <div className="w-full lg:w-[54%] xl:w-[56%] relative min-h-[320px] sm:min-h-[400px] lg:min-h-[540px] overflow-hidden bg-black">
+            
+            {/* Edge-to-Edge Pizza Images with Subtle Ken Burns Motion */}
             {slides.map((slide, index) => {
               const isCurrent = index === current;
               const shouldRender = isHydrated || index === 0;
@@ -185,69 +213,70 @@ export default function HeroSlider({ dict }: HeroSliderProps) {
               return (
                 <div
                   key={slide.image}
-                  className={`absolute inset-0 flex items-center justify-center transition-all duration-700 ease-out transform ${
-                    isCurrent
-                      ? 'opacity-100 scale-100 rotate-0'
-                      : 'opacity-0 scale-90 rotate-6 pointer-events-none'
+                  className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                    isCurrent ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
                   }`}
                   aria-hidden={!isCurrent}
                 >
-                  <div className="relative w-[280px] h-[280px] sm:w-[380px] sm:h-[380px] lg:w-[440px] lg:h-[440px] drop-shadow-[0_25px_45px_rgba(0,0,0,0.92)] drop-shadow-[0_12px_24px_rgba(201,161,92,0.18)] hover:scale-[1.03] transition-transform duration-500 cursor-pointer">
-                    <Image
-                      src={slide.image}
-                      alt={slide.seoAlt}
-                      fill
-                      priority={index === 0}
-                      quality={75}
-                      sizes="(max-width: 640px) 280px, (max-width: 1024px) 380px, 440px"
-                      className="object-contain filter contrast-[1.03] brightness-[1.02]"
-                    />
-                  </div>
+                  <Image
+                    src={slide.image}
+                    alt={slide.seoAlt}
+                    fill
+                    priority={index === 0}
+                    quality={82}
+                    sizes="(max-width: 1024px) 100vw, 55vw"
+                    className={`object-cover object-center transition-transform duration-[7000ms] ease-out ${
+                      isCurrent ? 'scale-105' : 'scale-100'
+                    }`}
+                  />
+                  {/* Subtle cinema vignette on the food */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/25 pointer-events-none" />
                 </div>
               );
             })}
-          </div>
 
-          {/* DESKTOP NAVIGATION CHEVRONS */}
-          <button
-            type="button"
-            onClick={prevSlide}
-            aria-label="Previous pizza slide"
-            className="hidden lg:flex absolute left-4 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-ink/70 border border-panel-border text-cream/70 hover:text-gold hover:border-gold/50 hover:bg-panel transition-all cursor-pointer active:scale-95 shadow-md"
-          >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <button
-            type="button"
-            onClick={nextSlide}
-            aria-label="Next pizza slide"
-            className="hidden lg:flex absolute right-4 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-ink/70 border border-panel-border text-cream/70 hover:text-gold hover:border-gold/50 hover:bg-panel transition-all cursor-pointer active:scale-95 shadow-md"
-          >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
+            {/* Seamless Left-Edge Dark Blend into Text Column (Desktop only) */}
+            <div className="hidden lg:block absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-ink via-ink/80 to-transparent z-15 pointer-events-none" />
 
-          {/* SLIDER PAGINATION DOTS */}
-          <div className="absolute bottom-4 left-0 right-0 flex items-center justify-center gap-2 z-20">
-            {slides.map((_, dotIdx) => (
+            {/* Bottom Dark Blend for Mobile */}
+            <div className="lg:hidden absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-ink via-ink/70 to-transparent z-15 pointer-events-none" />
+
+            {/* Floating Glassmorphism Tag on the Dish */}
+            <div className="absolute top-5 right-5 z-20 backdrop-blur-md bg-ink/70 border border-gold/30 px-4 py-2 rounded-xl shadow-xl flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
+              <span className="text-xs font-bold text-cream tracking-wide">
+                {activeSlide.highlight}
+              </span>
+            </div>
+
+            {/* NAVIGATION ARROWS ON IMAGE */}
+            <div className="absolute bottom-5 right-5 z-20 flex items-center gap-2">
               <button
-                key={dotIdx}
                 type="button"
-                onClick={() => setCurrent(dotIdx)}
-                aria-label={`Go to slide ${dotIdx + 1}`}
-                className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                  current === dotIdx
-                    ? 'w-8 bg-gold shadow-[0_0_8px_rgba(201,161,92,0.6)]'
-                    : 'w-2 bg-stone-dim/40 hover:bg-stone-dim'
-                }`}
-              />
-            ))}
+                onClick={prevSlide}
+                aria-label="Previous pizza"
+                className="p-3 rounded-full backdrop-blur-md bg-black/60 border border-white/15 text-cream hover:text-gold hover:border-gold/60 transition-all cursor-pointer active:scale-95 shadow-lg"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <button
+                type="button"
+                onClick={nextSlide}
+                aria-label="Next pizza"
+                className="p-3 rounded-full backdrop-blur-md bg-black/60 border border-white/15 text-cream hover:text-gold hover:border-gold/60 transition-all cursor-pointer active:scale-95 shadow-lg"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+
           </div>
 
         </div>
+
       </div>
     </section>
   );
