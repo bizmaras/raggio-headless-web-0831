@@ -27,7 +27,7 @@ export default function StatsCounter({ dict }: StatsCounterProps) {
 
   return (
     <div
-      className="relative overflow-hidden border-y border-panel-border/40 bg-ink/70 py-2.5 md:py-3 w-full max-w-full select-none"
+      className="md:hidden relative overflow-hidden border-y border-panel-border/40 bg-ink/70 py-2.5 w-full max-w-full select-none"
       style={{ overflow: 'clip', contain: 'paint' }}
       aria-hidden="true"
     >
