@@ -57,7 +57,10 @@ export default function Footer({ dict }: FooterProps) {
 
             <div className="flex items-center gap-3">
               <Phone className="w-5 h-5 text-gold shrink-0" />
-              <a href="tel:+13023690553" className="hover:text-gold transition-colors font-semibold text-cream">
+              <a
+                href="tel:+13023690553"
+                className="hover:text-gold transition-colors font-semibold text-cream py-2.5 inline-flex items-center min-h-[44px]"
+              >
                 (302) 369-0553
               </a>
             </div>

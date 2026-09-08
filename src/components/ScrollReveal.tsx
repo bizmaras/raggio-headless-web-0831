@@ -23,7 +23,13 @@ export default function ScrollReveal({
     const el = elementRef.current;
     if (!el || typeof window === 'undefined') return;
 
-    // GPU-friendly initial state without hiding from SSR
+    const rect = el.getBoundingClientRect();
+    if (rect.top <= window.innerHeight) {
+      hasAnimated.current = true;
+      return;
+    }
+
+    // GPU-friendly initial state for offscreen elements
     el.style.opacity = '0';
     if (direction === 'up') {
       el.style.transform = 'translateY(24px)';

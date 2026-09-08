@@ -243,10 +243,10 @@ export default function HeroSlider({ dict }: HeroSliderProps) {
                     alt={slide.seoAlt}
                     fill
                     priority={index === 0}
-                    loading={index === 0 ? "eager" : "lazy"}
-                    quality={75}
-                    sizes="(max-width: 1024px) 100vw, 55vw"
-                    className={`object-cover object-center transition-transform duration-[7000ms] ease-out ${
+                    fetchPriority={index === 0 ? "high" : "auto"}
+                    quality={70}
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 55vw"
+                    className={`object-cover object-center will-change-transform transition-transform duration-[7000ms] ease-out ${
                       isCurrent ? 'scale-105' : 'scale-100'
                     }`}
                   />

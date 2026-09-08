@@ -111,7 +111,7 @@ export default function CateringItemCard({
           <button
             type="button"
             onClick={() => setIsModalOpen(true)}
-            className="w-full text-center text-xs font-semibold text-gold hover:text-gold-bright py-1.5 transition-colors cursor-pointer"
+            className="w-full text-center text-xs font-semibold text-gold hover:text-gold-bright py-2.5 min-h-[44px] flex items-center justify-center transition-colors cursor-pointer"
           >
             {halfLabel === 'MEDIANO' ? 'Ver Detalles y Porciones' : 'View Details & Servings'}
           </button>
