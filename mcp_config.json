@@ -21,7 +21,7 @@
     },
     "perplexity": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-perplexity"],
+      "args": ["-y", "@perplexity-ai/mcp-server"],
       "env": {
         "PERPLEXITY_API_KEY": ""
       }
