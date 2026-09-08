@@ -1,7 +1,8 @@
 {
   "nav": {
     "menu": "Menú",
-    "deals": "Ofertas",
+    "deals": "Ofertas Especiales",
+    "reviews": "Opiniones",
     "catering": "Catering",
     "hours_location": "Horarios y Ubicación",
     "order": "Ordenar Ahora"
@@ -49,6 +50,7 @@
   },
   "categories": {
     "Deals & Specials": "Ofertas y Especiales",
+    "⭐ Reviews (4.2)": "⭐ Opiniones (4.2)",
     "Pizza": "Pizza",
     "Gourmet Pizza": "Pizza Gourmet",
     "Sicilian Pizza": "Pizza Siciliana",

@@ -109,7 +109,7 @@ export default function GoogleReviewsSection({ dict }: GoogleReviewsSectionProps
   const writeReviewUrl = `https://search.google.com/local/writereview?placeid=ChIJ37Ox2q8Ax4kRXAKgVjHqfNY`;
 
   return (
-    <section id="reviews" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-24">
+    <section id="reviews" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-[130px] md:scroll-mt-[180px]">
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
         <div>

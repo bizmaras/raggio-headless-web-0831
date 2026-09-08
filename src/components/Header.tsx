@@ -10,6 +10,7 @@ interface HeaderProps {
     nav?: {
       menu?: string;
       deals?: string;
+      reviews?: string;
       catering?: string;
       hours_location?: string;
       order?: string;
@@ -23,6 +24,7 @@ export default function Header({ lang = 'en', dict }: HeaderProps) {
   const navLinks = [
     { name: dict?.nav?.menu || 'Menu', href: '#menu' },
     { name: dict?.nav?.deals || 'Deals & Specials', href: '#deals' },
+    { name: dict?.nav?.reviews || 'Reviews', href: '#reviews' },
     { name: dict?.nav?.catering || 'Catering', href: '#catering' },
     { name: dict?.nav?.hours_location || 'Hours & Location', href: '#location' },
   ];

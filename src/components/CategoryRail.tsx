@@ -8,6 +8,7 @@ interface CategoryRailProps {
 
 const CATEGORIES = [
   { label: 'Deals & Specials', searchId: 'deals' },
+  { label: '⭐ Reviews (4.2)', searchId: 'reviews' },
   { label: 'Pizza', searchId: 'pizza' },
   { label: 'Gourmet Pizza', searchId: 'gourmet-pizza' },
   { label: 'Sicilian Pizza', searchId: 'sicilian-pizza' },
