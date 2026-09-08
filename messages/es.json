@@ -1,35 +1,183 @@
 {
   "nav": {
-    "menu": "Menu",
+    "menu": "Menú",
     "deals": "Ofertas",
     "catering": "Catering",
+    "hours_location": "Horarios y Ubicación",
     "order": "Ordenar Ahora"
   },
   "hero": {
-    "tagline": "Autentica Pizza Gourmet",
-    "subtitle": "Elaborada con pasion, horneada a la perfeccion",
-    "cta": "Ver Menu",
-    "cta_order": "Ordenar en Linea"
+    "tagline": "Auténtica Pizza Gourmet",
+    "subtitle": "Elaborada con pasión, horneada a la perfección",
+    "cta": "Ver Menú",
+    "cta_order": "Ordenar en Línea",
+    "badge": "100% Mozzarella Fresca • Masa Fermentada 48h • Newark, DE",
+    "slides": [
+      {
+        "tag": "100% PEPPERONI DE RES",
+        "title": "Pepperoni de Res Crujiente",
+        "description": "Elaborada con sabroso pepperoni de res, 100% Mozzarella Grande y salsa marinara casera sobre masa horneada a la piedra.",
+        "ctaText": "Pedir Pepperoni de Res",
+        "seoAlt": "Pizza de Pepperoni de Res Crujiente en Raggio Gourmet Newark DE"
+      },
+      {
+        "tag": "PIZZA ESPECIAL",
+        "title": "Meat Lover's Exclusiva",
+        "description": "Cargada con pepperoni de res, salchicha italiana, tocino y jamón sobre nuestra masa horneada a la piedra para amantes de la carne.",
+        "ctaText": "Pedir Meat Lover's",
+        "seoAlt": "Entrega de Pizza Meat Lovers en Newark, DE"
+      },
+      {
+        "tag": "FAVORITA DE LA CASA",
+        "title": "Pizza Buffalo Chicken Picante",
+        "description": "Pollo tierno bañado en salsa buffalo picante con un toque de aderezo ranch cremoso. Una favorita local en Newark.",
+        "ctaText": "Probar Buffalo Chicken",
+        "seoAlt": "Pizza Buffalo Chicken Picante - Raggio Gourmet Newark"
+      },
+      {
+        "tag": "SELECCIÓN GOURMET",
+        "title": "Espinaca Fresca y Ajo Gourmet",
+        "description": "Espinaca fresca salteada, ajo asado, queso ricotta y aceite de oliva virgen extra. Ideal para eventos y cenas familiares.",
+        "ctaText": "Probar Espinaca Gourmet",
+        "seoAlt": "Pizza Gourmet de Espinaca Fresca y Ajo en Newark DE"
+      }
+    ]
+  },
+  "categories": {
+    "Deals & Specials": "Ofertas y Especiales",
+    "Pizza": "Pizza",
+    "Gourmet Pizza": "Pizza Gourmet",
+    "Sicilian Pizza": "Pizza Siciliana",
+    "Chicken Wings": "Alitas de Pollo",
+    "Cheesesteaks": "Cheesesteaks",
+    "Fresh Burgers": "Hamburguesas Frescas",
+    "Appetizers": "Aperitivos",
+    "Fresh Salads": "Ensaladas Frescas",
+    "Pasta": "Pasta",
+    "Complete Dinners": "Cenas Completas",
+    "Seafood": "Mariscos",
+    "Quesadillas": "Quesadillas",
+    "Latin Food": "Comida Latina",
+    "Subs & Grinders": "Subs y Sandwiches",
+    "Strombolis & Calzones": "Strombolis y Calzones",
+    "Strombolis + Calzones": "Strombolis y Calzones",
+    "Breakfast": "Desayunos",
+    "Hot Sandwiches": "Sandwiches Calientes",
+    "Desserts": "Postres",
+    "Soups": "Sopas",
+    "Drinks": "Bebidas",
+    "Side Orders": "Acompañamientos",
+    "Catering": "Catering"
+  },
+  "promotions": {
+    "title": "Ofertas y Especiales",
+    "order_deal": "Ordenar Esta Oferta",
+    "view_deal": "Ver Detalles de la Oferta",
+    "coupon_tag": "CUPÓN ESPECIAL",
+    "items": [
+      {
+        "id": "promo-1",
+        "tag": "CUPÓN ESPECIAL",
+        "title": "2 Pizzas XL con 1 Ingrediente",
+        "description": "Presenta el cupón al recibir tu pedido. No acumulable con otras ofertas. Solo para llevar y entrega a domicilio.",
+        "details": "Incluye 2 Pizzas Extra Grandes de Queso con 1 ingrediente de tu elección en cada una. Válido solo para llevar y entrega."
+      },
+      {
+        "id": "promo-2",
+        "tag": "CUPÓN ESPECIAL",
+        "title": "Pizza Grande 1 Ingrediente y 20 Alitas",
+        "description": "Presenta el cupón al recibir tu pedido. No acumulable con otras ofertas. Solo para llevar y entrega a domicilio.",
+        "details": "Incluye 1 Pizza Grande con 1 ingrediente y 20 Alitas Jumbo (Tradicionales o Sin Hueso) con salsa ranch o queso azul."
+      },
+      {
+        "id": "promo-3",
+        "tag": "CUPÓN ESPECIAL",
+        "title": "2 Pizzas Grandes 1 Ingrediente, 20 Alitas y Soda",
+        "description": "Presenta el cupón al recibir tu pedido. No acumulable con otras ofertas. Solo para llevar y entrega a domicilio.",
+        "details": "Incluye 2 Pizzas Grandes de 1 Ingrediente, 20 Alitas Jumbo y una Soda de 2 Litros a elección."
+      },
+      {
+        "id": "promo-4",
+        "tag": "CUPÓN ESPECIAL",
+        "title": "Pizza Grande 1 Ingrediente y 10 Alitas",
+        "description": "Presenta el cupón al recibir tu pedido. No acumulable con otras ofertas. Solo para llevar y entrega a domicilio.",
+        "details": "Incluye 1 Pizza Grande de 1 Ingrediente y 10 Alitas Jumbo con apio y salsa para mojar a elección."
+      }
+    ]
   },
   "menu": {
-    "title": "Nuestro Menu",
-    "items_count": "articulos",
-    "download_pdf": "Descargar Menu PDF Completo"
+    "title": "Nuestro Menú",
+    "items_count": "artículos",
+    "download_pdf": "Descargar Menú PDF Completo",
+    "view_details": "Ver Detalles e Ingredientes",
+    "key_ingredients": "Ingredientes Clave",
+    "order_online": "Ordenar en Línea",
+    "freshly_prepared": "Preparado Fresco",
+    "modal_close": "Cerrar ventana de detalles"
+  },
+  "stats": {
+    "menu_items": "Platos en el Menú",
+    "mozzarella": "Grande Mozzarella",
+    "tradition": "Años de Tradición",
+    "delivery": "Promedio de Entrega"
   },
   "catering": {
-    "title": "Servicios de Catering",
-    "subtitle": "Perfecto para tu proximo evento"
+    "title": "Catering por Raggio",
+    "location_badge": "Newark, Delaware",
+    "subtitle": "¿Planeando un evento en Newark? Todas las bandejas de catering están disponibles en tamaño Mediano o Completo.",
+    "items_count": "artículos",
+    "half_size": "MEDIANO",
+    "full_size": "COMPLETO",
+    "order_catering": "Ordenar Catering"
+  },
+  "faq": {
+    "title": "Preguntas Frecuentes",
+    "subtitle": "Todo lo que necesitas saber sobre pedidos, entrega a domicilio y catering en Newark.",
+    "questions": [
+      {
+        "question": "¿Hacen entregas de pizza a domicilio en Newark, DE?",
+        "answer": "Sí, Raggio Gourmet Pizza ofrece entrega a domicilio rápida y confiable en todo Newark, Delaware. Entregamos a residencias, negocios locales y directamente al campus de la University of Delaware (UD). Puedes ordenar fácilmente en línea o llamarnos al (302) 369-0553."
+      },
+      {
+        "question": "¿Cuáles son los platos más populares de su menú?",
+        "answer": "Nuestros clientes elogian especialmente nuestra Pizza de Pepperoni Artesanal, la clásica Siciliana Meat Lovers y nuestra exclusiva Pizza Philly Cheesesteak. Además, somos favoritos por nuestros cheesesteaks preparados al momento, alitas jumbo y cenas completas de pasta."
+      },
+      {
+        "question": "¿Ofrecen servicio de catering para eventos o fiestas grandes en Newark?",
+        "answer": "Sí, brindamos catering para eventos de cualquier tamaño. Atendemos pedidos grandes para eventos de la UD, almuerzos corporativos, reuniones de oficina y eventos familiares con pizzas XL, bandejas de alitas y sandwiches calientes."
+      },
+      {
+        "question": "¿Cómo puedo ordenar en línea en Raggio Gourmet Pizza?",
+        "answer": "Puedes hacer tu pedido directamente a través de nuestro sitio web para retiro inmediato o entrega a domicilio. Nuestro sistema seguro de pago en línea opera a través de nuestro sistema hermano, Philly Style Express."
+      },
+      {
+        "question": "¿Cuáles son las ofertas especiales de pizza actuales?",
+        "answer": "Ofrecemos combos diarios, que incluyen pizzas grandes de un ingrediente combinadas con alitas, paquetes familiares y cupones de descuento directo en pedidos superiores a $40. Consulta nuestra pestaña de Ofertas y Especiales para agregar promociones directamente a tu pedido."
+      }
+    ]
   },
   "footer": {
-    "hours": "Horario",
-    "address": "Direccion",
-    "phone": "Telefono",
-    "follow": "Siguenos"
+    "description": "Sirviendo a Newark, Delaware con pizzas artesanales horneadas a la piedra, auténticos Philly cheesesteaks, pastas frescas y servicio completo de catering para eventos.",
+    "address": "681 E Chestnut Hill Rd, Newark, DE 19713",
+    "phone": "(302) 369-0553",
+    "store_hours": "Horario de Atención",
+    "hours_week": "Domingo – Jueves: 9:00 AM – 9:00 PM",
+    "hours_weekend": "Viernes – Sábado: 9:00 AM – 10:00 PM",
+    "get_directions": "Cómo llegar con Google Maps",
+    "all_rights": "Todos los derechos reservados.",
+    "powered_by": "Pedidos en línea impulsados por FoodTec Solutions"
+  },
+  "sticky_bar": {
+    "call": "(302) 369-0553",
+    "order_online": "Ordenar en Línea"
   },
   "common": {
     "add_to_cart": "Agregar al Carrito",
     "close": "Cerrar",
     "loading": "Cargando...",
-    "back_to_top": "Volver arriba"
+    "back_to_top": "Volver arriba",
+    "lang_switch_label": "Idioma",
+    "english": "English",
+    "spanish": "Español"
   }
 }

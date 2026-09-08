@@ -94,19 +94,19 @@ export default async function HomePage({
 
   return (
     <>
-      <Header />
+      <Header lang={lang} dict={dict} />
       <main className="min-h-screen bg-ink text-cream">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <HeroSlider />
-        <CategoryRail />
-        <StatsCounter />
+        <HeroSlider dict={dict} />
+        <CategoryRail categoriesDict={dict.categories} />
+        <StatsCounter dict={dict} />
 
         <div id="deals" className="scroll-mt-[190px]">
           <ScrollReveal>
-            <PromotionsSection />
+            <PromotionsSection dict={dict} />
           </ScrollReveal>
         </div>
 
@@ -139,10 +139,13 @@ export default async function HomePage({
             const itemsInCategory = menuItems.filter(
               (item) => item.Category === category
             );
+            const displayCategory =
+              (dict.categories as Record<string, string>)?.[category] || category;
+
             return (
               <div key={category} id={targetId} className="mb-16 scroll-mt-[250px]">
                 <h3 className="sticky top-[138px] md:top-[180px] lg:top-[220px] z-[35] bg-ink/95 backdrop-blur-md pt-4 pb-3 mb-6 border-b border-panel-border text-gold-bright flex items-center justify-between text-2xl md:text-3xl font-bold tracking-wide shadow-sm">
-                  <span>{category}</span>
+                  <span>{displayCategory}</span>
                   <span className="text-sm font-normal text-cream/60 md:text-gold-bright tracking-normal">
                     {itemsInCategory.length} {dict.menu.items_count}
                   </span>
@@ -155,6 +158,7 @@ export default async function HomePage({
                         name={item["Product Name"]}
                         price={parseFloat(item.Price) || 0}
                         description={item.Description}
+                        dict={dict}
                       />
                     ))}
                   </div>
@@ -164,15 +168,15 @@ export default async function HomePage({
           })}
         </section>
         <ScrollReveal>
-          <CateringSection />
+          <CateringSection dict={dict} />
         </ScrollReveal>
         <ScrollReveal>
-          <FAQ />
+          <FAQ dict={dict} />
         </ScrollReveal>
       </main>
-      <Footer />
+      <Footer dict={dict} />
       <ScrollToTop />
-      <StickyMobileBar />
+      <StickyMobileBar dict={dict} />
       <DeferredWidgets />
     </>
   );

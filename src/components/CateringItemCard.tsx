@@ -5,10 +5,12 @@ import { useState } from 'react';
 interface CateringItemCardProps {
   name: string;
   desc?: string;
-  half: string | number;
-  full: string | number;
+  half?: string | number;
+  full?: string | number;
   servesHalf?: string;
   servesFull?: string;
+  halfLabel?: string;
+  fullLabel?: string;
 }
 
 const FOODTEC_URL = 'https://order.foodtecsolutions.com/ordering/phillystyleexpress/menu/Catering';
@@ -20,12 +22,15 @@ export default function CateringItemCard({
   full,
   servesHalf = '8-10',
   servesFull = '15-20',
+  halfLabel = 'HALF',
+  fullLabel = 'FULL',
 }: CateringItemCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const parsePrice = (priceVal: string | number): number => {
+  const parsePrice = (priceVal?: string | number): number => {
+    if (!priceVal) return 0;
     if (typeof priceVal === 'number') return priceVal;
-    return parseFloat(priceVal.replace(/[^0-9.]/g, '')) || 0;
+    return parseFloat(String(priceVal).replace(/[^0-9.]/g, '')) || 0;
   };
 
   const numericHalf = parsePrice(half);
@@ -53,7 +58,7 @@ export default function CateringItemCard({
               className="py-2.5 px-3 rounded-lg border bg-ink border-panel-border hover:border-gold hover:bg-gold/10 transition-all text-center cursor-pointer group"
             >
               <div className="text-[10px] font-bold text-stone group-hover:text-gold uppercase tracking-wider">
-                HALF ({servesHalf})
+                {halfLabel} ({servesHalf})
               </div>
               <div className="text-sm font-extrabold text-gold">
                 ${numericHalf.toFixed(2)}
@@ -67,7 +72,7 @@ export default function CateringItemCard({
               className="py-2.5 px-3 rounded-lg border bg-ink border-panel-border hover:border-gold hover:bg-gold/10 transition-all text-center cursor-pointer group"
             >
               <div className="text-[10px] font-bold text-stone group-hover:text-gold uppercase tracking-wider">
-                FULL ({servesFull})
+                {fullLabel} ({servesFull})
               </div>
               <div className="text-sm font-extrabold text-gold">
                 ${numericFull.toFixed(2)}
@@ -78,76 +83,71 @@ export default function CateringItemCard({
           <button
             type="button"
             onClick={() => setIsModalOpen(true)}
-            className="w-full flex items-center justify-center gap-2 bg-black/40 hover:bg-black/70 border border-panel-border hover:border-gold/50 text-gold hover:text-gold-bright py-2.5 rounded-lg text-xs font-semibold transition-all cursor-pointer"
+            className="w-full text-center text-xs font-semibold text-gold hover:text-gold-bright py-1.5 transition-colors cursor-pointer"
           >
-            {/* Inline Info Icon */}
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-gold">
-              <circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" />
-            </svg>
-            <span>View Details & Ingredients</span>
+            {halfLabel === 'MEDIANO' ? 'Ver Detalles y Porciones' : 'View Details & Servings'}
           </button>
         </div>
       </div>
 
-      {/* Details Modal */}
+      {/* CATERING MODAL DIALOG */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
-          <div className="relative w-full max-w-2xl bg-[#1c2127] border border-panel-border rounded-2xl overflow-hidden shadow-2xl grid grid-cols-1 md:grid-cols-12">
-            <div className="md:col-span-5 bg-[#14181d] p-8 flex flex-col items-center justify-center text-center border-b md:border-b-0 md:border-r border-panel-border">
-              {/* Inline BookOpen Icon */}
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12 text-gold mb-3 opacity-90">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
+          <div className="relative w-full max-w-lg bg-panel border border-panel-border rounded-2xl p-6 sm:p-8 shadow-2xl">
+            <button
+              type="button"
+              onClick={() => setIsModalOpen(false)}
+              aria-label="Close catering details"
+              className="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-ink/90 text-stone hover:text-cream flex items-center justify-center border border-panel-border cursor-pointer transition-colors"
+            >
+              ✕
+            </button>
+
+            <h3 className="text-xl sm:text-2xl font-extrabold text-cream mb-2">
+              {name}
+            </h3>
+
+            <p className="text-stone text-sm leading-relaxed mb-6">
+              {desc || 'Our catering trays are made fresh for corporate meetings, family gatherings, and university tailgates.'}
+            </p>
+
+            <div className="grid grid-cols-2 gap-4 mb-8">
+              <div className="p-4 rounded-xl bg-ink border border-panel-border text-center">
+                <span className="text-xs font-bold text-stone uppercase tracking-wider block mb-1">
+                  {halfLabel}
+                </span>
+                <span className="text-xl font-extrabold text-gold block mb-1">
+                  ${numericHalf.toFixed(2)}
+                </span>
+                <span className="text-xs text-cream/70 font-medium">
+                  {halfLabel === 'MEDIANO' ? `Sirve ${servesHalf} personas` : `Serves ${servesHalf} guests`}
+                </span>
+              </div>
+
+              <div className="p-4 rounded-xl bg-ink border border-panel-border text-center">
+                <span className="text-xs font-bold text-stone uppercase tracking-wider block mb-1">
+                  {fullLabel}
+                </span>
+                <span className="text-xl font-extrabold text-gold block mb-1">
+                  ${numericFull.toFixed(2)}
+                </span>
+                <span className="text-xs text-cream/70 font-medium">
+                  {fullLabel === 'COMPLETO' ? `Sirve ${servesFull} personas` : `Serves ${servesFull} guests`}
+                </span>
+              </div>
+            </div>
+
+            <a
+              href={FOODTEC_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full bg-gold hover:bg-gold-bright text-ink font-extrabold py-3 px-6 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 text-center text-sm sm:text-base shadow-lg"
+            >
+              {halfLabel === 'MEDIANO' ? 'Ordenar Catering en Línea' : 'Order Catering Online'}
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
               </svg>
-              <h5 className="text-xs font-mono font-bold tracking-widest text-gold uppercase">
-                Raggio Gourmet
-              </h5>
-              <p className="text-[11px] text-stone mt-1">Freshly Prepared</p>
-            </div>
-
-            <div className="md:col-span-7 p-6 md:p-8 flex flex-col justify-between relative">
-              <button
-                type="button"
-                onClick={() => setIsModalOpen(false)}
-                aria-label="Close details" // SEO ve Lighthouse 100/100 için eklendi
-                className="absolute top-4 right-4 p-1.5 rounded-full bg-black/40 text-stone hover:text-cream border border-panel-border hover:border-gold transition-all cursor-pointer"
-              >
-                {/* Inline X Icon */}
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-                  <path d="M18 6 6 18" /><path d="m6 6 12 12" />
-                </svg>
-              </button>
-
-              <div>
-                <div className="flex items-baseline justify-between gap-2 pr-8 mb-2">
-                  <h3 className="text-2xl font-extrabold text-cream">{name}</h3>
-                </div>
-
-                <div className="flex gap-4 text-xs font-mono text-gold mb-4">
-                  <span>Half Tray: ${numericHalf.toFixed(2)}</span>
-                  <span>|</span>
-                  <span>Full Tray: ${numericFull.toFixed(2)}</span>
-                </div>
-
-                <p className="text-stone text-sm leading-relaxed mb-6">
-                  {desc || 'Freshly prepared with premium quality ingredients according to traditional deck-oven standards.'}
-                </p>
-              </div>
-
-              <div className="pt-4 border-t border-panel-border/50">
-                <a
-                  href={FOODTEC_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full flex items-center justify-center gap-2 bg-gold hover:bg-gold-bright text-ink font-extrabold py-3 rounded-xl text-xs uppercase tracking-wider transition-all cursor-pointer shadow-lg"
-                >
-                  <span>Order Online via FoodTec</span>
-                  {/* Inline ExternalLink Icon */}
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-ink">
-                    <path d="M15 3h6v6" /><path d="M10 14 21 3" /><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                  </svg>
-                </a>
-              </div>
-            </div>
+            </a>
           </div>
         </div>
       )}

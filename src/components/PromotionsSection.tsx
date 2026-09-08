@@ -14,9 +14,30 @@ interface PromoItem {
   orderUrl: string;
 }
 
+interface PromotionsSectionProps {
+  dict?: {
+    promotions?: {
+      title?: string;
+      order_deal?: string;
+      view_deal?: string;
+      coupon_tag?: string;
+      items?: Array<{
+        id: string;
+        tag: string;
+        title: string;
+        description: string;
+        details: string;
+      }>;
+    };
+    menu?: {
+      key_ingredients?: string;
+    };
+  };
+}
+
 const FOODTEC_BASE_URL = 'https://phillystyleexpress.foodtecsolutions.com/';
 
-const PROMOTIONS: PromoItem[] = [
+const DEFAULT_PROMOTIONS: PromoItem[] = [
   {
     id: 'promo-1',
     tag: 'COUPON SPECIAL',
@@ -60,159 +81,159 @@ const PROMOTIONS: PromoItem[] = [
   {
     id: 'promo-5',
     tag: 'COUPON SPECIAL',
-    title: 'Large Cheese Pizza with 3 Toppings',
+    title: '2 Medium 1 Topping Pizzas',
     description: 'Present coupon when receiving your order. Not to be combined with any other offer. For take-out & delivery only.',
-    price: '$19.99',
-    details: 'Includes 1 Large Cheese Pizza with up to 3 standard toppings of your choice.',
-    ingredients: ['Grande Mozzarella', 'Choice of 3 Toppings', 'Signature Sauce'],
+    price: '$26.99',
+    details: 'Includes 2 Medium 1-Topping Pizzas with our signature marinara and fresh mozzarella.',
+    ingredients: ['Grande Mozzarella', 'Choice of 1 Topping per Pizza'],
     orderUrl: FOODTEC_BASE_URL
   },
   {
     id: 'promo-6',
     tag: 'COUPON SPECIAL',
-    title: '2 XL Cheese Pizzas & 20 Wings',
+    title: '2 XL Pizzas, 20 Wings & 2L Soda',
     description: 'Present coupon when receiving your order. Not to be combined with any other offer. For take-out & delivery only.',
-    price: '$64.99',
-    details: 'Includes 2 Extra Large Plain Cheese Pizzas and 20 Jumbo Wings.',
-    ingredients: ['Grande Mozzarella', 'Jumbo Wings', 'Fresh Garlic'],
-    orderUrl: FOODTEC_BASE_URL
-  },
-  {
-    id: 'promo-7',
-    tag: 'COUPON SPECIAL',
-    title: '$5 OFF with Purchase of $40 or more',
-    description: 'Present coupon when receiving your order. Not to be combined with any other offer.',
-    price: 'SAVE $5',
-    details: 'Get $5 off your total order when spending $40 or more before taxes and delivery fees.',
-    ingredients: ['Applies to Any Order $40+'],
+    price: '$59.99',
+    details: 'The ultimate party feast: 2 Extra Large 1-Topping Pizzas, 20 Jumbo Wings, and a 2-Liter Soda.',
+    ingredients: ['Grande Mozzarella', 'Jumbo Wings', '2-Liter Soda'],
     orderUrl: FOODTEC_BASE_URL
   }
 ];
 
-export default function PromotionsSection() {
+export default function PromotionsSection({ dict }: PromotionsSectionProps) {
   const [selectedPromo, setSelectedPromo] = useState<PromoItem | null>(null);
 
+  const sectionTitle = dict?.promotions?.title || 'Deals & Specials';
+  const orderDealText = dict?.promotions?.order_deal || 'Order This Deal';
+  const viewDealText = dict?.promotions?.view_deal || 'View Deal Details';
+
+  const promotions = DEFAULT_PROMOTIONS.map((promo, idx) => {
+    const localized = dict?.promotions?.items?.[idx];
+    if (!localized) return promo;
+    return {
+      ...promo,
+      tag: localized.tag || promo.tag,
+      title: localized.title || promo.title,
+      description: localized.description || promo.description,
+      details: localized.details || promo.details,
+    };
+  });
+
   return (
-    <section id="promotions" className="max-w-7xl mx-auto px-4 md:px-6 py-16 scroll-mt-[120px]">
-      <div className="text-center mb-10 md:mb-12">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-panel-border bg-panel text-stone text-xs font-bold uppercase tracking-wider mb-4">
-          <svg className="w-4 h-4 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-          </svg>
-          Weekly POS Specials
+    <section className="py-12 px-6 max-w-7xl mx-auto">
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <h2 className="text-3xl font-extrabold text-gold-bright tracking-tight">
+            {sectionTitle}
+          </h2>
+          <p className="text-sm text-stone mt-1">
+            {dict?.promotions?.coupon_tag ? 'Válido para llevar y entrega a domicilio' : 'Valid for takeout & delivery online'}
+          </p>
         </div>
-        <h2 className="text-3xl md:text-5xl font-extrabold text-cream mb-4">Featured Deals & Online Offers</h2>
-        <p className="text-stone max-w-2xl mx-auto text-sm md:text-base">
-          Select your deal to order online directly through our FoodTec portal for instant delivery or pickup.
-        </p>
       </div>
 
-      {/* MOBILDE YATAY KAYDIRMALI CAROUSEL / MASAÜSTÜNDE GRID CONTAINER */}
-      <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory pb-6 md:pb-0 no-scrollbar -mx-4 px-4 md:mx-0 md:px-0">
-        {PROMOTIONS.map((promo) => (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {promotions.map((promo) => (
           <div
             key={promo.id}
-            className="snap-center shrink-0 w-[85vw] max-w-[340px] md:w-auto md:max-w-none flex flex-col bg-panel border border-panel-border rounded-xl p-6 hover:border-gold/50 transition-colors duration-300"
+            className="bg-panel border border-panel-border rounded-xl p-6 flex flex-col justify-between hover:border-gold/60 hover:shadow-xl transition-all duration-300 relative group"
           >
-            <div className="flex justify-between items-start mb-4">
-              <span className="text-[10px] font-bold text-stone uppercase tracking-wider px-2 py-1 bg-ink rounded border border-panel-border">
-                {promo.tag}
-              </span>
+            <div>
+              <div className="flex justify-between items-start mb-3">
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-gold bg-gold/10 px-2.5 py-1 rounded-md border border-gold/20">
+                  {promo.tag}
+                </span>
+                <span className="text-xl font-extrabold text-cream group-hover:text-gold-bright transition-colors">
+                  {promo.price}
+                </span>
+              </div>
+
+              <h3 className="text-lg font-bold text-cream mb-2 group-hover:text-gold transition-colors">
+                {promo.title}
+              </h3>
+
+              <p className="text-xs text-stone leading-relaxed mb-4">
+                {promo.description}
+              </p>
             </div>
 
-            <h3 className="text-xl font-bold text-cream mb-2">{promo.title}</h3>
-            <p className="text-sm text-stone mb-6 flex-grow">{promo.description}</p>
+            <div className="space-y-2 pt-2 border-t border-panel-border/50">
+              <button
+                type="button"
+                onClick={() => setSelectedPromo(promo)}
+                className="w-full py-2 px-3 rounded-lg bg-ink border border-panel-border hover:border-gold text-stone hover:text-cream text-xs font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+              >
+                <BookOpen className="w-3.5 h-3.5 text-gold" />
+                {viewDealText}
+              </button>
 
-            <div className="flex items-end gap-2 mb-6">
-              <span className="text-3xl font-extrabold text-gold">{promo.price}</span>
-            </div>
-
-            <div className="flex flex-col gap-3 mt-auto">
               <a
                 href={promo.orderUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full bg-gold hover:bg-gold-bright text-ink font-bold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer text-center active:scale-[0.98]"
+                className="w-full py-2.5 px-4 rounded-lg bg-gold hover:bg-gold-bright text-ink text-xs font-extrabold transition-all duration-200 shadow-md flex items-center justify-center gap-1.5"
               >
-                Order This Deal
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
+                {orderDealText}
+                <span aria-hidden="true">&rarr;</span>
               </a>
-
-              <button
-                type="button"
-                onClick={() => setSelectedPromo(promo)}
-                className="w-full flex items-center justify-center gap-2 py-2 text-sm font-medium text-cream hover:text-gold transition-colors border border-transparent hover:border-panel-border rounded-lg cursor-pointer"
-              >
-                <svg className="w-4 h-4 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <circle cx="12" cy="12" r="10" strokeWidth="2"></circle>
-                  <path d="M12 16v-4" strokeWidth="2" strokeLinecap="round"></path>
-                  <path d="M12 8h.01" strokeWidth="2" strokeLinecap="round"></path>
-                </svg>
-                View Details & Ingredients
-              </button>
             </div>
           </div>
         ))}
       </div>
 
+      {/* MODAL: Deal Details & Ingredients */}
       {selectedPromo && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 bg-black/85 backdrop-blur-md">
-          <div className="relative w-full max-w-4xl bg-panel border border-panel-border rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh] md:max-h-[80vh]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+          <div className="bg-panel border border-panel-border rounded-2xl p-6 max-w-lg w-full shadow-2xl relative">
             <button
               type="button"
               onClick={() => setSelectedPromo(null)}
-              className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-ink/90 text-stone hover:text-cream flex items-center justify-center border border-panel-border cursor-pointer transition-colors"
+              aria-label="Close modal"
+              className="absolute top-4 right-4 text-stone hover:text-cream text-xl font-bold cursor-pointer"
             >
               ✕
             </button>
 
-            <div className="w-full md:w-1/2 h-56 md:h-auto relative bg-[#14181d] flex-shrink-0 flex flex-col items-center justify-center p-6 border-b md:border-b-0 md:border-r border-panel-border">
-              <BookOpen className="w-12 h-12 text-[#D4AF37] mb-4" strokeWidth={1.5} />
-              <span className="text-[#D4AF37] font-bold text-xs tracking-[0.2em] uppercase text-center">
-                Raggio Gourmet
-              </span>
-              <span className="text-gray-400 text-xs mt-1 text-center">
-                Freshly Prepared
-              </span>
+            <span className="text-xs font-bold uppercase tracking-widest text-gold mb-2 block">
+              {selectedPromo.tag}
+            </span>
+
+            <h3 className="text-2xl font-extrabold text-cream mb-2">
+              {selectedPromo.title}
+            </h3>
+
+            <div className="text-xl font-extrabold text-gold-bright mb-4">
+              {selectedPromo.price}
             </div>
 
-            <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between overflow-y-auto">
-              <div>
-                <div className="flex justify-between items-start mb-4 pr-8">
-                  <h3 className="text-2xl md:text-3xl font-extrabold text-cream leading-tight">{selectedPromo.title}</h3>
-                  <span className="text-gold font-extrabold text-2xl ml-3 flex-shrink-0">{selectedPromo.price}</span>
-                </div>
+            <p className="text-sm text-stone leading-relaxed mb-4">
+              {selectedPromo.details}
+            </p>
 
-                <p className="text-sm md:text-base text-stone mb-6 leading-relaxed">{selectedPromo.details}</p>
-
-                <div className="mb-8">
-                  <span className="text-xs font-bold text-gold uppercase tracking-wider block mb-3">
-                    Key Ingredients & Terms
+            <div className="mb-6">
+              <span className="text-xs font-bold text-cream uppercase tracking-wider block mb-2">
+                {dict?.menu?.key_ingredients || 'Key Inclusions:'}
+              </span>
+              <div className="flex flex-wrap gap-2">
+                {selectedPromo.ingredients.map((ing) => (
+                  <span
+                    key={ing}
+                    className="text-xs px-2.5 py-1 rounded-md bg-ink text-stone border border-panel-border font-medium"
+                  >
+                    {ing}
                   </span>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedPromo.ingredients.map((ing) => (
-                      <span key={ing} className="text-xs md:text-sm px-3 py-1.5 rounded-md bg-ink text-cream border border-panel-border font-medium">
-                        {ing}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+                ))}
               </div>
-
-              <a
-                href={selectedPromo.orderUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full bg-gold hover:bg-gold-bright text-ink font-extrabold py-4 px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 text-center text-base md:text-lg shadow-lg hover:shadow-gold/20"
-              >
-                Order Online
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-              </a>
             </div>
+
+            <a
+              href={selectedPromo.orderUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full block text-center bg-gold hover:bg-gold-bright text-ink font-extrabold py-3 rounded-xl text-sm transition-all shadow-lg"
+            >
+              {orderDealText} &rarr;
+            </a>
           </div>
         </div>
       )}

@@ -19,7 +19,7 @@ export async function generateMetadata({
   const isEs = lang === "es";
 
   const title = isEs
-    ? "Raggio Gourmet & Pizza | Pizza Auténtica en Newark, DE"
+    ? "Raggio Gourmet & Pizza | Pizza Autentica en Newark, DE"
     : "Raggio Gourmet & Pizza | Authentic Pizza & Catering in Newark, DE";
 
   const description = isEs

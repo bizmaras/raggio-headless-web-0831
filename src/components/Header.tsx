@@ -2,16 +2,32 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import LanguageSwitcher from './LanguageSwitcher';
 
-export default function Header() {
+interface HeaderProps {
+  lang?: string;
+  dict?: {
+    nav?: {
+      menu?: string;
+      deals?: string;
+      catering?: string;
+      hours_location?: string;
+      order?: string;
+    };
+  };
+}
+
+export default function Header({ lang = 'en', dict }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { name: 'Menu', href: '#menu' },
-    { name: 'Deals & Specials', href: '#deals' },
-    { name: 'Catering', href: '#catering' },
-    { name: 'Hours & Location', href: '#location' },
+    { name: dict?.nav?.menu || 'Menu', href: '#menu' },
+    { name: dict?.nav?.deals || 'Deals & Specials', href: '#deals' },
+    { name: dict?.nav?.catering || 'Catering', href: '#catering' },
+    { name: dict?.nav?.hours_location || 'Hours & Location', href: '#location' },
   ];
+
+  const orderText = dict?.nav?.order || 'Order Online';
 
   return (
     <header className="sticky top-0 z-40 w-full bg-ink/95 backdrop-blur-md border-b border-panel-border">
@@ -19,8 +35,8 @@ export default function Header() {
         <div className="flex items-center justify-between h-20">
 
           {/* LEFT: LOGO & MOBILE HOME BUTTON */}
-          <div className="flex items-center gap-5 sm:gap-6">
-            <a href="#" className="flex items-center shrink-0" aria-label="Raggio Gourmet Pizza Home">
+          <div className="flex items-center gap-4 sm:gap-6">
+            <a href={`/${lang}`} className="flex items-center shrink-0" aria-label="Raggio Gourmet Pizza Home">
               <Image
                 src="/images/raggio-logo.png"
                 alt="Raggio Gourmet & Pizza"
@@ -35,7 +51,7 @@ export default function Header() {
 
             {/* Mobile Only Home Button */}
             <a
-              href="#"
+              href={`/${lang}`}
               aria-label="Back to Home"
               className="flex lg:hidden items-center justify-center p-2.5 rounded-xl bg-[#14181d] border border-gold/60 text-gold shadow-[0_0_8px_rgba(212,175,55,0.12)] hover:bg-gold/20 transition-all cursor-pointer active:scale-95 shrink-0"
             >
@@ -55,7 +71,7 @@ export default function Header() {
             </a>
           </div>
 
-          {/* DESKTOP NAV - Font size text-base (16px) and font-semibold applied */}
+          {/* DESKTOP NAV */}
           <nav className="hidden lg:flex items-center gap-2 xl:gap-5">
             {navLinks.map((link) => (
               <a
@@ -68,8 +84,10 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* DESKTOP ACTIONS - Phone number font set to text-base */}
-          <div className="hidden lg:flex items-center gap-6">
+          {/* DESKTOP ACTIONS */}
+          <div className="hidden lg:flex items-center gap-5">
+            <LanguageSwitcher currentLang={lang} />
+
             <a
               href="tel:3023690553"
               className="text-base font-bold text-cream hover:text-gold transition-colors flex items-center gap-2"
@@ -85,12 +103,14 @@ export default function Header() {
               rel="noopener noreferrer"
               className="bg-gold hover:bg-gold-bright text-ink font-extrabold px-6 py-3 rounded-xl text-base transition-all shadow-md"
             >
-              Order Online
+              {orderText}
             </a>
           </div>
 
           {/* RIGHT: MOBILE CONTROLS */}
           <div className="flex lg:hidden items-center gap-2">
+            <LanguageSwitcher currentLang={lang} />
+
             <a
               href="tel:3023690553"
               aria-label="Call Raggio Gourmet Pizza"
@@ -107,7 +127,7 @@ export default function Header() {
               rel="noopener noreferrer"
               className="bg-gold hover:bg-gold-bright text-ink font-extrabold text-xs px-3.5 py-2.5 rounded-xl shadow-md transition-all active:scale-95 flex items-center justify-center"
             >
-              Order
+              {orderText === 'Ordenar Ahora' ? 'Ordenar' : 'Order'}
             </a>
 
             <button

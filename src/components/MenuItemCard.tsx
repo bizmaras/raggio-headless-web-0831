@@ -18,6 +18,15 @@ interface MenuItemCardProps {
   ingredients?: string[];
   image?: string;
   orderUrl?: string;
+  dict?: {
+    menu?: {
+      view_details?: string;
+      key_ingredients?: string;
+      order_online?: string;
+      freshly_prepared?: string;
+      modal_close?: string;
+    };
+  };
 }
 
 export default function MenuItemCard(props: MenuItemCardProps) {
@@ -35,6 +44,12 @@ export default function MenuItemCard(props: MenuItemCardProps) {
 
   // Item image URL
   const itemImage = props.image || props.item?.image;
+
+  const viewDetailsText = props.dict?.menu?.view_details || 'View Details & Ingredients';
+  const orderOnlineText = props.dict?.menu?.order_online || 'Order Online';
+  const keyIngredientsText = props.dict?.menu?.key_ingredients || 'Key Ingredients';
+  const freshlyPreparedText = props.dict?.menu?.freshly_prepared || 'Freshly Prepared';
+  const modalCloseAria = props.dict?.menu?.modal_close || 'Close details modal';
 
   return (
     <>
@@ -59,7 +74,7 @@ export default function MenuItemCard(props: MenuItemCardProps) {
             <path d="M12 16v-4" strokeWidth="2" strokeLinecap="round" />
             <path d="M12 8h.01" strokeWidth="2" strokeLinecap="round" />
           </svg>
-          View Details & Ingredients
+          {viewDetailsText}
         </button>
       </div>
 
@@ -69,7 +84,7 @@ export default function MenuItemCard(props: MenuItemCardProps) {
             <button
               type="button"
               onClick={() => setIsOpen(false)}
-              aria-label="Close details modal"
+              aria-label={modalCloseAria}
               className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-ink/90 text-stone hover:text-cream flex items-center justify-center border border-panel-border cursor-pointer transition-colors"
             >
               ✕
@@ -93,7 +108,7 @@ export default function MenuItemCard(props: MenuItemCardProps) {
                     Raggio Gourmet
                   </span>
                   <span className="text-stone text-xs mt-1 font-medium tracking-wider">
-                    Freshly Prepared
+                    {freshlyPreparedText}
                   </span>
                 </div>
               )}
@@ -115,7 +130,7 @@ export default function MenuItemCard(props: MenuItemCardProps) {
                 {itemIngredients.length > 0 && (
                   <div className="mb-8">
                     <span className="text-xs font-bold text-gold uppercase tracking-wider block mb-3">
-                      Key Ingredients
+                      {keyIngredientsText}
                     </span>
                     <div className="flex flex-wrap gap-2">
                       {itemIngredients.map((ing) => (
@@ -134,7 +149,7 @@ export default function MenuItemCard(props: MenuItemCardProps) {
                 rel="noopener noreferrer"
                 className="w-full bg-gold hover:bg-gold-bright text-ink font-extrabold py-4 px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 text-center text-base md:text-lg shadow-lg hover:shadow-gold/20"
               >
-                Order Online
+                {orderOnlineText}
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                 </svg>

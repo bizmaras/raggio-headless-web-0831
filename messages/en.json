@@ -1,35 +1,183 @@
 {
   "nav": {
     "menu": "Menu",
-    "deals": "Deals",
+    "deals": "Deals & Specials",
     "catering": "Catering",
+    "hours_location": "Hours & Location",
     "order": "Order Now"
   },
   "hero": {
     "tagline": "Authentic Gourmet Pizza",
     "subtitle": "Handcrafted with passion, baked to perfection",
     "cta": "View Menu",
-    "cta_order": "Order Online"
+    "cta_order": "Order Online",
+    "badge": "100% Fresh Mozzarella • 48h Fermented Dough • Newark, DE",
+    "slides": [
+      {
+        "tag": "100% BEEF PEPPERONI",
+        "title": "Crispy Beef Pepperoni",
+        "description": "Crafted with savory beef pepperoni, 100% Grande Mozzarella, and homemade marinara on deck-oven stone-baked crust.",
+        "ctaText": "Order Beef Pepperoni",
+        "seoAlt": "Crispy Beef Pepperoni Pizza at Raggio Gourmet Newark DE"
+      },
+      {
+        "tag": "SPECIALTY PIZZA",
+        "title": "Signature Meat Lover’s",
+        "description": "Packed with beef pepperoni, sausage, bacon, and ham on our deck-oven stone-baked crust for true meat lovers.",
+        "ctaText": "Get the Meat Lover’s",
+        "seoAlt": "Signature Meat Lovers Pizza Delivery in Newark, DE"
+      },
+      {
+        "tag": "HOUSE FAVORITE",
+        "title": "Spicy Buffalo Chicken Pizza",
+        "description": "Tender chicken tossed in fiery buffalo sauce with creamy ranch drizzle. A local favorite in Newark.",
+        "ctaText": "Try Buffalo Chicken",
+        "seoAlt": "Spicy Buffalo Chicken Pizza - Raggio Gourmet Newark"
+      },
+      {
+        "tag": "GOURMET SELECTION",
+        "title": "Fresh Spinach & Garlic Gourmet",
+        "description": "Sauteed fresh spinach, roasted garlic, ricotta, and extra virgin olive oil. Perfect for catering and family dining.",
+        "ctaText": "Taste Spinach Gourmet",
+        "seoAlt": "Fresh Spinach and Garlic Gourmet Pizza in Newark DE"
+      }
+    ]
+  },
+  "categories": {
+    "Deals & Specials": "Deals & Specials",
+    "Pizza": "Pizza",
+    "Gourmet Pizza": "Gourmet Pizza",
+    "Sicilian Pizza": "Sicilian Pizza",
+    "Chicken Wings": "Chicken Wings",
+    "Cheesesteaks": "Cheesesteaks",
+    "Fresh Burgers": "Fresh Burgers",
+    "Appetizers": "Appetizers",
+    "Fresh Salads": "Fresh Salads",
+    "Pasta": "Pasta",
+    "Complete Dinners": "Complete Dinners",
+    "Seafood": "Seafood",
+    "Quesadillas": "Quesadillas",
+    "Latin Food": "Latin Food",
+    "Subs & Grinders": "Subs & Grinders",
+    "Strombolis & Calzones": "Strombolis & Calzones",
+    "Strombolis + Calzones": "Strombolis & Calzones",
+    "Breakfast": "Breakfast",
+    "Hot Sandwiches": "Hot Sandwiches",
+    "Desserts": "Desserts",
+    "Soups": "Soups",
+    "Drinks": "Drinks",
+    "Side Orders": "Side Orders",
+    "Catering": "Catering"
+  },
+  "promotions": {
+    "title": "Deals & Specials",
+    "order_deal": "Order This Deal",
+    "view_deal": "View Deal Details",
+    "coupon_tag": "COUPON SPECIAL",
+    "items": [
+      {
+        "id": "promo-1",
+        "tag": "COUPON SPECIAL",
+        "title": "2 XL Pizzas 1 Topping Each",
+        "description": "Present coupon when receiving your order. Not to be combined with any other offer. For take-out & delivery only.",
+        "details": "Includes 2 Extra Large Cheese Pizzas with 1 topping of your choice on each. Valid for Take-Out & Delivery only."
+      },
+      {
+        "id": "promo-2",
+        "tag": "COUPON SPECIAL",
+        "title": "Large 1 Topping Pizza & 20 Wings",
+        "description": "Present coupon when receiving your order. Not to be combined with any other offer. For take-out & delivery only.",
+        "details": "Includes 1 Large Pizza with 1 topping and 20 Jumbo Wings (Traditional or Boneless) with ranch or blue cheese."
+      },
+      {
+        "id": "promo-3",
+        "tag": "COUPON SPECIAL",
+        "title": "2 Lrg 1 Topping Pizza, 20 Wings & Soda",
+        "description": "Present coupon when receiving your order. Not to be combined with any other offer. For take-out & delivery only.",
+        "details": "Includes 2 Large 1-Topping Pizzas, 20 Jumbo Wings, and one 2-Liter Soda of choice."
+      },
+      {
+        "id": "promo-4",
+        "tag": "COUPON SPECIAL",
+        "title": "Large 1 Topping Pizza & 10 Wings",
+        "description": "Present coupon when receiving your order. Not to be combined with any other offer. For take-out & delivery only.",
+        "details": "Includes 1 Large 1-Topping Pizza and 10 Jumbo Wings with celery and choice of dipping sauce."
+      }
+    ]
   },
   "menu": {
     "title": "Our Menu",
     "items_count": "items",
-    "download_pdf": "Download Full PDF Menu"
+    "download_pdf": "Download Full PDF Menu",
+    "view_details": "View Details & Ingredients",
+    "key_ingredients": "Key Ingredients",
+    "order_online": "Order Online",
+    "freshly_prepared": "Freshly Prepared",
+    "modal_close": "Close details modal"
+  },
+  "stats": {
+    "menu_items": "Artisanal Menu Items",
+    "mozzarella": "Grande Mozzarella",
+    "tradition": "Years of Tradition",
+    "delivery": "Average Delivery"
   },
   "catering": {
-    "title": "Catering Services",
-    "subtitle": "Perfect for your next event"
+    "title": "Catering by Raggio",
+    "location_badge": "Newark, Delaware",
+    "subtitle": "Feeding a crowd in Newark? All catering trays are available in Half or Full sizes.",
+    "items_count": "items",
+    "half_size": "HALF",
+    "full_size": "FULL",
+    "order_catering": "Order Catering"
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Everything you need to know about ordering, delivery, and catering in Newark.",
+    "questions": [
+      {
+        "question": "Do you deliver pizza in Newark, DE?",
+        "answer": "Yes, Raggio Gourmet Pizza offers fast and reliable delivery throughout Newark, Delaware. We deliver to residential neighborhoods, local businesses, and directly to the University of Delaware (UD) campus. You can easily order online or call us at (302) 369-0553."
+      },
+      {
+        "question": "What are your most popular menu items?",
+        "answer": "Our customers highly rate our Artisanal Pepperoni Pizza, the classic Meat Lovers Sicilian, and our signature Philly Cheesesteak Pizza. Beyond pizza, we are a local favorite for fresh, made-to-order cheesesteaks, jumbo wings, and complete pasta dinners."
+      },
+      {
+        "question": "Do you cater events or large parties in Newark?",
+        "answer": "Yes, we provide catering for events of all sizes. We can accommodate large bulk orders for UD tailgates, corporate lunches, office meetings, and family gatherings with our XL pizzas, wing platters, and hot sandwiches."
+      },
+      {
+        "question": "How do I order online from Raggio Gourmet Pizza?",
+        "answer": "You can place an order directly through our website for instant pickup or delivery. Please note that our secure online checkout is processed through our sister-system, Philly Style Express, so you are in the right place when you click to order!"
+      },
+      {
+        "question": "What are your current pizza specials?",
+        "answer": "We offer daily combo deals, including large one-topping pizzas paired with wings, family combo meals, and instant discount coupons on orders over $40. Check our Deals & Specials tab to add today's active offers directly to your cart."
+      }
+    ]
   },
   "footer": {
-    "hours": "Hours",
-    "address": "Address",
-    "phone": "Phone",
-    "follow": "Follow Us"
+    "description": "Serving Newark, Delaware with artisanal stone-baked pizzas, authentic Philly cheesesteaks, fresh pastas, and full-service event catering.",
+    "address": "681 E Chestnut Hill Rd, Newark, DE 19713",
+    "phone": "(302) 369-0553",
+    "store_hours": "Store Hours",
+    "hours_week": "Sunday – Thursday: 9:00 AM – 9:00 PM",
+    "hours_weekend": "Friday – Saturday: 9:00 AM – 10:00 PM",
+    "get_directions": "Get Directions via Google Maps",
+    "all_rights": "All rights reserved.",
+    "powered_by": "Online Ordering Powered by FoodTec Solutions"
+  },
+  "sticky_bar": {
+    "call": "(302) 369-0553",
+    "order_online": "Order Online"
   },
   "common": {
     "add_to_cart": "Add to Cart",
     "close": "Close",
     "loading": "Loading...",
-    "back_to_top": "Back to top"
+    "back_to_top": "Back to top",
+    "lang_switch_label": "Language",
+    "english": "English",
+    "spanish": "Español"
   }
 }

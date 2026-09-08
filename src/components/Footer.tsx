@@ -3,7 +3,32 @@
 import Image from 'next/image';
 import { MapPin, Phone, Clock } from 'lucide-react';
 
-export default function Footer() {
+interface FooterProps {
+  dict?: {
+    footer?: {
+      description?: string;
+      address?: string;
+      phone?: string;
+      store_hours?: string;
+      hours_week?: string;
+      hours_weekend?: string;
+      get_directions?: string;
+      all_rights?: string;
+      powered_by?: string;
+    };
+  };
+}
+
+export default function Footer({ dict }: FooterProps) {
+  const descriptionText = dict?.footer?.description ||
+    'Serving Newark, Delaware with artisanal stone-baked pizzas, authentic Philly cheesesteaks, fresh pastas, and full-service event catering.';
+  const storeHoursText = dict?.footer?.store_hours || 'Store Hours';
+  const hoursWeekText = dict?.footer?.hours_week || 'Sunday – Thursday: 9:00 AM – 9:00 PM';
+  const hoursWeekendText = dict?.footer?.hours_weekend || 'Friday – Saturday: 9:00 AM – 10:00 PM';
+  const getDirectionsText = dict?.footer?.get_directions || 'Get Directions via Google Maps';
+  const allRightsText = dict?.footer?.all_rights || 'All rights reserved.';
+  const poweredByText = dict?.footer?.powered_by || 'Online Ordering Powered by FoodTec Solutions';
+
   return (
     <footer id="location" className="bg-ink border-t border-panel-border text-cream pt-16 pb-24 lg:pb-12 px-6 scroll-mt-20">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 mb-12">
@@ -21,7 +46,7 @@ export default function Footer() {
           </div>
 
           <p className="text-stone text-sm leading-relaxed max-w-md">
-            Serving Newark, Delaware with artisanal stone-baked pizzas, authentic Philly cheesesteaks, fresh pastas, and full-service event catering.
+            {descriptionText}
           </p>
 
           <div className="space-y-3 text-sm text-stone">
@@ -37,13 +62,13 @@ export default function Footer() {
               </a>
             </div>
 
-            {/* Operating Hours (High Contrast Fix) */}
+            {/* Operating Hours */}
             <div className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-gold shrink-0 mt-0.5" />
               <div>
-                <p className="text-cream font-medium mb-1">Store Hours</p>
-                <p className="text-xs text-stone font-medium">Sunday – Thursday: 9:00 AM – 9:00 PM</p>
-                <p className="text-xs text-stone font-medium">Friday – Saturday: 9:00 AM – 10:00 PM</p>
+                <p className="text-cream font-medium mb-1">{storeHoursText}</p>
+                <p className="text-xs text-stone font-medium">{hoursWeekText}</p>
+                <p className="text-xs text-stone font-medium">{hoursWeekendText}</p>
               </div>
             </div>
           </div>
@@ -55,7 +80,7 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-panel border border-panel-border text-gold-bright hover:bg-gold hover:text-[#1c1408] font-bold text-xs px-5 py-2.5 rounded-full transition-all duration-200"
             >
-              Get Directions via Google Maps
+              {getDirectionsText}
             </a>
           </div>
         </div>
@@ -75,10 +100,10 @@ export default function Footer() {
 
       </div>
 
-      {/* Footer Bottom Bar (High Contrast Fix) */}
+      {/* Footer Bottom Bar */}
       <div className="max-w-7xl mx-auto pt-8 border-t border-panel-border/60 flex flex-col md:flex-row items-center justify-between text-xs text-stone font-medium gap-4">
-        <p>© {new Date().getFullYear()} Raggio Gourmet &amp; Pizza. All rights reserved.</p>
-        <p>Online Ordering Powered by FoodTec Solutions</p>
+        <p>© {new Date().getFullYear()} Raggio Gourmet &amp; Pizza. {allRightsText}</p>
+        <p>{poweredByText}</p>
       </div>
     </footer>
   );

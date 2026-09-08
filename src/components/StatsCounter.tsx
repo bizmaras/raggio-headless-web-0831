@@ -1,27 +1,30 @@
-﻿'use client';
+'use client';
 
 import React, { useEffect, useRef } from 'react';
 import { animate } from 'animejs';
 import { Award, Flame, Clock, Heart } from 'lucide-react';
 
-interface StatItem {
-  id: string;
-  targetNumber: number;
-  suffix: string;
-  label: string;
-  icon: React.ComponentType<{ className?: string }>;
+interface StatsCounterProps {
+  dict?: {
+    stats?: {
+      menu_items?: string;
+      mozzarella?: string;
+      tradition?: string;
+      delivery?: string;
+    };
+  };
 }
 
-const STATS: StatItem[] = [
-  { id: 'stat-1', targetNumber: 171, suffix: '+', label: 'Artisanal Menu Items', icon: Flame },
-  { id: 'stat-2', targetNumber: 100, suffix: '%', label: 'Grande Mozzarella', icon: Award },
-  { id: 'stat-3', targetNumber: 25, suffix: '+', label: 'Years of Tradition', icon: Heart },
-  { id: 'stat-4', targetNumber: 30, suffix: ' Min', label: 'Average Delivery', icon: Clock },
-];
-
-export default function StatsCounter() {
+export default function StatsCounter({ dict }: StatsCounterProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const hasAnimated = useRef(false);
+
+  const stats = [
+    { id: 'stat-1', targetNumber: 171, suffix: '+', label: dict?.stats?.menu_items || 'Artisanal Menu Items', icon: Flame },
+    { id: 'stat-2', targetNumber: 100, suffix: '%', label: dict?.stats?.mozzarella || 'Grande Mozzarella', icon: Award },
+    { id: 'stat-3', targetNumber: 25, suffix: '+', label: dict?.stats?.tradition || 'Years of Tradition', icon: Heart },
+    { id: 'stat-4', targetNumber: 30, suffix: ' Min', label: dict?.stats?.delivery || 'Average Delivery', icon: Clock },
+  ];
 
   useEffect(() => {
     const container = containerRef.current;
@@ -34,7 +37,7 @@ export default function StatsCounter() {
             hasAnimated.current = true;
             observer.unobserve(container);
 
-            STATS.forEach((stat) => {
+            stats.forEach((stat) => {
               const numEl = document.getElementById(`counter-${stat.id}`);
               if (!numEl) return;
 
@@ -59,12 +62,12 @@ export default function StatsCounter() {
     return () => {
       observer.disconnect();
     };
-  }, []);
+  }, [stats]);
 
   return (
     <section ref={containerRef} className="py-8 bg-panel/60 border-y border-panel-border/60">
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-        {STATS.map((stat) => {
+        {stats.map((stat) => {
           const Icon = stat.icon;
           return (
             <div

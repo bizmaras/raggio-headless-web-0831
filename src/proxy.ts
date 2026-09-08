@@ -33,7 +33,7 @@ export function proxy(request: NextRequest) {
   if (pathnameHasLocale) return;
 
   const locale = getLocale(request);
-  request.nextUrl.pathname = `/${locale}${pathname}`;
+  request.nextUrl.pathname = `/${locale}${pathname === "/" ? "" : pathname}`;
   return NextResponse.redirect(request.nextUrl);
 }
 
