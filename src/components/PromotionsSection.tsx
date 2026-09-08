@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { BookOpen } from 'lucide-react';
 
 interface PromoItem {
@@ -43,20 +44,20 @@ const DEFAULT_PROMOTIONS: PromoItem[] = [
     tag: 'COUPON SPECIAL',
     title: '2 XL Pizzas 1 Topping Each',
     description: 'Present coupon when receiving your order. Not to be combined with any other offer. For take-out & delivery only.',
-    price: '$32.99',
-    details: 'Includes 2 Extra Large Cheese Pizzas with 1 topping of your choice on each. Valid for Take-Out & Delivery only.',
-    ingredients: ['Grande Mozzarella', 'Signature Sauce', 'Choice of 1 Topping per Pizza'],
-    orderUrl: FOODTEC_BASE_URL
+    price: '$29.99',
+    details: 'Get two of our generous 16-inch XL thin-crust or hand-tossed pizzas topped with your choice of savory topping on each pie.',
+    ingredients: ['Two 16" Extra Large Pizzas', '1 Premium Topping Each', 'Grande Mozzarella', 'Homemade Marinara'],
+    orderUrl: `${FOODTEC_BASE_URL}`,
   },
   {
     id: 'promo-2',
-    tag: 'COUPON SPECIAL',
-    title: 'Large 1 Topping Pizza & 20 Wings',
-    description: 'Present coupon when receiving your order. Not to be combined with any other offer. For take-out & delivery only.',
-    price: '$37.99',
-    details: 'Includes 1 Large Pizza with 1 topping and 20 Jumbo Wings (Traditional or Boneless) with ranch or blue cheese.',
-    ingredients: ['Grande Mozzarella', 'Jumbo Chicken Wings', 'Choice of Wing Sauce'],
-    orderUrl: FOODTEC_BASE_URL
+    tag: 'GAME DAY COMBO',
+    title: '1 Large 1-Topping + 10 Wings',
+    description: 'The ultimate game day fuel. Choice of bone-in or boneless wings tossed in your signature sauce.',
+    price: '$24.99',
+    details: 'One large 14-inch pizza paired with 10 jumbo fresh roaster chicken wings with celery, carrots, and house bleu cheese.',
+    ingredients: ['1 Large 14" Pizza', '10 Jumbo Wings', 'Choice of Wing Sauce', 'House Ranch or Bleu Cheese'],
+    orderUrl: `${FOODTEC_BASE_URL}`,
   },
   {
     id: 'promo-3',
@@ -102,6 +103,31 @@ const DEFAULT_PROMOTIONS: PromoItem[] = [
 
 export default function PromotionsSection({ dict }: PromotionsSectionProps) {
   const [selectedPromo, setSelectedPromo] = useState<PromoItem | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Lock background body scroll while modal is open
+  useEffect(() => {
+    if (!selectedPromo) return;
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [selectedPromo]);
+
+  // Close on Escape key press
+  useEffect(() => {
+    if (!selectedPromo) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSelectedPromo(null);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedPromo]);
 
   const sectionTitle = dict?.promotions?.title || 'Deals & Specials';
   const orderDealText = dict?.promotions?.order_deal || 'Order This Deal';
@@ -221,9 +247,16 @@ export default function PromotionsSection({ dict }: PromotionsSectionProps) {
       </div>
 
       {/* MODAL: Deal Details & Ingredients */}
-      {selectedPromo && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-          <div className="bg-panel border border-panel-border rounded-2xl p-6 max-w-lg w-full shadow-2xl relative">
+      {selectedPromo && mounted && createPortal(
+        <div
+          className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-200"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setSelectedPromo(null);
+          }}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="bg-panel border border-panel-border rounded-2xl p-6 max-w-lg w-full shadow-2xl relative my-auto animate-in zoom-in-95 duration-200">
             <button
               type="button"
               onClick={() => setSelectedPromo(null)}
@@ -269,12 +302,13 @@ export default function PromotionsSection({ dict }: PromotionsSectionProps) {
               href={selectedPromo.orderUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full block text-center bg-gold hover:bg-gold-bright text-ink font-extrabold py-3 rounded-xl text-sm transition-all shadow-lg"
+              className="w-full block text-center bg-gold hover:bg-gold-bright text-ink font-extrabold py-3.5 rounded-xl text-sm transition-all shadow-lg active:scale-[0.98]"
             >
               {orderDealText} &rarr;
             </a>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </section>
   );

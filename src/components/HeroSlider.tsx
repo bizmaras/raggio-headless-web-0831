@@ -135,7 +135,7 @@ export default function HeroSlider({ dict }: HeroSliderProps) {
 
   return (
     <section
-      className="relative w-full overflow-hidden bg-ink py-4 sm:py-8 lg:py-10 select-none"
+      className="relative w-full overflow-hidden bg-ink py-2.5 sm:py-6 lg:py-10 select-none"
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
@@ -150,55 +150,55 @@ export default function HeroSlider({ dict }: HeroSliderProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* CINEMATIC SPLIT-BLEED SHOWCASE CARD */}
-        <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-panel-border bg-ink shadow-2xl flex flex-col-reverse lg:flex-row items-stretch min-h-[480px] lg:min-h-[540px]">
+        <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-panel-border bg-ink shadow-2xl flex flex-col-reverse lg:flex-row items-stretch min-h-0 lg:min-h-[540px]">
 
           {/* EDITORIAL TEXT & ACTIONS (Bottom on mobile, Left on desktop) */}
-          <div className="w-full lg:w-[46%] xl:w-[44%] flex flex-col justify-center p-5 sm:p-8 lg:p-12 z-20 space-y-3.5 sm:space-y-6 relative bg-ink lg:bg-gradient-to-r lg:from-ink lg:via-ink/95 lg:to-ink/60">
+          <div className="w-full lg:w-[46%] xl:w-[44%] flex flex-col justify-center p-4 sm:p-8 lg:p-12 z-20 space-y-2.5 sm:space-y-6 relative bg-ink lg:bg-gradient-to-r lg:from-ink lg:via-ink/95 lg:to-ink/60">
             
             {/* Category Tag */}
-            <div className="inline-flex items-center gap-2 self-start bg-gold/15 border border-gold/40 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full shadow-sm">
+            <div className="inline-flex items-center gap-2 self-start bg-gold/15 border border-gold/40 px-2.5 py-0.5 sm:px-3.5 sm:py-1.5 rounded-full shadow-sm">
               <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
-              <span className="text-gold-bright text-xs font-bold tracking-wider uppercase font-mono">
+              <span className="text-gold-bright text-[11px] sm:text-xs font-bold tracking-wider uppercase font-mono">
                 {activeSlide.tag}
               </span>
             </div>
 
             {/* Product Title */}
-            <h2 className="text-2xl sm:text-3xl lg:text-5xl font-extrabold text-cream tracking-tight drop-shadow-md leading-[1.15]">
+            <h2 className="text-xl xs:text-2xl sm:text-3xl lg:text-5xl font-extrabold text-cream tracking-tight drop-shadow-md leading-[1.15]">
               {activeSlide.title}
             </h2>
 
             {/* Appetizing Description */}
-            <p className="text-stone text-xs sm:text-sm lg:text-base leading-relaxed font-normal max-w-md">
+            <p className="text-stone text-xs sm:text-sm lg:text-base leading-relaxed font-normal max-w-md line-clamp-2 sm:line-clamp-none">
               {activeSlide.description}
             </p>
 
             {/* CTAs */}
-            <div className="pt-1 sm:pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
+            <div className="pt-1 sm:pt-4 grid grid-cols-2 gap-2 sm:flex sm:flex-row sm:items-center sm:gap-4">
               <a
                 href={activeSlide.ctaLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto text-center bg-gradient-to-br from-gold-bright via-gold to-gold-deep text-ink font-extrabold px-7 py-3 sm:py-3.5 rounded-full text-sm sm:text-base transition-all duration-300 shadow-[0_4px_25px_rgba(201,161,92,0.45)] hover:shadow-[0_4px_35px_rgba(201,161,92,0.65)] hover:scale-105 active:scale-95 cursor-pointer"
+                className="w-full sm:w-auto text-center bg-gradient-to-br from-gold-bright via-gold to-gold-deep text-ink font-extrabold px-3 sm:px-7 py-2.5 sm:py-3.5 rounded-full text-xs sm:text-base transition-all duration-300 shadow-[0_4px_20px_rgba(201,161,92,0.45)] hover:shadow-[0_4px_35px_rgba(201,161,92,0.65)] hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center"
               >
-                {activeSlide.ctaText}
+                <span className="truncate">{activeSlide.ctaText}</span>
               </a>
               <a
                 href="#menu"
-                className="w-full sm:w-auto text-center border border-panel-border hover:border-gold text-cream hover:text-gold font-bold px-5 py-2.5 sm:py-3.5 rounded-full text-sm sm:text-base transition-all duration-300 bg-panel/60 hover:bg-panel active:scale-95 cursor-pointer"
+                className="w-full sm:w-auto text-center border border-panel-border hover:border-gold text-cream hover:text-gold font-bold px-3 sm:px-5 py-2.5 sm:py-3.5 rounded-full text-xs sm:text-base transition-all duration-300 bg-panel/60 hover:bg-panel active:scale-95 cursor-pointer flex items-center justify-center"
               >
-                {dict?.hero?.cta || 'View Menu'}
+                <span className="truncate">{dict?.hero?.cta || 'View Menu'}</span>
               </a>
             </div>
 
             {/* Trust Footer */}
-            <div className="pt-1 flex items-center gap-2 text-[11px] sm:text-xs text-stone-dim uppercase tracking-wider font-semibold">
+            <div className="pt-0.5 sm:pt-1 hidden xs:flex items-center gap-2 text-[10px] sm:text-xs text-stone-dim uppercase tracking-wider font-semibold">
               <span className="w-1.5 h-1.5 rounded-full bg-gold/50 shrink-0" />
               <span className="truncate">{dict?.hero?.badge || '100% Fresh Mozzarella • Stone-Baked Crust • Newark, DE'}</span>
             </div>
 
             {/* SLIDER DOTS */}
-            <div className="flex items-center gap-2 sm:gap-2.5 pt-2 sm:pt-4">
+            <div className="flex items-center gap-2 sm:gap-2.5 pt-1 sm:pt-4">
               {slides.map((_, dotIdx) => (
                 <button
                   key={dotIdx}
@@ -208,7 +208,7 @@ export default function HeroSlider({ dict }: HeroSliderProps) {
                   className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
                     current === dotIdx
                       ? 'w-8 sm:w-10 bg-gold shadow-[0_0_10px_rgba(201,161,92,0.7)]'
-                      : 'w-2.5 bg-panel-border hover:bg-stone-dim'
+                  : 'w-2.5 bg-panel-border hover:bg-stone-dim'
                   }`}
                 />
               ))}
@@ -217,7 +217,7 @@ export default function HeroSlider({ dict }: HeroSliderProps) {
           </div>
 
           {/* FULL-BLEED CINEMATIC PHOTOGRAPHY (Top on mobile, Right on desktop) */}
-          <div className="w-full lg:w-[54%] xl:w-[56%] relative min-h-[300px] xs:min-h-[340px] sm:min-h-[420px] lg:min-h-[540px] overflow-hidden bg-black">
+          <div className="w-full lg:w-[54%] xl:w-[56%] relative h-[210px] xs:h-[240px] sm:h-[340px] lg:h-auto lg:min-h-[540px] overflow-hidden bg-black">
             
             {/* Edge-to-Edge Pizza Images with Subtle Ken Burns Motion */}
             {slides.map((slide, index) => {

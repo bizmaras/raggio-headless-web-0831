@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 
 interface CateringItemCardProps {
   name: string;
@@ -26,6 +27,31 @@ export default function CateringItemCard({
   fullLabel = 'FULL',
 }: CateringItemCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Lock background body scroll while modal is open
+  useEffect(() => {
+    if (!isModalOpen) return;
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [isModalOpen]);
+
+  // Close on Escape key press
+  useEffect(() => {
+    if (!isModalOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsModalOpen(false);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isModalOpen]);
 
   const parsePrice = (priceVal?: string | number): number => {
     if (!priceVal) return 0;
@@ -93,14 +119,21 @@ export default function CateringItemCard({
       </div>
 
       {/* CATERING MODAL DIALOG */}
-      {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
-          <div className="relative w-full max-w-lg bg-panel border border-panel-border rounded-2xl p-6 sm:p-8 shadow-2xl">
+      {isModalOpen && mounted && createPortal(
+        <div
+          className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-200"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setIsModalOpen(false);
+          }}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="relative w-full max-w-lg bg-panel border border-panel-border rounded-2xl p-6 sm:p-8 shadow-2xl my-auto animate-in zoom-in-95 duration-200">
             <button
               type="button"
               onClick={() => setIsModalOpen(false)}
               aria-label={halfLabel === 'MEDIANO' ? 'Cerrar detalles de catering' : 'Close catering details'}
-              className="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-ink/90 text-stone hover:text-cream flex items-center justify-center border border-panel-border cursor-pointer transition-colors"
+              className="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-ink/90 text-stone hover:text-cream flex items-center justify-center border border-panel-border cursor-pointer transition-colors shadow-md"
             >
               ✕
             </button>
@@ -145,7 +178,7 @@ export default function CateringItemCard({
               href={FOODTEC_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full bg-gold hover:bg-gold-bright text-ink font-extrabold py-3 px-6 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 text-center text-sm sm:text-base shadow-lg"
+              className="w-full bg-gold hover:bg-gold-bright text-ink font-extrabold py-3.5 px-6 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 text-center text-sm sm:text-base shadow-lg active:scale-[0.98]"
             >
               {halfLabel === 'MEDIANO' ? 'Ordenar Catering en Línea' : 'Order Catering Online'}
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -153,7 +186,8 @@ export default function CateringItemCard({
               </svg>
             </a>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );

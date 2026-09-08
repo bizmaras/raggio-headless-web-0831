@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useEffect, useRef } from 'react';
 import { animate } from 'animejs';
@@ -42,6 +42,9 @@ export default function ScrollReveal({
               duration: 550,
               delay: delay,
               ease: 'outCubic',
+              complete: () => {
+                el.style.transform = 'none';
+              },
             });
           }
         });
