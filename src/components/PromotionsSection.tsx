@@ -119,28 +119,67 @@ export default function PromotionsSection({ dict }: PromotionsSectionProps) {
     };
   });
 
+  const handleScroll = (direction: 'left' | 'right') => {
+    const el = document.getElementById('promotions-carousel');
+    if (el) {
+      const scrollAmount = el.clientWidth * 0.85;
+      el.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth',
+      });
+    }
+  };
+
   return (
     <section className="py-12 px-6 max-w-7xl mx-auto">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h2 className="text-3xl font-extrabold text-gold-bright tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-gold-bright tracking-tight">
             {sectionTitle}
           </h2>
-          <p className="text-sm text-stone mt-1">
+          <p className="text-xs sm:text-sm text-stone mt-1">
             {dict?.promotions?.coupon_tag ? 'Válido para llevar y entrega a domicilio' : 'Valid for takeout & delivery online'}
           </p>
         </div>
+
+        {/* Mobile Navigation Arrows to slide deals left/right */}
+        <div className="flex md:hidden items-center gap-2">
+          <button
+            type="button"
+            onClick={() => handleScroll('left')}
+            aria-label="Previous deal"
+            className="p-2 rounded-full bg-panel border border-panel-border text-stone hover:text-gold hover:border-gold/50 transition-all cursor-pointer active:scale-90"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            onClick={() => handleScroll('right')}
+            aria-label="Next deal"
+            className="p-2 rounded-full bg-panel border border-panel-border text-stone hover:text-gold hover:border-gold/50 transition-all cursor-pointer active:scale-90"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* HORIZONTAL SNAP CAROUSEL ON MOBILE (saves vertical space) / 3-COL GRID ON DESKTOP */}
+      <div
+        id="promotions-carousel"
+        className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory scroll-smooth no-scrollbar -mx-6 px-6 md:mx-0 md:px-0 pb-4 md:pb-0 scroll-pl-6 md:scroll-pl-0"
+      >
         {promotions.map((promo) => (
           <div
             key={promo.id}
-            className="bg-panel border border-panel-border rounded-xl p-6 flex flex-col justify-between hover:border-gold/60 hover:shadow-xl transition-all duration-300 relative group"
+            className="snap-start shrink-0 w-[82vw] max-w-[330px] sm:w-[350px] md:w-auto md:max-w-none bg-panel border border-panel-border rounded-2xl p-5 sm:p-6 flex flex-col justify-between hover:border-gold/60 hover:shadow-xl transition-all duration-300 relative group"
           >
             <div>
               <div className="flex justify-between items-start mb-3">
-                <span className="text-[10px] font-extrabold uppercase tracking-widest text-gold bg-gold/10 px-2.5 py-1 rounded-md border border-gold/20">
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-gold bg-gold/10 px-2.5 py-1 rounded-md border border-gold/20 font-mono">
                   {promo.tag}
                 </span>
                 <span className="text-xl font-extrabold text-cream group-hover:text-gold-bright transition-colors">
@@ -148,11 +187,11 @@ export default function PromotionsSection({ dict }: PromotionsSectionProps) {
                 </span>
               </div>
 
-              <h3 className="text-lg font-bold text-cream mb-2 group-hover:text-gold transition-colors">
+              <h3 className="text-base sm:text-lg font-bold text-cream mb-2 group-hover:text-gold transition-colors line-clamp-1">
                 {promo.title}
               </h3>
 
-              <p className="text-xs text-stone leading-relaxed mb-4">
+              <p className="text-xs text-stone leading-relaxed mb-4 line-clamp-2">
                 {promo.description}
               </p>
             </div>
@@ -161,7 +200,7 @@ export default function PromotionsSection({ dict }: PromotionsSectionProps) {
               <button
                 type="button"
                 onClick={() => setSelectedPromo(promo)}
-                className="w-full py-2 px-3 rounded-lg bg-ink border border-panel-border hover:border-gold text-stone hover:text-cream text-xs font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                className="w-full py-2.5 px-3 rounded-lg bg-ink border border-panel-border hover:border-gold text-stone hover:text-cream text-xs font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer active:scale-98"
               >
                 <BookOpen className="w-3.5 h-3.5 text-gold" />
                 {viewDealText}
@@ -171,7 +210,7 @@ export default function PromotionsSection({ dict }: PromotionsSectionProps) {
                 href={promo.orderUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full py-2.5 px-4 rounded-lg bg-gold hover:bg-gold-bright text-ink text-xs font-extrabold transition-all duration-200 shadow-md flex items-center justify-center gap-1.5"
+                className="w-full py-2.5 px-4 rounded-lg bg-gold hover:bg-gold-bright text-ink text-xs font-extrabold transition-all duration-200 shadow-md flex items-center justify-center gap-1.5 active:scale-98"
               >
                 {orderDealText}
                 <span aria-hidden="true">&rarr;</span>
