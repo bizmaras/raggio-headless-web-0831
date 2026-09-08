@@ -130,6 +130,7 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
   }, []);
 
   const handleCategoryClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, searchId: string) => {
+    e.preventDefault();
     setActiveCategory(searchId);
     isPaused.current = true;
     if (resumeTimer.current) clearTimeout(resumeTimer.current);
@@ -138,30 +139,23 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
       isPaused.current = false;
     }, 2000);
 
-    // If on a dedicated category page, navigate between routes
-    if (activeSlug) {
-      e.preventDefault();
-      if (searchId === 'deals' || searchId === 'reviews' || searchId === 'catering') {
+    // If deals, reviews, or catering: scroll to homepage section
+    if (searchId === 'deals' || searchId === 'reviews' || searchId === 'catering') {
+      if (activeSlug) {
         router.push(`/${lang}/#${searchId}`);
       } else {
-        router.push(`/${lang}/menu/${searchId}`);
+        const target = document.getElementById(searchId);
+        if (target) {
+          const isMobile = window.innerWidth < 640;
+          const yOffset = isMobile ? -130 : -220;
+          window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY + yOffset, behavior: 'instant' });
+        }
       }
       return;
     }
 
-    // Homepage smooth anchor scrolling
-    e.preventDefault();
-    if (typeof window === 'undefined') return;
-    let target = document.getElementById(searchId);
-    if (!target) {
-      target = Array.from(document.querySelectorAll('section,div,h1,h2,h3'))
-        .find(el => (el.id || '').toLowerCase().includes(searchId.replace('-and-', ''))) as HTMLElement | null;
-    }
-    if (target) {
-      const isMobile = window.innerWidth < 640;
-      const yOffset = isMobile ? -130 : -220;
-      window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY + yOffset, behavior: 'smooth' });
-    }
+    // For all menu categories: immediately open the dedicated category page in the same tab!
+    router.push(`/${lang}/menu/${searchId}`);
   }, [activeSlug, lang, router]);
 
   return (
@@ -178,11 +172,9 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
         {CATEGORIES.map((cat) => {
           const isActive = activeCategory === cat.searchId;
           const label = categoriesDict?.[cat.label] || cat.label;
-          const href = activeSlug
-            ? (cat.searchId === 'deals' || cat.searchId === 'reviews' || cat.searchId === 'catering'
-                ? `/${lang}/#${cat.searchId}`
-                : `/${lang}/menu/${cat.searchId}`)
-            : `#${cat.searchId}`;
+          const href = cat.searchId === 'deals' || cat.searchId === 'reviews' || cat.searchId === 'catering'
+            ? `/${lang}/#${cat.searchId}`
+            : `/${lang}/menu/${cat.searchId}`;
 
           return (
             <a

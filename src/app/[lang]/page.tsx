@@ -145,12 +145,12 @@ export default async function HomePage({
             return (
               <div key={category} id={targetId} className="mb-16 scroll-mt-[250px]">
                 <h3 className="sticky top-[138px] md:top-[180px] lg:top-[220px] z-[35] bg-ink/95 backdrop-blur-md pt-4 pb-3 mb-6 border-b border-panel-border text-gold-bright flex items-center justify-between text-2xl md:text-3xl font-bold tracking-wide shadow-sm">
-                  <div className="flex items-baseline gap-2.5">
-                    <span>{displayCategory}</span>
+                  <Link href={`/${lang}/menu/${targetId}`} className="flex items-baseline gap-2.5 hover:text-gold transition-colors group/title">
+                    <span className="group-hover/title:underline decoration-gold/40">{displayCategory}</span>
                     <span className="text-xs sm:text-sm font-normal text-cream/60 md:text-gold-bright tracking-normal">
                       ({itemsInCategory.length})
                     </span>
-                  </div>
+                  </Link>
                   <Link
                     href={`/${lang}/menu/${targetId}`}
                     className="text-xs sm:text-sm font-semibold text-stone hover:text-cream hover:border-gold transition-all duration-200 px-3.5 py-1.5 rounded-full bg-panel border border-panel-border flex items-center gap-1.5 shadow-sm group"
