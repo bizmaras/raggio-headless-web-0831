@@ -15,6 +15,7 @@ interface StatsCounterProps {
 
 export default function StatsCounter({ dict }: StatsCounterProps) {
   const items = [
+    { emoji: '⭐', value: '4.2', label: 'Google Rating (211+ Reviews)' },
     { emoji: '🔥', value: '171+', label: dict?.stats?.menu_items || 'Artisanal Menu Items' },
     { emoji: '🧀', value: '100%', label: dict?.stats?.mozzarella || 'Grande Mozzarella' },
     { emoji: '❤️', value: '25+',  label: dict?.stats?.tradition || 'Years of Tradition' },

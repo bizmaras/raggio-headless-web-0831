@@ -190,6 +190,15 @@
     "call": "(302) 369-0553",
     "order_online": "Ordenar en Línea"
   },
+  "reviews": {
+    "badge": "OPINIONES VERIFICADAS DE GOOGLE",
+    "title": "Amado por la Comunidad de Newark",
+    "subtitle": "Opiniones reales de nuestros vecinos, familias y clientes en Delaware.",
+    "view_on_google": "Ver en Google Maps",
+    "write_review": "Escribir una Opinión",
+    "based_on": "Basado en más de 211 opiniones verificadas en Google",
+    "verified_customer": "Cliente Verificado"
+  },
   "common": {
     "add_to_cart": "Agregar al Carrito",
     "close": "Cerrar",

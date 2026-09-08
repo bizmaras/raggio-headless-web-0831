@@ -186,6 +186,15 @@
     "call": "(302) 369-0553",
     "order_online": "Order Online"
   },
+  "reviews": {
+    "badge": "VERIFIED GOOGLE REVIEWS",
+    "title": "Loved by Newark Locals",
+    "subtitle": "Real feedback from our neighbors, families, and university students across Delaware.",
+    "view_on_google": "View on Google Maps",
+    "write_review": "Write a Review",
+    "based_on": "Based on 211+ verified Google reviews",
+    "verified_customer": "Verified Customer"
+  },
   "common": {
     "add_to_cart": "Add to Cart",
     "close": "Close",

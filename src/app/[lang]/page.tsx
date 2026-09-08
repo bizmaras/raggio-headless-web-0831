@@ -17,6 +17,7 @@ import FAQ from "../../components/FAQ";
 import StickyMobileBar from "../../components/StickyMobileBar";
 
 const CateringSection = dynamic(() => import("../../components/CateringSection"));
+const GoogleReviewsSection = dynamic(() => import("../../components/GoogleReviewsSection"));
 const DeferredWidgets = dynamic(() => import("../../components/DeferredWidgets"));
 
 const jsonLd = {
@@ -170,6 +171,9 @@ export default async function HomePage({
         </section>
         <ScrollReveal>
           <CateringSection dict={dict} lang={lang} />
+        </ScrollReveal>
+        <ScrollReveal>
+          <GoogleReviewsSection dict={dict} />
         </ScrollReveal>
         <ScrollReveal>
           <FAQ dict={dict} />
