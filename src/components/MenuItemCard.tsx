@@ -110,7 +110,7 @@ export default function MenuItemCard(props: MenuItemCardProps) {
 
   return (
     <>
-      <div className="bg-panel border border-panel-border rounded-xl p-5 hover:border-gold/60 hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(201,161,92,0.14)] transition-all duration-300 flex flex-col justify-between group">
+      <div className="bg-panel border border-gold/30 sm:border-panel-border rounded-xl p-5 hover:border-gold/60 active:border-gold active:scale-[0.99] active:shadow-[0_8px_24px_rgba(201,161,92,0.18)] hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(201,161,92,0.14)] transition-all duration-300 flex flex-col justify-between group">
         <div>
           <div className="flex justify-between items-start mb-2 gap-2">
             {productUrl ? (
@@ -141,7 +141,7 @@ export default function MenuItemCard(props: MenuItemCardProps) {
           <div className="mb-4 pt-1 border-t border-panel-border/50">
             <div className="flex items-center justify-between gap-2 mb-1.5 pt-2">
               <span className="text-[11px] font-bold uppercase tracking-wider text-stone/80 flex items-center gap-1">
-                <svg className="w-3 h-3 text-gold/80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg className="w-3 h-3 text-gold/80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
                   <circle cx="12" cy="12" r="9" />
                   <path d="M12 8v8M8 12h8" />
                 </svg>
@@ -187,7 +187,7 @@ export default function MenuItemCard(props: MenuItemCardProps) {
         <button
           type="button"
           onClick={() => setIsOpen(true)}
-          className="w-full py-2.5 px-4 rounded-lg bg-ink border border-panel-border hover:border-gold text-cream hover:text-gold text-sm font-medium transition-colors flex items-center justify-center gap-2 cursor-pointer mt-auto"
+          className="w-full py-2.5 px-4 rounded-lg bg-ink border border-gold/60 sm:border-panel-border hover:border-gold text-gold sm:text-cream hover:text-gold text-sm font-semibold sm:font-medium transition-all duration-150 flex items-center justify-center gap-2 cursor-pointer mt-auto active:scale-[0.98] active:border-gold shadow-sm hover:shadow-[0_0_12px_rgba(201,161,92,0.2)]"
         >
           <svg className="w-4 h-4 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <circle cx="12" cy="12" r="10" strokeWidth="2" />
