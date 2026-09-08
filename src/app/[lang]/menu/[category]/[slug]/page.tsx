@@ -190,7 +190,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         activeSlug={categorySlug}
       />
 
-      <main className="min-h-screen bg-ink pt-6 pb-20 overflow-x-clip w-full max-w-full">
+      <main className="min-h-screen bg-ink pt-8 md:pt-10 pb-20 overflow-x-clip w-full max-w-full">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           {/* Breadcrumb Navigation */}
           <div className="flex flex-wrap items-center justify-between gap-3 py-3 border-b border-panel-border/60 mb-8">

@@ -19,7 +19,7 @@ import ScrollToTop from "../../components/ScrollToTop";
 import FAQ from "../../components/FAQ";
 import StickyMobileBar from "../../components/StickyMobileBar";
 
-const CateringSection = dynamic(() => import("../../components/CateringSection"));
+import CateringSection from "../../components/CateringSection";
 const GoogleReviewsSection = dynamic(() => import("../../components/GoogleReviewsSection"));
 const DeferredWidgets = dynamic(() => import("../../components/DeferredWidgets"));
 
@@ -187,9 +187,7 @@ export default async function HomePage({
             );
           })}
         </section>
-        <ScrollReveal>
-          <CateringSection dict={dict} lang={lang} />
-        </ScrollReveal>
+        <CateringSection dict={dict} lang={lang} />
         <ScrollReveal>
           <FAQ dict={dict} />
         </ScrollReveal>

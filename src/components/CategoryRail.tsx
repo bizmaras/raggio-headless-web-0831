@@ -9,7 +9,7 @@ interface CategoryRailProps {
   activeSlug?: string;
 }
 
-const CATEGORIES = [
+export const CATEGORIES = [
   { label: 'Deals & Specials', searchId: 'deals' },
   { label: '⭐ Reviews (4.2)', searchId: 'reviews' },
   { label: 'Pizza', searchId: 'pizza' },
@@ -33,7 +33,7 @@ const CATEGORIES = [
   { label: 'Soups', searchId: 'soups' },
   { label: 'Drinks', searchId: 'drinks' },
   { label: 'Side Orders', searchId: 'side-orders' },
-  { label: 'Catering', searchId: 'catering' }
+  { label: 'Catering', searchId: 'catering' },
 ];
 
 export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }: CategoryRailProps) {
@@ -65,7 +65,7 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
           }
         });
       },
-      { root: null, rootMargin: '-230px 0px -60% 0px', threshold: 0 }
+      { root: null, rootMargin: '-160px 0px -60% 0px', threshold: 0 }
     );
 
     const timer = setTimeout(() => {
@@ -80,7 +80,7 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
           observer.observe(el);
         }
       });
-    }, 800);
+    }, 600);
 
     return () => {
       clearTimeout(timer);
@@ -88,27 +88,45 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
     };
   }, [activeSlug]);
 
-  // Continuous smooth auto-scroll to the left on mobile (never stops or stutters)
+  // Mobile auto-scroll: Seamless infinite loop with zero subpixel jitter and slower speed
   useEffect(() => {
     const container = scrollRef.current;
     if (!container) return;
 
     let animId: number;
+    let lastTime = performance.now();
+    let accumulated = 0;
+    // Calibrated speed: ~22 pixels/second (calm, legible, premium motion)
+    const PIXELS_PER_SECOND = 22;
+
     exactScroll.current = container.scrollLeft;
 
-    const step = () => {
-      if (!isPaused.current && window.innerWidth < 768) {
-        if (container.scrollWidth > container.clientWidth) {
-          exactScroll.current += 0.8;
-          container.scrollLeft = exactScroll.current;
+    const step = (now: number) => {
+      const dt = Math.min((now - lastTime) / 1000, 0.1);
+      lastTime = now;
 
-          // Seamless loop back when reaching the end
-          if (container.scrollLeft >= container.scrollWidth - container.clientWidth - 2) {
-            exactScroll.current = 0;
-            container.scrollLeft = 0;
+      if (!isPaused.current && window.innerWidth < 768) {
+        // Half-width corresponds to Set 1 length (since Set 1 and Set 2 are equal on mobile)
+        const halfWidth = container.scrollWidth / 2;
+
+        if (halfWidth > 0 && container.scrollWidth > container.clientWidth) {
+          accumulated += dt * PIXELS_PER_SECOND;
+
+          // Integer-only pixel movement eliminates subpixel text jittering on mobile
+          if (accumulated >= 1) {
+            const pixelsToMove = Math.floor(accumulated);
+            accumulated -= pixelsToMove;
+            exactScroll.current += pixelsToMove;
+
+            // Seamless infinite loop without any visual jump
+            if (exactScroll.current >= halfWidth) {
+              exactScroll.current -= halfWidth;
+            }
+            container.scrollLeft = Math.round(exactScroll.current);
           }
         }
       }
+
       animId = requestAnimationFrame(step);
     };
 
@@ -124,9 +142,30 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
   const handleInteractionEnd = useCallback(() => {
     if (resumeTimer.current) clearTimeout(resumeTimer.current);
     resumeTimer.current = setTimeout(() => {
-      if (scrollRef.current) exactScroll.current = scrollRef.current.scrollLeft;
+      if (scrollRef.current) {
+        exactScroll.current = scrollRef.current.scrollLeft;
+      }
       isPaused.current = false;
-    }, 1200);
+    }, 2500); // 2.5s calm pause after user releases touch
+  }, []);
+
+  // Handle continuous loop while user manually scrolls or flicks
+  const handleContainerScroll = useCallback(() => {
+    const container = scrollRef.current;
+    if (!container || window.innerWidth >= 768) return;
+
+    const halfWidth = container.scrollWidth / 2;
+    if (halfWidth <= 0) return;
+
+    if (container.scrollLeft >= halfWidth) {
+      container.scrollLeft -= halfWidth;
+      exactScroll.current = container.scrollLeft;
+    } else if (container.scrollLeft <= 0) {
+      container.scrollLeft += halfWidth;
+      exactScroll.current = container.scrollLeft;
+    } else {
+      exactScroll.current = container.scrollLeft;
+    }
   }, []);
 
   const handleCategoryClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, searchId: string) => {
@@ -137,26 +176,77 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
     resumeTimer.current = setTimeout(() => {
       if (scrollRef.current) exactScroll.current = scrollRef.current.scrollLeft;
       isPaused.current = false;
-    }, 2000);
+    }, 3500);
 
-    // If deals, reviews, or catering: scroll to homepage section
-    if (searchId === 'deals' || searchId === 'reviews' || searchId === 'catering') {
-      if (activeSlug) {
+    // If on a dedicated category page or product page:
+    if (activeSlug) {
+      if (searchId === 'deals' || searchId === 'reviews' || searchId === 'catering') {
         router.push(`/${lang}/#${searchId}`);
       } else {
-        const target = document.getElementById(searchId);
-        if (target) {
-          const isMobile = window.innerWidth < 640;
-          const yOffset = isMobile ? -130 : -220;
-          window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY + yOffset, behavior: 'instant' });
-        }
+        router.push(`/${lang}/menu/${searchId}`);
       }
       return;
     }
 
-    // For all menu categories: immediately open the dedicated category page in the same tab!
-    router.push(`/${lang}/menu/${searchId}`);
+    // ON HOMEPAGE: Maintain single-page app experience!
+    let target = document.getElementById(searchId);
+    if (!target) {
+      target = Array.from(document.querySelectorAll('div[id],section[id]'))
+        .find(el => el.id.toLowerCase().includes(searchId.replace('-and-', ''))) as HTMLElement | null;
+    }
+
+    if (target) {
+      const headerEl = document.querySelector('header');
+      const railEl = scrollRef.current?.parentElement;
+      const headerH = headerEl ? headerEl.getBoundingClientRect().height : 80;
+      const railH = railEl ? railEl.getBoundingClientRect().height : 60;
+      const headerOffset = headerH + railH + 16;
+
+      const elementPosition = target.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: Math.max(0, offsetPosition),
+        behavior: 'smooth',
+      });
+    }
   }, [activeSlug, lang, router]);
+
+  const renderPill = (cat: typeof CATEGORIES[number], key: string, isDuplicate = false) => {
+    const isActive = activeCategory === cat.searchId;
+    const label = categoriesDict?.[cat.label] || cat.label;
+    const href = activeSlug
+      ? (cat.searchId === 'deals' || cat.searchId === 'reviews' || cat.searchId === 'catering'
+          ? `/${lang}/#${cat.searchId}`
+          : `/${lang}/menu/${cat.searchId}`)
+      : `#${cat.searchId}`;
+
+    return (
+      <a
+        key={key}
+        data-cat-pill={cat.searchId}
+        href={href}
+        onClick={(e) => handleCategoryClick(e, cat.searchId)}
+        className={`
+          flex-none flex items-center gap-2 px-4 py-2 md:px-5 md:py-2.5 rounded-full border text-xs sm:text-sm font-semibold whitespace-nowrap
+          transition-all duration-200 touch-manipulation select-none cursor-pointer
+          active:scale-95 focus:outline-none tracking-wide shadow-sm
+          ${isDuplicate ? 'md:hidden' : ''}
+          ${isActive
+            ? 'border-gold text-gold bg-gold/15 shadow-[0_0_14px_rgba(201,161,92,0.35)] ring-1 ring-gold/40'
+            : 'border-panel-border/90 bg-panel text-stone hover:text-cream hover:border-gold/60'
+          }
+        `}
+      >
+        <span
+          className={`w-1.5 h-1.5 rounded-full shrink-0 transition-colors duration-300 ${
+            isActive ? 'bg-gold animate-pulse' : 'bg-red-500/70'
+          }`}
+        />
+        {label}
+      </a>
+    );
+  };
 
   return (
     <div className="sticky top-16 md:top-20 z-40 bg-ink/95 backdrop-blur-md border-b border-panel-border py-2 md:py-3.5 shadow-sm">
@@ -166,37 +256,17 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
         onPointerUp={handleInteractionEnd}
         onPointerCancel={handleInteractionEnd}
         onPointerLeave={handleInteractionEnd}
-        className="flex overflow-x-auto md:flex-wrap md:justify-center gap-2 px-3 md:px-6 max-w-7xl mx-auto no-scrollbar"
+        onTouchStart={handleInteractionStart}
+        onTouchEnd={handleInteractionEnd}
+        onScroll={handleContainerScroll}
+        className="flex overflow-x-auto md:flex-wrap md:justify-center gap-2.5 px-3 md:px-6 max-w-7xl mx-auto no-scrollbar"
         style={{ WebkitOverflowScrolling: 'touch' }}
       >
-        {CATEGORIES.map((cat) => {
-          const isActive = activeCategory === cat.searchId;
-          const label = categoriesDict?.[cat.label] || cat.label;
-          const href = cat.searchId === 'deals' || cat.searchId === 'reviews' || cat.searchId === 'catering'
-            ? `/${lang}/#${cat.searchId}`
-            : `/${lang}/menu/${cat.searchId}`;
+        {/* Set 1: visible everywhere (wraps on desktop, flows on mobile) */}
+        {CATEGORIES.map((cat, idx) => renderPill(cat, `s1-${cat.searchId}-${idx}`))}
 
-          return (
-            <a
-              key={cat.label}
-              data-cat-pill={cat.searchId}
-              href={href}
-              onClick={(e) => handleCategoryClick(e, cat.searchId)}
-              className={`
-                flex-none flex items-center gap-1.5 px-3.5 py-1.5 md:px-4 md:py-2 rounded-full border text-xs md:text-sm font-medium whitespace-nowrap
-                transition-all duration-200 touch-manipulation select-none cursor-pointer
-                active:scale-95 focus:outline-none
-                ${isActive
-                  ? 'border-gold text-gold bg-gold/15 shadow-[0_0_12px_rgba(201,161,92,0.3)] ring-1 ring-gold/30 font-semibold'
-                  : 'border-panel-border bg-panel text-stone hover:text-cream hover:border-gold/60'
-                }
-              `}
-            >
-              <span className={`w-1.5 h-1.5 rounded-full shrink-0 transition-colors duration-300 ${isActive ? 'bg-gold animate-pulse' : 'bg-red-500/70'}`} />
-              {label}
-            </a>
-          );
-        })}
+        {/* Set 2: rendered ONLY on mobile (md:hidden) to create an infinite seamless loop without jumping */}
+        {CATEGORIES.map((cat, idx) => renderPill(cat, `s2-${cat.searchId}-${idx}`, true))}
       </div>
     </div>
   );
