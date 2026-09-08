@@ -134,7 +134,9 @@
     "order_online": "Ordenar en Línea",
     "freshly_prepared": "Preparado Fresco",
     "default_description": "Preparado fresco al momento con ingredientes de primera calidad.",
-    "modal_close": "Cerrar ventana de detalles"
+    "modal_close": "Cerrar ventana de detalles",
+    "select_size": "Tamaño:",
+    "choose_size": "Seleccionar Tamaño"
   },
   "stats": {
     "menu_items": "Platos en el Menú",

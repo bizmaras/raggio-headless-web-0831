@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import type { SizeVariant } from '@/data/sizePricing';
 
 interface MenuItemCardProps {
   item?: {
@@ -19,6 +20,8 @@ interface MenuItemCardProps {
   ingredients?: string[];
   image?: string;
   orderUrl?: string;
+  sizes?: SizeVariant[] | null;
+  lang?: string;
   dict?: {
     menu?: {
       view_details?: string;
@@ -27,6 +30,8 @@ interface MenuItemCardProps {
       freshly_prepared?: string;
       default_description?: string;
       modal_close?: string;
+      select_size?: string;
+      choose_size?: string;
     };
   };
 }
@@ -34,6 +39,13 @@ interface MenuItemCardProps {
 export default function MenuItemCard(props: MenuItemCardProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+
+  const sizes = props.sizes && props.sizes.length > 0 ? props.sizes : null;
+  // Default to LRG if present, otherwise first available size
+  const defaultSizeIdx = sizes
+    ? Math.max(0, sizes.findIndex((s) => s.id === 'lrg'))
+    : 0;
+  const [selectedSizeIndex, setSelectedSizeIndex] = useState(defaultSizeIdx);
 
   useEffect(() => {
     setMounted(true);
@@ -59,9 +71,16 @@ export default function MenuItemCard(props: MenuItemCardProps) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen]);
 
+  const currentLang = (props.lang === 'es' ? 'es' : 'en') as 'en' | 'es';
   const itemName = props.name || props.item?.name || 'Menu Item';
-  const rawPrice = props.price ?? props.item?.price ?? '0.00';
+  
+  // Selected size calculation
+  const activeSize = sizes ? sizes[selectedSizeIndex] ?? sizes[0] : null;
+  const rawPrice = activeSize
+    ? activeSize.price
+    : (props.price ?? props.item?.price ?? '0.00');
   const itemPrice = typeof rawPrice === 'number' ? `$${rawPrice.toFixed(2)}` : rawPrice;
+
   const defaultDesc = props.dict?.menu?.default_description || 
     (props.dict?.menu?.view_details === 'Ver Detalles e Ingredientes' 
       ? 'Preparado fresco al momento con ingredientes de primera calidad.' 
@@ -81,19 +100,75 @@ export default function MenuItemCard(props: MenuItemCardProps) {
   const keyIngredientsText = props.dict?.menu?.key_ingredients || 'Key Ingredients';
   const freshlyPreparedText = props.dict?.menu?.freshly_prepared || 'Freshly Prepared';
   const modalCloseAria = props.dict?.menu?.modal_close || 'Close details modal';
+  const selectSizeText = props.dict?.menu?.select_size || 'Size:';
+  const chooseSizeText = props.dict?.menu?.choose_size || 'Select Size';
 
   return (
     <>
       <div className="bg-panel border border-panel-border rounded-xl p-5 hover:border-gold/60 hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(201,161,92,0.14)] transition-all duration-300 flex flex-col justify-between group">
         <div>
-          <div className="flex justify-between items-start mb-2">
-            <h4 className="text-lg font-bold text-cream group-hover:text-gold-bright transition-colors">{itemName}</h4>
-            <span className="text-gold font-extrabold">{itemPrice}</span>
+          <div className="flex justify-between items-start mb-2 gap-2">
+            <h4 className="text-lg font-bold text-cream group-hover:text-gold-bright transition-colors leading-snug">
+              {itemName}
+            </h4>
+            <div className="text-right flex-shrink-0 ml-2">
+              <span className="text-gold font-extrabold text-base sm:text-lg tabular-nums tracking-tight transition-all duration-150">
+                {itemPrice}
+              </span>
+            </div>
           </div>
-          <p className="text-sm text-stone mb-4 line-clamp-2">
+          <p className="text-sm text-stone mb-4 line-clamp-2 leading-relaxed">
             {itemDescription}
           </p>
         </div>
+
+        {/* Micro In-Card Size Pills (Rendered only for items with sizes) */}
+        {sizes && sizes.length > 0 && (
+          <div className="mb-4 pt-1 border-t border-panel-border/50">
+            <div className="flex items-center justify-between gap-2 mb-1.5 pt-2">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-stone/80 flex items-center gap-1">
+                <svg className="w-3 h-3 text-gold/80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M12 8v8M8 12h8" />
+                </svg>
+                {selectSizeText}
+              </span>
+              <span className="text-[11px] text-gold-bright font-semibold">
+                {activeSize?.fullName?.[currentLang] || activeSize?.label}
+              </span>
+            </div>
+
+            <div className="grid grid-flow-col auto-cols-fr gap-1 p-1 rounded-lg bg-ink/90 border border-panel-border">
+              {sizes.map((s, idx) => {
+                const isSelected = selectedSizeIndex === idx;
+                return (
+                  <button
+                    key={s.id}
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedSizeIndex(idx);
+                    }}
+                    aria-pressed={isSelected}
+                    className={`py-1 px-1 rounded-md text-xs font-bold transition-all duration-150 flex flex-col items-center justify-center cursor-pointer ${
+                      isSelected
+                        ? 'bg-gold text-ink shadow-[0_2px_8px_rgba(201,161,92,0.35)] scale-[1.02]'
+                        : 'text-stone hover:text-cream hover:bg-panel/70'
+                    }`}
+                    title={`${s.fullName?.[currentLang] || s.label} - $${s.price.toFixed(2)}`}
+                  >
+                    <span className="leading-tight">{s.label}</span>
+                    {s.inches && (
+                      <span className={`text-[9px] font-normal leading-none mt-0.5 ${isSelected ? 'text-ink/85 font-semibold' : 'text-stone/60'}`}>
+                        {s.inches}
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         <button
           type="button"
@@ -155,14 +230,51 @@ export default function MenuItemCard(props: MenuItemCardProps) {
             {/* Item Details Information */}
             <div className="w-full md:w-1/2 p-5 sm:p-6 md:p-8 flex flex-col justify-between overflow-y-auto">
               <div>
-                <div className="flex justify-between items-start mb-3 sm:mb-4 pr-8">
+                <div className="flex justify-between items-start mb-3 sm:mb-4 pr-8 gap-2">
                   <h3 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-cream leading-tight">{itemName}</h3>
-                  <span className="text-gold font-extrabold text-xl sm:text-2xl ml-3 flex-shrink-0">{itemPrice}</span>
+                  <span className="text-gold font-extrabold text-xl sm:text-2xl ml-3 flex-shrink-0 tabular-nums">{itemPrice}</span>
                 </div>
 
                 <p className="text-xs sm:text-sm md:text-base text-stone mb-4 sm:mb-6 leading-relaxed">
                   {itemDescription}
                 </p>
+
+                {/* Modal Size Selector (Synchronized with Card) */}
+                {sizes && sizes.length > 0 && (
+                  <div className="mb-5 sm:mb-6 p-3 rounded-xl bg-ink/70 border border-panel-border">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs font-bold text-gold uppercase tracking-wider">
+                        {chooseSizeText}
+                      </span>
+                      <span className="text-xs text-cream/80 font-medium">
+                        {activeSize?.fullName?.[currentLang] || activeSize?.label}
+                      </span>
+                    </div>
+                    <div className="grid grid-flow-col auto-cols-fr gap-2">
+                      {sizes.map((s, idx) => {
+                        const isSelected = selectedSizeIndex === idx;
+                        return (
+                          <button
+                            key={s.id}
+                            type="button"
+                            onClick={() => setSelectedSizeIndex(idx)}
+                            aria-pressed={isSelected}
+                            className={`py-2 px-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all duration-150 flex flex-col items-center justify-center cursor-pointer ${
+                              isSelected
+                                ? 'bg-gold text-ink shadow-md scale-[1.02]'
+                                : 'bg-panel/80 text-stone hover:text-cream border border-panel-border hover:border-gold/40'
+                            }`}
+                          >
+                            <span>{s.label}</span>
+                            <span className={`text-[10px] sm:text-xs mt-0.5 tabular-nums ${isSelected ? 'text-ink/85 font-medium' : 'text-stone/60'}`}>
+                              ${s.price.toFixed(2)}
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
 
                 {/* Key Ingredients (Rendered Only When Present) */}
                 {itemIngredients.length > 0 && (
@@ -187,7 +299,7 @@ export default function MenuItemCard(props: MenuItemCardProps) {
                 rel="noopener noreferrer"
                 className="w-full bg-gold hover:bg-gold-bright text-ink font-extrabold py-3.5 sm:py-4 px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 text-center text-sm sm:text-base md:text-lg shadow-lg hover:shadow-gold/20 active:scale-[0.98]"
               >
-                {orderOnlineText}
+                {orderOnlineText} {activeSize ? `(${activeSize.label})` : ''}
                 <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                 </svg>

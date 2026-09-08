@@ -11,6 +11,7 @@ import StatsCounter from "../../components/StatsCounter";
 import ScrollReveal from "../../components/ScrollReveal";
 import PromotionsSection from "../../components/PromotionsSection";
 import MenuItemCard from "../../components/MenuItemCard";
+import { getSizeVariants } from "../../data/sizePricing";
 import Footer from "../../components/Footer";
 import ScrollToTop from "../../components/ScrollToTop";
 import FAQ from "../../components/FAQ";
@@ -154,15 +155,21 @@ export default async function HomePage({
                 </h3>
                 <ScrollReveal>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {itemsInCategory.map((item, idx) => (
-                      <MenuItemCard
-                        key={idx}
-                        name={item["Product Name"]}
-                        price={parseFloat(item.Price) || 0}
-                        description={item.Description}
-                        dict={dict}
-                      />
-                    ))}
+                    {itemsInCategory.map((item, idx) => {
+                      const basePrice = parseFloat(item.Price) || 0;
+                      const sizes = getSizeVariants(item.Category, item["Product Name"], basePrice);
+                      return (
+                        <MenuItemCard
+                          key={idx}
+                          name={item["Product Name"]}
+                          price={basePrice}
+                          description={item.Description}
+                          sizes={sizes}
+                          lang={lang}
+                          dict={dict}
+                        />
+                      );
+                    })}
                   </div>
                 </ScrollReveal>
               </div>

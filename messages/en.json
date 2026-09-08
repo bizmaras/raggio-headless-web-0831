@@ -130,7 +130,9 @@
     "order_online": "Order Online",
     "freshly_prepared": "Freshly Prepared",
     "default_description": "Prepared fresh to order with premium ingredients.",
-    "modal_close": "Close details modal"
+    "modal_close": "Close details modal",
+    "select_size": "Size:",
+    "choose_size": "Select Size"
   },
   "stats": {
     "menu_items": "Artisanal Menu Items",
