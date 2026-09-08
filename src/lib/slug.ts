@@ -22,3 +22,17 @@ export function slugToCategory(
   const normSlug = (slug || "").trim().toLowerCase();
   return categories.find((cat) => categoryToSlug(cat) === normSlug);
 }
+
+/**
+ * Helper to get clean product slug
+ */
+export function productToSlug(productName: string, rawSlug?: string): string {
+  if (rawSlug && rawSlug.trim()) {
+    return rawSlug.trim().toLowerCase();
+  }
+  return String(productName || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9\-]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+}

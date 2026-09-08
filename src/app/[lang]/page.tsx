@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { getMenuItems } from "../../lib/menu";
 import { getLocalizedMenuItem } from "../../data/menuTranslations";
-import { categoryToSlug } from "../../lib/slug";
+import { categoryToSlug, productToSlug } from "../../lib/slug";
 import { hasLocale, getDictionary } from "./dictionaries";
 import type { Locale } from "./dictionaries";
 import Header from "../../components/Header";
@@ -166,6 +166,7 @@ export default async function HomePage({
                     {itemsInCategory.map((item, idx) => {
                       const basePrice = parseFloat(item.Price) || 0;
                       const sizes = getSizeVariants(item.Category, item["Product Name"], basePrice);
+                      const itemSlug = productToSlug(item["Product Name"], item.Slug);
                       return (
                         <MenuItemCard
                           key={idx}
@@ -174,6 +175,8 @@ export default async function HomePage({
                           description={item.Description}
                           sizes={sizes}
                           lang={lang}
+                          categorySlug={targetId}
+                          slug={itemSlug}
                           dict={dict}
                         />
                       );
