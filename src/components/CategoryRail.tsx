@@ -36,14 +36,11 @@ export default function CategoryRail({ categoriesDict }: CategoryRailProps) {
   const [activeCategory, setActiveCategory] = useState<string>('deals');
 
   const scrollRef = useRef<HTMLDivElement>(null);
-  // Auto-scroll state — all in refs to avoid re-render overhead
   const isPaused = useRef(false);
+  const exactScroll = useRef(0);
   const resumeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const animId = useRef<number>(0);
-  // Separate flag: when scrollIntoView is running we must not also RAF-scroll
-  const centring = useRef(false);
 
-  // ─── ScrollSpy ───────────────────────────────────────────────────────────
+  // ScrollSpy to highlight active category on scroll
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
@@ -73,61 +70,38 @@ export default function CategoryRail({ categoriesDict }: CategoryRailProps) {
       });
     }, 800);
 
-    return () => { clearTimeout(timer); observer.disconnect(); };
+    return () => {
+      clearTimeout(timer);
+      observer.disconnect();
+    };
   }, []);
 
-  // ─── Centre active pill (no scrollIntoView — manual, conflict-free) ──────
+  // Continuous smooth auto-scroll to the left on mobile (never stops or stutters)
   useEffect(() => {
     const container = scrollRef.current;
     if (!container) return;
 
-    const pill = container.querySelector<HTMLElement>(`[data-cat-pill="${activeCategory}"]`);
-    if (!pill) return;
+    let animId: number;
+    exactScroll.current = container.scrollLeft;
 
-    // Pause auto-scroll while we manually centre
-    centring.current = true;
-    const pillLeft = pill.offsetLeft;
-    const pillWidth = pill.offsetWidth;
-    const containerWidth = container.clientWidth;
-    const targetScroll = pillLeft - containerWidth / 2 + pillWidth / 2;
+    const step = () => {
+      if (!isPaused.current && window.innerWidth < 768) {
+        if (container.scrollWidth > container.clientWidth) {
+          exactScroll.current += 0.8;
+          container.scrollLeft = exactScroll.current;
 
-    // Smooth-scroll only on desktop; on mobile let auto-scroll handle position
-    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-    if (!isMobile) {
-      container.scrollTo({ left: Math.max(0, targetScroll), behavior: 'smooth' });
-    }
-
-    // Release centring lock after a brief moment
-    const t = setTimeout(() => { centring.current = false; }, 400);
-    return () => clearTimeout(t);
-  }, [activeCategory]);
-
-  // ─── Auto-scroll (RAF, mobile-only, no conflict with centring) ───────────
-  useEffect(() => {
-    const container = scrollRef.current;
-    if (!container) return;
-
-    // Wait 4 s before starting so page settles
-    const startDelay = setTimeout(() => {
-      const step = () => {
-        if (!isPaused.current && !centring.current && window.innerWidth < 768) {
-          if (container.scrollWidth > container.clientWidth) {
-            container.scrollLeft += 0.5;
-            // Loop back seamlessly
-            if (container.scrollLeft >= container.scrollWidth - container.clientWidth - 1) {
-              container.scrollLeft = 0;
-            }
+          // Seamless loop back when reaching the end
+          if (container.scrollLeft >= container.scrollWidth - container.clientWidth - 2) {
+            exactScroll.current = 0;
+            container.scrollLeft = 0;
           }
         }
-        animId.current = requestAnimationFrame(step);
-      };
-      animId.current = requestAnimationFrame(step);
-    }, 4000);
-
-    return () => {
-      clearTimeout(startDelay);
-      cancelAnimationFrame(animId.current);
+      }
+      animId = requestAnimationFrame(step);
     };
+
+    animId = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(animId);
   }, []);
 
   const handleInteractionStart = useCallback(() => {
@@ -138,16 +112,20 @@ export default function CategoryRail({ categoriesDict }: CategoryRailProps) {
   const handleInteractionEnd = useCallback(() => {
     if (resumeTimer.current) clearTimeout(resumeTimer.current);
     resumeTimer.current = setTimeout(() => {
+      if (scrollRef.current) exactScroll.current = scrollRef.current.scrollLeft;
       isPaused.current = false;
-    }, 2000);
+    }, 1200);
   }, []);
 
   const handleCategoryClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, searchId: string) => {
     e.preventDefault();
     setActiveCategory(searchId);
-    isPaused.current = true; // pause auto-scroll during navigation
+    isPaused.current = true;
     if (resumeTimer.current) clearTimeout(resumeTimer.current);
-    resumeTimer.current = setTimeout(() => { isPaused.current = false; }, 3000);
+    resumeTimer.current = setTimeout(() => {
+      if (scrollRef.current) exactScroll.current = scrollRef.current.scrollLeft;
+      isPaused.current = false;
+    }, 2000);
 
     if (typeof window === 'undefined') return;
     let target = document.getElementById(searchId);
@@ -171,7 +149,6 @@ export default function CategoryRail({ categoriesDict }: CategoryRailProps) {
         onPointerCancel={handleInteractionEnd}
         onPointerLeave={handleInteractionEnd}
         className="flex overflow-x-auto md:flex-wrap md:justify-center gap-2 px-3 md:px-6 max-w-7xl mx-auto no-scrollbar"
-        /* No scroll-smooth here — we control it manually to avoid conflicts */
         style={{ WebkitOverflowScrolling: 'touch' }}
       >
         {CATEGORIES.map((cat) => {
@@ -184,7 +161,7 @@ export default function CategoryRail({ categoriesDict }: CategoryRailProps) {
               href={`#${cat.searchId}`}
               onClick={(e) => handleCategoryClick(e, cat.searchId)}
               className={`
-                flex-none flex items-center gap-1.5 px-3 py-1.5 md:px-4 md:py-2 rounded-full border text-xs md:text-sm font-medium whitespace-nowrap
+                flex-none flex items-center gap-1.5 px-3.5 py-1.5 md:px-4 md:py-2 rounded-full border text-xs md:text-sm font-medium whitespace-nowrap
                 transition-all duration-200 touch-manipulation select-none cursor-pointer
                 active:scale-95 focus:outline-none
                 ${isActive

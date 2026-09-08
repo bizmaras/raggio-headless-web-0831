@@ -135,7 +135,7 @@ export default function HeroSlider({ dict }: HeroSliderProps) {
 
   return (
     <section
-      className="relative w-full overflow-hidden bg-ink py-2.5 sm:py-6 lg:py-10 select-none flex flex-col justify-center min-h-[calc(100dvh-4rem)] lg:min-h-0"
+      className="relative w-full overflow-hidden bg-ink py-2 sm:py-6 lg:py-10 select-none flex flex-col justify-center h-[calc(100dvh-138px)] max-h-[620px] min-h-[420px] lg:h-auto lg:min-h-[540px] lg:max-h-none"
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
@@ -147,13 +147,13 @@ export default function HeroSlider({ dict }: HeroSliderProps) {
         Raggio Gourmet &amp; Pizza - Artisanal Stone-Baked Pizzas &amp; Italian Kitchen in Newark, DE
       </h1>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
         
         {/* CINEMATIC SPLIT-BLEED SHOWCASE CARD */}
-        <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-panel-border bg-ink shadow-2xl flex flex-col-reverse lg:flex-row items-stretch min-h-0 lg:min-h-[540px]">
+        <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-panel-border bg-ink shadow-2xl flex flex-col-reverse lg:flex-row items-stretch h-full min-h-0 lg:min-h-[540px]">
 
           {/* EDITORIAL TEXT & ACTIONS (Bottom on mobile, Left on desktop) */}
-          <div className="w-full lg:w-[46%] xl:w-[44%] flex flex-col justify-center p-4 sm:p-8 lg:p-12 z-20 space-y-2.5 sm:space-y-6 relative bg-ink lg:bg-gradient-to-r lg:from-ink lg:via-ink/95 lg:to-ink/60">
+          <div className="w-full lg:w-[46%] xl:w-[44%] flex flex-col justify-center p-3.5 xs:p-4 sm:p-8 lg:p-12 z-20 space-y-2 xs:space-y-2.5 sm:space-y-6 relative bg-ink lg:bg-gradient-to-r lg:from-ink lg:via-ink/95 lg:to-ink/60 shrink-0">
             
             {/* Category Tag */}
             <div className="inline-flex items-center gap-2 self-start bg-gold/15 border border-gold/40 px-2.5 py-0.5 sm:px-3.5 sm:py-1.5 rounded-full shadow-sm">
@@ -217,7 +217,7 @@ export default function HeroSlider({ dict }: HeroSliderProps) {
           </div>
 
           {/* FULL-BLEED CINEMATIC PHOTOGRAPHY (Top on mobile, Right on desktop) */}
-          <div className="w-full lg:w-[54%] xl:w-[56%] relative h-[210px] xs:h-[240px] sm:h-[340px] lg:h-auto lg:min-h-[540px] overflow-hidden bg-black">
+          <div className="w-full lg:w-[54%] xl:w-[56%] relative flex-1 min-h-[190px] lg:h-auto lg:min-h-[540px] overflow-hidden bg-black">
             
             {/* Edge-to-Edge Pizza Images with Subtle Ken Burns Motion */}
             {slides.map((slide, index) => {
