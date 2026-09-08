@@ -1,9 +1,12 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface CategoryRailProps {
   categoriesDict?: Record<string, string>;
+  lang?: string;
+  activeSlug?: string;
 }
 
 const CATEGORIES = [
@@ -33,16 +36,24 @@ const CATEGORIES = [
   { label: 'Catering', searchId: 'catering' }
 ];
 
-export default function CategoryRail({ categoriesDict }: CategoryRailProps) {
-  const [activeCategory, setActiveCategory] = useState<string>('deals');
+export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }: CategoryRailProps) {
+  const router = useRouter();
+  const [activeCategory, setActiveCategory] = useState<string>(activeSlug || 'deals');
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const isPaused = useRef(false);
   const exactScroll = useRef(0);
   const resumeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // ScrollSpy to highlight active category on scroll
   useEffect(() => {
+    if (activeSlug) {
+      setActiveCategory(activeSlug);
+    }
+  }, [activeSlug]);
+
+  // ScrollSpy to highlight active category on scroll (Homepage only)
+  useEffect(() => {
+    if (activeSlug) return;
     if (typeof window === 'undefined') return;
 
     const observer = new IntersectionObserver(
@@ -75,7 +86,7 @@ export default function CategoryRail({ categoriesDict }: CategoryRailProps) {
       clearTimeout(timer);
       observer.disconnect();
     };
-  }, []);
+  }, [activeSlug]);
 
   // Continuous smooth auto-scroll to the left on mobile (never stops or stutters)
   useEffect(() => {
@@ -119,7 +130,6 @@ export default function CategoryRail({ categoriesDict }: CategoryRailProps) {
   }, []);
 
   const handleCategoryClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, searchId: string) => {
-    e.preventDefault();
     setActiveCategory(searchId);
     isPaused.current = true;
     if (resumeTimer.current) clearTimeout(resumeTimer.current);
@@ -128,6 +138,19 @@ export default function CategoryRail({ categoriesDict }: CategoryRailProps) {
       isPaused.current = false;
     }, 2000);
 
+    // If on a dedicated category page, navigate between routes
+    if (activeSlug) {
+      e.preventDefault();
+      if (searchId === 'deals' || searchId === 'reviews' || searchId === 'catering') {
+        router.push(`/${lang}/#${searchId}`);
+      } else {
+        router.push(`/${lang}/menu/${searchId}`);
+      }
+      return;
+    }
+
+    // Homepage smooth anchor scrolling
+    e.preventDefault();
     if (typeof window === 'undefined') return;
     let target = document.getElementById(searchId);
     if (!target) {
@@ -139,7 +162,7 @@ export default function CategoryRail({ categoriesDict }: CategoryRailProps) {
       const yOffset = isMobile ? -130 : -220;
       window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY + yOffset, behavior: 'smooth' });
     }
-  }, []);
+  }, [activeSlug, lang, router]);
 
   return (
     <div className="sticky top-16 md:top-20 z-40 bg-ink/95 backdrop-blur-md border-b border-panel-border py-2 md:py-3.5 shadow-sm">
@@ -155,11 +178,17 @@ export default function CategoryRail({ categoriesDict }: CategoryRailProps) {
         {CATEGORIES.map((cat) => {
           const isActive = activeCategory === cat.searchId;
           const label = categoriesDict?.[cat.label] || cat.label;
+          const href = activeSlug
+            ? (cat.searchId === 'deals' || cat.searchId === 'reviews' || cat.searchId === 'catering'
+                ? `/${lang}/#${cat.searchId}`
+                : `/${lang}/menu/${cat.searchId}`)
+            : `#${cat.searchId}`;
+
           return (
             <a
               key={cat.label}
               data-cat-pill={cat.searchId}
-              href={`#${cat.searchId}`}
+              href={href}
               onClick={(e) => handleCategoryClick(e, cat.searchId)}
               className={`
                 flex-none flex items-center gap-1.5 px-3.5 py-1.5 md:px-4 md:py-2 rounded-full border text-xs md:text-sm font-medium whitespace-nowrap

@@ -1,7 +1,9 @@
 import { notFound } from "next/navigation";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { getMenuItems } from "../../lib/menu";
 import { getLocalizedMenuItem } from "../../data/menuTranslations";
+import { categoryToSlug } from "../../lib/slug";
 import { hasLocale, getDictionary } from "./dictionaries";
 import type { Locale } from "./dictionaries";
 import Header from "../../components/Header";
@@ -104,7 +106,7 @@ export default async function HomePage({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <HeroSlider dict={dict} />
-        <CategoryRail categoriesDict={dict.categories} />
+        <CategoryRail categoriesDict={dict.categories} lang={lang} />
         <StatsCounter dict={dict} />
 
         <div id="deals" className="scroll-mt-[190px]">
@@ -133,12 +135,7 @@ export default async function HomePage({
           </ScrollReveal>
 
           {categories.map((category) => {
-            const targetId = String(category)
-              .toLowerCase()
-              .replace(/\s*\+\s*|\s*&\s*/g, "-and-")
-              .replace(/[^a-z0-9\-]+/g, "-")
-              .replace(/-+/g, "-")
-              .replace(/^-|-$/g, "");
+            const targetId = categoryToSlug(category);
             const itemsInCategory = menuItems
               .filter((item) => item.Category === category)
               .map((item) => getLocalizedMenuItem(item, lang));
@@ -148,10 +145,21 @@ export default async function HomePage({
             return (
               <div key={category} id={targetId} className="mb-16 scroll-mt-[250px]">
                 <h3 className="sticky top-[138px] md:top-[180px] lg:top-[220px] z-[35] bg-ink/95 backdrop-blur-md pt-4 pb-3 mb-6 border-b border-panel-border text-gold-bright flex items-center justify-between text-2xl md:text-3xl font-bold tracking-wide shadow-sm">
-                  <span>{displayCategory}</span>
-                  <span className="text-sm font-normal text-cream/60 md:text-gold-bright tracking-normal">
-                    {itemsInCategory.length} {dict.menu.items_count}
-                  </span>
+                  <div className="flex items-baseline gap-2.5">
+                    <span>{displayCategory}</span>
+                    <span className="text-xs sm:text-sm font-normal text-cream/60 md:text-gold-bright tracking-normal">
+                      ({itemsInCategory.length})
+                    </span>
+                  </div>
+                  <Link
+                    href={`/${lang}/menu/${targetId}`}
+                    className="text-xs sm:text-sm font-semibold text-stone hover:text-cream hover:border-gold transition-all duration-200 px-3.5 py-1.5 rounded-full bg-panel border border-panel-border flex items-center gap-1.5 shadow-sm group"
+                  >
+                    <span>{dict.menu.view_category || "View Category"}</span>
+                    <svg className="w-3.5 h-3.5 text-gold group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                    </svg>
+                  </Link>
                 </h3>
                 <ScrollReveal>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

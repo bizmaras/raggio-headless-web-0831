@@ -136,7 +136,13 @@
     "default_description": "Preparado fresco al momento con ingredientes de primera calidad.",
     "modal_close": "Cerrar ventana de detalles",
     "select_size": "Tamaño:",
-    "choose_size": "Seleccionar Tamaño"
+    "choose_size": "Seleccionar Tamaño",
+    "view_category": "Ver Página de Categoría",
+    "back_to_full_menu": "Volver al Menú Completo",
+    "breadcrumb_home": "Inicio",
+    "breadcrumb_menu": "Menú",
+    "all_categories": "Todas las Categorías",
+    "items_available": "platos disponibles"
   },
   "stats": {
     "menu_items": "Platos en el Menú",

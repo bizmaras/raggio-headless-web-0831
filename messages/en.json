@@ -132,7 +132,13 @@
     "default_description": "Prepared fresh to order with premium ingredients.",
     "modal_close": "Close details modal",
     "select_size": "Size:",
-    "choose_size": "Select Size"
+    "choose_size": "Select Size",
+    "view_category": "View Category Page",
+    "back_to_full_menu": "Back to Full Menu",
+    "breadcrumb_home": "Home",
+    "breadcrumb_menu": "Menu",
+    "all_categories": "All Categories",
+    "items_available": "dishes available"
   },
   "stats": {
     "menu_items": "Artisanal Menu Items",
