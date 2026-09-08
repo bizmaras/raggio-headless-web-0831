@@ -102,6 +102,20 @@
         "title": "Large 1 Topping Pizza & 10 Wings",
         "description": "Present coupon when receiving your order. Not to be combined with any other offer. For take-out & delivery only.",
         "details": "Includes 1 Large 1-Topping Pizza and 10 Jumbo Wings with celery and choice of dipping sauce."
+      },
+      {
+        "id": "promo-5",
+        "tag": "COUPON SPECIAL",
+        "title": "2 Medium 1 Topping Pizzas",
+        "description": "Present coupon when receiving your order. Not to be combined with any other offer. For take-out & delivery only.",
+        "details": "Includes 2 Medium 1-Topping Pizzas with our signature marinara and fresh mozzarella."
+      },
+      {
+        "id": "promo-6",
+        "tag": "COUPON SPECIAL",
+        "title": "2 XL Pizzas, 20 Wings & 2L Soda",
+        "description": "Present coupon when receiving your order. Not to be combined with any other offer. For take-out & delivery only.",
+        "details": "The ultimate party feast: 2 Extra Large 1-Topping Pizzas, 20 Jumbo Wings, and a 2-Liter Soda."
       }
     ]
   },
@@ -113,6 +127,7 @@
     "key_ingredients": "Key Ingredients",
     "order_online": "Order Online",
     "freshly_prepared": "Freshly Prepared",
+    "default_description": "Prepared fresh to order with premium ingredients.",
     "modal_close": "Close details modal"
   },
   "stats": {

@@ -13,10 +13,14 @@ export default function WelcomePopup() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
+    const [isEs, setIsEs] = useState(false);
 
     const FOODTEC_ORDER_URL = 'https://phillystyleexpress.foodtecsolutions.com/';
 
     useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setIsEs(window.location.pathname.startsWith('/es') || document.documentElement.lang === 'es');
+        }
         const hasSeenPopup = localStorage.getItem('raggio_welcome_seen');
         if (!hasSeenPopup) {
             const timer = setTimeout(() => setIsOpen(true), 3000);
@@ -106,11 +110,22 @@ export default function WelcomePopup() {
                             <Gift className="w-12 h-12 text-[#c9a15c]" aria-hidden="true" />
                         </div>
                         <h2 id="popup-title" className="text-4xl font-extrabold text-[#f8f6f0] leading-tight">
-                            Gourmet Taste, <br />
-                            <span className="text-[#c9a15c]">Exclusive Price.</span>
+                            {isEs ? (
+                                <>
+                                    Sabor Gourmet, <br />
+                                    <span className="text-[#c9a15c]">Precio Exclusivo.</span>
+                                </>
+                            ) : (
+                                <>
+                                    Gourmet Taste, <br />
+                                    <span className="text-[#c9a15c]">Exclusive Price.</span>
+                                </>
+                            )}
                         </h2>
                         <p className="text-[#9e9b93] text-lg">
-                            Join the Raggio family today and get instant perks on your first order.
+                            {isEs
+                                ? 'Únete a la familia Raggio hoy y obtén beneficios instantáneos en tu primer pedido.'
+                                : 'Join the Raggio family today and get instant perks on your first order.'}
                         </p>
                     </div>
                     <Pizza className="absolute -bottom-12 -left-12 w-64 h-64 text-[#c9a15c]/5 -rotate-12" aria-hidden="true" />
@@ -119,8 +134,8 @@ export default function WelcomePopup() {
                 <div className="w-full md:w-1/2 p-8 md:p-12 relative flex flex-col justify-center">
                     <button
                         onClick={handleClose}
-                        aria-label="Close popup window"
-                        title="Close popup window"
+                        aria-label={isEs ? 'Cerrar ventana emergente' : 'Close popup window'}
+                        title={isEs ? 'Cerrar ventana emergente' : 'Close popup window'}
                         className="absolute top-4 right-4 p-2 text-[#9e9b93] hover:text-[#c9a15c] transition-colors rounded-full hover:bg-[#232932] cursor-pointer"
                     >
                         <X className="w-6 h-6" aria-hidden="true" />
@@ -130,10 +145,16 @@ export default function WelcomePopup() {
                         <>
                             <div className="text-center md:text-left mb-8">
                                 <h3 className="text-2xl md:text-3xl font-bold text-[#f8f6f0] mb-3">
-                                    Get <span className="text-[#c9a15c]">20% OFF</span> Now!
+                                    {isEs ? (
+                                        <>¡Obtén <span className="text-[#c9a15c]">20% DE DESCUENTO</span> Ahora!</>
+                                    ) : (
+                                        <>Get <span className="text-[#c9a15c]">20% OFF</span> Now!</>
+                                    )}
                                 </h3>
                                 <p className="text-[#9e9b93] text-sm md:text-base">
-                                    Sign up below and complete your registration on our ordering portal to claim your 20% discount.
+                                    {isEs
+                                        ? 'Regístrate a continuación y completa tu registro en nuestro portal de pedidos para reclamar tu 20% de descuento.'
+                                        : 'Sign up below and complete your registration on our ordering portal to claim your 20% discount.'}
                                 </p>
                             </div>
 
@@ -147,8 +168,8 @@ export default function WelcomePopup() {
 
                                 <input
                                     type="text"
-                                    placeholder="First Name"
-                                    aria-label="First Name"
+                                    placeholder={isEs ? 'Nombre' : 'First Name'}
+                                    aria-label={isEs ? 'Nombre' : 'First Name'}
                                     required
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
@@ -156,8 +177,8 @@ export default function WelcomePopup() {
                                 />
                                 <input
                                     type="email"
-                                    placeholder="Email Address"
-                                    aria-label="Email Address"
+                                    placeholder={isEs ? 'Correo Electrónico' : 'Email Address'}
+                                    aria-label={isEs ? 'Correo Electrónico' : 'Email Address'}
                                     required
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
@@ -165,8 +186,8 @@ export default function WelcomePopup() {
                                 />
                                 <input
                                     type="tel"
-                                    placeholder="Phone Number (e.g. 302-369-0553)"
-                                    aria-label="Phone Number"
+                                    placeholder={isEs ? 'Número de Teléfono (ej. 302-369-0553)' : 'Phone Number (e.g. 302-369-0553)'}
+                                    aria-label={isEs ? 'Número de Teléfono' : 'Phone Number'}
                                     required
                                     value={phone}
                                     onChange={handlePhoneChange}
@@ -178,18 +199,22 @@ export default function WelcomePopup() {
                                     disabled={loading}
                                     className="w-full py-4 mt-2 bg-[#c9a15c] text-[#14181d] font-bold text-lg rounded-xl hover:bg-[#b58e4e] hover:shadow-[0_0_20px_rgba(201,161,92,0.4)] transition-all disabled:opacity-70 cursor-pointer"
                                 >
-                                    {loading ? 'Checking...' : 'Claim My 20% OFF'}
+                                    {loading
+                                        ? (isEs ? 'Verificando...' : 'Checking...')
+                                        : (isEs ? 'Reclamar Mi 20% de Descuento' : 'Claim My 20% OFF')}
                                 </button>
 
                                 <p className="text-[11px] text-[#d1d5db] text-center leading-tight mt-3">
-                                    By clicking &apos;Claim My 20% OFF&apos;, you agree to receive promotional emails and SMS messages from Raggio Gourmet Pizza. You can opt out at any time.
+                                    {isEs
+                                        ? 'Al hacer clic en "Reclamar Mi 20% de Descuento", aceptas recibir correos promocionales y mensajes SMS de Raggio Gourmet Pizza. Puedes cancelar en cualquier momento.'
+                                        : 'By clicking \'Claim My 20% OFF\', you agree to receive promotional emails and SMS messages from Raggio Gourmet Pizza. You can opt out at any time.'}
                                 </p>
                             </form>
                             <button
                                 onClick={handleClose}
                                 className="w-full text-center mt-6 text-sm text-[#d1d5db] hover:text-white transition-colors underline decoration-[#d1d5db]/30 underline-offset-4 cursor-pointer"
                             >
-                                No thanks, I&apos;ll pay full price.
+                                {isEs ? 'No gracias, prefiero pagar precio completo.' : 'No thanks, I\'ll pay full price.'}
                             </button>
                         </>
                     ) : isDuplicate ? (
@@ -199,10 +224,14 @@ export default function WelcomePopup() {
                                 <CheckCircle2 className="w-10 h-10 text-amber-400" aria-hidden="true" />
                             </div>
                             <h3 className="text-2xl md:text-3xl font-bold text-[#f8f6f0] mb-3">
-                                You&apos;re Already Registered!
+                                {isEs ? '¡Ya estás registrado!' : 'You\'re Already Registered!'}
                             </h3>
                             <p className="text-[#9e9b93] text-sm md:text-base mb-6 leading-relaxed">
-                                It looks like <span className="text-[#c9a15c] font-semibold">{email.trim()}</span> is already in our system. Your 20% discount was sent to your email, or you can order directly through our portal now!
+                                {isEs ? (
+                                    <>Parece que <span className="text-[#c9a15c] font-semibold">{email.trim()}</span> ya está en nuestro sistema. Tu 20% de descuento fue enviado a tu correo, o puedes ordenar directamente a través de nuestro portal ahora.</>
+                                ) : (
+                                    <>It looks like <span className="text-[#c9a15c] font-semibold">{email.trim()}</span> is already in our system. Your 20% discount was sent to your email, or you can order directly through our portal now!</>
+                                )}
                             </p>
 
                             <a
@@ -212,7 +241,7 @@ export default function WelcomePopup() {
                                 onClick={handleClose}
                                 className="inline-block w-full py-4 bg-[#c9a15c] text-[#14181d] font-bold text-lg rounded-xl hover:bg-[#b58e4e] hover:shadow-[0_0_20px_rgba(201,161,92,0.4)] transition-all mb-4 text-center cursor-pointer"
                             >
-                                Continue to Order Portal
+                                {isEs ? 'Continuar al Portal de Pedidos' : 'Continue to Order Portal'}
                             </a>
 
                             <button
@@ -224,7 +253,7 @@ export default function WelcomePopup() {
                                 }}
                                 className="text-sm text-[#9e9b93] hover:text-[#c9a15c] underline decoration-[#9e9b93]/40 underline-offset-4 transition-colors cursor-pointer"
                             >
-                                Register with a different email
+                                {isEs ? 'Registrarse con un correo diferente' : 'Register with a different email'}
                             </button>
                         </div>
                     ) : (
@@ -234,10 +263,12 @@ export default function WelcomePopup() {
                                 <Gift className="w-10 h-10 text-green-500" aria-hidden="true" />
                             </div>
                             <h3 className="text-2xl md:text-3xl font-bold text-[#f8f6f0] mb-3">
-                                You&apos;re in, {name.trim()}!
+                                {isEs ? `¡Estás dentro, ${name.trim()}!` : `You're in, ${name.trim()}!`}
                             </h3>
                             <p className="text-[#9e9b93] text-sm md:text-base mb-8 leading-relaxed">
-                                To unlock your 20% discount, simply proceed to our ordering portal and complete your quick registration. Your discount will apply automatically!
+                                {isEs
+                                    ? 'Para desbloquear tu 20% de descuento, simplemente continúa a nuestro portal de pedidos y completa tu registro rápido. ¡Tu descuento se aplicará automáticamente!'
+                                    : 'To unlock your 20% discount, simply proceed to our ordering portal and complete your quick registration. Your discount will apply automatically!'}
                             </p>
 
                             <a
@@ -247,7 +278,7 @@ export default function WelcomePopup() {
                                 onClick={handleClose}
                                 className="inline-block w-full py-4 bg-[#c9a15c] text-[#14181d] font-bold text-lg rounded-xl hover:bg-[#b58e4e] hover:shadow-[0_0_20px_rgba(201,161,92,0.4)] transition-all text-center cursor-pointer"
                             >
-                                Continue to Order Portal
+                                {isEs ? 'Continuar al Portal de Pedidos' : 'Continue to Order Portal'}
                             </a>
                         </div>
                     )}

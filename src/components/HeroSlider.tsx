@@ -17,6 +17,7 @@ interface HeroSliderProps {
         description: string;
         ctaText: string;
         seoAlt: string;
+        highlight?: string;
       }>;
     };
   };
@@ -85,6 +86,7 @@ export default function HeroSlider({ dict }: HeroSliderProps) {
       description: localized.description || slide.description,
       ctaText: localized.ctaText || slide.ctaText,
       seoAlt: localized.seoAlt || slide.seoAlt,
+      highlight: localized.highlight || slide.highlight,
     };
   });
 

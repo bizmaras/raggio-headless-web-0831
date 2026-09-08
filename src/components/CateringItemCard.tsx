@@ -44,7 +44,9 @@ export default function CateringItemCard({
             <h4 className="text-lg font-bold text-cream">{name}</h4>
           </div>
           <p className="text-sm text-stone mb-4 line-clamp-2">
-            {desc || 'Freshly prepared with premium ingredients for your events.'}
+            {desc || (halfLabel === 'MEDIANO' 
+              ? 'Preparado fresco al momento con ingredientes de primera calidad para sus eventos.' 
+              : 'Freshly prepared with premium ingredients for your events.')}
           </p>
         </div>
 
@@ -97,7 +99,7 @@ export default function CateringItemCard({
             <button
               type="button"
               onClick={() => setIsModalOpen(false)}
-              aria-label="Close catering details"
+              aria-label={halfLabel === 'MEDIANO' ? 'Cerrar detalles de catering' : 'Close catering details'}
               className="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-ink/90 text-stone hover:text-cream flex items-center justify-center border border-panel-border cursor-pointer transition-colors"
             >
               ✕
@@ -108,7 +110,9 @@ export default function CateringItemCard({
             </h3>
 
             <p className="text-stone text-sm leading-relaxed mb-6">
-              {desc || 'Our catering trays are made fresh for corporate meetings, family gatherings, and university tailgates.'}
+              {desc || (halfLabel === 'MEDIANO'
+                ? 'Nuestras bandejas de catering se preparan frescas para reuniones corporativas, celebraciones familiares y eventos.'
+                : 'Our catering trays are made fresh for corporate meetings, family gatherings, and university tailgates.')}
             </p>
 
             <div className="grid grid-cols-2 gap-4 mb-8">

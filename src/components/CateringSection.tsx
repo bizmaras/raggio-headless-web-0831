@@ -2,8 +2,10 @@
 
 import CateringItemCard from './CateringItemCard';
 import * as cateringModule from '../data/cateringData';
+import { getLocalizedCateringItem } from '../data/cateringTranslations';
 
 interface CateringSectionProps {
+  lang?: string;
   dict?: {
     catering?: {
       title?: string;
@@ -18,12 +20,13 @@ interface CateringSectionProps {
   };
 }
 
-export default function CateringSection({ dict }: CateringSectionProps) {
-  const rawItems: any[] =
+export default function CateringSection({ dict, lang = 'en' }: CateringSectionProps) {
+  const rawItems: any[] = (
     (cateringModule as any).CATERING_ITEMS ||
     (cateringModule as any).cateringItems ||
     (cateringModule as any).default ||
-    [];
+    []
+  ).map((item: any) => getLocalizedCateringItem(item, lang));
 
   const categoriesMap: Record<string, any[]> = {};
   rawItems.forEach((item) => {

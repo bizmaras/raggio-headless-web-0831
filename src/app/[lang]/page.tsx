@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import dynamic from "next/dynamic";
 import { getMenuItems } from "../../lib/menu";
+import { getLocalizedMenuItem } from "../../data/menuTranslations";
 import { hasLocale, getDictionary } from "./dictionaries";
 import type { Locale } from "./dictionaries";
 import Header from "../../components/Header";
@@ -136,9 +137,9 @@ export default async function HomePage({
               .replace(/[^a-z0-9\-]+/g, "-")
               .replace(/-+/g, "-")
               .replace(/^-|-$/g, "");
-            const itemsInCategory = menuItems.filter(
-              (item) => item.Category === category
-            );
+            const itemsInCategory = menuItems
+              .filter((item) => item.Category === category)
+              .map((item) => getLocalizedMenuItem(item, lang));
             const displayCategory =
               (dict.categories as Record<string, string>)?.[category] || category;
 
@@ -168,7 +169,7 @@ export default async function HomePage({
           })}
         </section>
         <ScrollReveal>
-          <CateringSection dict={dict} />
+          <CateringSection dict={dict} lang={lang} />
         </ScrollReveal>
         <ScrollReveal>
           <FAQ dict={dict} />

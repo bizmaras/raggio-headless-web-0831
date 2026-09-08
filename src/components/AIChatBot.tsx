@@ -12,15 +12,23 @@ interface Message {
 const ORDER_URL = 'https://phillystyleexpress.foodtecsolutions.com/';
 const SESSION_KEY = 'raggio_chat_history';
 
-const QUICK_REPLIES = [
+const QUICK_REPLIES_EN = [
     { label: '🍕 Deals', message: "What are today's deals and specials?" },
     { label: '🛵 Hours & Delivery', message: 'What are your hours and do you deliver to my area?' },
     { label: '🌮 Latin Menu', message: 'Tell me about your Latin food menu — pupusas, tacos, etc.' },
     { label: '🎉 Catering', message: 'I want to ask about catering for a group event.' },
 ];
 
+const QUICK_REPLIES_ES = [
+    { label: '🍕 Ofertas', message: "¿Cuáles son las ofertas y especiales de hoy?" },
+    { label: '🛵 Horarios y Entrega', message: "¿Cuáles son sus horarios y hacen entregas a mi zona?" },
+    { label: '🌮 Comida Latina', message: "Cuéntame sobre el menú latino: pupusas, tacos, etc." },
+    { label: '🎉 Catering', message: "Quiero consultar sobre catering para un evento grupal." },
+];
+
 export default function AIChatBot() {
     const [isOpen, setIsOpen] = useState(false);
+    const [isEs, setIsEs] = useState(false);
     const [input, setInput] = useState('');
     const [messages, setMessages] = useState<Message[]>([]);
     const [loading, setLoading] = useState(false);
@@ -29,6 +37,8 @@ export default function AIChatBot() {
     const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
+        const spanish = typeof window !== 'undefined' && (window.location.pathname.startsWith('/es') || document.documentElement.lang === 'es');
+        setIsEs(spanish);
         try {
             const savedHistory = sessionStorage.getItem(SESSION_KEY);
             if (savedHistory) {
@@ -38,12 +48,14 @@ export default function AIChatBot() {
                 setMessages([
                     {
                         sender: 'bot',
-                        text: "Hey there! 🍕 Craving a fresh-out-of-the-oven **gourmet pizza**, **authentic Latin food**, **wings**, or **cheesesteaks**? You're in the right place — what can I get started for you today?",
+                        text: spanish
+                            ? "¡Hola! 🍕 ¿Se te antoja una **pizza gourmet** recién horneada, auténtica **comida latina**, **alitas** o **cheesesteaks**? Estás en el lugar correcto — ¿en qué te puedo ayudar hoy?"
+                            : "Hey there! 🍕 Craving a fresh-out-of-the-oven **gourmet pizza**, **authentic Latin food**, **wings**, or **cheesesteaks**? You're in the right place — what can I get started for you today?",
                     },
                 ]);
             }
         } catch (e) {
-            setMessages([{ sender: 'bot', text: "Hello! How can I help you today?" }]);
+            setMessages([{ sender: 'bot', text: spanish ? "¡Hola! ¿Cómo te puedo ayudar hoy?" : "Hello! How can I help you today?" }]);
         }
     }, []);
 
@@ -210,7 +222,7 @@ export default function AIChatBot() {
                             </div>
                             <div>
                                 <h3 className="font-semibold text-base text-[#f8f6f0] leading-tight">Raggio AI</h3>
-                                <p className="text-xs text-[#9e9b93]">Gourmet Assistant</p>
+                                <p className="text-xs text-[#9e9b93]">{isEs ? 'Asistente Gourmet' : 'Gourmet Assistant'}</p>
                             </div>
                         </div>
                         <div className="flex items-center gap-2.5">
@@ -220,12 +232,12 @@ export default function AIChatBot() {
                                 rel="noopener noreferrer"
                                 className="flex items-center gap-1.5 rounded-lg border border-[#c9a15c] px-3 py-1.5 text-xs font-semibold text-[#c9a15c] hover:bg-[#c9a15c] hover:text-[#14181d] transition-colors"
                             >
-                                Order Now <ExternalLink className="h-3 w-3" />
+                                {isEs ? 'Ordenar' : 'Order Now'} <ExternalLink className="h-3 w-3" />
                             </a>
                             <button
                                 onClick={() => setIsOpen(false)}
                                 className="p-1 text-[#9e9b93] hover:text-[#f8f6f0] transition-colors rounded-lg hover:bg-[#252b34]"
-                                aria-label="Close Chat"
+                                aria-label={isEs ? 'Cerrar Chat' : 'Close Chat'}
                             >
                                 <X className="h-6 w-6" />
                             </button>
@@ -250,7 +262,7 @@ export default function AIChatBot() {
                         ))}
                         {showQuickReplies && !loading && (
                             <div className="flex flex-wrap gap-2 pt-1">
-                                {QUICK_REPLIES.map((qr) => (
+                                {(isEs ? QUICK_REPLIES_ES : QUICK_REPLIES_EN).map((qr) => (
                                     <button
                                         key={qr.label}
                                         onClick={() => handleQuickReply(qr.message)}
@@ -280,7 +292,7 @@ export default function AIChatBot() {
                                 type="text"
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
-                                placeholder="Ask about menu, specials..."
+                                placeholder={isEs ? 'Pregunta sobre el menú, ofertas...' : 'Ask about menu, specials...'}
                                 className="flex-1 rounded-xl border border-[#38414e] bg-[#232932] px-4 py-3 text-base sm:text-[15px] text-[#f8f6f0] placeholder-[#9e9b93] focus:border-[#c9a15c] focus:outline-none transition-colors"
                             />
                             <button type="submit" disabled={loading || !input.trim()} className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#c9a15c] text-[#14181d] transition-transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:hover:scale-100">

@@ -18,28 +18,32 @@
         "title": "Pepperoni de Res Crujiente",
         "description": "Elaborada con sabroso pepperoni de res, 100% Mozzarella Grande y salsa marinara casera sobre masa horneada a la piedra.",
         "ctaText": "Pedir Pepperoni de Res",
-        "seoAlt": "Pizza de Pepperoni de Res Crujiente en Raggio Gourmet Newark DE"
+        "seoAlt": "Pizza de Pepperoni de Res Crujiente en Raggio Gourmet Newark DE",
+        "highlight": "100% Mozzarella Grande y Masa Crujiente"
       },
       {
         "tag": "PIZZA ESPECIAL",
         "title": "Meat Lover's Exclusiva",
         "description": "Cargada con pepperoni de res, salchicha italiana, tocino y jamón sobre nuestra masa horneada a la piedra para amantes de la carne.",
         "ctaText": "Pedir Meat Lover's",
-        "seoAlt": "Entrega de Pizza Meat Lovers en Newark, DE"
+        "seoAlt": "Entrega de Pizza Meat Lovers en Newark, DE",
+        "highlight": "Cargada con 4 Carnes Artesanales"
       },
       {
         "tag": "FAVORITA DE LA CASA",
         "title": "Pizza Buffalo Chicken Picante",
         "description": "Pollo tierno bañado en salsa buffalo picante con un toque de aderezo ranch cremoso. Una favorita local en Newark.",
         "ctaText": "Probar Buffalo Chicken",
-        "seoAlt": "Pizza Buffalo Chicken Picante - Raggio Gourmet Newark"
+        "seoAlt": "Pizza Buffalo Chicken Picante - Raggio Gourmet Newark",
+        "highlight": "Salsa Buffalo Picante y Ranch Cremoso"
       },
       {
         "tag": "SELECCIÓN GOURMET",
         "title": "Espinaca Fresca y Ajo Gourmet",
         "description": "Espinaca fresca salteada, ajo asado, queso ricotta y aceite de oliva virgen extra. Ideal para eventos y cenas familiares.",
         "ctaText": "Probar Espinaca Gourmet",
-        "seoAlt": "Pizza Gourmet de Espinaca Fresca y Ajo en Newark DE"
+        "seoAlt": "Pizza Gourmet de Espinaca Fresca y Ajo en Newark DE",
+        "highlight": "Ajo Asado y Queso Ricotta"
       }
     ]
   },
@@ -102,6 +106,20 @@
         "title": "Pizza Grande 1 Ingrediente y 10 Alitas",
         "description": "Presenta el cupón al recibir tu pedido. No acumulable con otras ofertas. Solo para llevar y entrega a domicilio.",
         "details": "Incluye 1 Pizza Grande de 1 Ingrediente y 10 Alitas Jumbo con apio y salsa para mojar a elección."
+      },
+      {
+        "id": "promo-5",
+        "tag": "CUPÓN ESPECIAL",
+        "title": "2 Pizzas Medianas con 1 Ingrediente",
+        "description": "Presenta el cupón al recibir tu pedido. No acumulable con otras ofertas. Solo para llevar y entrega a domicilio.",
+        "details": "Incluye 2 Pizzas Medianas de 1 Ingrediente con nuestra salsa marinara casera y mozzarella fresca."
+      },
+      {
+        "id": "promo-6",
+        "tag": "CUPÓN ESPECIAL",
+        "title": "2 Pizzas XL, 20 Alitas y Soda 2L",
+        "description": "Presenta el cupón al recibir tu pedido. No acumulable con otras ofertas. Solo para llevar y entrega a domicilio.",
+        "details": "El banquete definitivo para fiestas: 2 Pizzas Extra Grandes de 1 Ingrediente, 20 Alitas Jumbo y una Soda de 2 Litros."
       }
     ]
   },
@@ -113,6 +131,7 @@
     "key_ingredients": "Ingredientes Clave",
     "order_online": "Ordenar en Línea",
     "freshly_prepared": "Preparado Fresco",
+    "default_description": "Preparado fresco al momento con ingredientes de primera calidad.",
     "modal_close": "Cerrar ventana de detalles"
   },
   "stats": {

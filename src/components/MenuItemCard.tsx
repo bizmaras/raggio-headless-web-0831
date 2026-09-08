@@ -24,6 +24,7 @@ interface MenuItemCardProps {
       key_ingredients?: string;
       order_online?: string;
       freshly_prepared?: string;
+      default_description?: string;
       modal_close?: string;
     };
   };
@@ -35,7 +36,11 @@ export default function MenuItemCard(props: MenuItemCardProps) {
   const itemName = props.name || props.item?.name || 'Menu Item';
   const rawPrice = props.price ?? props.item?.price ?? '0.00';
   const itemPrice = typeof rawPrice === 'number' ? `$${rawPrice.toFixed(2)}` : rawPrice;
-  const itemDescription = props.description || props.item?.description || 'Prepared fresh to order with premium ingredients.';
+  const defaultDesc = props.dict?.menu?.default_description || 
+    (props.dict?.menu?.view_details === 'Ver Detalles e Ingredientes' 
+      ? 'Preparado fresco al momento con ingredientes de primera calidad.' 
+      : 'Prepared fresh to order with premium ingredients.');
+  const itemDescription = props.description || props.item?.description || defaultDesc;
 
   const itemOrderUrl = props.orderUrl || props.item?.orderUrl || 'https://phillystyleexpress.foodtecsolutions.com/';
 
