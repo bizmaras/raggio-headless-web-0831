@@ -6,8 +6,8 @@ export async function POST(req: Request) {
     const authHeader = req.headers.get('authorization');
     const secret = process.env.CRON_SECRET || process.env.BUFFER_WEBHOOK_SECRET;
 
-    // Optional webhook/cron secret verification if configured
-    if (secret && authHeader !== `Bearer ${secret}`) {
+    // Strict Fail-Closed authentication: reject if secret is not configured or token does not match
+    if (!secret || authHeader !== `Bearer ${secret}`) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 

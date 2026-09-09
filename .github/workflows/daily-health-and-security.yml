@@ -1,0 +1,66 @@
+﻿name: Daily Security & Health Check
+
+on:
+  schedule:
+    # Her gün saat 07:00 UTC (sabah) otomatik çalışır
+    - cron: '0 7 * * *'
+  # GitHub arayüzünden istenildiği an elle tetiklenebilir
+  workflow_dispatch:
+
+jobs:
+  security-audit:
+    name: NPM Dependency Security Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Run NPM Security Audit
+        run: npm audit --audit-level=high
+
+  live-site-health:
+    name: Live Website & Uptime Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Health Endpoint
+        run: |
+          echo "Checking /api/health endpoint..."
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 https://raggiogourmetpizza.com/api/health)
+          echo "HTTP Status: $STATUS"
+          if [ "$STATUS" -ne 200 ]; then
+            echo "::error::Health endpoint failed with status $STATUS"
+            exit 1
+          fi
+
+      - name: Check English Homepage
+        run: |
+          echo "Checking English homepage..."
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 https://raggiogourmetpizza.com/en)
+          echo "HTTP Status: $STATUS"
+          if [ "$STATUS" -ne 200 ]; then
+            echo "::error::English homepage failed with status $STATUS"
+            exit 1
+          fi
+
+      - name: Check Spanish Homepage
+        run: |
+          echo "Checking Spanish homepage..."
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 https://raggiogourmetpizza.com/es)
+          echo "HTTP Status: $STATUS"
+          if [ "$STATUS" -ne 200 ]; then
+            echo "::error::Spanish homepage failed with status $STATUS"
+            exit 1
+          fi
+
+      - name: Check Robots & Sitemap
+        run: |
+          echo "Checking robots.txt & sitemap..."
+          curl -f -s --max-time 5 https://raggiogourmetpizza.com/robots.txt > /dev/null
+          curl -f -s --max-time 5 https://raggiogourmetpizza.com/sitemap.xml > /dev/null
+          echo "Robots and Sitemap are reachable (OK)."

@@ -103,7 +103,7 @@ export default async function HomePage({
       <main className="min-h-screen bg-ink text-cream w-full max-w-full overflow-x-clip">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }}
         />
         <HeroSlider dict={dict} />
         <CategoryRail categoriesDict={dict.categories} lang={lang} />

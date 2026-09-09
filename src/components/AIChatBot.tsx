@@ -152,6 +152,10 @@ export default function AIChatBot() {
             if (mdLinkMatch) {
                 const linkText = mdLinkMatch[1];
                 const url = mdLinkMatch[2].trim();
+                const isSafeProtocol = /^(https?:\/\/|\/|#)/i.test(url);
+                if (!isSafeProtocol) {
+                    return <span key={index}>{linkText}</span>;
+                }
                 const isInternal = url.includes('#');
                 return (
                     <a
@@ -167,8 +171,8 @@ export default function AIChatBot() {
                 );
             }
 
-            // Çıplak http:// formatı
-            if (part.startsWith('http')) {
+            // Çıplak http:// veya https:// formatı
+            if (part.startsWith('http://') || part.startsWith('https://')) {
                 const url = part.trim();
                 const isInternal = url.includes('#');
                 return (

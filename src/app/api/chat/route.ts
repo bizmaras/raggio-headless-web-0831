@@ -115,6 +115,15 @@ const rateLimitMap = new Map<string, { count: number; windowStart: number }>();
 
 function isRateLimited(identifier: string): boolean {
     const now = Date.now();
+    // Clean up expired entries periodically to prevent memory leaks
+    if (rateLimitMap.size > 500) {
+        for (const [key, val] of rateLimitMap.entries()) {
+            if (now - val.windowStart > RATE_LIMIT_WINDOW_MS) {
+                rateLimitMap.delete(key);
+            }
+        }
+    }
+
     const entry = rateLimitMap.get(identifier);
     if (!entry || now - entry.windowStart > RATE_LIMIT_WINDOW_MS) {
         rateLimitMap.set(identifier, { count: 1, windowStart: now });
@@ -131,21 +140,30 @@ type IncomingMessage = {
     text?: string;
 };
 
+const MAX_MESSAGES_COUNT = 30;
+const MAX_MESSAGE_LENGTH = 1500;
+
 export async function POST(req: Request) {
     try {
         const identifier = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || req.headers.get('x-real-ip') || 'unknown';
         if (isRateLimited(identifier)) {
-            return NextResponse.json({ reply: "You're sending messages too fast!" }, { status: 429 });
+            return NextResponse.json({ reply: "You're sending messages too fast! Please wait a moment." }, { status: 429 });
         }
 
-        const { messages } = await req.json();
+        const body = await req.json();
+        const { messages } = body || {};
         if (!Array.isArray(messages) || messages.length === 0) {
             return NextResponse.json({ reply: 'No message provided.' }, { status: 400 });
         }
 
-        const apiKey = process.env.GEMINI_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+        if (messages.length > MAX_MESSAGES_COUNT) {
+            return NextResponse.json({ reply: 'Conversation history too long. Please refresh the chat.' }, { status: 400 });
+        }
+
+        const apiKey = process.env.GEMINI_API_KEY;
         if (!apiKey) {
-            return NextResponse.json({ reply: 'API Key missing' }, { status: 500 });
+            console.error('Missing GEMINI_API_KEY environment variable');
+            return NextResponse.json({ reply: 'Chat service is temporarily unavailable.' }, { status: 503 });
         }
 
         const genAI = new GoogleGenerativeAI(apiKey);
@@ -154,13 +172,20 @@ export async function POST(req: Request) {
             systemInstruction: buildSystemPrompt(),
         });
 
-        // 1. Mesaj geçmişini Gemini formatına dönüştür
+        // 1. Mesaj geçmişini Gemini formatına dönüştür ve boyut sınırlarını doğrula
         const rawHistory = (messages as IncomingMessage[])
-            .filter((m) => (m.content || m.text || '').trim().length > 0)
-            .map((m) => ({
-                role: (m.role === 'assistant' || m.role === 'model' || m.sender === 'bot') ? ('model' as const) : ('user' as const),
-                parts: [{ text: (m.content || m.text || '').trim() }],
-            }));
+            .filter((m) => {
+                const str = (m.content || m.text || '').trim();
+                return str.length > 0;
+            })
+            .map((m) => {
+                const str = (m.content || m.text || '').trim();
+                const sanitizedText = str.length > MAX_MESSAGE_LENGTH ? str.slice(0, MAX_MESSAGE_LENGTH) : str;
+                return {
+                    role: (m.role === 'assistant' || m.role === 'model' || m.sender === 'bot') ? ('model' as const) : ('user' as const),
+                    parts: [{ text: sanitizedText }],
+                };
+            });
 
         // 2. İlk kullanıcı mesajını bul (baştaki bot karşılama mesajlarını atla)
         const firstUserIndex = rawHistory.findIndex((m) => m.role === 'user');
@@ -192,8 +217,11 @@ export async function POST(req: Request) {
         const responseText = result.response.text();
 
         return NextResponse.json({ reply: responseText });
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error('Gemini API Error:', error);
-        return NextResponse.json({ reply: `System Error: ${error.message}` }, { status: 500 });
+        return NextResponse.json(
+            { reply: "I'm having trouble connecting right now. Please call us at (302) 369-0553 or try again shortly!" },
+            { status: 500 }
+        );
     }
 }

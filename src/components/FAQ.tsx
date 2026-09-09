@@ -63,7 +63,7 @@ export default function FAQ({ dict }: FAQProps) {
       {/* Injecting the Schema JSON into the DOM for Search Engines */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema).replace(/</g, '\\u003c') }}
       />
 
       <div className="max-w-4xl mx-auto px-6">
