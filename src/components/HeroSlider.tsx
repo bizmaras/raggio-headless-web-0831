@@ -30,7 +30,7 @@ const DEFAULT_SLIDES = [
     description: 'Crafted with savory beef pepperoni, 100% Grande Mozzarella, and homemade marinara on deck-oven stone-baked crust.',
     ctaText: 'Order Beef Pepperoni',
     ctaLink: 'https://phillystyleexpress.foodtecsolutions.com/',
-    image: '/images/hero-pepperoni.webp',
+    image: '/images/apple-card-pepperoni.jpg',
     seoAlt: 'Crispy Beef Pepperoni Pizza at Raggio Gourmet Newark DE',
     highlight: 'Grande Mozzarella & Crispy Crust',
   },
@@ -40,7 +40,7 @@ const DEFAULT_SLIDES = [
     description: 'Packed with beef pepperoni, sausage, bacon, and ham on our deck-oven stone-baked crust for true meat lovers.',
     ctaText: 'Get the Meat Lover’s',
     ctaLink: 'https://phillystyleexpress.foodtecsolutions.com/',
-    image: '/images/hero-meatlover.webp',
+    image: '/images/apple-card-meatlover.jpg',
     seoAlt: 'Signature Meat Lovers Pizza Delivery in Newark, DE',
     highlight: 'Loaded with 4 Artisan Meats',
   },
@@ -50,7 +50,7 @@ const DEFAULT_SLIDES = [
     description: 'Tender chicken tossed in fiery buffalo sauce with creamy ranch drizzle. A local favorite in Newark.',
     ctaText: 'Try Buffalo Chicken',
     ctaLink: 'https://phillystyleexpress.foodtecsolutions.com/',
-    image: '/images/hero-buffalo.webp',
+    image: '/images/apple-card-buffalo.jpg',
     seoAlt: 'Spicy Buffalo Chicken Pizza - Raggio Gourmet Newark',
     highlight: 'Fiery Buffalo & Creamy Ranch',
   },
@@ -60,7 +60,7 @@ const DEFAULT_SLIDES = [
     description: 'Sauteed fresh spinach, roasted garlic, ricotta, and extra virgin olive oil. Perfect for catering and family dining.',
     ctaText: 'Taste Spinach Gourmet',
     ctaLink: 'https://phillystyleexpress.foodtecsolutions.com/',
-    image: '/images/hero-spinach.webp',
+    image: '/images/apple-card-spinach.jpg',
     seoAlt: 'Fresh Spinach and Garlic Gourmet Pizza in Newark DE',
     highlight: 'Roasted Garlic & Ricotta',
   },
@@ -98,7 +98,7 @@ export default function HeroSlider({ dict }: HeroSliderProps) {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % slides.length);
-    }, 5500);
+    }, 6000);
     return () => clearInterval(timer);
   }, [slides.length]);
 
@@ -121,7 +121,6 @@ export default function HeroSlider({ dict }: HeroSliderProps) {
     if (!touchStartX || !touchEndX || !touchStartY || !touchEndY) return;
     const diffX = touchStartX - touchEndX;
     const diffY = touchStartY - touchEndY;
-    // Only trigger slide if horizontal swipe is clearly dominant over vertical scrolling
     if (Math.abs(diffX) > minSwipeDistance && Math.abs(diffX) > Math.abs(diffY) * 1.2) {
       if (diffX > 0) {
         nextSlide();
@@ -135,165 +134,115 @@ export default function HeroSlider({ dict }: HeroSliderProps) {
 
   return (
     <section
-      className="relative w-full overflow-hidden bg-ink py-2 sm:py-6 lg:py-8 select-none flex flex-col justify-center lg:block h-[calc(100dvh-138px)] max-h-[620px] min-h-[420px] lg:h-auto lg:max-h-none lg:min-h-0"
+      className="relative w-full overflow-hidden bg-ink py-3 sm:py-6 lg:py-8 select-none"
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
       aria-roledescription="carousel"
       aria-label="Cinematic Featured Specials"
     >
-      {/* Semantic H1 for SEO & Accessibility */}
+      {/* Semantic Headings for SEO & Accessibility */}
       <h1 className="sr-only">
         Raggio Gourmet &amp; Pizza - Artisanal Stone-Baked Pizzas &amp; Italian Kitchen in Newark, DE
       </h1>
+      <h2 className="sr-only">{activeSlide.title}</h2>
+      <p className="sr-only">{activeSlide.description}</p>
 
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full lg:h-auto">
+      <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         
-        {/* CINEMATIC SPLIT-BLEED SHOWCASE CARD */}
-        <div className="w-full relative rounded-2xl sm:rounded-3xl overflow-hidden border border-panel-border bg-ink shadow-2xl flex flex-col-reverse lg:flex-row items-stretch h-full lg:h-auto min-h-0 lg:min-h-[580px] xl:min-h-[620px]">
+        {/* APPLE CONCEPT CARD SHOWCASE */}
+        <div className="w-full relative aspect-[16/9] max-h-[640px] rounded-2xl sm:rounded-3xl lg:rounded-[32px] overflow-hidden border border-white/10 bg-[#0c0d10] shadow-[0_25px_60px_rgba(0,0,0,0.85)]">
+          
+          {/* SLIDES */}
+          {slides.map((slide, index) => {
+            const isCurrent = index === current;
+            const shouldRender = isHydrated || index === 0;
+            if (!shouldRender) return null;
 
-          {/* EDITORIAL TEXT & ACTIONS (Bottom on mobile, Left on desktop) */}
-          <div className="w-full lg:w-[45%] xl:w-[43%] flex flex-col justify-center p-3.5 xs:p-4 sm:p-8 lg:p-12 xl:p-14 z-20 space-y-2 xs:space-y-2.5 sm:space-y-6 relative bg-ink lg:bg-gradient-to-r lg:from-ink lg:via-ink/95 lg:to-ink/60 shrink-0 lg:shrink">
-            
-            {/* Category Tag */}
-            <div className="inline-flex items-center gap-2 self-start bg-gold/15 border border-gold/40 px-2.5 py-0.5 sm:px-3.5 sm:py-1.5 rounded-full shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-gold animate-pulse" />
-              <span className="text-gold-bright text-[11px] sm:text-xs font-bold tracking-wider uppercase font-mono">
-                {activeSlide.tag}
-              </span>
-            </div>
-
-            {/* Product Title */}
-            <h2 className="text-xl xs:text-2xl sm:text-3xl lg:text-5xl xl:text-6xl font-extrabold text-cream tracking-tight drop-shadow-md leading-[1.12]">
-              {activeSlide.title}
-            </h2>
-
-            {/* Appetizing Description */}
-            <p className="text-stone text-xs sm:text-sm lg:text-base leading-relaxed font-normal max-w-md line-clamp-2 sm:line-clamp-none">
-              {activeSlide.description}
-            </p>
-
-            {/* CTAs */}
-            <div className="pt-1 sm:pt-4 grid grid-cols-2 gap-2 sm:flex sm:flex-row sm:items-center sm:gap-4">
-              <a
-                href={activeSlide.ctaLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full sm:w-auto text-center bg-gradient-to-br from-gold-bright via-gold to-gold-deep text-ink font-extrabold px-3 sm:px-8 py-2.5 sm:py-3.5 lg:py-4 rounded-full text-xs sm:text-base transition-all duration-300 shadow-[0_4px_25px_rgba(201,161,92,0.45)] hover:shadow-[0_4px_35px_rgba(201,161,92,0.65)] hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center"
+            return (
+              <div
+                key={slide.image}
+                className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+                  isCurrent ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
+                }`}
+                aria-hidden={!isCurrent}
               >
-                <span className="truncate">{activeSlide.ctaText}</span>
-              </a>
-              <a
-                href="#menu"
-                className="w-full sm:w-auto text-center border border-panel-border hover:border-gold text-cream hover:text-gold font-bold px-3 sm:px-6 py-2.5 sm:py-3.5 lg:py-4 rounded-full text-xs sm:text-base transition-all duration-300 bg-panel/60 hover:bg-panel active:scale-95 cursor-pointer flex items-center justify-center"
-              >
-                <span className="truncate">{dict?.hero?.cta || 'View Menu'}</span>
-              </a>
-            </div>
+                <Image
+                  src={slide.image}
+                  alt={slide.seoAlt}
+                  fill
+                  priority={index === 0}
+                  fetchPriority={index === 0 ? "high" : "auto"}
+                  quality={90}
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 95vw, 1280px"
+                  className="object-cover object-center"
+                />
+              </div>
+            );
+          })}
 
-            {/* Trust Footer */}
-            <div className="pt-0.5 sm:pt-1 hidden xs:flex items-center gap-2 text-[10px] sm:text-xs text-stone-dim uppercase tracking-wider font-semibold">
-              <span className="w-1.5 h-1.5 rounded-full bg-gold/50 shrink-0" />
-              <span className="truncate">{dict?.hero?.badge || '100% Fresh Mozzarella • Stone-Baked Crust • Newark, DE'}</span>
-            </div>
+          {/* INTERACTIVE CLICKABLE HOTSPOTS OVER APPLE BUTTONS */}
+          <div className="absolute inset-0 z-20 pointer-events-none">
+            {/* Primary Order CTA Hotspot */}
+            <a
+              href={activeSlide.ctaLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="absolute pointer-events-auto left-[6%] sm:left-[8%] bottom-[20%] sm:bottom-[23%] lg:bottom-[24%] w-[42%] sm:w-[26%] lg:w-[22%] h-[15%] sm:h-[13%] rounded-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-gold/60"
+              aria-label={activeSlide.ctaText}
+            />
 
-            {/* SLIDER DOTS */}
-            <div className="flex items-center gap-1 sm:gap-1.5 pt-1 sm:pt-4">
-              {slides.map((_, dotIdx) => (
-                <button
-                  key={dotIdx}
-                  type="button"
-                  onClick={() => setCurrent(dotIdx)}
-                  aria-label={`Go to slide ${dotIdx + 1}`}
-                  className="p-3 min-w-[44px] min-h-[44px] flex items-center justify-center cursor-pointer -m-1 focus:outline-none touch-manipulation"
-                >
-                  <span
-                    className={`h-2 rounded-full transition-all duration-300 pointer-events-none block ${
-                      current === dotIdx
-                        ? 'w-8 sm:w-10 bg-gold shadow-[0_0_10px_rgba(201,161,92,0.7)]'
-                        : 'w-2.5 bg-panel-border hover:bg-stone-dim'
-                    }`}
-                  />
-                </button>
-              ))}
-            </div>
-
+            {/* Secondary View Menu Hotspot */}
+            <a
+              href="#menu"
+              className="absolute pointer-events-auto left-[50%] sm:left-[36%] lg:left-[31%] bottom-[20%] sm:bottom-[23%] lg:bottom-[24%] w-[28%] sm:w-[18%] lg:w-[15%] h-[15%] sm:h-[13%] rounded-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-gold/60"
+              aria-label={dict?.hero?.cta || 'View Menu'}
+            />
           </div>
 
-          {/* FULL-BLEED CINEMATIC PHOTOGRAPHY (Top on mobile, Right on desktop) */}
-          <div className="w-full lg:w-[55%] xl:w-[57%] relative flex-1 min-h-[190px] lg:h-auto lg:min-h-[580px] xl:min-h-[620px] overflow-hidden bg-black">
-            
-            {/* Edge-to-Edge Pizza Images with Subtle Ken Burns Motion */}
-            {slides.map((slide, index) => {
-              const isCurrent = index === current;
-              const shouldRender = isHydrated || index === 0;
-
-              if (!shouldRender) return null;
-
-              return (
-                <div
-                  key={slide.image}
-                  className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                    isCurrent ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
-                  }`}
-                  aria-hidden={!isCurrent}
-                >
-                  <Image
-                    src={slide.image}
-                    alt={slide.seoAlt}
-                    fill
-                    priority={index === 0}
-                    fetchPriority={index === 0 ? "high" : "auto"}
-                    quality={70}
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 55vw"
-                    className={`object-cover object-center will-change-transform transition-transform duration-[7000ms] ease-out ${
-                      isCurrent ? 'scale-105' : 'scale-100'
+          {/* STORYLINE PROGRESS INDICATOR (Segmented Gold Bars) */}
+          <div className="absolute z-30 left-[6%] sm:left-[8%] bottom-[5%] sm:bottom-[7%] flex items-center gap-1.5 sm:gap-2">
+            {slides.map((_, dotIdx) => (
+              <button
+                key={dotIdx}
+                type="button"
+                onClick={() => setCurrent(dotIdx)}
+                aria-label={`Go to slide ${dotIdx + 1}`}
+                className="group py-2 cursor-pointer focus:outline-none"
+              >
+                <div className="w-6 sm:w-12 h-1 rounded-full bg-white/25 overflow-hidden transition-colors group-hover:bg-white/45">
+                  <div
+                    className={`h-full bg-gold transition-all duration-500 rounded-full ${
+                      current === dotIdx ? 'w-full shadow-[0_0_10px_rgba(201,161,92,0.9)]' : 'w-0'
                     }`}
                   />
-                  {/* Subtle cinema vignette on the food */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/25 pointer-events-none" />
                 </div>
-              );
-            })}
-
-            {/* Seamless Left-Edge Dark Blend into Text Column (Desktop only) */}
-            <div className="hidden lg:block absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-ink via-ink/80 to-transparent z-15 pointer-events-none" />
-
-            {/* Seamless Bottom Dark Blend into Text Column (Mobile only) */}
-            <div className="lg:hidden absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-ink via-ink/80 to-transparent z-15 pointer-events-none" />
-
-            {/* Floating Glassmorphism Highlight Tag on the Dish */}
-            <div className="absolute top-3.5 right-3.5 sm:top-5 sm:right-5 z-20 backdrop-blur-md bg-ink/75 border border-gold/30 px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl shadow-xl flex items-center gap-2 max-w-[85%]">
-              <span className="w-2 h-2 shrink-0 rounded-full bg-gold animate-pulse" />
-              <span className="text-[11px] sm:text-xs font-bold text-cream tracking-wide truncate">
-                {activeSlide.highlight}
-              </span>
-            </div>
-
-            {/* NAVIGATION ARROWS ON IMAGE */}
-            <div className="absolute bottom-3.5 right-3.5 sm:bottom-5 sm:right-5 z-20 flex items-center gap-2">
-              <button
-                type="button"
-                onClick={prevSlide}
-                aria-label="Previous pizza"
-                className="p-2.5 sm:p-3 rounded-full backdrop-blur-md bg-black/65 border border-white/15 text-cream hover:text-gold hover:border-gold/60 transition-all cursor-pointer active:scale-95 shadow-lg"
-              >
-                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-                </svg>
               </button>
-              <button
-                type="button"
-                onClick={nextSlide}
-                aria-label="Next pizza"
-                className="p-2.5 sm:p-3 rounded-full backdrop-blur-md bg-black/65 border border-white/15 text-cream hover:text-gold hover:border-gold/60 transition-all cursor-pointer active:scale-95 shadow-lg"
-              >
-                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-            </div>
+            ))}
+          </div>
 
+          {/* NAVIGATION ARROWS */}
+          <div className="absolute z-30 right-3 sm:right-6 bottom-3 sm:bottom-6 flex items-center gap-2">
+            <button
+              type="button"
+              onClick={prevSlide}
+              aria-label="Previous pizza"
+              className="p-2 sm:p-2.5 rounded-full backdrop-blur-md bg-black/60 border border-white/15 text-cream hover:text-gold hover:border-gold/60 transition-all active:scale-95 shadow-lg"
+            >
+              <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              onClick={nextSlide}
+              aria-label="Next pizza"
+              className="p-2 sm:p-2.5 rounded-full backdrop-blur-md bg-black/60 border border-white/15 text-cream hover:text-gold hover:border-gold/60 transition-all active:scale-95 shadow-lg"
+            >
+              <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
           </div>
 
         </div>
