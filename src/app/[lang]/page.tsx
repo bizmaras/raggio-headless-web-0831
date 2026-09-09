@@ -11,6 +11,7 @@ import HeroSlider from "../../components/HeroSlider";
 import CategoryRail from "../../components/CategoryRail";
 import StatsCounter from "../../components/StatsCounter";
 import ScrollReveal from "../../components/ScrollReveal";
+import DealsSectionWrapper from "../../components/DealsSectionWrapper";
 import PromotionsSection from "../../components/PromotionsSection";
 import MenuItemCard from "../../components/MenuItemCard";
 import { getSizeVariants } from "../../data/sizePricing";
@@ -109,11 +110,11 @@ export default async function HomePage({
         <CategoryRail categoriesDict={dict.categories} lang={lang} />
         <StatsCounter dict={dict} />
 
-        <div id="deals" className="scroll-mt-[190px]">
+        <DealsSectionWrapper>
           <ScrollReveal>
             <PromotionsSection dict={dict} />
           </ScrollReveal>
-        </div>
+        </DealsSectionWrapper>
 
         <section id="menu" className="max-w-7xl mx-auto px-6 py-12 scroll-mt-[210px]">
           <ScrollReveal>

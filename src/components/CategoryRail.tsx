@@ -38,7 +38,7 @@ export const CATEGORIES = [
 
 export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }: CategoryRailProps) {
   const router = useRouter();
-  const [activeCategory, setActiveCategory] = useState<string>(activeSlug || 'deals');
+  const [activeCategory, setActiveCategory] = useState<string>(activeSlug || '');
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const isPaused = useRef(false);
@@ -189,6 +189,17 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
     }
 
     // ON HOMEPAGE: Maintain single-page app experience!
+    if (searchId === 'deals') {
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('toggle-deals', { detail: { show: true } }));
+      }
+      return;
+    } else {
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('toggle-deals', { detail: { show: false } }));
+      }
+    }
+
     let target = document.getElementById(searchId);
     if (!target) {
       target = Array.from(document.querySelectorAll('div[id],section[id]'))
@@ -233,14 +244,14 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
           active:scale-95 focus:outline-none tracking-wide shadow-sm
           ${isDuplicate ? 'md:hidden' : ''}
           ${isActive
-            ? 'border-gold text-gold bg-gold/15 shadow-[0_0_14px_rgba(201,161,92,0.35)] ring-1 ring-gold/40'
-            : 'border-panel-border/90 bg-panel text-stone hover:text-cream hover:border-gold/60'
+            ? 'border-gold text-gold bg-gold/15'
+            : 'border-white/10 bg-[#16181d]/85 text-white/80 hover:text-white hover:border-white/20'
           }
         `}
       >
         <span
-          className={`w-1.5 h-1.5 rounded-full shrink-0 transition-colors duration-300 ${
-            isActive ? 'bg-gold animate-pulse' : 'bg-red-500/70'
+          className={`w-1.5 h-1.5 rounded-full shrink-0 ${
+            isActive ? 'bg-gold' : 'bg-red-500'
           }`}
         />
         {label}

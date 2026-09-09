@@ -166,14 +166,14 @@ export default function MenuItemCard(props: MenuItemCardProps) {
                     aria-pressed={isSelected}
                     className={`py-1 px-1 rounded-md text-xs font-bold transition-all duration-150 flex flex-col items-center justify-center cursor-pointer ${
                       isSelected
-                        ? 'bg-gradient-to-b from-[#f2dc98] via-[#e6c884] to-[#d8b467] text-[#241710] shadow-[0_4px_14px_rgba(216,180,103,0.45)] border border-white/40 scale-[1.02]'
+                        ? 'bg-[#c9a15c] text-[#121214] font-bold border border-white/40 shadow-sm scale-[1.02]'
                         : 'text-stone hover:text-cream hover:bg-panel/70'
                     }`}
                     title={`${s.fullName?.[currentLang] || s.label} - $${s.price.toFixed(2)}`}
                   >
                     <span className="leading-tight">{s.label}</span>
                     {s.inches && (
-                      <span className={`text-[9px] font-normal leading-none mt-0.5 ${isSelected ? 'text-ink/85 font-semibold' : 'text-stone/60'}`}>
+                      <span className={`text-[9px] font-normal leading-none mt-0.5 ${isSelected ? 'text-[#121214] font-semibold' : 'text-stone/60'}`}>
                         {s.inches}
                       </span>
                     )}
@@ -187,14 +187,14 @@ export default function MenuItemCard(props: MenuItemCardProps) {
         <button
           type="button"
           onClick={() => setIsOpen(true)}
-          className="w-full py-2.5 px-4 rounded-lg bg-ink border border-gold/60 sm:border-panel-border hover:border-gold text-gold sm:text-cream hover:text-gold text-sm font-semibold sm:font-medium transition-all duration-150 flex items-center justify-center gap-2 cursor-pointer mt-auto active:scale-[0.98] active:border-gold shadow-sm hover:shadow-[0_0_12px_rgba(201,161,92,0.2)]"
+          className="w-full py-2.5 px-4 rounded-xl bg-[#16181d] border border-white/10 hover:border-white/20 text-white hover:text-white text-xs sm:text-sm font-medium transition-all duration-150 flex items-center justify-center gap-2 cursor-pointer mt-auto active:scale-[0.98] shadow-sm"
         >
-          <svg className="w-4 h-4 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg className="w-4 h-4 text-gold shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <circle cx="12" cy="12" r="10" strokeWidth="2" />
             <path d="M12 16v-4" strokeWidth="2" strokeLinecap="round" />
             <path d="M12 8h.01" strokeWidth="2" strokeLinecap="round" />
           </svg>
-          {viewDetailsText}
+          <span>{viewDetailsText}</span>
         </button>
       </div>
 

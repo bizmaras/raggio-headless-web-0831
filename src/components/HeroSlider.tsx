@@ -3,6 +3,24 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 
+interface PinItem {
+  label: string;
+  top: number;
+  left: number;
+}
+
+interface SlideItem {
+  tag: string;
+  title: string;
+  description: string;
+  ctaText: string;
+  ctaLink: string;
+  image: string;
+  seoAlt: string;
+  pins: PinItem[];
+  glowColor: string;
+}
+
 interface HeroSliderProps {
   dict?: {
     hero?: {
@@ -23,34 +41,62 @@ interface HeroSliderProps {
   };
 }
 
-interface SlideItem {
-  tag: string;
-  title: string;
-  description: string;
-  ctaText: string;
-  ctaLink: string;
-  image: string;
-  seoAlt: string;
-}
-
 const DEFAULT_SLIDES: SlideItem[] = [
-  {
-    tag: 'HOUSE FAVORITE',
-    title: 'Spicy Buffalo Chicken',
-    description: 'Tender chicken tossed in fiery buffalo sauce with creamy ranch drizzle. A local favorite in Newark.',
-    ctaText: 'Try Buffalo Chicken',
-    ctaLink: 'https://phillystyleexpress.foodtecsolutions.com/',
-    image: '/images/card-buffalo-clean.png',
-    seoAlt: 'Spicy Buffalo Chicken Pizza - Raggio Gourmet Newark DE',
-  },
   {
     tag: 'SPECIALTY PIZZA',
     title: 'Signature Meat Lover’s',
     description: 'Packed with beef pepperoni, sausage, bacon, and ham on our stone-baked crust for true meat lovers.',
     ctaText: 'Order Meat Lover’s',
     ctaLink: 'https://phillystyleexpress.foodtecsolutions.com/',
-    image: '/images/card-meatlover-clean.png',
-    seoAlt: 'Signature Meat Lovers Pizza Delivery in Newark DE',
+    image: '/images/pizza-meatlover-clean.png',
+    seoAlt: 'Signature Meat Lovers Pizza - Raggio Gourmet Newark DE',
+    pins: [
+      { label: 'Loaded with 4 Artisan Meats', top: 22, left: 24 },
+      { label: 'Grande Mozzarella', top: 18, left: 62 },
+    ],
+    glowColor: 'rgba(212, 154, 85, 0.28)',
+  },
+  {
+    tag: 'HOUSE FAVORITE',
+    title: 'Spicy Buffalo Chicken',
+    description: 'Tender chicken tossed in fiery buffalo glaze with artisanal spiral ranch drizzle and melted mozzarella on stone-baked crust.',
+    ctaText: 'Try Buffalo Chicken',
+    ctaLink: 'https://phillystyleexpress.foodtecsolutions.com/',
+    image: '/images/pizza-buffalo-clean.png',
+    seoAlt: 'Spicy Buffalo Chicken Pizza - Raggio Gourmet Newark DE',
+    pins: [
+      { label: 'Fiery Buffalo Glaze', top: 24, left: 22 },
+      { label: 'Creamy Ranch Drizzle', top: 54, left: 58 },
+    ],
+    glowColor: 'rgba(234, 88, 12, 0.26)',
+  },
+  {
+    tag: 'CLASSIC SPECIALTY',
+    title: 'Artisanal Pepperoni',
+    description: 'Crispy cupped beef pepperoni, melted Grande Mozzarella, rich San Marzano tomato sauce, and fresh basil on stone-baked crust.',
+    ctaText: 'Order Pepperoni',
+    ctaLink: 'https://phillystyleexpress.foodtecsolutions.com/',
+    image: '/images/pizza-pepperoni-clean.png',
+    seoAlt: 'Artisanal Pepperoni Pizza - Raggio Gourmet Newark DE',
+    pins: [
+      { label: 'Crispy Cupped Pepperoni', top: 26, left: 30 },
+      { label: 'Fresh Basil Leaves', top: 46, left: 48 },
+    ],
+    glowColor: 'rgba(225, 29, 72, 0.25)',
+  },
+  {
+    tag: "CHEF'S SIGNATURE",
+    title: 'White Spinach & Ricotta',
+    description: 'Fresh baby spinach, velvety whole-milk ricotta, garlic-infused olive oil, and melted mozzarella on stone-baked blistered crust.',
+    ctaText: 'Try White Spinach',
+    ctaLink: 'https://phillystyleexpress.foodtecsolutions.com/',
+    image: '/images/pizza-spinach-clean.png',
+    seoAlt: 'White Spinach and Ricotta Pizza - Raggio Gourmet Newark DE',
+    pins: [
+      { label: 'Whole Milk Ricotta', top: 28, left: 50 },
+      { label: 'Garlic Infused Oil', top: 52, left: 38 },
+    ],
+    glowColor: 'rgba(34, 197, 94, 0.22)',
   },
 ];
 
@@ -115,7 +161,7 @@ export default function HeroSlider({ dict }: HeroSliderProps) {
 
   return (
     <section
-      className="relative w-full overflow-hidden bg-ink py-4 sm:py-6 lg:py-8 select-none"
+      className="relative w-full overflow-hidden bg-ink pt-4 sm:pt-6 lg:pt-8 pb-10 sm:pb-16 lg:pb-24 select-none"
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
@@ -129,101 +175,141 @@ export default function HeroSlider({ dict }: HeroSliderProps) {
       <h2 className="sr-only">{activeSlide.title}</h2>
       <p className="sr-only">{activeSlide.description}</p>
 
-      <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+      {/* FULL-WIDTH CONTAINER: No max-w-7xl constraint to eliminate dead empty space */}
+      <div className="w-full px-3 sm:px-6 lg:px-8 xl:px-12 overflow-visible relative">
         
-        {/* MASTER HERO CARD PRESENTATION */}
-        <div className="w-full relative aspect-[1024/458] rounded-2xl sm:rounded-3xl lg:rounded-[32px] overflow-hidden border border-white/10 bg-[#0c0d10] shadow-[0_25px_60px_rgba(0,0,0,0.85)]">
+        {/* MASTER FULL-WIDTH HERO CARD PRESENTATION */}
+        <div className="w-full relative min-h-[460px] sm:min-h-[500px] lg:min-h-[540px] xl:min-h-[580px] rounded-2xl sm:rounded-3xl lg:rounded-[32px] bg-gradient-to-b from-[#15171d]/90 via-[#101216]/95 to-[#0b0c0f] border border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.85)] flex items-center overflow-visible">
 
-          {/* SLIDES */}
-          {slides.map((slide, index) => {
-            const isCurrent = index === current;
+          <div className="w-full h-full flex flex-col lg:flex-row items-center justify-between px-6 sm:px-10 lg:px-14 xl:px-18 py-8 lg:py-12 relative overflow-visible">
 
-            return (
+            {/* LEFT EDITORIAL COLUMN */}
+            <div className="w-full lg:max-w-[48%] xl:max-w-[45%] 2xl:max-w-[42%] z-20 flex flex-col justify-center text-left">
+              
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 self-start px-3.5 py-1.5 rounded-full bg-white/[0.06] border border-white/12 text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#e6c884] mb-3 sm:mb-4 shadow-sm">
+                <span className="w-2 h-2 rounded-full bg-[#d8b467] shadow-[0_0_8px_rgba(216,180,103,0.9)]" />
+                <span>{activeSlide.tag}</span>
+              </div>
+
+              {/* Title */}
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-extrabold text-white tracking-tight leading-[1.06] mb-3 sm:mb-4 drop-shadow-md">
+                {activeSlide.title}
+              </h2>
+
+              {/* Description */}
+              <p className="text-white/70 text-xs sm:text-sm lg:text-base leading-relaxed max-w-lg mb-6 sm:mb-8">
+                {activeSlide.description}
+              </p>
+
+              {/* SIGNATURE FLAT BUTTONS (NO GRADIENTS) */}
+              <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
+                <a
+                  href={activeSlide.ctaLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-gold px-5 sm:px-6 lg:px-7 py-2.5 sm:py-3 text-xs sm:text-sm lg:text-base font-bold shadow-md"
+                >
+                  <span>{activeSlide.ctaText}</span>
+                  <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7V17" />
+                  </svg>
+                </a>
+
+                <a
+                  href="#menu"
+                  className="btn-charcoal px-4 sm:px-5 lg:px-6 py-2.5 sm:py-3 text-xs sm:text-sm lg:text-base font-medium shadow-md"
+                >
+                  <span>{dict?.hero?.cta || 'View Menu'}</span>
+                </a>
+              </div>
+
+              {/* STORYLINE PROGRESS INDICATOR (Segmented Gold Bars) */}
+              <div className="flex items-center gap-2 mt-8 lg:mt-12">
+                {slides.map((_, dotIdx) => (
+                  <button
+                    key={dotIdx}
+                    type="button"
+                    onClick={() => setCurrent(dotIdx)}
+                    aria-label={`Go to slide ${dotIdx + 1}`}
+                    className="py-2 cursor-pointer focus:outline-none group"
+                  >
+                    <div className="w-8 sm:w-14 h-1 rounded-full bg-white/20 overflow-hidden transition-colors group-hover:bg-white/40">
+                      <div
+                        className={`h-full bg-[#c9a15c] transition-all duration-500 rounded-full ${
+                          current === dotIdx ? 'w-full shadow-[0_0_10px_rgba(201,161,92,0.9)]' : 'w-0'
+                        }`}
+                      />
+                    </div>
+                  </button>
+                ))}
+              </div>
+
+            </div>
+
+            {/* RIGHT 3D PRODUCT COLUMN WITH OVERFLOW (NO WOODEN BOARD) */}
+            <div className="w-full lg:w-auto lg:absolute lg:right-[-3%] xl:right-[-4%] 2xl:right-[-5%] lg:top-1/2 lg:-translate-y-1/2 flex items-center justify-center overflow-visible z-20 pointer-events-none mt-6 lg:mt-0">
+              
+              {/* Ambient Glow */}
               <div
-                key={slide.image}
-                className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
-                  isCurrent ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
-                }`}
-                aria-hidden={!isCurrent}
-              >
+                className="absolute w-[340px] sm:w-[460px] lg:w-[680px] xl:w-[800px] 2xl:w-[900px] h-[340px] sm:h-[460px] lg:h-[680px] xl:h-[800px] 2xl:h-[900px] rounded-full blur-3xl pointer-events-none -z-10"
+                style={{
+                  background: `radial-gradient(circle, ${activeSlide.glowColor} 0%, transparent 65%)`,
+                }}
+              />
+
+              {/* 3D Overflowing Product Container - Scaled boldly to eliminate dead space */}
+              <div className="relative w-[320px] sm:w-[440px] md:w-[540px] lg:w-[680px] xl:w-[780px] 2xl:w-[880px] aspect-[16/11] overflow-visible">
+                
+                {/* Hotspot Pins */}
+                {activeSlide.pins && activeSlide.pins.map((pin, pIdx) => (
+                  <div
+                    key={pIdx}
+                    style={{ top: `${pin.top}%`, left: `${pin.left}%` }}
+                    className="absolute z-30 hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#121417]/85 backdrop-blur-md border border-white/20 text-[11px] font-semibold text-white/95 shadow-[0_4px_16px_rgba(0,0,0,0.6)] pointer-events-auto select-none"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#e3c383] shadow-[0_0_6px_#e3c383]" />
+                    <span>{pin.label}</span>
+                  </div>
+                ))}
+
                 <Image
-                  src={slide.image}
-                  alt={slide.seoAlt}
+                  src={activeSlide.image}
+                  alt={activeSlide.seoAlt}
                   fill
-                  priority={index === 0}
-                  quality={95}
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 95vw, 1280px"
-                  className="object-contain sm:object-cover object-center"
+                  priority
+                  quality={92}
+                  sizes="(max-width: 640px) 320px, (max-width: 1024px) 540px, (max-width: 1440px) 780px, 880px"
+                  className="object-contain filter drop-shadow-[0_28px_40px_rgba(0,0,0,0.85)] select-none"
                 />
               </div>
-            );
-          })}
 
-          {/* LIVE MODEL 2 BUTTONS OVERLAY */}
-          <div className="absolute left-[8.2%] sm:left-[8.6%] bottom-[24.5%] sm:bottom-[25.5%] z-20 flex items-center gap-2.5 sm:gap-3.5">
-            <a
-              href={activeSlide.ctaLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-gold px-3.5 sm:px-5 lg:px-6 py-2 sm:py-2.5 lg:py-3 text-[11px] sm:text-xs lg:text-sm font-extrabold shadow-xl"
-            >
-              <span>{activeSlide.ctaText}</span>
-              <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7V17" />
-              </svg>
-            </a>
+            </div>
 
-            <a
-              href="#menu"
-              className="btn-charcoal px-3 sm:px-4 lg:px-5 py-2 sm:py-2.5 lg:py-3 text-[11px] sm:text-xs lg:text-sm font-bold shadow-xl"
-            >
-              <span>{dict?.hero?.cta || 'View Menu'}</span>
-            </a>
-          </div>
-
-          {/* STORYLINE PROGRESS INDICATOR (Segmented Gold Bars) */}
-          <div className="absolute z-30 left-[9.5%] bottom-[8%] flex items-center gap-1.5 sm:gap-2">
-            {slides.map((_, dotIdx) => (
+            {/* GLOBAL NAVIGATION ARROWS (BOTTOM RIGHT) */}
+            <div className="absolute z-30 right-4 sm:right-8 lg:right-10 bottom-4 sm:bottom-6 flex items-center gap-2">
               <button
-                key={dotIdx}
                 type="button"
-                onClick={() => setCurrent(dotIdx)}
-                aria-label={`Go to slide ${dotIdx + 1}`}
-                className="group py-2 cursor-pointer focus:outline-none"
+                onClick={prevSlide}
+                aria-label="Previous pizza"
+                className="p-2 sm:p-2.5 rounded-xl backdrop-blur-md bg-black/60 border border-white/15 text-cream hover:text-gold hover:border-gold/60 transition-all active:scale-95 shadow-lg cursor-pointer"
               >
-                <div className="w-6 sm:w-12 h-1 rounded-full bg-white/25 overflow-hidden transition-colors group-hover:bg-white/45">
-                  <div
-                    className={`h-full bg-gradient-to-r from-[#f2dc98] via-[#e6c884] to-[#d8b467] transition-all duration-500 rounded-full ${
-                      current === dotIdx ? 'w-full shadow-[0_0_10px_rgba(216,180,103,0.9)]' : 'w-0'
-                    }`}
-                  />
-                </div>
+                <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
               </button>
-            ))}
-          </div>
+              <button
+                type="button"
+                onClick={nextSlide}
+                aria-label="Next pizza"
+                className="p-2 sm:p-2.5 rounded-xl backdrop-blur-md bg-black/60 border border-white/15 text-cream hover:text-gold hover:border-gold/60 transition-all active:scale-95 shadow-lg cursor-pointer"
+              >
+                <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
 
-          {/* NAVIGATION ARROWS */}
-          <div className="absolute z-30 right-3 sm:right-6 bottom-3 sm:bottom-6 flex items-center gap-2">
-            <button
-              type="button"
-              onClick={prevSlide}
-              aria-label="Previous pizza"
-              className="p-2 sm:p-2.5 rounded-xl backdrop-blur-md bg-black/60 border border-white/15 text-cream hover:text-gold hover:border-gold/60 transition-all active:scale-95 shadow-lg cursor-pointer"
-            >
-              <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            <button
-              type="button"
-              onClick={nextSlide}
-              aria-label="Next pizza"
-              className="p-2 sm:p-2.5 rounded-xl backdrop-blur-md bg-black/60 border border-white/15 text-cream hover:text-gold hover:border-gold/60 transition-all active:scale-95 shadow-lg cursor-pointer"
-            >
-              <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
           </div>
 
         </div>

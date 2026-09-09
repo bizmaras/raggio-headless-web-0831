@@ -15,19 +15,19 @@
     "badge": "100% Mozzarella Fresca • Masa Fermentada 48h • Newark, DE",
     "slides": [
       {
+        "tag": "PIZZA ESPECIAL",
+        "title": "Meat Lover's Exclusiva",
+        "description": "Cargada con pepperoni de res, salchicha italiana, tocino y jamón sobre nuestra masa horneada a la piedra para amantes de la carne.",
+        "ctaText": "Pedir Meat Lover's",
+        "seoAlt": "Entrega de Pizza Meat Lovers en Newark, DE"
+      },
+      {
         "tag": "FAVORITA DE LA CASA",
         "title": "Pizza Buffalo Chicken Picante",
         "description": "Pollo tierno bañado en salsa buffalo picante con un toque de aderezo ranch cremoso. Una favorita local en Newark.",
         "ctaText": "Probar Buffalo Chicken",
         "seoAlt": "Pizza Buffalo Chicken Picante - Raggio Gourmet Newark",
         "highlight": "Salsa Buffalo Picante y Ranch Cremoso"
-      },
-      {
-        "tag": "PIZZA ESPECIAL",
-        "title": "Meat Lover's Exclusiva",
-        "description": "Cargada con pepperoni de res, salchicha italiana, tocino y jamón sobre nuestra masa horneada a la piedra para amantes de la carne.",
-        "ctaText": "Pedir Meat Lover's",
-        "seoAlt": "Entrega de Pizza Meat Lovers en Newark, DE"
       }
     ]
   },

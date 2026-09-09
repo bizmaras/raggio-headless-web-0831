@@ -209,10 +209,10 @@ export default function AIChatBot() {
                 <div className="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 z-40">
                     <button
                         onClick={() => setIsOpen(true)}
-                        className="flex h-14 w-14 items-center justify-center rounded-full bg-[#14181d] border-2 border-[#c9a15c] text-[#c9a15c] shadow-[0_6px_20px_rgba(201,161,92,0.28)] transition-transform hover:scale-105 active:scale-95"
+                        className="flex h-14 w-14 items-center justify-center rounded-full bg-[#c9a15c] text-[#121214] shadow-[0_0_24px_rgba(201,161,92,0.45)] border border-white/20 transition-transform hover:scale-105 active:scale-95 cursor-pointer"
                         aria-label="Open Chat"
                     >
-                        <MessageSquare className="h-6 w-6" />
+                        <MessageSquare className="h-6 w-6 text-[#121214]" />
                     </button>
                 </div>
             )}
