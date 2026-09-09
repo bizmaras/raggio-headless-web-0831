@@ -1,6 +1,23 @@
 import type { NextConfig } from 'next';
 
+const cspHeader = `
+  default-src 'self';
+  script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.datadoghq.com;
+  style-src 'self' 'unsafe-inline';
+  img-src 'self' data: blob: https://*.googleusercontent.com https://*.googleapis.com https://images.ctfassets.net https://raggiogourmetpizza.com;
+  font-src 'self' data:;
+  connect-src 'self' https://*.datadoghq.com https://places.googleapis.com https://script.google.com https://*.foodtecsolutions.com https://raggiogourmetpizza.com;
+  frame-src 'self' https://www.google.com https://maps.google.com;
+  object-src 'none';
+  base-uri 'self';
+  form-action 'self' https://*.foodtecsolutions.com;
+`.replace(/\s{2,}/g, ' ').trim();
+
 const securityHeaders = [
+  {
+    key: 'Content-Security-Policy',
+    value: cspHeader,
+  },
   {
     key: 'X-Frame-Options',
     value: 'DENY',
@@ -16,6 +33,14 @@ const securityHeaders = [
   {
     key: 'Permissions-Policy',
     value: 'camera=(), microphone=(), geolocation=()',
+  },
+  {
+    key: 'Cross-Origin-Opener-Policy',
+    value: 'same-origin-allow-popups',
+  },
+  {
+    key: 'Cross-Origin-Resource-Policy',
+    value: 'same-origin',
   },
   {
     key: 'X-XSS-Protection',
