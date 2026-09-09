@@ -110,12 +110,6 @@ export default async function HomePage({
         <CategoryRail categoriesDict={dict.categories} lang={lang} />
         <StatsCounter dict={dict} />
 
-        <DealsSectionWrapper>
-          <ScrollReveal>
-            <PromotionsSection dict={dict} />
-          </ScrollReveal>
-        </DealsSectionWrapper>
-
         <section id="menu" className="max-w-7xl mx-auto px-6 py-12 scroll-mt-[210px]">
           <ScrollReveal>
             <div className="flex flex-col sm:flex-row items-center justify-between mb-12 gap-4">
@@ -193,6 +187,9 @@ export default async function HomePage({
             );
           })}
         </section>
+        <ScrollReveal>
+          <PromotionsSection dict={dict} />
+        </ScrollReveal>
         <div style={{ contentVisibility: 'auto', containIntrinsicSize: '0 500px' }}>
           <CateringSection dict={dict} lang={lang} />
         </div>

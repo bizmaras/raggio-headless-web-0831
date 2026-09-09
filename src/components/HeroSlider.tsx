@@ -175,16 +175,16 @@ export default function HeroSlider({ dict }: HeroSliderProps) {
       <h2 className="sr-only">{activeSlide.title}</h2>
       <p className="sr-only">{activeSlide.description}</p>
 
-      {/* FULL-WIDTH CONTAINER: No max-w-7xl constraint to eliminate dead empty space */}
-      <div className="w-full px-3 sm:px-6 lg:px-8 xl:px-12 overflow-visible relative">
+      {/* CONSTRAINED LUXURY CONTAINER: Anchored to max-w-7xl to prevent wide-screen dispersion */}
+      <div className="max-w-7xl 2xl:max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8 overflow-visible relative">
         
-        {/* MASTER FULL-WIDTH HERO CARD PRESENTATION */}
-        <div className="w-full relative min-h-[460px] sm:min-h-[500px] lg:min-h-[540px] xl:min-h-[580px] rounded-2xl sm:rounded-3xl lg:rounded-[32px] bg-gradient-to-b from-[#15171d]/90 via-[#101216]/95 to-[#0b0c0f] border border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.85)] flex items-center overflow-visible">
+        {/* MASTER HERO CARD PRESENTATION */}
+        <div className="w-full relative min-h-[480px] sm:min-h-[540px] lg:min-h-[600px] xl:min-h-[640px] rounded-2xl sm:rounded-3xl lg:rounded-[36px] bg-gradient-to-b from-[#15171d]/90 via-[#101216]/95 to-[#0b0c0f] border border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.85)] flex items-center overflow-visible">
 
-          <div className="w-full h-full flex flex-col lg:flex-row items-center justify-between px-6 sm:px-10 lg:px-14 xl:px-18 py-8 lg:py-12 relative overflow-visible">
+          <div className="w-full h-full flex flex-col lg:flex-row items-center justify-between px-6 sm:px-10 lg:px-12 xl:px-14 py-8 lg:py-12 relative overflow-visible">
 
             {/* LEFT EDITORIAL COLUMN */}
-            <div className="w-full lg:max-w-[48%] xl:max-w-[45%] 2xl:max-w-[42%] z-20 flex flex-col justify-center text-left">
+            <div className="w-full lg:max-w-[48%] xl:max-w-[46%] z-20 flex flex-col justify-center text-left">
               
               {/* Badge */}
               <div className="inline-flex items-center gap-2 self-start px-3.5 py-1.5 rounded-full bg-white/[0.06] border border-white/12 text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#e6c884] mb-3 sm:mb-4 shadow-sm">
@@ -192,13 +192,13 @@ export default function HeroSlider({ dict }: HeroSliderProps) {
                 <span>{activeSlide.tag}</span>
               </div>
 
-              {/* Title */}
+              {/* Title - Bold & Impactful */}
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-extrabold text-white tracking-tight leading-[1.06] mb-3 sm:mb-4 drop-shadow-md">
                 {activeSlide.title}
               </h2>
 
               {/* Description */}
-              <p className="text-white/70 text-xs sm:text-sm lg:text-base leading-relaxed max-w-lg mb-6 sm:mb-8">
+              <p className="text-white/70 text-xs sm:text-sm lg:text-base leading-relaxed max-w-md mb-6 sm:mb-8">
                 {activeSlide.description}
               </p>
 
@@ -247,19 +247,19 @@ export default function HeroSlider({ dict }: HeroSliderProps) {
 
             </div>
 
-            {/* RIGHT 3D PRODUCT COLUMN WITH OVERFLOW (NO WOODEN BOARD) */}
-            <div className="w-full lg:w-auto lg:absolute lg:right-[-3%] xl:right-[-4%] 2xl:right-[-5%] lg:top-1/2 lg:-translate-y-1/2 flex items-center justify-center overflow-visible z-20 pointer-events-none mt-6 lg:mt-0">
+            {/* RIGHT 3D PRODUCT COLUMN WITH OVERFLOW (ANCHORED & PROPORTIONAL) */}
+            <div className="w-full lg:w-auto lg:absolute lg:right-[-6%] xl:right-[-7%] 2xl:right-[-8%] lg:top-[53%] lg:-translate-y-1/2 flex items-center justify-center overflow-visible z-20 pointer-events-none mt-6 lg:mt-0">
               
               {/* Ambient Glow */}
               <div
-                className="absolute w-[340px] sm:w-[460px] lg:w-[680px] xl:w-[800px] 2xl:w-[900px] h-[340px] sm:h-[460px] lg:h-[680px] xl:h-[800px] 2xl:h-[900px] rounded-full blur-3xl pointer-events-none -z-10"
+                className="absolute w-[340px] sm:w-[480px] lg:w-[680px] xl:w-[760px] 2xl:w-[820px] h-[340px] sm:h-[480px] lg:h-[680px] xl:h-[760px] 2xl:h-[820px] rounded-full blur-3xl pointer-events-none -z-10"
                 style={{
                   background: `radial-gradient(circle, ${activeSlide.glowColor} 0%, transparent 65%)`,
                 }}
               />
 
-              {/* 3D Overflowing Product Container - Scaled boldly to eliminate dead space */}
-              <div className="relative w-[320px] sm:w-[440px] md:w-[540px] lg:w-[680px] xl:w-[780px] 2xl:w-[880px] aspect-[16/11] overflow-visible">
+              {/* 3D Overflowing Product Container */}
+              <div className="relative w-[320px] sm:w-[460px] md:w-[560px] lg:w-[680px] xl:w-[760px] 2xl:w-[820px] aspect-[16/11] overflow-visible">
                 
                 {/* Hotspot Pins */}
                 {activeSlide.pins && activeSlide.pins.map((pin, pIdx) => (
@@ -279,7 +279,7 @@ export default function HeroSlider({ dict }: HeroSliderProps) {
                   fill
                   priority
                   quality={92}
-                  sizes="(max-width: 640px) 320px, (max-width: 1024px) 540px, (max-width: 1440px) 780px, 880px"
+                  sizes="(max-width: 640px) 340px, (max-width: 1024px) 640px, (max-width: 1440px) 980px, 1120px"
                   className="object-contain filter drop-shadow-[0_28px_40px_rgba(0,0,0,0.85)] select-none"
                 />
               </div>

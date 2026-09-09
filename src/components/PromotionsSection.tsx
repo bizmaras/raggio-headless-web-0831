@@ -157,7 +157,7 @@ export default function PromotionsSection({ dict }: PromotionsSectionProps) {
   };
 
   return (
-    <section className="py-5 sm:py-10 px-4 sm:px-6 max-w-7xl mx-auto">
+    <section id="deals" className="py-8 sm:py-14 px-4 sm:px-6 max-w-7xl mx-auto scroll-mt-28">
       <div className="flex items-center justify-between mb-4 sm:mb-8">
         <div>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-gold-bright tracking-tight">

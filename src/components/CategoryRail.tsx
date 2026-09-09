@@ -10,8 +10,6 @@ interface CategoryRailProps {
 }
 
 export const CATEGORIES = [
-  { label: 'Deals & Specials', searchId: 'deals' },
-  { label: '⭐ Reviews (4.2)', searchId: 'reviews' },
   { label: 'Pizza', searchId: 'pizza' },
   { label: 'Gourmet Pizza', searchId: 'gourmet-pizza' },
   { label: 'Sicilian Pizza', searchId: 'sicilian-pizza' },
@@ -33,12 +31,14 @@ export const CATEGORIES = [
   { label: 'Soups', searchId: 'soups' },
   { label: 'Drinks', searchId: 'drinks' },
   { label: 'Side Orders', searchId: 'side-orders' },
+  { label: 'Deals & Specials', searchId: 'deals' },
   { label: 'Catering', searchId: 'catering' },
+  { label: '⭐ Reviews (4.2)', searchId: 'reviews' },
 ];
 
 export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }: CategoryRailProps) {
   const router = useRouter();
-  const [activeCategory, setActiveCategory] = useState<string>(activeSlug || '');
+  const [activeCategory, setActiveCategory] = useState<string>(activeSlug || 'pizza');
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const isPaused = useRef(false);
@@ -188,18 +188,6 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
       return;
     }
 
-    // ON HOMEPAGE: Maintain single-page app experience!
-    if (searchId === 'deals') {
-      if (typeof window !== 'undefined') {
-        window.dispatchEvent(new CustomEvent('toggle-deals', { detail: { show: true } }));
-      }
-      return;
-    } else {
-      if (typeof window !== 'undefined') {
-        window.dispatchEvent(new CustomEvent('toggle-deals', { detail: { show: false } }));
-      }
-    }
-
     let target = document.getElementById(searchId);
     if (!target) {
       target = Array.from(document.querySelectorAll('div[id],section[id]'))
@@ -239,28 +227,23 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
         href={href}
         onClick={(e) => handleCategoryClick(e, cat.searchId)}
         className={`
-          flex-none flex items-center gap-2 px-4 py-2 md:px-5 md:py-2.5 rounded-full border text-xs sm:text-sm font-semibold whitespace-nowrap
-          transition-all duration-200 touch-manipulation select-none cursor-pointer
-          active:scale-95 focus:outline-none tracking-wide shadow-sm
+          flex-none flex items-center justify-center px-4 py-2 md:px-5 md:py-2.5 rounded-xl border text-xs sm:text-sm font-semibold whitespace-nowrap
+          transition-all duration-300 touch-manipulation select-none cursor-pointer
+          active:scale-95 focus:outline-none tracking-wide
           ${isDuplicate ? 'md:hidden' : ''}
           ${isActive
-            ? 'border-gold text-gold bg-gold/15'
-            : 'border-white/10 bg-[#16181d]/85 text-white/80 hover:text-white hover:border-white/20'
+            ? 'bg-[#c9a15c]/15 text-[#c9a15c] font-bold border-[#c9a15c] shadow-[0_0_24px_rgba(201,161,92,0.45)] ring-1 ring-[#c9a15c]/50'
+            : 'border-white/10 bg-[#16181d]/90 text-white/90 hover:text-[#c9a15c] hover:border-[#c9a15c] hover:shadow-[0_0_20px_rgba(201,161,92,0.35)] hover:-translate-y-0.5 shadow-sm active:text-[#c9a15c] active:border-[#c9a15c]'
           }
         `}
       >
-        <span
-          className={`w-1.5 h-1.5 rounded-full shrink-0 ${
-            isActive ? 'bg-gold' : 'bg-red-500'
-          }`}
-        />
         {label}
       </a>
     );
   };
 
   return (
-    <div className="sticky top-16 md:top-20 z-40 bg-ink/95 backdrop-blur-md border-b border-panel-border py-2 md:py-3.5 shadow-sm">
+    <div className="sticky top-16 md:top-20 z-40 bg-ink/95 backdrop-blur-md border-b border-panel-border pt-6 pb-4 md:pt-8 md:pb-5 shadow-sm">
       <div
         ref={scrollRef}
         onPointerDown={handleInteractionStart}
@@ -270,7 +253,7 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
         onTouchStart={handleInteractionStart}
         onTouchEnd={handleInteractionEnd}
         onScroll={handleContainerScroll}
-        className="flex overflow-x-auto md:flex-wrap md:justify-center gap-2.5 px-3 md:px-6 max-w-7xl mx-auto no-scrollbar"
+        className="flex overflow-x-auto md:flex-wrap md:justify-center gap-2.5 md:gap-3 px-3 md:px-6 max-w-7xl mx-auto no-scrollbar pt-2 pb-1"
         style={{ WebkitOverflowScrolling: 'touch' }}
       >
         {/* Set 1: visible everywhere (wraps on desktop, flows on mobile) */}

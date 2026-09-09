@@ -27,6 +27,20 @@
         "description": "Tender chicken tossed in fiery buffalo sauce with creamy ranch drizzle. A local favorite in Newark.",
         "ctaText": "Try Buffalo Chicken",
         "seoAlt": "Spicy Buffalo Chicken Pizza - Raggio Gourmet Newark"
+      },
+      {
+        "tag": "CLASSIC SPECIALTY",
+        "title": "Artisanal Pepperoni",
+        "description": "Crispy cupped beef pepperoni, melted Grande Mozzarella, rich San Marzano tomato sauce, and fresh basil on stone-baked crust.",
+        "ctaText": "Order Pepperoni",
+        "seoAlt": "Artisanal Pepperoni Pizza - Raggio Gourmet Newark DE"
+      },
+      {
+        "tag": "CHEF'S SIGNATURE",
+        "title": "White Spinach & Ricotta",
+        "description": "Fresh baby spinach, velvety whole-milk ricotta, garlic-infused olive oil, and melted mozzarella on stone-baked blistered crust.",
+        "ctaText": "Try White Spinach",
+        "seoAlt": "White Spinach and Ricotta Pizza - Raggio Gourmet Newark DE"
       }
     ]
   },
