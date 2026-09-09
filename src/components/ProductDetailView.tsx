@@ -225,7 +225,7 @@ export default function ProductDetailView({
               href={orderUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full bg-gold hover:bg-gold-bright text-ink font-extrabold py-4 px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 text-center text-base sm:text-lg shadow-lg hover:shadow-gold/25 active:scale-[0.98]"
+              className="w-full btn-gold py-3.5 px-6 text-base sm:text-lg"
             >
               <span>{orderOnlineText} {activeSize ? `(${activeSize.label})` : ''}</span>
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

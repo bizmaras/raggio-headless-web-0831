@@ -186,7 +186,7 @@ export default function GoogleReviewsSection({ dict }: GoogleReviewsSectionProps
               href={writeReviewUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-4 py-3 rounded-xl bg-gold hover:bg-gold-bright text-ink text-xs sm:text-sm font-extrabold transition-all shadow-md hover:shadow-gold/20 cursor-pointer active:scale-95"
+              className="btn-gold px-4 py-2.5 text-xs sm:text-sm"
             >
               <MessageSquare className="w-3.5 h-3.5" />
               <span>{writeReviewText}</span>

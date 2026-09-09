@@ -178,7 +178,7 @@ export default function CateringItemCard({
               href={FOODTEC_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full bg-gold hover:bg-gold-bright text-ink font-extrabold py-3.5 px-6 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 text-center text-sm sm:text-base shadow-lg active:scale-[0.98]"
+              className="w-full btn-gold py-3 px-6 text-sm sm:text-base"
             >
               {halfLabel === 'MEDIANO' ? 'Ordenar Catering en Línea' : 'Order Catering Online'}
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

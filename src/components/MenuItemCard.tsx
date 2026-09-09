@@ -166,7 +166,7 @@ export default function MenuItemCard(props: MenuItemCardProps) {
                     aria-pressed={isSelected}
                     className={`py-1 px-1 rounded-md text-xs font-bold transition-all duration-150 flex flex-col items-center justify-center cursor-pointer ${
                       isSelected
-                        ? 'bg-gold text-ink shadow-[0_2px_8px_rgba(201,161,92,0.35)] scale-[1.02]'
+                        ? 'bg-gradient-to-b from-[#f2dc98] via-[#e6c884] to-[#d8b467] text-[#241710] shadow-[0_4px_14px_rgba(216,180,103,0.45)] border border-white/40 scale-[1.02]'
                         : 'text-stone hover:text-cream hover:bg-panel/70'
                     }`}
                     title={`${s.fullName?.[currentLang] || s.label} - $${s.price.toFixed(2)}`}
@@ -325,7 +325,7 @@ export default function MenuItemCard(props: MenuItemCardProps) {
                 href={itemOrderUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full bg-gold hover:bg-gold-bright text-ink font-extrabold py-3.5 sm:py-4 px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 text-center text-sm sm:text-base md:text-lg shadow-lg hover:shadow-gold/20 active:scale-[0.98]"
+                className="w-full btn-gold py-3.5 sm:py-4 px-6 text-base sm:text-lg"
               >
                 {orderOnlineText} {activeSize ? `(${activeSize.label})` : ''}
                 <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

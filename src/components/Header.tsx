@@ -102,7 +102,7 @@ export default function Header({ lang = 'en', dict }: HeaderProps) {
               href="https://phillystyleexpress.foodtecsolutions.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-gold hover:bg-gold-bright text-ink font-extrabold px-6 py-3 rounded-xl text-base transition-all shadow-md"
+              className="btn-gold px-6 py-2.5 text-base"
             >
               {orderText}
             </a>
@@ -126,7 +126,7 @@ export default function Header({ lang = 'en', dict }: HeaderProps) {
               href="https://phillystyleexpress.foodtecsolutions.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-gold hover:bg-gold-bright text-ink font-extrabold text-xs px-3.5 py-2.5 rounded-xl shadow-md transition-all active:scale-95 flex items-center justify-center"
+              className="btn-gold text-xs px-3.5 py-2"
             >
               {orderText === 'Ordenar Ahora' ? 'Ordenar' : 'Order'}
             </a>

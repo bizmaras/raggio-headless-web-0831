@@ -65,7 +65,7 @@ export default function StickyMobileBar({ dict }: StickyMobileBarProps) {
           href="https://phillystyleexpress.foodtecsolutions.com/"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-gold hover:bg-gold-bright text-ink font-extrabold text-sm active:scale-95 transition-all shadow-md"
+          className="flex-1 btn-gold py-2.5 px-4 text-sm"
           aria-label="Order Online via FoodTec"
         >
           <span>{orderOnlineText}</span>

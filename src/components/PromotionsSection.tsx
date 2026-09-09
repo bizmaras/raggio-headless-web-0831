@@ -236,7 +236,7 @@ export default function PromotionsSection({ dict }: PromotionsSectionProps) {
                 href={promo.orderUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full py-2.5 px-4 rounded-lg bg-gold hover:bg-gold-bright text-ink text-xs font-extrabold transition-all duration-200 shadow-md flex items-center justify-center gap-1.5 active:scale-98"
+                className="w-full btn-gold py-2.5 px-4 text-xs"
               >
                 {orderDealText}
                 <span aria-hidden="true">&rarr;</span>
@@ -302,7 +302,7 @@ export default function PromotionsSection({ dict }: PromotionsSectionProps) {
               href={selectedPromo.orderUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full block text-center bg-gold hover:bg-gold-bright text-ink font-extrabold py-3.5 rounded-xl text-sm transition-all shadow-lg active:scale-[0.98]"
+              className="w-full btn-gold py-3 text-sm"
             >
               {orderDealText} &rarr;
             </a>

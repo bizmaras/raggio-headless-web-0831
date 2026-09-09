@@ -23,52 +23,74 @@ interface HeroSliderProps {
   };
 }
 
-const DEFAULT_SLIDES = [
+interface SlideItem {
+  tag: string;
+  title: string;
+  description: string;
+  ctaText: string;
+  ctaLink: string;
+  image: string;
+  seoAlt: string;
+  pins: Array<{ label: string; top: number; left: number }>;
+}
+
+const DEFAULT_SLIDES: SlideItem[] = [
+  {
+    tag: 'HOUSE FAVORITE',
+    title: 'Spicy Buffalo Chicken',
+    description: 'Tender chicken tossed in fiery buffalo sauce with creamy ranch drizzle on our stone-baked crust. A local Newark favorite.',
+    ctaText: 'Try Buffalo Chicken',
+    ctaLink: 'https://phillystyleexpress.foodtecsolutions.com/',
+    image: '/images/pizza-buffalo-wood-cutout.png',
+    seoAlt: 'Spicy Buffalo Chicken Pizza - Raggio Gourmet Newark DE',
+    pins: [
+      { label: 'Fiery Buffalo Chicken', top: 18, left: 15 },
+      { label: 'Creamy Ranch Drizzle', top: 76, left: 52 },
+    ],
+  },
+  {
+    tag: 'SPECIALTY PIZZA',
+    title: 'Signature Meat Lover’s',
+    description: 'Packed with savory beef pepperoni, sausage crumbles, crispy bacon, and ham on deck-oven crust for true meat lovers.',
+    ctaText: 'Order Meat Lover’s',
+    ctaLink: 'https://phillystyleexpress.foodtecsolutions.com/',
+    image: '/images/pizza-meatlover-wood-cutout.png',
+    seoAlt: 'Signature Meat Lovers Pizza Delivery in Newark DE',
+    pins: [
+      { label: 'Loaded with 4 Artisan Meats', top: 18, left: 20 },
+      { label: 'Grande Mozzarella', top: 78, left: 55 },
+    ],
+  },
   {
     tag: '100% BEEF PEPPERONI',
     title: 'Crispy Beef Pepperoni',
     description: 'Crafted with savory beef pepperoni, 100% Grande Mozzarella, and homemade marinara on deck-oven stone-baked crust.',
     ctaText: 'Order Beef Pepperoni',
     ctaLink: 'https://phillystyleexpress.foodtecsolutions.com/',
-    image: '/images/apple-card-pepperoni.jpg',
+    image: '/images/pizza-pepperoni-wood-cutout.png',
     seoAlt: 'Crispy Beef Pepperoni Pizza at Raggio Gourmet Newark DE',
-    highlight: 'Grande Mozzarella & Crispy Crust',
-  },
-  {
-    tag: 'SPECIALTY PIZZA',
-    title: 'Signature Meat Lover’s',
-    description: 'Packed with beef pepperoni, sausage, bacon, and ham on our deck-oven stone-baked crust for true meat lovers.',
-    ctaText: 'Get the Meat Lover’s',
-    ctaLink: 'https://phillystyleexpress.foodtecsolutions.com/',
-    image: '/images/apple-card-meatlover.jpg',
-    seoAlt: 'Signature Meat Lovers Pizza Delivery in Newark, DE',
-    highlight: 'Loaded with 4 Artisan Meats',
-  },
-  {
-    tag: 'HOUSE FAVORITE',
-    title: 'Spicy Buffalo Chicken Pizza',
-    description: 'Tender chicken tossed in fiery buffalo sauce with creamy ranch drizzle. A local favorite in Newark.',
-    ctaText: 'Try Buffalo Chicken',
-    ctaLink: 'https://phillystyleexpress.foodtecsolutions.com/',
-    image: '/images/apple-card-buffalo.jpg',
-    seoAlt: 'Spicy Buffalo Chicken Pizza - Raggio Gourmet Newark',
-    highlight: 'Fiery Buffalo & Creamy Ranch',
+    pins: [
+      { label: '100% Beef Pepperoni', top: 18, left: 18 },
+      { label: 'Stone-Baked Crust', top: 76, left: 54 },
+    ],
   },
   {
     tag: 'GOURMET SELECTION',
-    title: 'Fresh Spinach & Garlic Gourmet',
-    description: 'Sauteed fresh spinach, roasted garlic, ricotta, and extra virgin olive oil. Perfect for catering and family dining.',
+    title: 'Fresh Spinach & Garlic',
+    description: 'Sautéed fresh spinach, roasted garlic, creamy ricotta, and extra virgin olive oil. Perfect for catering and family dining.',
     ctaText: 'Taste Spinach Gourmet',
     ctaLink: 'https://phillystyleexpress.foodtecsolutions.com/',
-    image: '/images/apple-card-spinach.jpg',
+    image: '/images/pizza-spinach-wood-cutout.png',
     seoAlt: 'Fresh Spinach and Garlic Gourmet Pizza in Newark DE',
-    highlight: 'Roasted Garlic & Ricotta',
+    pins: [
+      { label: 'Roasted Garlic & Ricotta', top: 18, left: 18 },
+      { label: 'Fresh Baby Spinach', top: 76, left: 52 },
+    ],
   },
 ];
 
 export default function HeroSlider({ dict }: HeroSliderProps) {
   const [current, setCurrent] = useState(0);
-  const [isHydrated, setIsHydrated] = useState(false);
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const [touchStartY, setTouchStartY] = useState<number | null>(null);
   const [touchEndX, setTouchEndX] = useState<number | null>(null);
@@ -86,19 +108,13 @@ export default function HeroSlider({ dict }: HeroSliderProps) {
       description: localized.description || slide.description,
       ctaText: localized.ctaText || slide.ctaText,
       seoAlt: localized.seoAlt || slide.seoAlt,
-      highlight: localized.highlight || slide.highlight,
     };
   });
 
   useEffect(() => {
-    const deferTimer = setTimeout(() => setIsHydrated(true), 1200);
-    return () => clearTimeout(deferTimer);
-  }, []);
-
-  useEffect(() => {
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % slides.length);
-    }, 6000);
+    }, 6500);
     return () => clearInterval(timer);
   }, [slides.length]);
 
@@ -134,7 +150,7 @@ export default function HeroSlider({ dict }: HeroSliderProps) {
 
   return (
     <section
-      className="relative w-full overflow-hidden bg-ink py-3 sm:py-6 lg:py-8 select-none"
+      className="relative w-full overflow-hidden bg-ink py-4 sm:py-8 lg:py-10 select-none"
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
@@ -150,84 +166,120 @@ export default function HeroSlider({ dict }: HeroSliderProps) {
 
       <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         
-        {/* APPLE CONCEPT CARD SHOWCASE */}
-        <div className="w-full relative aspect-[16/9] max-h-[640px] rounded-2xl sm:rounded-3xl lg:rounded-[32px] overflow-hidden border border-white/10 bg-[#0c0d10] shadow-[0_25px_60px_rgba(0,0,0,0.85)]">
-          
-          {/* SLIDES */}
-          {slides.map((slide, index) => {
-            const isCurrent = index === current;
-            const shouldRender = isHydrated || index === 0;
-            if (!shouldRender) return null;
+        {/* MASTER 3D SHOWCASE CONTAINER */}
+        <div className="w-full relative min-h-[500px] sm:min-h-[520px] lg:min-h-[560px] rounded-2xl sm:rounded-3xl lg:rounded-[32px] bg-[#0c0d10] border border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.85)] p-4 sm:p-7 lg:p-10 flex items-center overflow-visible">
 
-            return (
-              <div
-                key={slide.image}
-                className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
-                  isCurrent ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
-                }`}
-                aria-hidden={!isCurrent}
-              >
-                <Image
-                  src={slide.image}
-                  alt={slide.seoAlt}
-                  fill
-                  priority={index === 0}
-                  fetchPriority={index === 0 ? "high" : "auto"}
-                  quality={90}
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 95vw, 1280px"
-                  className="object-cover object-center"
-                />
+          {/* INNER FROSTED GLASS CARD */}
+          <div className="w-full relative rounded-xl sm:rounded-2xl lg:rounded-[24px] bg-gradient-to-b from-[#14171d]/75 to-[#0e1014]/90 backdrop-blur-xl border border-white/10 p-5 sm:p-8 lg:p-12 overflow-visible">
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+              
+              {/* LEFT EDITORIAL COLUMN */}
+              <div key={`text-${current}`} className="lg:col-span-7 flex flex-col justify-center text-left z-20 animate-fadeIn">
+                
+                {/* Badge */}
+                <div className="inline-flex items-center gap-2 self-start px-3.5 py-1.5 rounded-full bg-white/[0.06] border border-white/12 text-[11px] sm:text-xs font-bold uppercase tracking-widest text-cream/90 mb-3 sm:mb-4 shadow-sm">
+                  <span className="w-2 h-2 rounded-full bg-ember shadow-[0_0_8px_#e54d2e]" />
+                  {activeSlide.tag}
+                </div>
+
+                {/* Headline */}
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-[1.08] mb-3 sm:mb-4 drop-shadow-md">
+                  {activeSlide.title}
+                </h2>
+
+                {/* Description */}
+                <p className="text-stone text-xs sm:text-sm lg:text-base leading-relaxed max-w-lg mb-6 sm:mb-8 line-clamp-2 sm:line-clamp-3">
+                  {activeSlide.description}
+                </p>
+
+                {/* LUXURY MODEL 2 BUTTONS (SATIN GOLD & CHARCOAL) */}
+                <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
+                  <a
+                    href={activeSlide.ctaLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-gold px-5 sm:px-7 py-3 text-xs sm:text-sm lg:text-base font-extrabold shadow-lg"
+                  >
+                    <span>{activeSlide.ctaText}</span>
+                    <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7V17" />
+                    </svg>
+                  </a>
+
+                  <a
+                    href="#menu"
+                    className="btn-charcoal px-4 sm:px-6 py-3 text-xs sm:text-sm lg:text-base font-bold"
+                  >
+                    <span>{dict?.hero?.cta || 'View Menu'}</span>
+                  </a>
+                </div>
+
+                {/* STORYLINE PROGRESS INDICATOR (Segmented Gold Bars) */}
+                <div className="flex items-center gap-2 mt-8 sm:mt-12">
+                  {slides.map((_, dotIdx) => (
+                    <button
+                      key={dotIdx}
+                      type="button"
+                      onClick={() => setCurrent(dotIdx)}
+                      aria-label={`Go to slide ${dotIdx + 1}`}
+                      className="py-2 cursor-pointer focus:outline-none group"
+                    >
+                      <div className={`h-1 sm:h-1.5 rounded-full transition-all duration-300 ${
+                        current === dotIdx
+                          ? 'w-8 sm:w-14 bg-gradient-to-r from-[#f2dc98] via-[#e6c884] to-[#d8b467] shadow-[0_0_12px_rgba(216,180,103,0.85)]'
+                          : 'w-4 sm:w-6 bg-white/20 group-hover:bg-white/40'
+                      }`} />
+                    </button>
+                  ))}
+                </div>
+
               </div>
-            );
-          })}
 
-          {/* INTERACTIVE CLICKABLE HOTSPOTS OVER APPLE BUTTONS */}
-          <div className="absolute inset-0 z-20 pointer-events-none">
-            {/* Primary Order CTA Hotspot */}
-            <a
-              href={activeSlide.ctaLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="absolute pointer-events-auto left-[6%] sm:left-[8%] bottom-[20%] sm:bottom-[23%] lg:bottom-[24%] w-[42%] sm:w-[26%] lg:w-[22%] h-[15%] sm:h-[13%] rounded-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-gold/60"
-              aria-label={activeSlide.ctaText}
-            />
+              {/* RIGHT 3D OVERFLOW PRODUCT COLUMN */}
+              <div key={`img-${current}`} className="lg:col-span-5 relative flex items-center justify-center min-h-[260px] sm:min-h-[320px] lg:min-h-[420px] animate-fadeIn">
+                
+                {/* Ambient Oven Glow Halo */}
+                <div className="absolute w-[280px] sm:w-[340px] lg:w-[420px] h-[280px] sm:h-[340px] lg:h-[420px] rounded-full bg-radial from-ember/30 via-gold/20 to-transparent blur-3xl pointer-events-none -z-10" />
 
-            {/* Secondary View Menu Hotspot */}
-            <a
-              href="#menu"
-              className="absolute pointer-events-auto left-[50%] sm:left-[36%] lg:left-[31%] bottom-[20%] sm:bottom-[23%] lg:bottom-[24%] w-[28%] sm:w-[18%] lg:w-[15%] h-[15%] sm:h-[13%] rounded-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-gold/60"
-              aria-label={dict?.hero?.cta || 'View Menu'}
-            />
-          </div>
-
-          {/* STORYLINE PROGRESS INDICATOR (Segmented Gold Bars) */}
-          <div className="absolute z-30 left-[6%] sm:left-[8%] bottom-[5%] sm:bottom-[7%] flex items-center gap-1.5 sm:gap-2">
-            {slides.map((_, dotIdx) => (
-              <button
-                key={dotIdx}
-                type="button"
-                onClick={() => setCurrent(dotIdx)}
-                aria-label={`Go to slide ${dotIdx + 1}`}
-                className="group py-2 cursor-pointer focus:outline-none"
-              >
-                <div className="w-6 sm:w-12 h-1 rounded-full bg-white/25 overflow-hidden transition-colors group-hover:bg-white/45">
+                {/* Interactive Topping Hotspots / Pins */}
+                {activeSlide.pins.map((pin, pIdx) => (
                   <div
-                    className={`h-full bg-gold transition-all duration-500 rounded-full ${
-                      current === dotIdx ? 'w-full shadow-[0_0_10px_rgba(201,161,92,0.9)]' : 'w-0'
-                    }`}
+                    key={pIdx}
+                    style={{ top: `${pin.top}%`, left: `${pin.left}%` }}
+                    className="absolute z-30 hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#121417]/85 backdrop-blur-md border border-white/20 text-[11px] font-semibold text-cream shadow-[0_4px_16px_rgba(0,0,0,0.6)] pointer-events-auto"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-gold-bright shadow-[0_0_6px_#e3c383]" />
+                    <span>{pin.label}</span>
+                  </div>
+                ))}
+
+                {/* The 3D Overflowing Product Image */}
+                <div className="relative w-[280px] sm:w-[360px] lg:w-[440px] aspect-square lg:scale-110 lg:translate-x-6 transition-transform duration-500">
+                  <Image
+                    src={activeSlide.image}
+                    alt={activeSlide.seoAlt}
+                    fill
+                    priority
+                    quality={92}
+                    sizes="(max-width: 640px) 280px, (max-width: 1024px) 360px, 440px"
+                    className="object-contain filter drop-shadow-[0_25px_35px_rgba(0,0,0,0.85)]"
                   />
                 </div>
-              </button>
-            ))}
+
+              </div>
+
+            </div>
+
           </div>
 
-          {/* NAVIGATION ARROWS */}
-          <div className="absolute z-30 right-3 sm:right-6 bottom-3 sm:bottom-6 flex items-center gap-2">
+          {/* GLOBAL NAVIGATION ARROWS (BOTTOM RIGHT) */}
+          <div className="absolute z-40 right-6 sm:right-10 bottom-6 sm:bottom-10 flex items-center gap-2">
             <button
               type="button"
               onClick={prevSlide}
               aria-label="Previous pizza"
-              className="p-2 sm:p-2.5 rounded-full backdrop-blur-md bg-black/60 border border-white/15 text-cream hover:text-gold hover:border-gold/60 transition-all active:scale-95 shadow-lg"
+              className="p-2.5 sm:p-3 rounded-xl backdrop-blur-md bg-[#16181d]/85 border border-white/15 text-cream hover:text-gold hover:border-gold/60 transition-all active:scale-95 shadow-lg cursor-pointer"
             >
               <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
@@ -237,7 +289,7 @@ export default function HeroSlider({ dict }: HeroSliderProps) {
               type="button"
               onClick={nextSlide}
               aria-label="Next pizza"
-              className="p-2 sm:p-2.5 rounded-full backdrop-blur-md bg-black/60 border border-white/15 text-cream hover:text-gold hover:border-gold/60 transition-all active:scale-95 shadow-lg"
+              className="p-2.5 sm:p-3 rounded-xl backdrop-blur-md bg-[#16181d]/85 border border-white/15 text-cream hover:text-gold hover:border-gold/60 transition-all active:scale-95 shadow-lg cursor-pointer"
             >
               <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
