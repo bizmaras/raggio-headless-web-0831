@@ -15,32 +15,18 @@
     "badge": "100% Fresh Mozzarella • 48h Fermented Dough • Newark, DE",
     "slides": [
       {
-        "tag": "100% BEEF PEPPERONI",
-        "title": "Crispy Beef Pepperoni",
-        "description": "Crafted with savory beef pepperoni, 100% Grande Mozzarella, and homemade marinara on deck-oven stone-baked crust.",
-        "ctaText": "Order Beef Pepperoni",
-        "seoAlt": "Crispy Beef Pepperoni Pizza at Raggio Gourmet Newark DE"
-      },
-      {
-        "tag": "SPECIALTY PIZZA",
-        "title": "Signature Meat Lover’s",
-        "description": "Packed with beef pepperoni, sausage, bacon, and ham on our deck-oven stone-baked crust for true meat lovers.",
-        "ctaText": "Get the Meat Lover’s",
-        "seoAlt": "Signature Meat Lovers Pizza Delivery in Newark, DE"
-      },
-      {
         "tag": "HOUSE FAVORITE",
-        "title": "Spicy Buffalo Chicken Pizza",
+        "title": "Spicy Buffalo Chicken",
         "description": "Tender chicken tossed in fiery buffalo sauce with creamy ranch drizzle. A local favorite in Newark.",
         "ctaText": "Try Buffalo Chicken",
         "seoAlt": "Spicy Buffalo Chicken Pizza - Raggio Gourmet Newark"
       },
       {
-        "tag": "GOURMET SELECTION",
-        "title": "Fresh Spinach & Garlic Gourmet",
-        "description": "Sauteed fresh spinach, roasted garlic, ricotta, and extra virgin olive oil. Perfect for catering and family dining.",
-        "ctaText": "Taste Spinach Gourmet",
-        "seoAlt": "Fresh Spinach and Garlic Gourmet Pizza in Newark DE"
+        "tag": "SPECIALTY PIZZA",
+        "title": "Signature Meat Lover’s",
+        "description": "Packed with beef pepperoni, sausage, bacon, and ham on our stone-baked crust for true meat lovers.",
+        "ctaText": "Order Meat Lover’s",
+        "seoAlt": "Signature Meat Lovers Pizza Delivery in Newark, DE"
       }
     ]
   },
