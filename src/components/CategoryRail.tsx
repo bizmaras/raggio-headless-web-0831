@@ -10,7 +10,7 @@ interface CategoryRailProps {
 }
 
 export const CATEGORIES = [
-  { label: 'Pizza', searchId: 'pizza' },
+  { label: 'Deals & Specials', searchId: 'deals' },
   { label: 'Gourmet Pizza', searchId: 'gourmet-pizza' },
   { label: 'Sicilian Pizza', searchId: 'sicilian-pizza' },
   { label: 'Chicken Wings', searchId: 'chicken-wings' },
@@ -31,14 +31,14 @@ export const CATEGORIES = [
   { label: 'Soups', searchId: 'soups' },
   { label: 'Drinks', searchId: 'drinks' },
   { label: 'Side Orders', searchId: 'side-orders' },
-  { label: 'Deals & Specials', searchId: 'deals' },
+  { label: 'Pizza', searchId: 'pizza' },
   { label: 'Catering', searchId: 'catering' },
   { label: '⭐ Reviews (4.2)', searchId: 'reviews' },
 ];
 
 export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }: CategoryRailProps) {
   const router = useRouter();
-  const [activeCategory, setActiveCategory] = useState<string>(activeSlug || 'pizza');
+  const [activeCategory, setActiveCategory] = useState<string>(activeSlug || 'deals');
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const isPaused = useRef(false);
@@ -132,6 +132,29 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
 
     animId = requestAnimationFrame(step);
     return () => cancelAnimationFrame(animId);
+  }, []);
+
+  // Pause auto-scroll during window vertical scroll to prevent jitter
+  useEffect(() => {
+    let scrollTimeout: ReturnType<typeof setTimeout>;
+
+    const handleWindowScroll = () => {
+      isPaused.current = true;
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+
+      scrollTimeout = setTimeout(() => {
+        if (scrollRef.current) {
+          exactScroll.current = scrollRef.current.scrollLeft;
+        }
+        isPaused.current = false;
+      }, 150); // Resume 150ms after user stops scrolling vertically
+    };
+
+    window.addEventListener('scroll', handleWindowScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleWindowScroll);
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+    };
   }, []);
 
   const handleInteractionStart = useCallback(() => {
