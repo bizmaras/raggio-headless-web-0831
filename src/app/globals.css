@@ -23,6 +23,16 @@
   --color-ember: #e54d2e;
 }
 
+:root {
+  --sticky-category-top: 136px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --sticky-category-top: 220px;
+  }
+}
+
 @layer base {
 
   html {

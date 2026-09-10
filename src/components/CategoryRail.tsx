@@ -40,10 +40,16 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
   const router = useRouter();
   const [activeCategory, setActiveCategory] = useState<string>(activeSlug || 'deals');
 
-  const scrollRef = useRef<HTMLDivElement>(null);
-  // Tracks whether activeCategory was set by a user tap (true) or by scrollspy (false).
-  // Auto-center only fires when the user tapped — NOT during free scroll.
-  const clickedRef = useRef(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  // Motion physics refs (GPU translate3d based, NO scrollLeft layout thrashing)
+  const currentX = useRef(0);
+  const isDragging = useRef(false);
+  const isInteracting = useRef(false);
+  const dragStartX = useRef(0);
+  const dragStartCurrentX = useRef(0);
+  const resumeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (activeSlug) {
@@ -61,12 +67,11 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const id = entry.target.getAttribute('data-rail-id') || entry.target.id;
-            clickedRef.current = false; // scrollspy update — do NOT auto-center rail
             setActiveCategory(id);
           }
         });
       },
-      { root: null, rootMargin: '-160px 0px -60% 0px', threshold: 0 }
+      { root: null, rootMargin: '-140px 0px -60% 0px', threshold: 0 }
     );
 
     const timer = setTimeout(() => {
@@ -89,18 +94,16 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
     };
   }, [activeSlug]);
 
-  // Set --sticky-category-top CSS variable (header height + rail height).
-  // NO ResizeObserver — it fires when the mobile browser hides/shows its address bar
-  // causing constant trembling. Simple one-time measurement with two delayed retries.
+  // Set exact --sticky-category-top CSS variable (Header height + Rail height)
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
     const updateStickyOffsets = () => {
       const headerEl = document.querySelector('header');
-      const railEl = scrollRef.current?.closest('.sticky') as HTMLElement | null;
+      const railEl = containerRef.current;
       if (headerEl && railEl) {
-        const headerH = headerEl.getBoundingClientRect().height;
-        const railH = railEl.getBoundingClientRect().height;
+        const headerH = headerEl.offsetHeight;
+        const railH = railEl.offsetHeight;
         const totalTop = Math.round(headerH + railH);
         document.documentElement.style.setProperty('--sticky-category-top', `${totalTop}px`);
       }
@@ -108,39 +111,110 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
 
     updateStickyOffsets();
     const t1 = setTimeout(updateStickyOffsets, 150);
-    const t2 = setTimeout(updateStickyOffsets, 700);
-
-    // Only re-measure on orientation change (device rotation), NOT on window resize
+    const t2 = setTimeout(updateStickyOffsets, 600);
+    window.addEventListener('resize', updateStickyOffsets, { passive: true });
     window.addEventListener('orientationchange', updateStickyOffsets, { passive: true });
 
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
+      window.removeEventListener('resize', updateStickyOffsets);
       window.removeEventListener('orientationchange', updateStickyOffsets);
     };
   }, []);
 
-  // Auto-center the active pill — ONLY when the user explicitly tapped a pill.
-  // scrollspy changes do NOT trigger this (clickedRef.current === false during scroll).
+  // Endless Leftward Auto-Scroll Loop on Mobile via GPU Transform (translate3d)
   useEffect(() => {
-    if (!clickedRef.current) return;
-    if (!scrollRef.current || typeof window === 'undefined' || window.innerWidth >= 768) return;
+    if (typeof window === 'undefined') return;
 
-    const activePill = scrollRef.current.querySelector(`[data-cat-pill="${activeCategory}"]`) as HTMLElement;
-    if (activePill) {
-      const container = scrollRef.current;
-      const targetLeft = activePill.offsetLeft - container.offsetWidth / 2 + activePill.offsetWidth / 2;
-      container.scrollTo({
-        left: Math.max(0, targetLeft),
-        behavior: 'smooth',
-      });
+    let animId: number;
+    let lastTime = performance.now();
+    const PIXELS_PER_SECOND = 24; // Calm, legible, premium speed
+
+    const loop = (now: number) => {
+      const dt = Math.min((now - lastTime) / 1000, 0.1);
+      lastTime = now;
+
+      const track = trackRef.current;
+      if (track && window.innerWidth < 768) {
+        // Track width consists of Set 1 + Set 2. Half-width is exactly Set 1 width.
+        const halfWidth = track.scrollWidth / 2;
+
+        if (halfWidth > 0) {
+          if (!isInteracting.current && !isDragging.current) {
+            currentX.current -= PIXELS_PER_SECOND * dt;
+          }
+
+          // Seamless infinite wrap around
+          if (currentX.current <= -halfWidth) {
+            currentX.current += halfWidth;
+          } else if (currentX.current > 0) {
+            currentX.current -= halfWidth;
+          }
+
+          // Apply directly via hardware-accelerated translate3d (zero layout reflow)
+          track.style.transform = `translate3d(${currentX.current.toFixed(2)}px, 0, 0)`;
+        }
+      } else if (track) {
+        track.style.transform = 'none';
+      }
+
+      animId = requestAnimationFrame(loop);
+    };
+
+    animId = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(animId);
+  }, []);
+
+  // Touch and Drag handlers for mobile
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (typeof window !== 'undefined' && window.innerWidth >= 768) return;
+    isDragging.current = true;
+    isInteracting.current = true;
+    dragStartX.current = e.clientX;
+    dragStartCurrentX.current = currentX.current;
+    if (resumeTimer.current) clearTimeout(resumeTimer.current);
+  };
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDragging.current) return;
+    const deltaX = e.clientX - dragStartX.current;
+    currentX.current = dragStartCurrentX.current + deltaX;
+
+    const track = trackRef.current;
+    if (track) {
+      const halfWidth = track.scrollWidth / 2;
+      if (halfWidth > 0) {
+        if (currentX.current <= -halfWidth) {
+          currentX.current += halfWidth;
+          dragStartCurrentX.current += halfWidth;
+        } else if (currentX.current > 0) {
+          currentX.current -= halfWidth;
+          dragStartCurrentX.current -= halfWidth;
+        }
+      }
+      track.style.transform = `translate3d(${currentX.current.toFixed(2)}px, 0, 0)`;
     }
-  }, [activeCategory]);
+  };
+
+  const handlePointerUp = () => {
+    isDragging.current = false;
+    if (resumeTimer.current) clearTimeout(resumeTimer.current);
+    resumeTimer.current = setTimeout(() => {
+      isInteracting.current = false;
+    }, 1500); // Resume auto-scroll after 1.5s pause
+  };
 
   const handleCategoryClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, searchId: string) => {
     e.preventDefault();
-    clickedRef.current = true; // user tapped — allow auto-center
     setActiveCategory(searchId);
+
+    // Pause auto-scroll briefly when user taps a pill
+    isInteracting.current = true;
+    if (resumeTimer.current) clearTimeout(resumeTimer.current);
+    resumeTimer.current = setTimeout(() => {
+      isInteracting.current = false;
+    }, 2500);
 
     // If on a dedicated category page or product page:
     if (activeSlug) {
@@ -160,23 +234,22 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
 
     if (target) {
       const headerEl = document.querySelector('header');
-      const railEl = scrollRef.current?.closest('.sticky') || scrollRef.current?.parentElement;
-      const headerH = headerEl ? headerEl.getBoundingClientRect().height : 70;
-      const railH = railEl ? railEl.getBoundingClientRect().height : 60;
-      const isPageSection = searchId === 'deals' || searchId === 'catering' || searchId === 'reviews' || searchId === 'location';
-      const totalOffset = headerH + railH + (isPageSection ? 20 : 0);
+      const railEl = containerRef.current;
+      const headerH = headerEl ? headerEl.offsetHeight : 80;
+      const railH = railEl ? railEl.offsetHeight : 56;
+      const totalOffset = headerH + railH;
 
       const elementPosition = target.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - totalOffset;
 
       window.scrollTo({
-        top: Math.max(0, offsetPosition),
+        top: Math.max(0, Math.round(offsetPosition)),
         behavior: 'smooth',
       });
     }
   }, [activeSlug, lang, router]);
 
-  const renderPill = (cat: typeof CATEGORIES[number], key: string) => {
+  const renderPill = (cat: typeof CATEGORIES[number], key: string, isDuplicate = false) => {
     const isActive = activeCategory === cat.searchId;
     const label = categoriesDict?.[cat.label] || cat.label;
     const href = activeSlug
@@ -195,6 +268,7 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
           flex-none flex items-center justify-center px-4 py-2 md:px-5 md:py-2.5 rounded-xl border text-xs sm:text-sm font-semibold whitespace-nowrap
           transition-all duration-300 touch-manipulation select-none cursor-pointer
           active:scale-95 focus:outline-none tracking-wide
+          ${isDuplicate ? 'md:hidden' : ''}
           ${isActive
             ? 'bg-[#c9a15c]/15 text-[#c9a15c] font-bold border-[#c9a15c] shadow-[0_0_24px_rgba(201,161,92,0.45)] ring-1 ring-[#c9a15c]/50'
             : 'border-white/10 bg-[#16181d]/90 text-white/90 hover:text-[#c9a15c] hover:border-[#c9a15c] hover:shadow-[0_0_20px_rgba(201,161,92,0.35)] hover:-translate-y-0.5 shadow-sm active:text-[#c9a15c] active:border-[#c9a15c]'
@@ -207,17 +281,26 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
   };
 
   return (
-    <div className="sticky top-16 md:top-20 z-40 bg-ink border-b border-panel-border py-3 md:py-5 shadow-sm">
+    <div
+      ref={containerRef}
+      className="sticky top-20 z-40 bg-ink border-b border-panel-border py-2.5 md:py-5 shadow-sm overflow-hidden select-none"
+    >
       <div
-        ref={scrollRef}
-        className="mobile-scroll-x flex md:flex-wrap md:overflow-x-visible md:justify-center gap-2.5 md:gap-3 px-3 md:px-6 max-w-7xl mx-auto no-scrollbar"
+        ref={trackRef}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={handlePointerUp}
+        className="flex items-center md:flex-wrap md:justify-center gap-2.5 md:gap-3 px-3 md:px-6 max-w-7xl mx-auto w-max md:w-full touch-pan-y"
         style={{
-          WebkitOverflowScrolling: 'touch',
-          touchAction: 'pan-x',
-          overscrollBehaviorX: 'contain',
+          touchAction: 'pan-y',
         }}
       >
-        {CATEGORIES.map((cat, idx) => renderPill(cat, `${cat.searchId}-${idx}`))}
+        {/* Set 1: visible everywhere (flows endlessly on mobile, wraps neatly on desktop) */}
+        {CATEGORIES.map((cat, idx) => renderPill(cat, `s1-${cat.searchId}-${idx}`))}
+
+        {/* Set 2: mobile-only duplicate for seamless infinite loop */}
+        {CATEGORIES.map((cat, idx) => renderPill(cat, `s2-${cat.searchId}-${idx}`, true))}
       </div>
     </div>
   );

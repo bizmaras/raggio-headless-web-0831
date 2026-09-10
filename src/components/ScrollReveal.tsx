@@ -28,10 +28,11 @@ export default function ScrollReveal({
       return;
     }
 
-    // GPU-friendly initial state for offscreen elements
+    // On mobile (< 768px), never translate Y — translateY on 20+ large grids during scroll causes severe jitter
+    const isMobile = window.innerWidth < 768;
     el.style.opacity = '0';
-    if (direction === 'up') {
-      el.style.transform = 'translateY(24px)';
+    if (direction === 'up' && !isMobile) {
+      el.style.transform = 'translateY(20px)';
     }
 
     const observer = new IntersectionObserver(
