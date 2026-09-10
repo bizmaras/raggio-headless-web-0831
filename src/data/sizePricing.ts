@@ -22,11 +22,12 @@ export function getSizeVariants(
   const normCat = (category || "").trim().toLowerCase();
   const normName = (productName || "").trim().toLowerCase();
 
-  // Exclude single slices, combos, or taco/pita items that don't have standard sizes
+  // Exclude single slices, combos, clubs (single size only), or taco/pita items that don't have standard sizes
   if (
     normName.includes("slice") ||
     normName.includes("taco") ||
-    normName.includes("on pita")
+    normName.includes("on pita") ||
+    normName.includes("club")
   ) {
     return null;
   }
