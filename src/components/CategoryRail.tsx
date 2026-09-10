@@ -105,7 +105,11 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
         const headerH = headerEl.offsetHeight;
         const railH = railEl.offsetHeight;
         const totalTop = Math.round(headerH + railH);
-        document.documentElement.style.setProperty('--sticky-category-top', `${totalTop}px`);
+        const currentVal = document.documentElement.style.getPropertyValue('--sticky-category-top');
+        const newVal = `${totalTop}px`;
+        if (currentVal !== newVal) {
+          document.documentElement.style.setProperty('--sticky-category-top', newVal);
+        }
       }
     };
 
@@ -130,6 +134,18 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
     let animId: number;
     let lastTime = performance.now();
     const PIXELS_PER_SECOND = 24; // Calm, legible, premium speed
+    let isPageScrolling = false;
+    let scrollTimeout: ReturnType<typeof setTimeout> | null = null;
+
+    const handlePageScroll = () => {
+      isPageScrolling = true;
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        isPageScrolling = false;
+      }, 150);
+    };
+
+    window.addEventListener('scroll', handlePageScroll, { passive: true });
 
     const loop = (now: number) => {
       const dt = Math.min((now - lastTime) / 1000, 0.1);
@@ -141,7 +157,7 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
         const halfWidth = track.scrollWidth / 2;
 
         if (halfWidth > 0) {
-          if (!isInteracting.current && !isDragging.current) {
+          if (!isInteracting.current && !isDragging.current && !isPageScrolling) {
             currentX.current -= PIXELS_PER_SECOND * dt;
           }
 
@@ -163,7 +179,11 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
     };
 
     animId = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(animId);
+    return () => {
+      cancelAnimationFrame(animId);
+      window.removeEventListener('scroll', handlePageScroll);
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+    };
   }, []);
 
   // Touch and Drag handlers for mobile
@@ -283,7 +303,12 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
   return (
     <div
       ref={containerRef}
-      className="sticky top-20 z-40 bg-ink border-b border-panel-border py-2.5 md:py-5 shadow-sm overflow-hidden select-none"
+      style={{
+        transform: 'translate3d(0, 0, 0)',
+        WebkitBackfaceVisibility: 'hidden',
+        backfaceVisibility: 'hidden',
+      }}
+      className="sticky top-20 z-40 bg-ink border-b border-panel-border py-2.5 md:py-5 shadow-sm overflow-hidden select-none isolate will-change-transform"
     >
       <div
         ref={trackRef}

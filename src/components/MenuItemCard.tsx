@@ -112,7 +112,7 @@ export default function MenuItemCard(props: MenuItemCardProps) {
 
   return (
     <>
-      <div className="bg-panel border border-panel-border rounded-xl p-4 sm:p-5 hover:border-gold hover:shadow-[0_0_22px_rgba(201,161,92,0.35)] hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between group">
+      <div className="relative z-0 isolate bg-panel border border-panel-border rounded-xl p-4 sm:p-5 hover:border-gold hover:shadow-[0_0_22px_rgba(201,161,92,0.35)] md:hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between group">
         <div>
           {/* Top Row: 80x80 Thumbnail + Title, Price, Description */}
           <div className="flex items-start gap-3.5 mb-3">
@@ -195,7 +195,7 @@ export default function MenuItemCard(props: MenuItemCardProps) {
                     aria-pressed={isSelected}
                     className={`py-1 px-1 rounded-md text-xs font-bold transition-all duration-150 flex flex-col items-center justify-center cursor-pointer ${
                       isSelected
-                        ? 'bg-[#c9a15c] text-[#121214] font-bold border border-white/40 shadow-sm scale-[1.02]'
+                        ? 'bg-[#c9a15c] text-[#121214] font-bold border border-white/40 shadow-sm ring-1 ring-[#c9a15c]/50'
                         : 'text-stone hover:text-cream hover:bg-panel/70'
                     }`}
                     title={`${s.fullName?.[currentLang] || s.label} - $${s.price.toFixed(2)}`}

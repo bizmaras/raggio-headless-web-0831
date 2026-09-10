@@ -65,9 +65,16 @@ export default function Header({ lang = 'en', dict }: HeaderProps) {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-ink/95 backdrop-blur-md border-b border-panel-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+    <header
+      style={{
+        transform: 'translate3d(0, 0, 0)',
+        WebkitBackfaceVisibility: 'hidden',
+        backfaceVisibility: 'hidden',
+      }}
+      className="sticky top-0 z-50 w-full h-20 bg-ink/95 backdrop-blur-md border-b border-panel-border isolate will-change-transform"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
+        <div className="flex items-center justify-between h-full">
 
           {/* LEFT: LOGO & MOBILE HOME BUTTON */}
           <div className="flex items-center gap-4 sm:gap-6">

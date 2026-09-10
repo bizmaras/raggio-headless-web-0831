@@ -18,12 +18,20 @@ export default function StickyMobileBar({ dict }: StickyMobileBarProps) {
   const phoneText = dict?.sticky_bar?.call || '(302) 369-0553';
 
   useEffect(() => {
+    let lastState = false;
+    let ticking = false;
+
     const handleScroll = () => {
-      // Show sticky bar once user scrolls past hero section (> 180px)
-      if (window.scrollY > 180) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const shouldShow = window.scrollY > 180;
+          if (shouldShow !== lastState) {
+            lastState = shouldShow;
+            setIsVisible(shouldShow);
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
