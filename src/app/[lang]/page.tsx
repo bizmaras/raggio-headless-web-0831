@@ -154,13 +154,8 @@ export default async function HomePage({
                 style={{ scrollMarginTop: 'var(--sticky-category-top, 136px)' }}
               >
                 <h3
-                  style={{
-                    top: 'var(--sticky-category-top, 136px)',
-                    transform: 'translate3d(0, 0, 0)',
-                    WebkitBackfaceVisibility: 'hidden',
-                    backfaceVisibility: 'hidden',
-                  }}
-                  className="sticky z-30 bg-ink pt-4 pb-3 mb-6 border-b border-panel-border text-gold-bright flex items-center justify-between text-2xl md:text-3xl font-bold tracking-wide shadow-sm isolate will-change-transform"
+                  style={{ top: 'var(--sticky-category-top, 136px)' }}
+                  className="sticky z-30 bg-ink pt-4 pb-3 mb-6 border-b border-panel-border text-gold-bright flex items-center justify-between text-2xl md:text-3xl font-bold tracking-wide shadow-sm isolate"
                 >
                   <Link href={`/${lang}/menu/${targetId}`} className="flex items-baseline gap-2.5 hover:text-gold transition-colors group/title">
                     <span className="group-hover/title:underline decoration-gold/40">{displayCategory}</span>

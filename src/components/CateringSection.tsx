@@ -1,5 +1,6 @@
 'use client';
 
+import React, { useState, useEffect } from 'react';
 import CateringItemCard from './CateringItemCard';
 import * as cateringModule from '../data/cateringData';
 import { getLocalizedCateringItem } from '../data/cateringTranslations';
@@ -48,37 +49,77 @@ export default function CateringSection({ dict, lang = 'en' }: CateringSectionPr
 
   const isEs = lang === 'es';
 
+  const [activeSubcat, setActiveSubcat] = useState<{ name: string; count: number } | null>(null);
+
+  // Track active subcategory as user scrolls through catering items
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (categories.length === 0) return;
+
+    const firstCat = categories[0];
+    const firstDisplayName = dict?.categories?.[firstCat] || firstCat;
+    setActiveSubcat({ name: firstDisplayName, count: categoriesMap[firstCat]?.length || 0 });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const catKey = entry.target.getAttribute('data-catering-cat');
+            if (catKey && categoriesMap[catKey]) {
+              const displayName = dict?.categories?.[catKey] || catKey;
+              setActiveSubcat({ name: displayName, count: categoriesMap[catKey].length });
+            }
+          }
+        });
+      },
+      { rootMargin: '-200px 0px -50% 0px', threshold: 0 }
+    );
+
+    categories.forEach((cat) => {
+      const el = document.getElementById(`cat-sec-${cat}`);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [categories.length]);
+
   return (
     <section
       id="catering"
       className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-14 scroll-mt-[150px] md:scroll-mt-[270px]"
       style={{ scrollMarginTop: 'calc(var(--sticky-category-top, 250px) + 20px)' }}
     >
-      {/* Sticky Main Catering Header */}
+      {/* Pure Native Sticky Main Catering Header with Dynamic Subcategory Pill */}
       <div
-        style={{
-          top: 'var(--sticky-category-top, 136px)',
-          transform: 'translate3d(0, 0, 0)',
-          WebkitBackfaceVisibility: 'hidden',
-          backfaceVisibility: 'hidden',
-        }}
-        className="sticky z-30 bg-ink pt-4 pb-3.5 mb-6 border-b border-panel-border flex flex-wrap items-center justify-between gap-3 shadow-sm isolate will-change-transform"
+        style={{ top: 'var(--sticky-category-top, 136px)' }}
+        className="sticky z-30 bg-ink pt-3.5 pb-3 mb-6 border-b border-panel-border flex flex-wrap items-center justify-between gap-3 shadow-sm isolate"
       >
-        <div>
-          <div className="flex items-center gap-1.5 text-gold opacity-90 mb-0.5">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
-              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-              <circle cx="12" cy="10" r="3" />
-            </svg>
-            <span className="text-[10px] sm:text-xs font-bold tracking-widest uppercase">{locationBadge}</span>
+        <div className="flex items-center flex-wrap gap-2.5 min-w-0">
+          <div>
+            <div className="flex items-center gap-1.5 text-gold opacity-90 mb-0.5">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3 h-3">
+                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+              <span className="text-[10px] font-bold tracking-widest uppercase">{locationBadge}</span>
+            </div>
+            <h2 className="text-xl md:text-2xl font-extrabold text-gold-bright tracking-wide shrink-0 leading-tight">
+              {sectionTitle}
+            </h2>
           </div>
-          <h2 className="text-2xl md:text-3xl font-extrabold text-gold-bright tracking-wide">
-            {sectionTitle}
-          </h2>
+
+          {/* Dynamic Morphing Subcategory Dock */}
+          {activeSubcat && (
+            <div className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-panel border border-gold/40 text-xs sm:text-sm font-bold text-cream shadow-sm transition-all animate-in fade-in duration-200">
+              <span className="text-gold">›</span>
+              <span>{activeSubcat.name}</span>
+              <span className="text-[11px] text-gold font-normal">({activeSubcat.count})</span>
+            </div>
+          )}
         </div>
 
         {/* Portion Guide & Quick Call Pill */}
-        <div className="flex items-center flex-wrap gap-2 sm:gap-3">
+        <div className="flex items-center flex-wrap gap-2 sm:gap-3 shrink-0">
           <div className="hidden sm:flex items-center gap-2.5 text-xs bg-panel border border-panel-border px-3.5 py-1.5 rounded-full text-stone shadow-sm">
             <span className="font-semibold text-cream">
               <span className="text-gold font-bold">{halfLabel}:</span> 8–10 {isEs ? 'personas' : 'guests'}
@@ -129,21 +170,18 @@ export default function CateringSection({ dict, lang = 'en' }: CateringSectionPr
         const displayCategoryName = dict?.categories?.[categoryName] || categoryName;
 
         return (
-          <div key={categoryName} className="mb-16 scroll-mt-[210px]">
-            <h3
-              style={{
-                top: 'var(--sticky-category-top, 136px)',
-                transform: 'translate3d(0, 0, 0)',
-                WebkitBackfaceVisibility: 'hidden',
-                backfaceVisibility: 'hidden',
-              }}
-              className="sticky z-30 bg-ink pt-4 pb-3 mb-6 border-b border-panel-border text-gold-bright flex items-center justify-between text-xl md:text-2xl font-bold tracking-wide shadow-sm isolate will-change-transform"
-            >
+          <div
+            key={categoryName}
+            id={`cat-sec-${categoryName}`}
+            data-catering-cat={categoryName}
+            className="mb-16 scroll-mt-[210px]"
+          >
+            <div className="pt-2 pb-3 mb-6 border-b border-panel-border text-gold-bright flex items-center justify-between text-xl md:text-2xl font-bold tracking-wide">
               <span>{displayCategoryName}</span>
               <span className="text-xs sm:text-sm font-normal text-cream/60 md:text-gold-bright tracking-normal">
                 {items.length} {itemsCountLabel}
               </span>
-            </h3>
+            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {items.map((item, index) => {

@@ -65,14 +65,7 @@ export default function Header({ lang = 'en', dict }: HeaderProps) {
   };
 
   return (
-    <header
-      style={{
-        transform: 'translate3d(0, 0, 0)',
-        WebkitBackfaceVisibility: 'hidden',
-        backfaceVisibility: 'hidden',
-      }}
-      className="sticky top-0 z-50 w-full h-20 bg-ink/95 backdrop-blur-md border-b border-panel-border isolate will-change-transform"
-    >
+    <header className="sticky top-0 z-50 w-full h-20 bg-ink/95 backdrop-blur-md border-b border-panel-border isolate">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
         <div className="flex items-center justify-between h-full">
 
