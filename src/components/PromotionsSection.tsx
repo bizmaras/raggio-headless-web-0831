@@ -205,7 +205,7 @@ export default function PromotionsSection({ dict }: PromotionsSectionProps) {
         {promotions.map((promo) => (
           <div
             key={promo.id}
-            className="snap-start shrink-0 w-[82vw] max-w-[330px] sm:w-[350px] md:w-auto md:max-w-none bg-panel border border-gold/45 shadow-[0_0_18px_rgba(201,161,92,0.18)] rounded-2xl p-5 sm:p-6 flex flex-col justify-between hover:border-gold hover:shadow-[0_0_28px_rgba(201,161,92,0.32)] transition-all duration-300 relative group"
+            className="snap-start shrink-0 w-[82vw] max-w-[330px] sm:w-[350px] md:w-auto md:max-w-none bg-panel border border-panel-border rounded-2xl p-5 sm:p-6 flex flex-col justify-between hover:border-gold hover:shadow-[0_0_22px_rgba(201,161,92,0.35)] hover:-translate-y-0.5 transition-all duration-300 relative group"
           >
             <div>
               <div className="flex justify-between items-start mb-3">

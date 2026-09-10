@@ -204,7 +204,7 @@ export default function GoogleReviewsSection({ dict }: GoogleReviewsSectionProps
         {data.reviews.map((review) => (
           <div
             key={review.id}
-            className="bg-panel border border-gold/35 shadow-[0_0_16px_rgba(201,161,92,0.14)] rounded-2xl p-6 flex flex-col justify-between hover:border-gold hover:shadow-[0_0_26px_rgba(201,161,92,0.28)] hover:-translate-y-1 transition-all duration-300 group relative"
+            className="bg-panel border border-panel-border rounded-2xl p-6 flex flex-col justify-between hover:border-gold hover:shadow-[0_0_22px_rgba(201,161,92,0.35)] hover:-translate-y-0.5 transition-all duration-300 group relative"
           >
             <div>
               {/* Header: Author Avatar & Stars */}

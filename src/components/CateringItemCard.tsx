@@ -64,7 +64,7 @@ export default function CateringItemCard({
 
   return (
     <>
-      <div className="bg-panel border border-gold/45 shadow-[0_0_18px_rgba(201,161,92,0.18)] hover:border-gold hover:shadow-[0_0_28px_rgba(201,161,92,0.32)] rounded-xl p-5 transition-all flex flex-col justify-between">
+      <div className="bg-panel border border-panel-border hover:border-gold hover:shadow-[0_0_22px_rgba(201,161,92,0.35)] hover:-translate-y-0.5 rounded-xl p-5 transition-all duration-300 flex flex-col justify-between">
         <div>
           <div className="flex justify-between items-start mb-2">
             <h4 className="text-lg font-bold text-cream">{name}</h4>

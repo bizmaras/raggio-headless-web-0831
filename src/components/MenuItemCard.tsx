@@ -110,7 +110,7 @@ export default function MenuItemCard(props: MenuItemCardProps) {
 
   return (
     <>
-      <div className="bg-panel border border-gold/45 shadow-[0_0_18px_rgba(201,161,92,0.18)] rounded-xl p-5 hover:border-gold hover:shadow-[0_0_28px_rgba(201,161,92,0.32)] active:border-gold active:scale-[0.99] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group">
+      <div className="bg-panel border border-panel-border rounded-xl p-5 hover:border-gold hover:shadow-[0_0_22px_rgba(201,161,92,0.35)] hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between group">
         <div>
           <div className="flex justify-between items-start mb-2 gap-2">
             {productUrl ? (
