@@ -150,7 +150,7 @@ export default async function HomePage({
               >
                 <h3
                   style={{ top: 'var(--sticky-category-top, 140px)' }}
-                  className="sticky z-[35] bg-ink/95 backdrop-blur-md pt-4 pb-3 mb-6 border-b border-panel-border text-gold-bright flex items-center justify-between text-2xl md:text-3xl font-bold tracking-wide shadow-sm transform-gpu will-change-transform"
+                  className="sticky z-[35] bg-ink pt-4 pb-3 mb-6 border-b border-panel-border text-gold-bright flex items-center justify-between text-2xl md:text-3xl font-bold tracking-wide shadow-sm"
                 >
                   <Link href={`/${lang}/menu/${targetId}`} className="flex items-baseline gap-2.5 hover:text-gold transition-colors group/title">
                     <span className="group-hover/title:underline decoration-gold/40">{displayCategory}</span>

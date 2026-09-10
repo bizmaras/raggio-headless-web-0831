@@ -207,11 +207,15 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
   };
 
   return (
-    <div className="sticky top-16 md:top-20 z-40 bg-ink/95 backdrop-blur-sm border-b border-panel-border py-3 md:py-5 shadow-sm">
+    <div className="sticky top-16 md:top-20 z-40 bg-ink border-b border-panel-border py-3 md:py-5 shadow-sm">
       <div
         ref={scrollRef}
-        className="flex overflow-x-auto md:flex-wrap md:justify-center gap-2.5 md:gap-3 px-3 md:px-6 max-w-7xl mx-auto no-scrollbar"
-        style={{ WebkitOverflowScrolling: 'touch' }}
+        className="mobile-scroll-x flex md:flex-wrap md:overflow-x-visible md:justify-center gap-2.5 md:gap-3 px-3 md:px-6 max-w-7xl mx-auto no-scrollbar"
+        style={{
+          WebkitOverflowScrolling: 'touch',
+          touchAction: 'pan-x',
+          overscrollBehaviorX: 'contain',
+        }}
       >
         {CATEGORIES.map((cat, idx) => renderPill(cat, `${cat.searchId}-${idx}`))}
       </div>
