@@ -102,14 +102,13 @@ export default async function HomePage({
   return (
     <>
       <Header lang={lang} dict={dict} />
-      <main className="min-h-screen bg-ink text-cream w-full max-w-full overflow-x-clip">
+      <main className="min-h-screen bg-ink text-cream w-full max-w-full">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }}
         />
         <HeroSlider dict={dict} />
         <CategoryRail categoriesDict={dict.categories} lang={lang} />
-        <StatsCounter dict={dict} />
 
         <ScrollReveal>
           <SignatureDishShowcase dict={dict} lang={lang} />
@@ -153,7 +152,10 @@ export default async function HomePage({
                 className="mb-16"
                 style={{ scrollMarginTop: 'calc(var(--sticky-category-top, 136px) + 20px)' }}
               >
-                <h3 className="pt-6 pb-3 mb-6 border-b border-panel-border text-gold-bright flex items-center justify-between text-2xl md:text-3xl font-bold tracking-wide">
+                <h3
+                  style={{ top: 'var(--sticky-category-top, 136px)' }}
+                  className="sticky z-30 bg-ink pt-4 pb-3 mb-6 border-b border-panel-border text-gold-bright flex items-center justify-between text-2xl md:text-3xl font-bold tracking-wide shadow-sm"
+                >
                   <Link href={`/${lang}/menu/${targetId}`} className="flex items-baseline gap-2.5 hover:text-gold transition-colors group/title">
                     <span className="group-hover/title:underline decoration-gold/40">{displayCategory}</span>
                     <span className="text-xs sm:text-sm font-normal text-cream/60 md:text-gold-bright tracking-normal">
@@ -170,29 +172,27 @@ export default async function HomePage({
                     </svg>
                   </Link>
                 </h3>
-                <ScrollReveal>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {itemsInCategory.map((item, idx) => {
-                      const basePrice = parseFloat(item.Price) || 0;
-                      const sizes = getSizeVariants(item.Category, item["Product Name"], basePrice);
-                      const itemSlug = productToSlug(item["Product Name"], item.Slug);
-                      return (
-                        <MenuItemCard
-                          key={idx}
-                          name={item["Product Name"]}
-                          price={basePrice}
-                          description={item.Description}
-                          sizes={sizes}
-                          lang={lang}
-                          categorySlug={targetId}
-                          slug={itemSlug}
-                          image={(item as any).Image || (item as any).image}
-                          dict={dict}
-                        />
-                      );
-                    })}
-                  </div>
-                </ScrollReveal>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {itemsInCategory.map((item, idx) => {
+                    const basePrice = parseFloat(item.Price) || 0;
+                    const sizes = getSizeVariants(item.Category, item["Product Name"], basePrice);
+                    const itemSlug = productToSlug(item["Product Name"], item.Slug);
+                    return (
+                      <MenuItemCard
+                        key={idx}
+                        name={item["Product Name"]}
+                        price={basePrice}
+                        description={item.Description}
+                        sizes={sizes}
+                        lang={lang}
+                        categorySlug={targetId}
+                        slug={itemSlug}
+                        image={(item as any).Image || (item as any).image}
+                        dict={dict}
+                      />
+                    );
+                  })}
+                </div>
               </div>
             );
           })}

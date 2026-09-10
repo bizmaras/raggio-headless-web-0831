@@ -49,19 +49,8 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
     }
   }, [activeSlug]);
 
-  // Scroll active pill into view inside track smoothly without touching window/viewport scroll
-  useEffect(() => {
-    if (!activeCategory || typeof window === 'undefined') return;
-    if (window.innerWidth >= 768) return;
-    const track = trackRef.current;
-    if (!track) return;
-    const pill = track.querySelector(`[data-cat-pill="${activeCategory}"]`) as HTMLElement | null;
-    if (pill) {
-      // Pure element-level horizontal scroll to prevent iOS Safari window jitter
-      const scrollLeft = pill.offsetLeft - (track.offsetWidth / 2) + (pill.offsetWidth / 2);
-      track.scrollTo({ left: Math.max(0, scrollLeft), behavior: 'smooth' });
-    }
-  }, [activeCategory]);
+  // Active category is highlighted in place without auto-scrolling the track during vertical touch scroll
+
 
   // ScrollSpy to highlight active category on scroll (Homepage only)
   useEffect(() => {
@@ -145,6 +134,15 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
   const handleCategoryClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, searchId: string) => {
     e.preventDefault();
     setActiveCategory(searchId);
+
+    // Smoothly center clicked pill in mobile track on click:
+    if (trackRef.current && typeof window !== 'undefined' && window.innerWidth < 768) {
+      const pill = trackRef.current.querySelector(`[data-cat-pill="${searchId}"]`) as HTMLElement | null;
+      if (pill) {
+        const scrollLeft = pill.offsetLeft - (trackRef.current.offsetWidth / 2) + (pill.offsetWidth / 2);
+        trackRef.current.scrollTo({ left: Math.max(0, scrollLeft), behavior: 'smooth' });
+      }
+    }
 
     // If on a dedicated category page or product page:
     if (activeSlug) {
