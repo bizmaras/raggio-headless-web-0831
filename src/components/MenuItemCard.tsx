@@ -216,7 +216,7 @@ export default function MenuItemCard(props: MenuItemCardProps) {
         <button
           type="button"
           onClick={() => setIsOpen(true)}
-          className="w-full py-2.5 px-4 rounded-xl bg-[#16181d] border border-white/10 hover:border-white/20 text-white hover:text-white text-xs sm:text-sm font-medium transition-all duration-150 flex items-center justify-center gap-2 cursor-pointer mt-auto active:scale-[0.98] shadow-sm"
+          className="w-full py-2.5 px-4 rounded-xl bg-panel-2 border border-panel-border hover:border-gold/50 text-cream hover:text-white text-xs sm:text-sm font-medium transition-all duration-150 flex items-center justify-center gap-2 cursor-pointer mt-auto active:scale-[0.98] shadow-sm"
         >
           <svg className="w-4 h-4 text-gold shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <circle cx="12" cy="12" r="10" strokeWidth="2" />

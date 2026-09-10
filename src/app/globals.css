@@ -1,26 +1,30 @@
 @import "tailwindcss";
 
 @theme {
-  /* Pure Charcoal Black & Dark Slate Palette */
-  --color-ink: #121417;
-  /* Ana Arka Plan (Charcoal Black) */
-  --color-ink-2: #181b1f;
-  /* Hero & Koyu Bölümler (Dark Charcoal) */
-  --color-panel: #20242a;
-  /* Kartlar & Butonlar (Charcoal Slate) */
-  --color-panel-2: #282d35;
+  /* Warm Artisan Charcoal & Volcanic Slate Palette */
+  --color-ink: #131518;
+  /* Ana Arka Plan (Warm Artisan Charcoal) */
+  --color-ink-2: #191c21;
+  /* Hero & Koyu Bölümler (Fırın Taşı Kömürü) */
+  --color-panel: #20252d;
+  /* Kartlar & Paneller */
+  --color-panel-2: #282f3a;
   /* İkincil Vurgulu Paneller */
-  --color-panel-border: #2e3440;
-  /* İnce Kömür Sınır Çizgileri */
+  --color-panel-border: #303744;
+  /* İnce Sınır Çizgileri */
 
-  /* Gold & Accent Tokens */
-  --color-gold: #c9a15c;
-  --color-gold-bright: #e3c383;
-  --color-gold-deep: #7b6540;
-  --color-cream: #f3ead8;
-  --color-stone: #9ba3af;
-  --color-stone-dim: #6b7280;
+  /* Gold, Cream & Appetite Ember Accent Tokens */
+  --color-gold: #d4af62;
+  /* Sıcak Fırınlanmış Hamur & Zeytinyağı Sarısı */
+  --color-gold-bright: #ebd092;
+  --color-gold-deep: #856a3e;
+  --color-cream: #f6f1e5;
+  /* Yüksek Okunabilirlikli Sıcak İtalyan Kremi */
+  --color-stone: #a2aab7;
+  --color-stone-dim: #717886;
   --color-ember: #e54d2e;
+  /* San Marzano Domates & Fırın Köz Kırmızısı */
+  --color-ember-hover: #f05a39;
 }
 
 :root {
@@ -82,13 +86,13 @@
   justify-content: center;
   gap: 0.5rem;
   border-radius: 9999px; /* True pill */
-  background-color: #c9a15c !important;
+  background-color: #d4af62 !important;
   background-image: none !important;
-  color: #121214 !important;
+  color: #131518 !important;
   font-weight: 700;
   letter-spacing: -0.01em;
   border: 1px solid rgba(255, 255, 255, 0.35);
-  box-shadow: 0 4px 14px rgba(201, 161, 92, 0.25);
+  box-shadow: 0 4px 14px rgba(212, 175, 98, 0.25);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   text-decoration: none;
@@ -96,11 +100,40 @@
 
 .btn-gold:hover {
   transform: translateY(-1px);
-  background-color: #d6af69 !important;
-  box-shadow: 0 6px 20px rgba(201, 161, 92, 0.4);
+  background-color: #e2be72 !important;
+  box-shadow: 0 6px 20px rgba(212, 175, 98, 0.4);
 }
 
 .btn-gold:active {
+  transform: translateY(0);
+}
+
+/* San Marzano Ember / High-Conversion Action Button */
+.btn-ember {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  background-color: #e54d2e !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 14px rgba(229, 77, 46, 0.35);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn-ember:hover {
+  transform: translateY(-1px);
+  background-color: #f05a39 !important;
+  box-shadow: 0 6px 20px rgba(229, 77, 46, 0.5);
+}
+
+.btn-ember:active {
   transform: translateY(0);
 }
 
