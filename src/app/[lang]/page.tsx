@@ -10,6 +10,7 @@ import Header from "../../components/Header";
 import HeroSlider from "../../components/HeroSlider";
 import CategoryRail from "../../components/CategoryRail";
 import StatsCounter from "../../components/StatsCounter";
+import SignatureDishShowcase from "../../components/SignatureDishShowcase";
 import ScrollReveal from "../../components/ScrollReveal";
 import DealsSectionWrapper from "../../components/DealsSectionWrapper";
 import PromotionsSection from "../../components/PromotionsSection";
@@ -109,6 +110,10 @@ export default async function HomePage({
         <HeroSlider dict={dict} />
         <CategoryRail categoriesDict={dict.categories} lang={lang} />
         <StatsCounter dict={dict} />
+
+        <ScrollReveal>
+          <SignatureDishShowcase dict={dict} lang={lang} />
+        </ScrollReveal>
 
         <section
           id="menu"

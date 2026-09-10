@@ -200,5 +200,109 @@
     "lang_switch_label": "Idioma",
     "english": "English",
     "spanish": "Español"
+  },
+  "showcase": {
+    "badge": "PIZZAS ARTESANALES EXCLUSIVAS",
+    "title": "Elaboradas con Pasión, Horneadas a la Perfección",
+    "subtitle": "Descubre nuestras pizzas exclusivas en detalle. Pasa el cursor o toca los marcadores para conocer nuestros auténticos ingredientes italianos y artesanía.",
+    "size_label": "Grande 16\" Al Horno de Piedra",
+    "order_pizza": "Pedir Esta Pizza",
+    "secret_badge": "Secreto del Chef",
+    "crust_tab": "1. Masa",
+    "sauce_tab": "2. Salsa",
+    "cheese_tab": "3. Queso",
+    "topping_tab": "4. Ingrediente",
+    "dishes": {
+      "pepperoni": {
+        "name": "Raggio Pepperoni Artesanal",
+        "price": "$21.99",
+        "topping_badge": "Pepperoni Crujiente",
+        "topping_sub": "Cup & Char",
+        "crust_title": "Masa Fermentada en Frío por 48 Horas",
+        "crust_desc": "Fermentada naturalmente durante 48 horas con harina italiana. Borde súper ligero y aireado que nunca se siente pesado.",
+        "sauce_title": "Salsa de Tomate San Marzano D.O.P.",
+        "sauce_desc": "Tomates madurados al sol en las laderas del Monte Vesubio, triturados en crudo con aceite de oliva virgen extra y orégano.",
+        "cheese_title": "Mozzarella Entera Fior di Latte",
+        "cheese_desc": "Mozzarella 100% cremosa de leche entera que se funde en ricas burbujas doradas en cada porción.",
+        "topping_title": "Pepperoni Crujiente en Forma de Copa (Cup & Char)",
+        "topping_desc": "Pepperoni de res que se riza bajo el intenso calor del horno de piedra, liberando un rico aroma ahumado."
+      },
+      "meatlover": {
+        "name": "Banquete Exclusivo Meat Lover's",
+        "price": "$24.99",
+        "topping_badge": "4 Carnes Gourmet",
+        "topping_sub": "Salchicha, Tocino, Albóndigas",
+        "crust_title": "Masa Fermentada en Frío por 48 Horas",
+        "crust_desc": "Corteza horneada en piedra diseñada para sostener generosas carnes con un mordisco crujiente.",
+        "sauce_title": "Rica Salsa de Pizza Firma Raggio",
+        "sauce_desc": "Acidez equilibrada y hierbas aromáticas diseñadas para complementar las carnes sin abrumarlas.",
+        "cheese_title": "Doble Capa de Mozzarella y Provolone",
+        "cheese_desc": "Una doble capa de mozzarella de leche entera que une las carnes con una textura elástica y sedosa.",
+        "topping_title": "Salchicha Italiana, Albóndigas, Tocino y Pepperoni",
+        "topping_desc": "Salchicha italiana sazonada, albóndigas, tocino ahumado crujiente y pepperoni caramelizado al horno."
+      },
+      "buffalo": {
+        "name": "Pollo Buffalo Picante con Ranch",
+        "price": "$23.99",
+        "topping_badge": "Pollo Buffalo y Ranch",
+        "topping_sub": "Pollo a la Parrilla y Remolino Ranch",
+        "crust_title": "Masa Fermentada en Frío por 48 Horas",
+        "crust_desc": "Exterior crujiente e interior tierno que se mantiene firme y delicioso bajo ricas salsas.",
+        "sauce_title": "Glaseado Mantecoso de Buffalo Picante",
+        "sauce_desc": "Nuestra receta de la casa: salsa picante de pimienta de cayena mezclada con mantequilla real para un calor auténtico.",
+        "cheese_title": "Mezcla Cremosa de Mozzarella y Cheddar",
+        "cheese_desc": "Una mezcla suave y cremosa que armoniza el audaz picor del pollo buffalo.",
+        "topping_title": "Pechuga de Pollo a la Parrilla y Remolino Ranch",
+        "topping_desc": "Pechuga de pollo marinada en salsa buffalo, terminada al salir del horno con un remolino fresco de salsa ranch casera."
+      }
+    }
+  },
+  "catering_calculator": {
+    "badge": "PARA FIESTAS, OFICINAS Y EVENTOS",
+    "title": "Calculadora Interactiva de Catering",
+    "subtitle": "¿Planeas un evento en Newark? Selecciona la cantidad de invitados para ver bandejas recomendadas y precios estimados al instante.",
+    "phone_label": "Línea Directa de Catering",
+    "guests_label": "¿Cuántos Invitados Serán?",
+    "guests_count": "{count} Invitados",
+    "quick_small": "15 Invitados",
+    "quick_medium": "30 Invitados",
+    "quick_large": "50 Invitados",
+    "quick_xlarge": "100+ Invitados",
+    "event_type_label": "Tipo de Evento",
+    "events": {
+      "office": {
+        "name": "Oficina / Corporativo",
+        "desc": "Bandejas de subs y pastas",
+        "tier": "Banquete de Equipo y Oficina"
+      },
+      "party": {
+        "name": "Fiesta y Celebración",
+        "desc": "Alitas jumbo y bocadillos calientes",
+        "tier": "Fiesta de Alitas y Aperitivos"
+      },
+      "gameday": {
+        "name": "Día de Juego / Deportes",
+        "desc": "Alitas, subs y aperitivos",
+        "tier": "Banquete Deportivo de Estadio"
+      },
+      "feast": {
+        "name": "Banquete Italiano",
+        "desc": "Pasta horneada, ensaladas y postre",
+        "tier": "Banquete Clásico Italiano"
+      }
+    },
+    "trays_breakdown": "Distribución Recomendada de Bandejas",
+    "full_tray": "Bandejas Completas",
+    "sub_trays": "Bandejas Surtidas de Subs / Wraps",
+    "salad_trays": "Ensalada Fresca de la Huerta / César",
+    "pasta_trays": "Bandejas de Pasta Baked Ziti",
+    "wing_trays": "Alitas Jumbo Buffalo / BBQ",
+    "app_trays": "Palitos de Mozzarella / Poppers",
+    "garlic_knots": "Nudos de Ajo y Salsa Marinara Incluidos",
+    "per_person": "Aprox. Por Persona",
+    "estimated_total": "Total Estimado",
+    "order_button": "Llamar para Reservar Catering",
+    "copy_button": "Copiar Estimado (WhatsApp / Notas)",
+    "copied_toast": "¡Estimado Copiado!"
   }
 }

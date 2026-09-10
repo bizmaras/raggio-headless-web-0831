@@ -1,6 +1,7 @@
 'use client';
 
 import CateringItemCard from './CateringItemCard';
+import CateringCalculator from './CateringCalculator';
 import * as cateringModule from '../data/cateringData';
 import { getLocalizedCateringItem } from '../data/cateringTranslations';
 
@@ -67,6 +68,8 @@ export default function CateringSection({ dict, lang = 'en' }: CateringSectionPr
           {sectionSubtitle}
         </p>
       </div>
+
+      <CateringCalculator dict={dict} lang={lang} />
 
       {categories.map((categoryName) => {
         const items = categoriesMap[categoryName];

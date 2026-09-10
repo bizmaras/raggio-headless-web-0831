@@ -213,5 +213,109 @@
     "lang_switch_label": "Language",
     "english": "English",
     "spanish": "Español"
+  },
+  "showcase": {
+    "badge": "SIGNATURE ARTISANAL PIZZAS",
+    "title": "Crafted with Passion, Stone-Baked to Perfection",
+    "subtitle": "Explore our signature pizzas in detail. Hover or tap the markers to discover our authentic Italian ingredients and craftsmanship.",
+    "size_label": "Large 16\" Stone-Baked",
+    "order_pizza": "Order This Pizza",
+    "secret_badge": "Chef's Secret",
+    "crust_tab": "1. Crust",
+    "sauce_tab": "2. Sauce",
+    "cheese_tab": "3. Cheese",
+    "topping_tab": "4. Topping",
+    "dishes": {
+      "pepperoni": {
+        "name": "Raggio Artisan Pepperoni",
+        "price": "$21.99",
+        "topping_badge": "Crispy Cupped Pepperoni",
+        "topping_sub": "Cup & Char",
+        "crust_title": "48-Hour Cold-Fermented Dough",
+        "crust_desc": "Naturally fermented for 48 hours with Italian flour. Super light, airy cornicione crust that never feels heavy.",
+        "sauce_title": "San Marzano D.O.P. Plum Tomato Sauce",
+        "sauce_desc": "Sun-ripened tomatoes grown in the volcanic soil of Mount Vesuvius, crushed raw with extra virgin olive oil and oregano.",
+        "cheese_title": "Whole-Milk Fior di Latte Mozzarella",
+        "cheese_desc": "100% whole milk creamy mozzarella that melts into rich golden blisters across every single slice.",
+        "topping_title": "Crispy Cupped (Cup & Char) Pepperoni",
+        "topping_desc": "Beef pepperoni that crisps into savory chalices under high stone-oven heat, releasing rich smoky aroma."
+      },
+      "meatlover": {
+        "name": "Signature Meat Lover's Feast",
+        "price": "$24.99",
+        "topping_badge": "4 Gourmet Meats",
+        "topping_sub": "Sausage, Bacon, Meatballs",
+        "crust_title": "48-Hour Cold-Fermented Dough",
+        "crust_desc": "Heavy-duty stone-baked crust engineered to hold generous savory meat toppings with a crisp bite.",
+        "sauce_title": "Rich Raggio Signature Pizza Sauce",
+        "sauce_desc": "Balanced acidity and aromatic herbs designed to complement hearty meats without overwhelming them.",
+        "cheese_title": "Double Layer Mozzarella & Provolone",
+        "cheese_desc": "A double layer of whole-milk mozzarella binding the meats together with a velvety pull.",
+        "topping_title": "Italian Sausage, Meatballs, Bacon & Pepperoni",
+        "topping_desc": "Italian sausage, seasoned meatballs, crispy smoked bacon, and pepperoni caramelized in stone-oven heat."
+      },
+      "buffalo": {
+        "name": "Spicy Buffalo Chicken & Ranch",
+        "price": "$23.99",
+        "topping_badge": "Buffalo Chicken & Ranch",
+        "topping_sub": "Grilled Chicken & Ranch Swirl",
+        "crust_title": "48-Hour Cold-Fermented Dough",
+        "crust_desc": "Crisp exterior and tender interior that stays sturdy and delicious under rich sauces.",
+        "sauce_title": "Buttery Spicy Buffalo Glaze",
+        "sauce_desc": "Our house recipe: tangy cayenne pepper sauce blended with real butter for authentic heat.",
+        "cheese_title": "Creamy Mozzarella & Cheddar Blend",
+        "cheese_desc": "A mellow, creamy blend that harmonizes the bold spice of buffalo chicken.",
+        "topping_title": "Marinated Grilled Chicken & Ranch Swirl",
+        "topping_desc": "Grilled chicken breast tossed in buffalo sauce, finished out of the oven with a cool swirl of house ranch."
+      }
+    }
+  },
+  "catering_calculator": {
+    "badge": "FOR PARTIES, OFFICES & EVENTS",
+    "title": "Interactive Catering Calculator",
+    "subtitle": "Planning an event in Newark? Select your guest count to see recommended trays and estimated pricing instantly.",
+    "phone_label": "Catering Hotline",
+    "guests_label": "How Many Guests?",
+    "guests_count": "{count} Guests",
+    "quick_small": "15 Guests",
+    "quick_medium": "30 Guests",
+    "quick_large": "50 Guests",
+    "quick_xlarge": "100+ Guests",
+    "event_type_label": "Event Type",
+    "events": {
+      "office": {
+        "name": "Office / Corporate",
+        "desc": "Sub platters & pasta trays",
+        "tier": "Office & Team Feast"
+      },
+      "party": {
+        "name": "Party & Celebration",
+        "desc": "Jumbo wings & hot finger food",
+        "tier": "Party & Wings Feast"
+      },
+      "gameday": {
+        "name": "Game Day / Sports",
+        "desc": "Wings, subs & appetizers",
+        "tier": "Game Day Stadium Feast"
+      },
+      "feast": {
+        "name": "Italian Banquet",
+        "desc": "Baked pasta, salads & dessert",
+        "tier": "Classic Italian Banquet"
+      }
+    },
+    "trays_breakdown": "Recommended Trays Breakdown",
+    "full_tray": "Full Trays",
+    "sub_trays": "Assorted Sub/Wrap Trays",
+    "salad_trays": "Fresh Garden / Caesar Salad",
+    "pasta_trays": "Baked Ziti Pasta Trays",
+    "wing_trays": "Jumbo Buffalo/BBQ Wings",
+    "app_trays": "Mozzarella Sticks / Poppers",
+    "garlic_knots": "Garlic Knots & Marinara Included",
+    "per_person": "Approx. Per Person",
+    "estimated_total": "Estimated Total",
+    "order_button": "Call to Book Catering",
+    "copy_button": "Copy Estimate (WhatsApp / Notes)",
+    "copied_toast": "Estimate Copied!"
   }
 }
