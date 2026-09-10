@@ -85,6 +85,31 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
     };
   }, [activeSlug]);
 
+  // Dynamically calculate the combined sticky header + rail height and set it as a CSS variable
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const updateStickyOffsets = () => {
+      const headerEl = document.querySelector('header');
+      const railEl = scrollRef.current?.closest('.sticky') as HTMLElement | null;
+      if (headerEl && railEl) {
+        const headerH = headerEl.getBoundingClientRect().height;
+        const railH = railEl.getBoundingClientRect().height;
+        const totalTop = Math.round(headerH + railH);
+        document.documentElement.style.setProperty('--sticky-category-top', `${totalTop}px`);
+      }
+    };
+
+    updateStickyOffsets();
+    window.addEventListener('resize', updateStickyOffsets, { passive: true });
+    const timer = setTimeout(updateStickyOffsets, 500);
+
+    return () => {
+      window.removeEventListener('resize', updateStickyOffsets);
+      clearTimeout(timer);
+    };
+  }, []);
+
   // Auto-center active category pill in rail on mobile when category changes
   useEffect(() => {
     if (!scrollRef.current || typeof window === 'undefined' || window.innerWidth >= 768) return;
@@ -124,7 +149,7 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
       const railEl = scrollRef.current?.closest('.sticky') || scrollRef.current?.parentElement;
       const headerH = headerEl ? headerEl.getBoundingClientRect().height : 70;
       const railH = railEl ? railEl.getBoundingClientRect().height : 60;
-      const totalOffset = headerH + railH + 16;
+      const totalOffset = headerH + railH;
 
       const elementPosition = target.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - totalOffset;
