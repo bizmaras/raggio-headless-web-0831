@@ -1,11 +1,18 @@
 import { createClient } from "contentful";
-import type { EntrySkeletonType } from "contentful";
+import type { EntrySkeletonType, ContentfulClientApi } from "contentful";
 
-const client = createClient({
-  space: process.env.CONTENTFUL_SPACE_ID!,
-  accessToken: process.env.CONTENTFUL_ACCESS_TOKEN!,
-  environment: process.env.CONTENTFUL_ENVIRONMENT ?? "master",
-});
+let client: ContentfulClientApi<undefined> | null = null;
+
+export function getContentfulClient() {
+  if (!client && process.env.CONTENTFUL_SPACE_ID && process.env.CONTENTFUL_ACCESS_TOKEN) {
+    client = createClient({
+      space: process.env.CONTENTFUL_SPACE_ID,
+      accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+      environment: process.env.CONTENTFUL_ENVIRONMENT ?? "master",
+    });
+  }
+  return client;
+}
 
 export interface MenuItem {
   "Product Name": string;
@@ -31,8 +38,11 @@ interface MenuItemSkeleton extends EntrySkeletonType {
 }
 
 export async function getMenuItemsFromContentful(): Promise<MenuItem[]> {
+  const contentfulClient = getContentfulClient();
+  if (!contentfulClient) return [];
+
   try {
-    const entries = await client.getEntries<MenuItemSkeleton>({
+    const entries = await contentfulClient.getEntries<MenuItemSkeleton>({
       content_type: "menuItem",
       limit: 1000,
     });
