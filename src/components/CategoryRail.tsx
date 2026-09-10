@@ -193,12 +193,11 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
         href={href}
         onClick={(e) => handleCategoryClick(e, cat.searchId)}
         className={`
-          flex-none flex items-center justify-center px-4.5 py-2.5 md:px-5 md:py-2.5 min-h-[44px] rounded-2xl border text-sm font-bold whitespace-nowrap
-          transition-all duration-200 touch-manipulation select-none cursor-pointer
-          active:scale-95 focus:outline-none tracking-wide
+          flex-none inline-flex items-center justify-center px-4 py-2 md:px-4.5 md:py-2 rounded-xl text-xs sm:text-sm whitespace-nowrap
+          transition-all duration-200 touch-manipulation select-none cursor-pointer tracking-wide active:scale-95
           ${isActive
-            ? 'bg-gold/20 text-gold-bright font-extrabold border-gold shadow-[0_0_24px_rgba(212,175,98,0.45)] ring-1 ring-gold/50'
-            : 'border-panel-border bg-panel/85 text-cream/90 hover:text-gold hover:border-gold/50 hover:shadow-[0_0_20px_rgba(212,175,98,0.25)] shadow-sm active:text-gold active:border-gold'
+            ? 'bg-[#181c22] text-[#ebd092] font-bold border border-[#d4af62] shadow-[0_6px_20px_-2px_rgba(212,175,98,0.45)]'
+            : 'bg-[#181c22]/90 border border-white/10 text-cream/85 font-medium hover:text-[#ebd092] hover:border-[#d4af62]/50 hover:shadow-[0_4px_14px_-2px_rgba(212,175,98,0.25)]'
           }
         `}
       >
@@ -212,11 +211,27 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
       ref={containerRef}
       className="sticky top-20 z-40 bg-ink border-b border-panel-border py-2.5 md:py-4 shadow-sm select-none isolate"
     >
-      <div
-        ref={trackRef}
-        className="mobile-scroll-x flex items-center md:flex-wrap md:justify-center gap-2 md:gap-2.5 px-3 md:px-6 max-w-7xl mx-auto w-full"
-      >
-        {CATEGORIES.map((cat, idx) => renderPill(cat, `cat-${cat.searchId}-${idx}`))}
+      {/* MOBILE: Seamless Hardware-Accelerated Infinite Marquee (Zero Jitter, Normal Speed) */}
+      <div className="md:hidden relative w-full overflow-hidden select-none">
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-6 bg-gradient-to-r from-ink to-transparent z-10" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-ink to-transparent z-10" />
+
+        <div
+          className="flex items-center gap-2 px-2 w-max will-change-transform active:[animation-play-state:paused] hover:[animation-play-state:paused]"
+          style={{
+            animation: 'category-marquee-smooth 65s linear infinite',
+          }}
+        >
+          {/* Set 1 */}
+          {CATEGORIES.map((cat, idx) => renderPill(cat, `m1-${cat.searchId}-${idx}`))}
+          {/* Set 2 for seamless loop */}
+          {CATEGORIES.map((cat, idx) => renderPill(cat, `m2-${cat.searchId}-${idx}`))}
+        </div>
+      </div>
+
+      {/* DESKTOP: Multi-row wrapped centered grid matching Image 1 */}
+      <div className="hidden md:flex flex-wrap justify-center items-center gap-2 md:gap-2.5 px-4 max-w-7xl mx-auto w-full">
+        {CATEGORIES.map((cat, idx) => renderPill(cat, `d-${cat.searchId}-${idx}`))}
       </div>
     </div>
   );
