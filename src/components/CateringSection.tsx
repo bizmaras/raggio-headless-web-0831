@@ -74,7 +74,7 @@ export default function CateringSection({ dict, lang = 'en' }: CateringSectionPr
 
         return (
           <div key={categoryName} className="mb-16 scroll-mt-[210px]">
-            <h3 className="sticky top-[138px] md:top-[180px] lg:top-[220px] z-[35] bg-ink/95 backdrop-blur-md pt-4 pb-3 mb-6 border-b border-panel-border text-gold-bright flex items-center justify-between text-2xl md:text-3xl font-bold tracking-wide shadow-sm">
+            <h3 style={{ top: 'var(--sticky-category-top, 140px)' }} className="sticky z-[35] bg-ink/95 backdrop-blur-md pt-4 pb-3 mb-6 border-b border-panel-border text-gold-bright flex items-center justify-between text-2xl md:text-3xl font-bold tracking-wide shadow-sm transform-gpu will-change-transform">
               <span>{displayCategoryName}</span>
               <span className="text-sm font-normal text-cream/60 md:text-gold-bright tracking-normal">
                 {items.length} {itemsCountLabel}

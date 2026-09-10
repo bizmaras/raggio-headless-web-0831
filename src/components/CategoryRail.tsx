@@ -100,13 +100,25 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
       }
     };
 
+    // Fire immediately and again after fonts/images settle
     updateStickyOffsets();
+    const t1 = setTimeout(updateStickyOffsets, 100);
+    const t2 = setTimeout(updateStickyOffsets, 400);
+
     window.addEventListener('resize', updateStickyOffsets, { passive: true });
-    const timer = setTimeout(updateStickyOffsets, 500);
+
+    // Re-measure if layout shifts (e.g. font swap, image load)
+    const ro = new ResizeObserver(updateStickyOffsets);
+    const headerEl = document.querySelector('header');
+    const railEl = scrollRef.current?.closest('.sticky') as HTMLElement | null;
+    if (headerEl) ro.observe(headerEl);
+    if (railEl) ro.observe(railEl);
 
     return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
       window.removeEventListener('resize', updateStickyOffsets);
-      clearTimeout(timer);
+      ro.disconnect();
     };
   }, []);
 
@@ -193,10 +205,10 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
   };
 
   return (
-    <div className="sticky top-16 md:top-20 z-40 bg-ink/95 backdrop-blur-md border-b border-panel-border pt-6 pb-4 md:pt-8 md:pb-5 shadow-sm transform-gpu will-change-transform">
+    <div className="sticky top-16 md:top-20 z-40 bg-ink/98 border-b border-panel-border pt-3 pb-2 md:pt-8 md:pb-5 shadow-sm transform-gpu">
       <div
         ref={scrollRef}
-        className="flex overflow-x-auto md:flex-wrap md:justify-center gap-2.5 md:gap-3 px-3 md:px-6 max-w-7xl mx-auto no-scrollbar pt-2 pb-1 scroll-smooth"
+        className="flex overflow-x-auto md:flex-wrap md:justify-center gap-2.5 md:gap-3 px-3 md:px-6 max-w-7xl mx-auto no-scrollbar pt-1 pb-1"
         style={{ WebkitOverflowScrolling: 'touch' }}
       >
         {CATEGORIES.map((cat, idx) => renderPill(cat, `${cat.searchId}-${idx}`))}
