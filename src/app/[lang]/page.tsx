@@ -142,7 +142,6 @@ export default async function HomePage({
                 key={category}
                 id={targetId}
                 className="mb-16 scroll-mt-[250px]"
-                style={catIdx > 1 ? { contentVisibility: 'auto', containIntrinsicSize: '0 450px' } : undefined}
               >
                 <h3 className="sticky top-[138px] md:top-[180px] lg:top-[220px] z-[35] bg-ink/95 backdrop-blur-md pt-4 pb-3 mb-6 border-b border-panel-border text-gold-bright flex items-center justify-between text-2xl md:text-3xl font-bold tracking-wide shadow-sm">
                   <Link href={`/${lang}/menu/${targetId}`} className="flex items-baseline gap-2.5 hover:text-gold transition-colors group/title">

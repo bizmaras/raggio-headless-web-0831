@@ -138,7 +138,7 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
   useEffect(() => {
     let scrollTimeout: ReturnType<typeof setTimeout>;
 
-    const handleWindowScroll = () => {
+    const handleScrollOrTouch = () => {
       isPaused.current = true;
       if (scrollTimeout) clearTimeout(scrollTimeout);
 
@@ -147,12 +147,14 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
           exactScroll.current = scrollRef.current.scrollLeft;
         }
         isPaused.current = false;
-      }, 150); // Resume 150ms after user stops scrolling vertically
+      }, 200); // Resume 200ms after user stops scrolling/touching
     };
 
-    window.addEventListener('scroll', handleWindowScroll, { passive: true });
+    window.addEventListener('scroll', handleScrollOrTouch, { passive: true });
+    window.addEventListener('touchmove', handleScrollOrTouch, { passive: true });
     return () => {
-      window.removeEventListener('scroll', handleWindowScroll);
+      window.removeEventListener('scroll', handleScrollOrTouch);
+      window.removeEventListener('touchmove', handleScrollOrTouch);
       if (scrollTimeout) clearTimeout(scrollTimeout);
     };
   }, []);
@@ -218,19 +220,7 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
     }
 
     if (target) {
-      const headerEl = document.querySelector('header');
-      const railEl = scrollRef.current?.parentElement;
-      const headerH = headerEl ? headerEl.getBoundingClientRect().height : 80;
-      const railH = railEl ? railEl.getBoundingClientRect().height : 60;
-      const headerOffset = headerH + railH + 16;
-
-      const elementPosition = target.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-      window.scrollTo({
-        top: Math.max(0, offsetPosition),
-        behavior: 'smooth',
-      });
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }, [activeSlug, lang, router]);
 
