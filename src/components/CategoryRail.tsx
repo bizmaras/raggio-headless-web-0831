@@ -41,9 +41,6 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
   const [activeCategory, setActiveCategory] = useState<string>(activeSlug || 'deals');
 
   const scrollRef = useRef<HTMLDivElement>(null);
-  const isPaused = useRef(false);
-  const exactScroll = useRef(0);
-  const resumeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (activeSlug) {
@@ -88,120 +85,23 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
     };
   }, [activeSlug]);
 
-  // Mobile auto-scroll: Seamless infinite loop with zero subpixel jitter and slower speed
+  // Auto-center active category pill in rail on mobile when category changes
   useEffect(() => {
-    const container = scrollRef.current;
-    if (!container) return;
-
-    let animId: number;
-    let lastTime = performance.now();
-    let accumulated = 0;
-    // Calibrated speed: ~22 pixels/second (calm, legible, premium motion)
-    const PIXELS_PER_SECOND = 22;
-
-    exactScroll.current = container.scrollLeft;
-
-    const step = (now: number) => {
-      const dt = Math.min((now - lastTime) / 1000, 0.1);
-      lastTime = now;
-
-      if (!isPaused.current && window.innerWidth < 768) {
-        // Half-width corresponds to Set 1 length (since Set 1 and Set 2 are equal on mobile)
-        const halfWidth = container.scrollWidth / 2;
-
-        if (halfWidth > 0 && container.scrollWidth > container.clientWidth) {
-          accumulated += dt * PIXELS_PER_SECOND;
-
-          // Integer-only pixel movement eliminates subpixel text jittering on mobile
-          if (accumulated >= 1) {
-            const pixelsToMove = Math.floor(accumulated);
-            accumulated -= pixelsToMove;
-            exactScroll.current += pixelsToMove;
-
-            // Seamless infinite loop without any visual jump
-            if (exactScroll.current >= halfWidth) {
-              exactScroll.current -= halfWidth;
-            }
-            container.scrollLeft = Math.round(exactScroll.current);
-          }
-        }
-      }
-
-      animId = requestAnimationFrame(step);
-    };
-
-    animId = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(animId);
-  }, []);
-
-  // Pause auto-scroll during window vertical scroll to prevent jitter
-  useEffect(() => {
-    let scrollTimeout: ReturnType<typeof setTimeout>;
-
-    const handleScrollOrTouch = () => {
-      isPaused.current = true;
-      if (scrollTimeout) clearTimeout(scrollTimeout);
-
-      scrollTimeout = setTimeout(() => {
-        if (scrollRef.current) {
-          exactScroll.current = scrollRef.current.scrollLeft;
-        }
-        isPaused.current = false;
-      }, 200); // Resume 200ms after user stops scrolling/touching
-    };
-
-    window.addEventListener('scroll', handleScrollOrTouch, { passive: true });
-    window.addEventListener('touchmove', handleScrollOrTouch, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', handleScrollOrTouch);
-      window.removeEventListener('touchmove', handleScrollOrTouch);
-      if (scrollTimeout) clearTimeout(scrollTimeout);
-    };
-  }, []);
-
-  const handleInteractionStart = useCallback(() => {
-    isPaused.current = true;
-    if (resumeTimer.current) clearTimeout(resumeTimer.current);
-  }, []);
-
-  const handleInteractionEnd = useCallback(() => {
-    if (resumeTimer.current) clearTimeout(resumeTimer.current);
-    resumeTimer.current = setTimeout(() => {
-      if (scrollRef.current) {
-        exactScroll.current = scrollRef.current.scrollLeft;
-      }
-      isPaused.current = false;
-    }, 2500); // 2.5s calm pause after user releases touch
-  }, []);
-
-  // Handle continuous loop while user manually scrolls or flicks
-  const handleContainerScroll = useCallback(() => {
-    const container = scrollRef.current;
-    if (!container || window.innerWidth >= 768) return;
-
-    const halfWidth = container.scrollWidth / 2;
-    if (halfWidth <= 0) return;
-
-    if (container.scrollLeft >= halfWidth) {
-      container.scrollLeft -= halfWidth;
-      exactScroll.current = container.scrollLeft;
-    } else if (container.scrollLeft <= 0) {
-      container.scrollLeft += halfWidth;
-      exactScroll.current = container.scrollLeft;
-    } else {
-      exactScroll.current = container.scrollLeft;
+    if (!scrollRef.current || typeof window === 'undefined' || window.innerWidth >= 768) return;
+    const activePill = scrollRef.current.querySelector(`[data-cat-pill="${activeCategory}"]`) as HTMLElement;
+    if (activePill) {
+      const container = scrollRef.current;
+      const targetLeft = activePill.offsetLeft - container.offsetWidth / 2 + activePill.offsetWidth / 2;
+      container.scrollTo({
+        left: Math.max(0, targetLeft),
+        behavior: 'smooth',
+      });
     }
-  }, []);
+  }, [activeCategory]);
 
   const handleCategoryClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, searchId: string) => {
     e.preventDefault();
     setActiveCategory(searchId);
-    isPaused.current = true;
-    if (resumeTimer.current) clearTimeout(resumeTimer.current);
-    resumeTimer.current = setTimeout(() => {
-      if (scrollRef.current) exactScroll.current = scrollRef.current.scrollLeft;
-      isPaused.current = false;
-    }, 3500);
 
     // If on a dedicated category page or product page:
     if (activeSlug) {
@@ -220,11 +120,23 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
     }
 
     if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const headerEl = document.querySelector('header');
+      const railEl = scrollRef.current?.closest('.sticky') || scrollRef.current?.parentElement;
+      const headerH = headerEl ? headerEl.getBoundingClientRect().height : 70;
+      const railH = railEl ? railEl.getBoundingClientRect().height : 60;
+      const totalOffset = headerH + railH + 16;
+
+      const elementPosition = target.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - totalOffset;
+
+      window.scrollTo({
+        top: Math.max(0, offsetPosition),
+        behavior: 'smooth',
+      });
     }
   }, [activeSlug, lang, router]);
 
-  const renderPill = (cat: typeof CATEGORIES[number], key: string, isDuplicate = false) => {
+  const renderPill = (cat: typeof CATEGORIES[number], key: string) => {
     const isActive = activeCategory === cat.searchId;
     const label = categoriesDict?.[cat.label] || cat.label;
     const href = activeSlug
@@ -243,7 +155,6 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
           flex-none flex items-center justify-center px-4 py-2 md:px-5 md:py-2.5 rounded-xl border text-xs sm:text-sm font-semibold whitespace-nowrap
           transition-all duration-300 touch-manipulation select-none cursor-pointer
           active:scale-95 focus:outline-none tracking-wide
-          ${isDuplicate ? 'md:hidden' : ''}
           ${isActive
             ? 'bg-[#c9a15c]/15 text-[#c9a15c] font-bold border-[#c9a15c] shadow-[0_0_24px_rgba(201,161,92,0.45)] ring-1 ring-[#c9a15c]/50'
             : 'border-white/10 bg-[#16181d]/90 text-white/90 hover:text-[#c9a15c] hover:border-[#c9a15c] hover:shadow-[0_0_20px_rgba(201,161,92,0.35)] hover:-translate-y-0.5 shadow-sm active:text-[#c9a15c] active:border-[#c9a15c]'
@@ -256,24 +167,13 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
   };
 
   return (
-    <div className="sticky top-16 md:top-20 z-40 bg-ink/95 backdrop-blur-md border-b border-panel-border pt-6 pb-4 md:pt-8 md:pb-5 shadow-sm">
+    <div className="sticky top-16 md:top-20 z-40 bg-ink/95 backdrop-blur-md border-b border-panel-border pt-6 pb-4 md:pt-8 md:pb-5 shadow-sm transform-gpu will-change-transform">
       <div
         ref={scrollRef}
-        onPointerDown={handleInteractionStart}
-        onPointerUp={handleInteractionEnd}
-        onPointerCancel={handleInteractionEnd}
-        onPointerLeave={handleInteractionEnd}
-        onTouchStart={handleInteractionStart}
-        onTouchEnd={handleInteractionEnd}
-        onScroll={handleContainerScroll}
-        className="flex overflow-x-auto md:flex-wrap md:justify-center gap-2.5 md:gap-3 px-3 md:px-6 max-w-7xl mx-auto no-scrollbar pt-2 pb-1"
+        className="flex overflow-x-auto md:flex-wrap md:justify-center gap-2.5 md:gap-3 px-3 md:px-6 max-w-7xl mx-auto no-scrollbar pt-2 pb-1 scroll-smooth"
         style={{ WebkitOverflowScrolling: 'touch' }}
       >
-        {/* Set 1: visible everywhere (wraps on desktop, flows on mobile) */}
-        {CATEGORIES.map((cat, idx) => renderPill(cat, `s1-${cat.searchId}-${idx}`))}
-
-        {/* Set 2: rendered ONLY on mobile (md:hidden) to create an infinite seamless loop without jumping */}
-        {CATEGORIES.map((cat, idx) => renderPill(cat, `s2-${cat.searchId}-${idx}`, true))}
+        {CATEGORIES.map((cat, idx) => renderPill(cat, `${cat.searchId}-${idx}`))}
       </div>
     </div>
   );
