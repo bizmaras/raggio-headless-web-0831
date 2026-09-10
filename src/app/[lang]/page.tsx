@@ -184,6 +184,7 @@ export default async function HomePage({
                           lang={lang}
                           categorySlug={targetId}
                           slug={itemSlug}
+                          image={(item as any).Image || (item as any).image}
                           dict={dict}
                         />
                       );

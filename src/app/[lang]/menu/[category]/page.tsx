@@ -199,6 +199,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                   lang={lang}
                   categorySlug={categorySlug}
                   slug={itemSlug}
+                  image={(item as any).Image || (item as any).image}
                   dict={dict}
                 />
               );

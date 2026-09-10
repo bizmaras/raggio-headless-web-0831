@@ -108,32 +108,61 @@ export default function MenuItemCard(props: MenuItemCardProps) {
 
   const productUrl = props.categorySlug && props.slug ? `/${currentLang}/menu/${props.categorySlug}/${props.slug}` : null;
 
+  const seoAltText = `${itemName} - Raggio Gourmet & Pizza Newark DE`;
+
   return (
     <>
-      <div className="bg-panel border border-panel-border rounded-xl p-5 hover:border-gold hover:shadow-[0_0_22px_rgba(201,161,92,0.35)] hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between group">
+      <div className="bg-panel border border-panel-border rounded-xl p-4 sm:p-5 hover:border-gold hover:shadow-[0_0_22px_rgba(201,161,92,0.35)] hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between group">
         <div>
-          <div className="flex justify-between items-start mb-2 gap-2">
-            {productUrl ? (
-              <Link
-                href={productUrl}
-                className="text-lg font-bold text-cream group-hover:text-gold-bright transition-colors leading-snug hover:underline decoration-gold/40"
-              >
-                {itemName}
-              </Link>
-            ) : (
-              <h4 className="text-lg font-bold text-cream group-hover:text-gold-bright transition-colors leading-snug">
-                {itemName}
-              </h4>
-            )}
-            <div className="text-right flex-shrink-0 ml-2">
-              <span className="text-gold font-extrabold text-base sm:text-lg tabular-nums tracking-tight transition-all duration-150">
-                {itemPrice}
-              </span>
+          {/* Top Row: 80x80 Thumbnail + Title, Price, Description */}
+          <div className="flex items-start gap-3.5 mb-3">
+            {/* 80x80 (mobile 72x72) Locked Thumbnail or Brand Monogram Placeholder */}
+            <div className="w-[72px] h-[72px] sm:w-20 sm:h-20 shrink-0 rounded-xl overflow-hidden bg-ink/90 border border-panel-border group-hover:border-gold/50 transition-colors relative shadow-inner flex items-center justify-center">
+              {itemImage ? (
+                <img
+                  src={itemImage}
+                  alt={seoAltText}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+              ) : (
+                <div className="flex flex-col items-center justify-center p-1.5 text-center select-none">
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6 text-gold mb-0.5 opacity-90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  </svg>
+                  <span className="text-[9px] font-extrabold text-gold uppercase tracking-wider leading-none">Raggio</span>
+                  <span className="text-[8px] text-stone/80 mt-0.5 leading-none">{freshlyPreparedText}</span>
+                </div>
+              )}
+            </div>
+
+            {/* Title, Price & Short Description */}
+            <div className="flex-1 min-w-0">
+              <div className="flex justify-between items-start gap-1 mb-1">
+                {productUrl ? (
+                  <Link
+                    href={productUrl}
+                    className="text-base sm:text-lg font-bold text-cream group-hover:text-gold-bright transition-colors leading-tight hover:underline decoration-gold/40 line-clamp-1"
+                  >
+                    {itemName}
+                  </Link>
+                ) : (
+                  <h4 className="text-base sm:text-lg font-bold text-cream group-hover:text-gold-bright transition-colors leading-tight line-clamp-1">
+                    {itemName}
+                  </h4>
+                )}
+                <div className="text-right flex-shrink-0 ml-1.5">
+                  <span className="text-gold font-extrabold text-base sm:text-lg tabular-nums tracking-tight transition-all duration-150">
+                    {itemPrice}
+                  </span>
+                </div>
+              </div>
+              <p className="text-xs sm:text-sm text-stone line-clamp-2 leading-relaxed">
+                {itemDescription}
+              </p>
             </div>
           </div>
-          <p className="text-sm text-stone mb-4 line-clamp-2 leading-relaxed">
-            {itemDescription}
-          </p>
         </div>
 
         {/* Micro In-Card Size Pills (Rendered only for items with sizes) */}
@@ -222,8 +251,9 @@ export default function MenuItemCard(props: MenuItemCardProps) {
               {itemImage ? (
                 <img
                   src={itemImage}
-                  alt={itemName}
+                  alt={seoAltText}
                   loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover"
                 />
               ) : (
