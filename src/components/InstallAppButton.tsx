@@ -7,7 +7,12 @@ interface BeforeInstallPromptEvent extends Event {
   userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
 }
 
-export default function InstallAppButton({ className = '' }: { className?: string }) {
+interface InstallAppButtonProps {
+  className?: string;
+  children?: React.ReactNode;
+}
+
+export default function InstallAppButton({ className = '', children }: InstallAppButtonProps) {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [isInstallable, setIsInstallable] = useState(false);
   const [isIOS, setIsIOS] = useState(false);
@@ -53,16 +58,22 @@ export default function InstallAppButton({ className = '' }: { className?: strin
 
   return (
     <>
-      <button
-        onClick={handleInstallClick}
-        aria-label="Install Raggio App"
-        className={'inline-flex items-center gap-2 bg-[#181c22] border border-gold/60 text-gold-bright hover:bg-gold hover:text-[#1c1408] font-bold text-xs px-5 py-2.5 rounded-full transition-all duration-200 cursor-pointer shadow-sm active:scale-95 ' + className}
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 shrink-0 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-        </svg>
-        <span>Install App</span>
-      </button>
+      {children ? (
+        <div onClick={handleInstallClick} className={`inline-block cursor-pointer ${className}`}>
+          {children}
+        </div>
+      ) : (
+        <button
+          onClick={handleInstallClick}
+          aria-label="Install Raggio App"
+          className={'inline-flex items-center gap-2 bg-[#181c22] border border-gold/60 text-gold-bright hover:bg-gold hover:text-[#1c1408] font-bold text-xs px-5 py-2.5 rounded-full transition-all duration-200 cursor-pointer shadow-sm active:scale-95 ' + className}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 shrink-0 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+          <span>Install App</span>
+        </button>
+      )}
 
       {showModal && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
