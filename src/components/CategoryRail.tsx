@@ -41,6 +41,9 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
   const [activeCategory, setActiveCategory] = useState<string>(activeSlug || 'deals');
 
   const scrollRef = useRef<HTMLDivElement>(null);
+  // Tracks whether activeCategory was set by a user tap (true) or by scrollspy (false).
+  // Auto-center only fires when the user tapped — NOT during free scroll.
+  const clickedRef = useRef(false);
 
   useEffect(() => {
     if (activeSlug) {
@@ -58,6 +61,7 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const id = entry.target.getAttribute('data-rail-id') || entry.target.id;
+            clickedRef.current = false; // scrollspy update — do NOT auto-center rail
             setActiveCategory(id);
           }
         });
@@ -85,7 +89,9 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
     };
   }, [activeSlug]);
 
-  // Dynamically calculate the combined sticky header + rail height and set it as a CSS variable
+  // Set --sticky-category-top CSS variable (header height + rail height).
+  // NO ResizeObserver — it fires when the mobile browser hides/shows its address bar
+  // causing constant trembling. Simple one-time measurement with two delayed retries.
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
@@ -100,31 +106,26 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
       }
     };
 
-    // Fire immediately and again after fonts/images settle
     updateStickyOffsets();
-    const t1 = setTimeout(updateStickyOffsets, 100);
-    const t2 = setTimeout(updateStickyOffsets, 400);
+    const t1 = setTimeout(updateStickyOffsets, 150);
+    const t2 = setTimeout(updateStickyOffsets, 700);
 
-    window.addEventListener('resize', updateStickyOffsets, { passive: true });
-
-    // Re-measure if layout shifts (e.g. font swap, image load)
-    const ro = new ResizeObserver(updateStickyOffsets);
-    const headerEl = document.querySelector('header');
-    const railEl = scrollRef.current?.closest('.sticky') as HTMLElement | null;
-    if (headerEl) ro.observe(headerEl);
-    if (railEl) ro.observe(railEl);
+    // Only re-measure on orientation change (device rotation), NOT on window resize
+    window.addEventListener('orientationchange', updateStickyOffsets, { passive: true });
 
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
-      window.removeEventListener('resize', updateStickyOffsets);
-      ro.disconnect();
+      window.removeEventListener('orientationchange', updateStickyOffsets);
     };
   }, []);
 
-  // Auto-center active category pill in rail on mobile when category changes
+  // Auto-center the active pill — ONLY when the user explicitly tapped a pill.
+  // scrollspy changes do NOT trigger this (clickedRef.current === false during scroll).
   useEffect(() => {
+    if (!clickedRef.current) return;
     if (!scrollRef.current || typeof window === 'undefined' || window.innerWidth >= 768) return;
+
     const activePill = scrollRef.current.querySelector(`[data-cat-pill="${activeCategory}"]`) as HTMLElement;
     if (activePill) {
       const container = scrollRef.current;
@@ -138,6 +139,7 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
 
   const handleCategoryClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, searchId: string) => {
     e.preventDefault();
+    clickedRef.current = true; // user tapped — allow auto-center
     setActiveCategory(searchId);
 
     // If on a dedicated category page or product page:
@@ -205,10 +207,10 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
   };
 
   return (
-    <div className="sticky top-16 md:top-20 z-40 bg-ink/98 border-b border-panel-border pt-3 pb-2 md:pt-8 md:pb-5 shadow-sm transform-gpu">
+    <div className="sticky top-16 md:top-20 z-40 bg-ink/95 backdrop-blur-sm border-b border-panel-border py-3 md:py-5 shadow-sm">
       <div
         ref={scrollRef}
-        className="flex overflow-x-auto md:flex-wrap md:justify-center gap-2.5 md:gap-3 px-3 md:px-6 max-w-7xl mx-auto no-scrollbar pt-1 pb-1"
+        className="flex overflow-x-auto md:flex-wrap md:justify-center gap-2.5 md:gap-3 px-3 md:px-6 max-w-7xl mx-auto no-scrollbar"
         style={{ WebkitOverflowScrolling: 'touch' }}
       >
         {CATEGORIES.map((cat, idx) => renderPill(cat, `${cat.searchId}-${idx}`))}
