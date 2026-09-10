@@ -75,11 +75,11 @@ export default function Header({ lang = 'en', dict }: HeaderProps) {
               <Image
                 src="/images/raggio-logo.png"
                 alt="Raggio Gourmet & Pizza"
-                width={120}
-                height={33}
-                quality={60}
-                sizes="(max-width: 640px) 48px, 120px"
-                className="h-10 sm:h-12 w-auto object-contain drop-shadow-md"
+                width={160}
+                height={45}
+                quality={85}
+                sizes="(max-width: 640px) 48px, (max-width: 1024px) 120px, 160px"
+                className="h-10 sm:h-12 lg:h-14 w-auto object-contain drop-shadow-md"
               />
             </a>
 

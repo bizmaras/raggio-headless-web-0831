@@ -1,10 +1,17 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { hasLocale, getDictionary, supportedLocales } from "./dictionaries";
 import type { Locale } from "./dictionaries";
 import DatadogInit from "@/components/DatadogInit";
 import RestaurantJsonLd from "@/components/RestaurantJsonLd";
 import "../globals.css";
+
+export const viewport: Viewport = {
+  themeColor: "#101216",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+};
 
 export async function generateStaticParams() {
   return supportedLocales.map((lang) => ({ lang }));
@@ -78,6 +85,20 @@ export async function generateMetadata({
       title,
       description,
       images: ["https://raggiogourmetpizza.com/window.svg"],
+    },
+    icons: {
+      icon: [
+        { url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },
+        { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      ],
+      apple: [
+        { url: "/icons/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+      ],
+    },
+    appleWebApp: {
+      capable: true,
+      statusBarStyle: "black-translucent",
+      title: "Raggio Pizza",
     },
   };
 }
