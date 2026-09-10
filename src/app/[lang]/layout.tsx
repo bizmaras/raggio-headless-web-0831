@@ -100,6 +100,7 @@ export async function generateMetadata({
       statusBarStyle: "black-translucent",
       title: "Raggio Pizza",
     },
+    manifest: "/manifest.webmanifest",
   };
 }
 
