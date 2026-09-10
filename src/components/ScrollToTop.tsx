@@ -31,11 +31,11 @@ export default function ScrollToTop() {
             aria-label="Scroll to top"
             className={`
                 md:hidden 
-                fixed bottom-20 left-4 z-40 p-3 rounded-full 
+                fixed bottom-24 left-4 z-40 h-12 w-12 rounded-full 
                 bg-[#14181d] border border-gold text-gold
                 shadow-[0_0_15px_rgba(212,175,55,0.25)] 
                 transition-all duration-300 ease-in-out touch-manipulation
-                active:scale-90 active:bg-gold/20
+                active:scale-90 active:bg-gold/20 flex items-center justify-center cursor-pointer
                 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'}
             `}
         >

@@ -49,7 +49,7 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
     }
   }, [activeSlug]);
 
-  // Scroll active pill into view on mobile when active category changes
+  // Scroll active pill into view inside track smoothly without touching window/viewport scroll
   useEffect(() => {
     if (!activeCategory || typeof window === 'undefined') return;
     if (window.innerWidth >= 768) return;
@@ -57,7 +57,9 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
     if (!track) return;
     const pill = track.querySelector(`[data-cat-pill="${activeCategory}"]`) as HTMLElement | null;
     if (pill) {
-      pill.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      // Pure element-level horizontal scroll to prevent iOS Safari window jitter
+      const scrollLeft = pill.offsetLeft - (track.offsetWidth / 2) + (pill.offsetWidth / 2);
+      track.scrollTo({ left: Math.max(0, scrollLeft), behavior: 'smooth' });
     }
   }, [activeCategory]);
 
@@ -193,12 +195,12 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
         href={href}
         onClick={(e) => handleCategoryClick(e, cat.searchId)}
         className={`
-          flex-none flex items-center justify-center px-4 py-2 md:px-5 md:py-2.5 rounded-xl border text-xs sm:text-sm font-semibold whitespace-nowrap
+          flex-none flex items-center justify-center px-4.5 py-2.5 md:px-5 md:py-2.5 min-h-[44px] rounded-2xl border text-sm font-bold whitespace-nowrap
           transition-all duration-200 touch-manipulation select-none cursor-pointer
           active:scale-95 focus:outline-none tracking-wide
           ${isActive
-            ? 'bg-[#c9a15c]/15 text-[#c9a15c] font-bold border-[#c9a15c] shadow-[0_0_24px_rgba(201,161,92,0.45)] ring-1 ring-[#c9a15c]/50'
-            : 'border-white/10 bg-[#16181d]/90 text-white/90 hover:text-[#c9a15c] hover:border-[#c9a15c] hover:shadow-[0_0_20px_rgba(201,161,92,0.35)] shadow-sm active:text-[#c9a15c] active:border-[#c9a15c]'
+            ? 'bg-gold/20 text-gold-bright font-extrabold border-gold shadow-[0_0_24px_rgba(212,175,98,0.45)] ring-1 ring-gold/50'
+            : 'border-panel-border bg-panel/85 text-cream/90 hover:text-gold hover:border-gold/50 hover:shadow-[0_0_20px_rgba(212,175,98,0.25)] shadow-sm active:text-gold active:border-gold'
           }
         `}
       >

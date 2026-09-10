@@ -151,12 +151,9 @@ export default async function HomePage({
                 key={category}
                 id={targetId}
                 className="mb-16"
-                style={{ scrollMarginTop: 'var(--sticky-category-top, 136px)' }}
+                style={{ scrollMarginTop: 'calc(var(--sticky-category-top, 136px) + 20px)' }}
               >
-                <h3
-                  style={{ top: 'var(--sticky-category-top, 136px)' }}
-                  className="sticky z-30 bg-ink pt-4 pb-3 mb-6 border-b border-panel-border text-gold-bright flex items-center justify-between text-2xl md:text-3xl font-bold tracking-wide shadow-sm isolate"
-                >
+                <h3 className="pt-6 pb-3 mb-6 border-b border-panel-border text-gold-bright flex items-center justify-between text-2xl md:text-3xl font-bold tracking-wide">
                   <Link href={`/${lang}/menu/${targetId}`} className="flex items-baseline gap-2.5 hover:text-gold transition-colors group/title">
                     <span className="group-hover/title:underline decoration-gold/40">{displayCategory}</span>
                     <span className="text-xs sm:text-sm font-normal text-cream/60 md:text-gold-bright tracking-normal">

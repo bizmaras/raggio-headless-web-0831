@@ -206,13 +206,13 @@ export default function AIChatBot() {
     return (
         <>
             {!isOpen && (
-                <div className="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 z-40">
+                <div className="fixed bottom-24 right-4 sm:bottom-6 sm:right-6 z-40">
                     <button
                         onClick={() => setIsOpen(true)}
-                        className="flex h-14 w-14 items-center justify-center rounded-full bg-[#c9a15c] text-[#121214] shadow-[0_0_24px_rgba(201,161,92,0.45)] border border-white/20 transition-transform hover:scale-105 active:scale-95 cursor-pointer"
+                        className="flex h-12 w-12 items-center justify-center rounded-full bg-[#14181d] border border-gold text-gold shadow-[0_0_15px_rgba(212,175,55,0.25)] transition-all duration-300 ease-in-out touch-manipulation hover:scale-105 active:scale-90 active:bg-gold/20 cursor-pointer"
                         aria-label="Open Chat"
                     >
-                        <MessageSquare className="h-6 w-6 text-[#121214]" />
+                        <MessageSquare className="h-5 w-5 text-gold" />
                     </button>
                 </div>
             )}
