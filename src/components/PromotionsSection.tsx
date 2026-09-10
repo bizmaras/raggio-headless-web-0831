@@ -157,7 +157,11 @@ export default function PromotionsSection({ dict }: PromotionsSectionProps) {
   };
 
   return (
-    <section id="deals" className="py-8 sm:py-14 px-4 sm:px-6 max-w-7xl mx-auto scroll-mt-28">
+    <section
+      id="deals"
+      className="py-8 sm:py-14 px-4 sm:px-6 max-w-7xl mx-auto scroll-mt-[150px] md:scroll-mt-[270px]"
+      style={{ scrollMarginTop: 'calc(var(--sticky-category-top, 250px) + 20px)' }}
+    >
       <div className="flex items-center justify-between mb-4 sm:mb-8">
         <div>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-gold-bright tracking-tight">

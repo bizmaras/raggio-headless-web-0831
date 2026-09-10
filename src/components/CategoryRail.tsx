@@ -149,7 +149,8 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }
       const railEl = scrollRef.current?.closest('.sticky') || scrollRef.current?.parentElement;
       const headerH = headerEl ? headerEl.getBoundingClientRect().height : 70;
       const railH = railEl ? railEl.getBoundingClientRect().height : 60;
-      const totalOffset = headerH + railH;
+      const isPageSection = searchId === 'deals' || searchId === 'catering' || searchId === 'reviews' || searchId === 'location';
+      const totalOffset = headerH + railH + (isPageSection ? 20 : 0);
 
       const elementPosition = target.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - totalOffset;

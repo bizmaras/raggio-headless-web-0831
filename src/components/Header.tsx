@@ -31,6 +31,39 @@ export default function Header({ lang = 'en', dict }: HeaderProps) {
 
   const orderText = dict?.nav?.order || 'Order Online';
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (typeof window === 'undefined') return;
+
+    const isSamePage =
+      window.location.pathname === `/${lang}` ||
+      window.location.pathname === `/${lang}/` ||
+      window.location.pathname === '/';
+
+    if (isSamePage && href.includes('#')) {
+      const hash = href.split('#')[1];
+      const target = document.getElementById(hash);
+      if (target) {
+        e.preventDefault();
+        setIsMobileMenuOpen(false);
+
+        const headerEl = document.querySelector('header');
+        const railEl = document.querySelector('div.sticky');
+        const headerH = headerEl ? headerEl.getBoundingClientRect().height : 80;
+        const railH = railEl ? railEl.getBoundingClientRect().height : 0;
+        const totalOffset = headerH + railH + 20;
+
+        const targetTop = target.getBoundingClientRect().top + window.pageYOffset;
+        window.scrollTo({
+          top: Math.max(0, targetTop - totalOffset),
+          behavior: 'smooth',
+        });
+        window.history.pushState(null, '', href);
+        return;
+      }
+    }
+    setIsMobileMenuOpen(false);
+  };
+
   return (
     <header className="sticky top-0 z-40 w-full bg-ink/95 backdrop-blur-md border-b border-panel-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -78,7 +111,8 @@ export default function Header({ lang = 'en', dict }: HeaderProps) {
               <a
                 key={link.name}
                 href={link.href}
-                className="px-4 py-2 rounded-lg text-base font-semibold text-cream hover:text-gold hover:bg-panel transition-all"
+                onClick={(e) => handleNavClick(e, link.href)}
+                className="px-4 py-2 rounded-lg text-base font-semibold text-cream hover:text-gold hover:bg-panel transition-all cursor-pointer"
               >
                 {link.name}
               </a>
@@ -159,8 +193,8 @@ export default function Header({ lang = 'en', dict }: HeaderProps) {
             <a
               key={link.name}
               href={link.href}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="flex items-center justify-between px-4 py-3 rounded-lg text-lg font-bold text-cream hover:text-gold hover:bg-ink transition-colors"
+              onClick={(e) => handleNavClick(e, link.href)}
+              className="flex items-center justify-between px-4 py-3 rounded-lg text-lg font-bold text-cream hover:text-gold hover:bg-ink transition-colors cursor-pointer"
             >
               <span>{link.name}</span>
               {link.href === '#reviews' && (

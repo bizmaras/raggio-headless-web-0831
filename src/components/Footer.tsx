@@ -30,7 +30,11 @@ export default function Footer({ dict }: FooterProps) {
   const poweredByText = dict?.footer?.powered_by || 'Online Ordering Powered by FoodTec Solutions';
 
   return (
-    <footer id="location" className="bg-ink border-t border-panel-border text-cream pt-16 pb-24 lg:pb-12 px-6 scroll-mt-20">
+    <footer
+      id="location"
+      className="bg-ink border-t border-panel-border text-cream pt-16 pb-32 lg:pb-20 px-6 scroll-mt-[150px] md:scroll-mt-[270px] min-h-[75vh]"
+      style={{ scrollMarginTop: 'calc(var(--sticky-category-top, 250px) + 20px)' }}
+    >
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 mb-12">
 
         <div className="lg:col-span-5 space-y-6">

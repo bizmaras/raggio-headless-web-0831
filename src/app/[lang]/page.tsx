@@ -110,7 +110,11 @@ export default async function HomePage({
         <CategoryRail categoriesDict={dict.categories} lang={lang} />
         <StatsCounter dict={dict} />
 
-        <section id="menu" className="max-w-7xl mx-auto px-6 py-12 scroll-mt-[210px]">
+        <section
+          id="menu"
+          className="max-w-7xl mx-auto px-6 py-12 scroll-mt-[150px] md:scroll-mt-[270px]"
+          style={{ scrollMarginTop: 'calc(var(--sticky-category-top, 250px) + 20px)' }}
+        >
           <ScrollReveal>
             <div className="flex flex-col sm:flex-row items-center justify-between mb-12 gap-4">
               <h2 className="text-3xl md:text-4xl font-extrabold text-gold-bright">
@@ -193,9 +197,7 @@ export default async function HomePage({
         <ScrollReveal>
           <PromotionsSection dict={dict} />
         </ScrollReveal>
-        <div style={{ contentVisibility: 'auto', containIntrinsicSize: '0 500px' }}>
-          <CateringSection dict={dict} lang={lang} />
-        </div>
+        <CateringSection dict={dict} lang={lang} />
         <ScrollReveal>
           <FAQ dict={dict} />
         </ScrollReveal>

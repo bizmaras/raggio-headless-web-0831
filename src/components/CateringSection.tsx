@@ -47,7 +47,11 @@ export default function CateringSection({ dict, lang = 'en' }: CateringSectionPr
   const fullLabel = dict?.catering?.full_size || 'FULL';
 
   return (
-    <section id="catering" className="max-w-7xl mx-auto px-6 py-12 scroll-mt-[210px]">
+    <section
+      id="catering"
+      className="max-w-7xl mx-auto px-6 py-12 scroll-mt-[150px] md:scroll-mt-[270px]"
+      style={{ scrollMarginTop: 'calc(var(--sticky-category-top, 250px) + 20px)' }}
+    >
       <div className="text-center mb-12 max-w-2xl mx-auto">
         <div className="flex items-center justify-center gap-1.5 text-gold mb-2 opacity-90">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
