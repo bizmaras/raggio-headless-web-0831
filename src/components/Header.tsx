@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import LanguageSwitcher from './LanguageSwitcher';
-import InstallAppButton from './InstallAppButton';
 
 interface HeaderProps {
   lang?: string;
@@ -121,8 +120,7 @@ export default function Header({ lang = 'en', dict }: HeaderProps) {
           </nav>
 
           {/* DESKTOP ACTIONS */}
-          <div className="hidden lg:flex items-center gap-4">
-            <InstallAppButton />
+          <div className="hidden lg:flex items-center gap-5">
             <LanguageSwitcher currentLang={lang} />
 
             <a
@@ -148,7 +146,6 @@ export default function Header({ lang = 'en', dict }: HeaderProps) {
 
           {/* RIGHT: MOBILE CONTROLS */}
           <div className="flex lg:hidden items-center gap-2">
-            <InstallAppButton />
             <LanguageSwitcher currentLang={lang} />
 
             <a

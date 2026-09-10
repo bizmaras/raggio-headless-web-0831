@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { MapPin, Phone, Clock } from 'lucide-react';
+import InstallAppButton from './InstallAppButton';
 
 interface FooterProps {
   dict?: {
@@ -80,7 +81,7 @@ export default function Footer({ dict }: FooterProps) {
             </div>
           </div>
 
-          <div className="pt-2">
+          <div className="pt-2 flex items-center gap-3 flex-wrap">
             <a
               href="https://maps.google.com/?q=681+E+Chestnut+Hill+Rd,+Newark,+DE+19713"
               target="_blank"
@@ -89,6 +90,7 @@ export default function Footer({ dict }: FooterProps) {
             >
               {getDirectionsText}
             </a>
+            <InstallAppButton />
           </div>
         </div>
 
