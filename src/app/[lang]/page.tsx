@@ -107,7 +107,7 @@ export default async function HomePage({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }}
         />
-        <HeroSlider dict={dict} />
+        <HeroSlider dict={dict} lang={lang} />
         <CategoryRail categoriesDict={dict.categories} lang={lang} />
 
         <ScrollReveal>
@@ -208,7 +208,7 @@ export default async function HomePage({
           <GoogleReviewsSection dict={dict} />
         </ScrollReveal>
       </main>
-      <Footer dict={dict} />
+      <Footer dict={dict} lang={lang} />
       <ScrollToTop />
       <StickyMobileBar dict={dict} />
       <DeferredWidgets />

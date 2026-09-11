@@ -18,9 +18,10 @@ interface FooterProps {
       powered_by?: string;
     };
   };
+  lang?: string;
 }
 
-export default function Footer({ dict }: FooterProps) {
+export default function Footer({ dict, lang }: FooterProps) {
   const descriptionText = dict?.footer?.description ||
     'Serving Newark, Delaware with artisanal stone-baked pizzas, authentic Philly cheesesteaks, fresh pastas, and full-service event catering.';
   const storeHoursText = dict?.footer?.store_hours || 'Store Hours';
@@ -90,7 +91,7 @@ export default function Footer({ dict }: FooterProps) {
             >
               {getDirectionsText}
             </a>
-            <InstallAppButton />
+            <InstallAppButton lang={lang} />
           </div>
         </div>
 
