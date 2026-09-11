@@ -18,6 +18,7 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [, setIsInstallable] = useState(false);
   const [isIOS, setIsIOS] = useState(false);
+  const [isChromeIOS, setIsChromeIOS] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [mounted, setMounted] = useState(false);
 
@@ -45,6 +46,9 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
     if (isIosDevice) {
       setIsIOS(true);
       setIsInstallable(true);
+      if (/crios/i.test(ua)) {
+        setIsChromeIOS(true);
+      }
     }
 
     return () => {
@@ -108,7 +112,7 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
       onClick={() => setShowModal(false)}
       role="dialog"
       aria-modal="true"
-      aria-label="Install Raggio VIP App"
+      aria-label="Install Raggio VIP App Guide"
     >
       <div
         className="bg-[#12151a] border border-[#d4af62]/40 rounded-3xl p-6 sm:p-7 max-w-sm sm:max-w-md w-full shadow-[0_25px_60px_rgba(0,0,0,0.9)] relative text-left my-auto animate-in fade-in zoom-in-95 duration-200"
@@ -137,7 +141,7 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
               </span>
             </div>
             <p className="text-xs text-[#d4af62] font-medium mt-0.5">
-              {isTr ? 'Ana Ekrana Ekle & Hızlı Sipariş' : isEs ? 'Agregar a Pantalla de Inicio' : 'Add to Home Screen & Instant Order'}
+              {isTr ? 'Kurulum Rehberi (3 Kolay Adım)' : isEs ? 'Guía de Instalación (3 Pasos)' : 'Installation Guide (3 Simple Steps)'}
             </p>
           </div>
         </div>
@@ -146,11 +150,17 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
         {isIOS ? (
           <div className="space-y-3 text-xs text-stone leading-relaxed">
             <p className="text-cream font-semibold text-xs sm:text-sm">
-              {isTr
-                ? 'iPhone veya iPad cihazınıza yüklemek için:'
-                : isEs
-                ? 'Para instalar en su iPhone o iPad:'
-                : 'To install on your iPhone or iPad:'}
+              {isChromeIOS
+                ? (isTr
+                    ? "iPhone'da Google Chrome ile yüklemek için:"
+                    : isEs
+                    ? 'Para instalar en Chrome en iPhone o iPad:'
+                    : 'To install via Chrome on your iPhone or iPad:')
+                : (isTr
+                    ? "iPhone veya iPad'inize Safari ile yüklemek için:"
+                    : isEs
+                    ? 'Para instalar en Safari en su iPhone o iPad:'
+                    : 'To install via Safari on your iPhone or iPad:')}
             </p>
 
             {/* Step 1 */}
@@ -159,36 +169,70 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
                 1
               </div>
               <div className="pt-0.5 leading-snug">
-                {isTr ? (
-                  <>
-                    Safari ekranının en altındaki <strong className="text-white">Paylaş</strong> simgesine dokunun:
-                    <span className="inline-flex items-center gap-1 ml-1.5 px-2 py-0.5 rounded bg-white/10 text-[#ebd092] font-medium align-middle">
-                      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                      </svg>
-                      Paylaş
-                    </span>
-                  </>
-                ) : isEs ? (
-                  <>
-                    Toque el botón <strong className="text-white">Compartir</strong> en la barra inferior de Safari:
-                    <span className="inline-flex items-center gap-1 ml-1.5 px-2 py-0.5 rounded bg-white/10 text-[#ebd092] font-medium align-middle">
-                      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                      </svg>
-                      Compartir
-                    </span>
-                  </>
+                {isChromeIOS ? (
+                  isTr ? (
+                    <>
+                      En üstteki adres çubuğunun sağındaki <strong className="text-white">Paylaş</strong> simgesine veya en sağ alttaki <strong className="text-white">[ ··· ]</strong> menüsüne dokunun:
+                      <span className="inline-flex items-center gap-1 ml-1.5 px-2 py-0.5 rounded bg-white/10 text-[#ebd092] font-medium align-middle">
+                        <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                        </svg>
+                        Paylaş
+                      </span>
+                    </>
+                  ) : isEs ? (
+                    <>
+                      Toque el icono <strong className="text-white">Compartir</strong> a la derecha de la barra superior o el menú <strong className="text-white">[ ··· ]</strong> abajo:
+                      <span className="inline-flex items-center gap-1 ml-1.5 px-2 py-0.5 rounded bg-white/10 text-[#ebd092] font-medium align-middle">
+                        <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                        </svg>
+                        Compartir
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      Tap the <strong className="text-white">Share</strong> icon at the top right of address bar (or the <strong className="text-white">[ ··· ]</strong> menu at bottom right):
+                      <span className="inline-flex items-center gap-1 ml-1.5 px-2 py-0.5 rounded bg-white/10 text-[#ebd092] font-medium align-middle">
+                        <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                        </svg>
+                        Share
+                      </span>
+                    </>
+                  )
                 ) : (
-                  <>
-                    Tap the <strong className="text-white">Share</strong> button in Safari's bottom toolbar:
-                    <span className="inline-flex items-center gap-1 ml-1.5 px-2 py-0.5 rounded bg-white/10 text-[#ebd092] font-medium align-middle">
-                      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                      </svg>
-                      Share
-                    </span>
-                  </>
+                  isTr ? (
+                    <>
+                      Safari ekranının en altındaki <strong className="text-white">Paylaş</strong> simgesine dokunun:
+                      <span className="inline-flex items-center gap-1 ml-1.5 px-2 py-0.5 rounded bg-white/10 text-[#ebd092] font-medium align-middle">
+                        <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                        </svg>
+                        Paylaş
+                      </span>
+                    </>
+                  ) : isEs ? (
+                    <>
+                      Toque el botón <strong className="text-white">Compartir</strong> en la barra inferior de Safari:
+                      <span className="inline-flex items-center gap-1 ml-1.5 px-2 py-0.5 rounded bg-white/10 text-[#ebd092] font-medium align-middle">
+                        <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                        </svg>
+                        Compartir
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      Tap the <strong className="text-white">Share</strong> button in Safari's bottom toolbar:
+                      <span className="inline-flex items-center gap-1 ml-1.5 px-2 py-0.5 rounded bg-white/10 text-[#ebd092] font-medium align-middle">
+                        <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                        </svg>
+                        Share
+                      </span>
+                    </>
+                  )
                 )}
               </div>
             </div>
@@ -223,7 +267,7 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
               <div className="pt-0.5 leading-snug">
                 {isTr ? (
                   <>
-                    Sağ üst köşedeki <strong className="text-white">"Ekle"</strong> butonuna basın. Raggio VIP App ana ekranınıza eklenir!
+                    Sağ üst köşedeki <strong className="text-white">"Ekle"</strong> butonuna basın. Raggio VIP App ana ekranınıza eklendi!
                   </>
                 ) : isEs ? (
                   <>
@@ -239,13 +283,19 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
 
             {/* Visual Pointer Hint */}
             <div className="pt-2 pb-1 flex items-center justify-center gap-2 text-[#ebd092] text-[11px] font-semibold animate-pulse">
-              <span>⬇️</span>
+              <span>{isChromeIOS ? '⬆️' : '⬇️'}</span>
               <span>
-                {isTr
-                  ? "Safari'nin en alt çubuğundaki Paylaş butonuna dokunun"
-                  : isEs
-                  ? "Toque el icono Compartir en la barra de Safari abajo"
-                  : "Tap the Share icon at the bottom of Safari"}
+                {isChromeIOS
+                  ? (isTr
+                      ? "Ekranın üstündeki Paylaş veya en sağ alttaki [ ··· ] simgesine dokunun"
+                      : isEs
+                      ? "Toque Compartir arriba o [ ··· ] abajo a la derecha"
+                      : "Tap Share at top right or [ ··· ] at bottom right")
+                  : (isTr
+                      ? "Safari'nin en alt çubuğundaki Paylaş butonuna dokunun"
+                      : isEs
+                      ? "Toque el icono Compartir en la barra de Safari abajo"
+                      : "Tap the Share icon at the bottom of Safari")}
               </span>
             </div>
           </div>
@@ -294,7 +344,7 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
           onClick={() => setShowModal(false)}
           className="mt-6 w-full py-3 rounded-xl bg-[#d4af62] text-[#131518] font-extrabold text-xs uppercase tracking-wider hover:bg-[#ebd092] transition-all cursor-pointer shadow-md active:scale-98"
         >
-          {isTr ? 'Anladım' : isEs ? 'Entendido' : 'Got It'}
+          {isTr ? 'Anladım, Kapat' : isEs ? 'Entendido, Cerrar' : 'Got It, Close'}
         </button>
       </div>
     </div>
