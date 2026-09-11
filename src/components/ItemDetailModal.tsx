@@ -26,6 +26,9 @@ export default function ItemDetailModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="item-modal-title"
         className="relative w-full max-w-2xl bg-ink-2 border border-panel-border rounded-3xl overflow-hidden shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
@@ -54,7 +57,7 @@ export default function ItemDetailModal({
           <div className="md:w-1/2 p-6 md:p-8 flex flex-col justify-between">
             <div>
               <div className="flex items-start justify-between gap-4 mb-2">
-                <h3 className="text-2xl font-extrabold text-cream leading-tight">
+                <h3 id="item-modal-title" className="text-2xl font-extrabold text-cream leading-tight">
                   {name}
                 </h3>
                 <span className="text-xl font-bold text-gold-bright shrink-0">

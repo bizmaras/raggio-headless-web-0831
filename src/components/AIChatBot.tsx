@@ -225,7 +225,7 @@ export default function AIChatBot() {
                                 <Bot className="h-5 w-5 text-[#c9a15c]" />
                             </div>
                             <div>
-                                <h3 className="font-semibold text-base text-[#f8f6f0] leading-tight">Raggio AI</h3>
+                                <p className="font-semibold text-base text-[#f8f6f0] leading-tight">Raggio AI</p>
                                 <p className="text-xs text-[#9e9b93]">{isEs ? 'Asistente Gourmet' : 'Gourmet Assistant'}</p>
                             </div>
                         </div>

@@ -48,7 +48,7 @@ export default function StatsCounter({ dict }: StatsCounterProps) {
             <span className="inline-flex items-center gap-2 px-5 md:px-8 text-xs md:text-sm font-semibold whitespace-nowrap">
               <span className="text-sm md:text-base leading-none">{item.emoji}</span>
               <span className="text-gold-bright font-extrabold tracking-tight tabular-nums">{item.value}</span>
-              <span className="text-cream/60 font-medium">{item.label}</span>
+              <span className="text-cream/80 font-medium">{item.label}</span>
             </span>
             {/* Elegant gold separator dot */}
             <span className="inline-flex items-center text-gold/35 text-xs md:text-sm select-none px-1" aria-hidden="true">

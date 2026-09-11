@@ -174,8 +174,6 @@ export default function HeroSlider({ dict, lang = 'en' }: HeroSliderProps) {
       <h1 className="sr-only">
         Raggio Gourmet &amp; Pizza - Artisanal Stone-Baked Pizzas &amp; Italian Kitchen in Newark, DE
       </h1>
-      <h2 className="sr-only">{activeSlide.title}</h2>
-      <p className="sr-only">{activeSlide.description}</p>
 
       {/* CONSTRAINED LUXURY CONTAINER: Anchored to max-w-7xl to prevent wide-screen dispersion */}
       <div className="max-w-7xl 2xl:max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8 overflow-visible relative">

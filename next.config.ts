@@ -4,9 +4,9 @@ const cspHeader = `
   default-src 'self';
   script-src 'self' 'unsafe-inline' 'nonce-r4gg10S3cur1ty' 'strict-dynamic' https://*.datadoghq.com;
   style-src 'self' 'unsafe-inline';
-  img-src 'self' data: blob: https://*.googleusercontent.com https://*.googleapis.com https://images.ctfassets.net https://raggiogourmetpizza.com;
-  font-src 'self' data:;
-  connect-src 'self' https://*.datadoghq.com https://places.googleapis.com https://script.google.com https://*.foodtecsolutions.com https://raggiogourmetpizza.com;
+  img-src 'self' data: blob: https://*.googleusercontent.com https://*.googleapis.com https://*.gstatic.com https://images.ctfassets.net https://raggiogourmetpizza.com;
+  font-src 'self' data: https://fonts.gstatic.com;
+  connect-src 'self' https://*.datadoghq.com https://*.browser-intake-datadoghq.com https://places.googleapis.com https://*.googleapis.com https://*.google.com https://script.google.com https://*.foodtecsolutions.com https://raggiogourmetpizza.com;
   frame-src 'self' https://www.google.com https://maps.google.com;
   frame-ancestors 'none';
   object-src 'none';

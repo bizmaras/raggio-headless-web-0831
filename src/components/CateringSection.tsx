@@ -176,12 +176,12 @@ export default function CateringSection({ dict, lang = 'en' }: CateringSectionPr
             data-catering-cat={categoryName}
             className="mb-16 scroll-mt-[210px]"
           >
-            <div className="pt-2 pb-3 mb-6 border-b border-panel-border text-gold-bright flex items-center justify-between text-xl md:text-2xl font-bold tracking-wide">
+            <h3 className="pt-2 pb-3 mb-6 border-b border-panel-border text-gold-bright flex items-center justify-between text-xl md:text-2xl font-bold tracking-wide">
               <span>{displayCategoryName}</span>
-              <span className="text-xs sm:text-sm font-normal text-cream/60 md:text-gold-bright tracking-normal">
+              <span className="text-xs sm:text-sm font-normal text-cream/80 md:text-gold-bright tracking-normal">
                 {items.length} {itemsCountLabel}
               </span>
-            </div>
+            </h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {items.map((item, index) => {

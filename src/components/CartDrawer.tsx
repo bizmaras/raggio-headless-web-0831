@@ -46,7 +46,7 @@ export default function CartDrawer() {
           <div className="p-6 border-b border-gray-800 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <ShoppingBag className="w-5 h-5 text-[#8D744E]" aria-hidden="true" />
-              <h3 id="cart-drawer-title" className="text-xl font-bold">Your Order</h3>
+              <h2 id="cart-drawer-title" className="text-xl font-bold">Your Order</h2>
             </div>
             <button
               onClick={closeCart}
@@ -59,7 +59,7 @@ export default function CartDrawer() {
 
           <div className="flex-1 overflow-y-auto p-6 space-y-4">
             {cart.length === 0 ? (
-              <div className="text-center py-16 text-gray-500">
+              <div className="text-center py-16 text-stone">
                 <ShoppingBag className="w-12 h-12 mx-auto mb-3 opacity-30" aria-hidden="true" />
                 <p>Your cart is empty</p>
               </div>
@@ -70,7 +70,7 @@ export default function CartDrawer() {
                   className="bg-black/50 border border-gray-800 p-4 rounded-xl flex items-center justify-between gap-4"
                 >
                   <div className="flex-1">
-                    <h4 className="font-semibold text-sm">{item.name}</h4>
+                    <p className="font-semibold text-sm text-cream">{item.name}</p>
                     <span className="text-[#8D744E] text-sm font-bold">
                       ${(item.price * item.quantity).toFixed(2)}
                     </span>
@@ -138,7 +138,7 @@ export default function CartDrawer() {
 
               <button
                 onClick={clearCart}
-                className="w-full text-xs text-gray-500 hover:text-gray-300 transition-colors py-1 cursor-pointer mt-1"
+                className="w-full text-xs text-stone hover:text-cream transition-colors py-1 cursor-pointer mt-1"
               >
                 Clear Cart
               </button>

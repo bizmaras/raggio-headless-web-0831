@@ -158,7 +158,7 @@ export default async function HomePage({
                 >
                   <Link href={`/${lang}/menu/${targetId}`} className="flex items-baseline gap-2.5 hover:text-gold transition-colors group/title">
                     <span className="group-hover/title:underline decoration-gold/40">{displayCategory}</span>
-                    <span className="text-xs sm:text-sm font-normal text-cream/60 md:text-gold-bright tracking-normal">
+                    <span className="text-xs sm:text-sm font-normal text-cream/80 md:text-gold-bright tracking-normal">
                       ({itemsInCategory.length})
                     </span>
                   </Link>

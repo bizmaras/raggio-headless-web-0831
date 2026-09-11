@@ -172,6 +172,8 @@ export default function Header({ lang = 'en', dict }: HeaderProps) {
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="flex items-center justify-center p-2.5 rounded-xl bg-[#14181d] border border-panel-border text-cream hover:text-gold hover:border-gold/60 transition-colors cursor-pointer active:scale-95"
               aria-label="Toggle Menu"
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-menu"
             >
               {isMobileMenuOpen ? (
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -190,7 +192,7 @@ export default function Header({ lang = 'en', dict }: HeaderProps) {
 
       {/* MOBILE DRAWER */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden border-t border-panel-border bg-panel px-4 pt-3 pb-6 space-y-2 shadow-2xl">
+        <div id="mobile-menu" className="lg:hidden border-t border-panel-border bg-panel px-4 pt-3 pb-6 space-y-2 shadow-2xl">
           {navLinks.map((link) => (
             <a
               key={link.name}
