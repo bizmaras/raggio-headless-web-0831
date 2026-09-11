@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { isValidOrigin } from '@/lib/security';
 
 export const runtime = 'nodejs';
 // Cache for 1 hour so Google API quota is protected and requests are instantaneous
@@ -48,7 +49,11 @@ const FALLBACK_PLACE_DATA = {
   ],
 };
 
-export async function GET() {
+export async function GET(req: Request) {
+  if (!isValidOrigin(req)) {
+    return NextResponse.json({ error: 'Forbidden origin' }, { status: 403 });
+  }
+
   const apiKey = process.env.GOOGLE_PLACES_API_KEY;
 
   if (!apiKey) {

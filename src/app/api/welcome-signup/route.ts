@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { isValidOrigin } from '@/lib/security';
 
 export const runtime = 'nodejs';
 
@@ -32,6 +33,13 @@ function isRateLimited(identifier: string): boolean {
 
 export async function POST(req: Request) {
   try {
+    if (!isValidOrigin(req)) {
+      return NextResponse.json(
+        { success: false, error: 'Forbidden origin.' },
+        { status: 403 }
+      );
+    }
+
     const ip =
       req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
       req.headers.get('x-real-ip') ||

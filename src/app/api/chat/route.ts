@@ -1,5 +1,6 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { NextResponse } from 'next/server';
+import { isValidOrigin } from '@/lib/security';
 
 export const runtime = 'nodejs';
 
@@ -145,6 +146,10 @@ const MAX_MESSAGE_LENGTH = 1500;
 
 export async function POST(req: Request) {
     try {
+        if (!isValidOrigin(req)) {
+            return NextResponse.json({ reply: 'Forbidden origin.' }, { status: 403 });
+        }
+
         const identifier = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || req.headers.get('x-real-ip') || 'unknown';
         if (isRateLimited(identifier)) {
             return NextResponse.json({ reply: "You're sending messages too fast! Please wait a moment." }, { status: 429 });
