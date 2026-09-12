@@ -27,11 +27,6 @@ export default function CateringItemCard({
   fullLabel = 'FULL',
 }: CateringItemCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   // Lock background body scroll while modal is open
   useEffect(() => {
@@ -119,7 +114,7 @@ export default function CateringItemCard({
       </div>
 
       {/* CATERING MODAL DIALOG */}
-      {isModalOpen && mounted && createPortal(
+      {isModalOpen && typeof document !== 'undefined' && createPortal(
         <div
           className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-200"
           onClick={(e) => {

@@ -42,7 +42,6 @@ interface MenuItemCardProps {
 
 export default function MenuItemCard(props: MenuItemCardProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
 
   const sizes = props.sizes && props.sizes.length > 0 ? props.sizes : null;
   // Default to LRG if present, otherwise first available size
@@ -50,10 +49,6 @@ export default function MenuItemCard(props: MenuItemCardProps) {
     ? Math.max(0, sizes.findIndex((s) => s.id === 'lrg'))
     : 0;
   const [selectedSizeIndex, setSelectedSizeIndex] = useState(defaultSizeIdx);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   // Lock background body scroll while modal is open
   useEffect(() => {
@@ -241,7 +236,7 @@ export default function MenuItemCard(props: MenuItemCardProps) {
         </button>
       </div>
 
-      {isOpen && mounted && createPortal(
+      {isOpen && typeof document !== 'undefined' && createPortal(
         <div
           className="fixed inset-0 z-[9999] flex items-center justify-center p-4 md:p-8 bg-black/85 backdrop-blur-md animate-in fade-in duration-200"
           onClick={(e) => {
