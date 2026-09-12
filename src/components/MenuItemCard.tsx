@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import type { SizeVariant } from '@/data/sizePricing';
+import { optimizeContentfulImage } from '@/lib/contentful';
 
 interface MenuItemCardProps {
   item?: {
@@ -96,7 +97,20 @@ export default function MenuItemCard(props: MenuItemCardProps) {
   const itemIngredients = props.ingredients || props.item?.ingredients || [];
 
   // Item image URL
-  const itemImage = props.image || props.item?.image;
+  const rawImage = props.image || props.item?.image;
+  const thumbnailImage = optimizeContentfulImage(rawImage, {
+    width: 160,
+    height: 160,
+    quality: 75,
+    format: 'webp',
+    fit: 'fill',
+  });
+  const modalImage = optimizeContentfulImage(rawImage, {
+    width: 600,
+    quality: 80,
+    format: 'webp',
+    fit: 'scale',
+  });
 
   const viewDetailsText = props.dict?.menu?.view_details || 'View Details & Ingredients';
   const orderOnlineText = props.dict?.menu?.order_online || 'Order Online';
@@ -118,9 +132,9 @@ export default function MenuItemCard(props: MenuItemCardProps) {
           <div className="flex items-start gap-3.5 mb-3">
             {/* 80x80 (mobile 72x72) Locked Thumbnail or Brand Monogram Placeholder */}
             <div className="w-[72px] h-[72px] sm:w-20 sm:h-20 shrink-0 rounded-xl overflow-hidden bg-ink/90 border border-panel-border group-hover:border-gold/50 transition-colors relative shadow-inner flex items-center justify-center">
-              {itemImage ? (
+              {thumbnailImage ? (
                 <img
-                  src={itemImage}
+                  src={thumbnailImage}
                   alt={seoAltText}
                   loading="lazy"
                   decoding="async"
@@ -248,9 +262,9 @@ export default function MenuItemCard(props: MenuItemCardProps) {
 
             {/* Display Image or Elegant Brand Logo Fallback */}
             <div className="w-full md:w-1/2 h-48 sm:h-56 md:h-auto relative bg-ink border-b md:border-b-0 md:border-r border-panel-border/50 flex-shrink-0 flex items-center justify-center">
-              {itemImage ? (
+              {modalImage ? (
                 <img
-                  src={itemImage}
+                  src={modalImage}
                   alt={seoAltText}
                   loading="lazy"
                   decoding="async"

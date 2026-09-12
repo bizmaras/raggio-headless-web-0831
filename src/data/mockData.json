@@ -1,0 +1,1396 @@
+[
+  {
+    "Product Name": "Plain Cheese Pizza",
+    "Description": "100% Grande Mozzarella",
+    "Price": "18.99",
+    "Category": "Pizza",
+    "Slug": "plain-cheese-pizza",
+    "Featured": "True",
+    "Image": "/images/pizza-pepperoni-clean.png"
+  },
+  {
+    "Product Name": "White Cheese Pizza",
+    "Description": "Ricotta, mozzarella cheese and Grande mozzarella",
+    "Price": "19.99",
+    "Category": "Pizza",
+    "Slug": "white-cheese-pizza",
+    "Featured": "False",
+    "Image": "/images/pizza-meatlover-clean.png"
+  },
+  {
+    "Product Name": "Pizza by the Slice",
+    "Description": "1 slice of pizza",
+    "Price": "2.5",
+    "Category": "Pizza",
+    "Slug": "pizza-by-the-slice",
+    "Featured": "False",
+    "Image": "/images/pizza-buffalo-clean.png"
+  },
+  {
+    "Product Name": "2 Slices + Can Drink",
+    "Description": "2 slices of pizza with a can of soda",
+    "Price": "6.0",
+    "Category": "Pizza",
+    "Slug": "2-slices-can-drink",
+    "Featured": "True",
+    "Image": "/images/pizza-spinach-clean.png"
+  },
+  {
+    "Product Name": "Our Signature Thin Crust",
+    "Description": "The Works Pizza",
+    "Price": "21.99",
+    "Category": "Gourmet Pizza",
+    "Slug": "signature-thin-crust",
+    "Featured": "True",
+    "Image": "/images/pizza-pepperoni-clean.png"
+  },
+  {
+    "Product Name": "The Works Pizza",
+    "Description": "Meat, green pepper, mushrooms, and fried onions",
+    "Price": "21.99",
+    "Category": "Gourmet Pizza",
+    "Slug": "the-works-pizza",
+    "Featured": "False",
+    "Image": "/images/pizza-meatlover-clean.png"
+  },
+  {
+    "Product Name": "White Special Pizza",
+    "Description": "Spinach, ricotta, mozzarella cheese and fresh garlic sauce",
+    "Price": "21.99",
+    "Category": "Gourmet Pizza",
+    "Slug": "white-special-pizza",
+    "Featured": "False",
+    "Image": "/images/pizza-buffalo-clean.png"
+  },
+  {
+    "Product Name": "Buffalo Chicken Pizza",
+    "Description": "Grilled chicken, buffalo sauce",
+    "Price": "21.99",
+    "Category": "Gourmet Pizza",
+    "Slug": "buffalo-chicken-pizza",
+    "Featured": "False",
+    "Image": "/images/pizza-spinach-clean.png"
+  },
+  {
+    "Product Name": "Chicken Ranch Pizza",
+    "Description": "Grilled chicken with ranch dressing",
+    "Price": "21.99",
+    "Category": "Gourmet Pizza",
+    "Slug": "chicken-ranch-pizza",
+    "Featured": "False",
+    "Image": "/images/pizza-pepperoni-clean.png"
+  },
+  {
+    "Product Name": "Chicken Parm Pizza",
+    "Description": "Grilled or crispy chicken with mozzarella cheese, and sauce",
+    "Price": "21.99",
+    "Category": "Gourmet Pizza",
+    "Slug": "chicken-parm-pizza",
+    "Featured": "False",
+    "Image": "/images/pizza-meatlover-clean.png"
+  },
+  {
+    "Product Name": "Chicken Alfredo Pizza",
+    "Description": "Grilled chicken, Alfredo sauce",
+    "Price": "21.99",
+    "Category": "Gourmet Pizza",
+    "Slug": "chicken-alfredo-pizza",
+    "Featured": "False",
+    "Image": "/images/pizza-buffalo-clean.png"
+  },
+  {
+    "Product Name": "Shrimp Alfredo Pizza (XL)",
+    "Description": "Fresh shrimp, Alfredo and Grande mozzarella",
+    "Price": "25.99",
+    "Category": "Gourmet Pizza",
+    "Slug": "shrimp-alfredo-pizza",
+    "Featured": "False",
+    "Image": "/images/pizza-spinach-clean.png"
+  },
+  {
+    "Product Name": "Greek Pizza",
+    "Description": "Spinach, feta cheese topped with spinach",
+    "Price": "21.99",
+    "Category": "Gourmet Pizza",
+    "Slug": "greek-pizza",
+    "Featured": "False",
+    "Image": "/images/pizza-pepperoni-clean.png"
+  },
+  {
+    "Product Name": "House Pizza",
+    "Description": "Fresh green peppers, onions, mozzarella cheese, and fried onions",
+    "Price": "21.99",
+    "Category": "Gourmet Pizza",
+    "Slug": "house-pizza",
+    "Featured": "False",
+    "Image": "/images/pizza-meatlover-clean.png"
+  },
+  {
+    "Product Name": "Philly Cheesesteak Pizza",
+    "Description": "Sliced steak, American cheese, onion",
+    "Price": "23.99",
+    "Category": "Gourmet Pizza",
+    "Slug": "philly-cheesesteak-pizza",
+    "Featured": "False",
+    "Image": "/images/pizza-buffalo-clean.png"
+  },
+  {
+    "Product Name": "Veggie Pizza",
+    "Description": "Fresh green peppers, onions, mushrooms",
+    "Price": "21.99",
+    "Category": "Gourmet Pizza",
+    "Slug": "veggie-pizza",
+    "Featured": "False",
+    "Image": "/images/pizza-spinach-clean.png"
+  },
+  {
+    "Product Name": "White Cheese Sicilian",
+    "Description": "100% Grande Mozzarella, thick crust",
+    "Price": "18.99",
+    "Category": "Sicilian Pizza",
+    "Slug": "white-cheese-sicilian",
+    "Featured": "False",
+    "Image": "/images/pizza-pepperoni-clean.png"
+  },
+  {
+    "Product Name": "Sicilian Meat Lover",
+    "Description": "Sausage, ham, pepperoni, bacon",
+    "Price": "23.99",
+    "Category": "Sicilian Pizza",
+    "Slug": "sicilian-meat-lover",
+    "Featured": "False",
+    "Image": "/images/pizza-meatlover-clean.png"
+  },
+  {
+    "Product Name": "Sicilian Special",
+    "Description": "Pepperoni, sausage, green peppers, mushrooms",
+    "Price": "25.99",
+    "Category": "Sicilian Pizza",
+    "Slug": "sicilian-special",
+    "Featured": "False",
+    "Image": "/images/pizza-buffalo-clean.png"
+  },
+  {
+    "Product Name": "Shrimp Alfredo Sicilian",
+    "Description": "Fresh shrimp, Alfredo sauce and Grande mozzarella",
+    "Price": "25.99",
+    "Category": "Sicilian Pizza",
+    "Slug": "shrimp-alfredo-sicilian",
+    "Featured": "False",
+    "Image": "/images/pizza-spinach-clean.png"
+  },
+  {
+    "Product Name": "Buffalo Chicken Sicilian",
+    "Description": "Grilled chicken, hot sauce and Grande mozzarella",
+    "Price": "23.99",
+    "Category": "Sicilian Pizza",
+    "Slug": "buffalo-chicken-sicilian",
+    "Featured": "False",
+    "Image": "/images/pizza-pepperoni-clean.png"
+  },
+  {
+    "Product Name": "Chicken Ranch Sicilian",
+    "Description": "Grilled chicken, ranch, mozzarella and bacon",
+    "Price": "23.99",
+    "Category": "Sicilian Pizza",
+    "Slug": "chicken-ranch-sicilian",
+    "Featured": "False",
+    "Image": "/images/pizza-meatlover-clean.png"
+  },
+  {
+    "Product Name": "Ham & American Cheese Sicilian",
+    "Description": "",
+    "Price": "21.99",
+    "Category": "Sicilian Pizza",
+    "Slug": "ham-american-sicilian",
+    "Featured": "False",
+    "Image": "/images/pizza-buffalo-clean.png"
+  },
+  {
+    "Product Name": "White Special Sicilian",
+    "Description": "Spinach, tomato, fresh garlic sauce and Grande mozzarella",
+    "Price": "23.99",
+    "Category": "Sicilian Pizza",
+    "Slug": "white-special-sicilian",
+    "Featured": "False",
+    "Image": "/images/pizza-spinach-clean.png"
+  },
+  {
+    "Product Name": "Philly Steak Sicilian",
+    "Description": "Grilled chicken, hot sauce and Grande mozzarella",
+    "Price": "23.99",
+    "Category": "Sicilian Pizza",
+    "Slug": "philly-steak-sicilian",
+    "Featured": "False",
+    "Image": "/images/pizza-pepperoni-clean.png"
+  },
+  {
+    "Product Name": "Plain Chicken Wings",
+    "Description": "Jumbo wings",
+    "Price": "8.99",
+    "Category": "Chicken Wings",
+    "Slug": "plain-wings",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "BBQ Wings",
+    "Description": "BBQ sauce",
+    "Price": "8.99",
+    "Category": "Chicken Wings",
+    "Slug": "bbq-wings",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Garlic Parmesan Wings",
+    "Description": "Garlic parmesan sauce",
+    "Price": "8.99",
+    "Category": "Chicken Wings",
+    "Slug": "garlic-parm-wings",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Spicy Wings",
+    "Description": "Hot sauce",
+    "Price": "8.99",
+    "Category": "Chicken Wings",
+    "Slug": "spicy-wings",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Honey Habanero Wings",
+    "Description": "Sweet & spicy",
+    "Price": "8.99",
+    "Category": "Chicken Wings",
+    "Slug": "honey-habanero-wings",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Mango Habanero Wings",
+    "Description": "Tropical sweet heat",
+    "Price": "8.99",
+    "Category": "Chicken Wings",
+    "Slug": "mango-habanero-wings",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Philadelphia Cheesesteak",
+    "Description": "Fresh homemade 8oz beef burgers on burger bun",
+    "Price": "10.99",
+    "Category": "Cheesesteaks",
+    "Slug": "philly-cheesesteak",
+    "Featured": "True"
+  },
+  {
+    "Product Name": "The Philly Special",
+    "Description": "Mushrooms, sweet peppers, onions",
+    "Price": "12.99",
+    "Category": "Cheesesteaks",
+    "Slug": "philly-special",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Cheesesteak Ranchero",
+    "Description": "Jalapeños, ranch dressing",
+    "Price": "12.99",
+    "Category": "Cheesesteaks",
+    "Slug": "cheesesteak-ranchero",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Pizza Steak or Chicken",
+    "Description": "Marinara sauce & mozzarella cheese",
+    "Price": "12.99",
+    "Category": "Cheesesteaks",
+    "Slug": "pizza-steak-chicken",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "BBQ Chicken Cheesesteak",
+    "Description": "BBQ sauce and Grande mozzarella",
+    "Price": "12.99",
+    "Category": "Cheesesteaks",
+    "Slug": "bbq-chicken-cheesesteak",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Italian Vegetable Cheesesteak",
+    "Description": "Fresh vegetables",
+    "Price": "12.99",
+    "Category": "Cheesesteaks",
+    "Slug": "italian-veg-cheesesteak",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Ham & American Cheese",
+    "Description": "Classic combo",
+    "Price": "12.99",
+    "Category": "Cheesesteaks",
+    "Slug": "ham-american-cheese",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Burger",
+    "Description": "Fresh homemade 8oz beef burger on burger bun",
+    "Price": "7.99",
+    "Category": "Fresh Burgers",
+    "Slug": "burger",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Cheeseburger",
+    "Description": "With American cheese",
+    "Price": "8.99",
+    "Category": "Fresh Burgers",
+    "Slug": "cheeseburger",
+    "Featured": "True"
+  },
+  {
+    "Product Name": "Double Cheeseburger",
+    "Description": "Double patty with American cheese",
+    "Price": "11.99",
+    "Category": "Fresh Burgers",
+    "Slug": "double-cheeseburger",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Bacon Double Cheeseburger",
+    "Description": "Bacon, double patty, cheese",
+    "Price": "14.99",
+    "Category": "Fresh Burgers",
+    "Slug": "bacon-double-cheeseburger",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Texas Cheeseburger",
+    "Description": "Jalapenos, onion rings, and Texas sauce",
+    "Price": "12.99",
+    "Category": "Fresh Burgers",
+    "Slug": "texas-cheeseburger",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Chicken Ranch Burger",
+    "Description": "Ranch & bacon",
+    "Price": "11.99",
+    "Category": "Fresh Burgers",
+    "Slug": "chicken-ranch-burger",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Chicken Caesar",
+    "Description": "Caesar dressing",
+    "Price": "11.99",
+    "Category": "Fresh Burgers",
+    "Slug": "chicken-caesar-burger",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "French Fries",
+    "Description": "",
+    "Price": "4.99",
+    "Category": "Appetizers",
+    "Slug": "french-fries",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Cheese Fries",
+    "Description": "",
+    "Price": "5.99",
+    "Category": "Appetizers",
+    "Slug": "cheese-fries",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Old Bay Fries",
+    "Description": "",
+    "Price": "5.99",
+    "Category": "Appetizers",
+    "Slug": "old-bay-fries",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Onion Rings",
+    "Description": "",
+    "Price": "5.99",
+    "Category": "Appetizers",
+    "Slug": "onion-rings",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Cheesesteak Fries",
+    "Description": "",
+    "Price": "12.99",
+    "Category": "Appetizers",
+    "Slug": "cheesesteak-fries",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Mega Fries",
+    "Description": "Topped with bacon, mozzarella cheese, and choice of sour cream or salsa",
+    "Price": "9.99",
+    "Category": "Appetizers",
+    "Slug": "mega-fries",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Buffalo Chicken",
+    "Description": "",
+    "Price": "10.99",
+    "Category": "Appetizers",
+    "Slug": "buffalo-chicken-app",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Pizza Fries",
+    "Description": "",
+    "Price": "7.99",
+    "Category": "Appetizers",
+    "Slug": "pizza-fries",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Jalapeno Poppers",
+    "Description": "6 pieces",
+    "Price": "8.99",
+    "Category": "Appetizers",
+    "Slug": "jalapeno-poppers",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Mac & Cheese Bites",
+    "Description": "9 pieces",
+    "Price": "8.99",
+    "Category": "Appetizers",
+    "Slug": "mac-cheese-bites",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Carne Asada",
+    "Description": "Tender flare steak",
+    "Price": "17.99",
+    "Category": "Appetizers",
+    "Slug": "carne-asada",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Nachos",
+    "Description": "Steak or chicken",
+    "Price": "11.99",
+    "Category": "Appetizers",
+    "Slug": "nachos",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Fajitas",
+    "Description": "All fajitas grilled onions, green peppers, and peppers",
+    "Price": "17.99",
+    "Category": "Appetizers",
+    "Slug": "fajitas",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Garlic Bread",
+    "Description": "",
+    "Price": "3.99",
+    "Category": "Appetizers",
+    "Slug": "garlic-bread",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Bread Sticks",
+    "Description": "4 pieces",
+    "Price": "4.99",
+    "Category": "Appetizers",
+    "Slug": "bread-sticks",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Garlic Knots",
+    "Description": "7 pieces",
+    "Price": "7.99",
+    "Category": "Appetizers",
+    "Slug": "garlic-knots",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Mozzarella Sticks",
+    "Description": "6 pieces",
+    "Price": "8.99",
+    "Category": "Appetizers",
+    "Slug": "mozzarella-sticks",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Broccoli Bites",
+    "Description": "10 pieces",
+    "Price": "8.99",
+    "Category": "Appetizers",
+    "Slug": "broccoli-bites",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Fried Mushrooms",
+    "Description": "7 pieces",
+    "Price": "7.99",
+    "Category": "Appetizers",
+    "Slug": "fried-mushrooms",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Chicken Tenders",
+    "Description": "3 pieces",
+    "Price": "11.99",
+    "Category": "Appetizers",
+    "Slug": "chicken-tenders",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Fried Calamari",
+    "Description": "",
+    "Price": "11.99",
+    "Category": "Appetizers",
+    "Slug": "fried-calamari",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Fried Shrimp",
+    "Description": "",
+    "Price": "10.99",
+    "Category": "Appetizers",
+    "Slug": "fried-shrimp",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Sampler Platter",
+    "Description": "Mozzarella sticks, Jalapeno Poppers, Mac & Cheese Bites",
+    "Price": "16.99",
+    "Category": "Appetizers",
+    "Slug": "sampler-platter",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Octopus Skins",
+    "Description": "4 pieces, Jalapenos, Broccoli, Cheese",
+    "Price": "8.99",
+    "Category": "Appetizers",
+    "Slug": "octopus-skins",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Cinnamon Bites",
+    "Description": "",
+    "Price": "10.99",
+    "Category": "Appetizers",
+    "Slug": "cinnamon-bites",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Small Garden Salad",
+    "Description": "",
+    "Price": "4.99",
+    "Category": "Fresh Salads",
+    "Slug": "small-garden-salad",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Garden Salad",
+    "Description": "",
+    "Price": "8.99",
+    "Category": "Fresh Salads",
+    "Slug": "garden-salad",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Grilled or Crispy Chicken Salad",
+    "Description": "",
+    "Price": "12.99",
+    "Category": "Fresh Salads",
+    "Slug": "chicken-salad",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Avocado Grilled Chicken Salad",
+    "Description": "",
+    "Price": "13.99",
+    "Category": "Fresh Salads",
+    "Slug": "avocado-chicken-salad",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Grilled Shrimp Salad",
+    "Description": "",
+    "Price": "15.99",
+    "Category": "Fresh Salads",
+    "Slug": "grilled-shrimp-salad",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Grilled Chicken and Shrimp Combo Salad",
+    "Description": "",
+    "Price": "16.99",
+    "Category": "Fresh Salads",
+    "Slug": "chicken-shrimp-salad",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Caesar Salad",
+    "Description": "",
+    "Price": "8.99",
+    "Category": "Fresh Salads",
+    "Slug": "caesar-salad",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Chef Salad",
+    "Description": "",
+    "Price": "12.99",
+    "Category": "Fresh Salads",
+    "Slug": "chef-salad",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Grilled Chicken Caesar Salad",
+    "Description": "",
+    "Price": "12.99",
+    "Category": "Fresh Salads",
+    "Slug": "chicken-caesar-salad",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Crispy Chicken Caesar Salad",
+    "Description": "",
+    "Price": "12.99",
+    "Category": "Fresh Salads",
+    "Slug": "crispy-caesar-salad",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Greek Salad",
+    "Description": "",
+    "Price": "11.99",
+    "Category": "Fresh Salads",
+    "Slug": "greek-salad",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Greek Salad with Grilled Chicken",
+    "Description": "",
+    "Price": "13.99",
+    "Category": "Fresh Salads",
+    "Slug": "greek-chicken-salad",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Steak Salad",
+    "Description": "",
+    "Price": "13.99",
+    "Category": "Fresh Salads",
+    "Slug": "steak-salad",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Antipasto Salad",
+    "Description": "",
+    "Price": "12.99",
+    "Category": "Fresh Salads",
+    "Slug": "antipasto-salad",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Cobb Salad",
+    "Description": "",
+    "Price": "14.99",
+    "Category": "Fresh Salads",
+    "Slug": "cobb-salad",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Spaghetti with Meat Sauce",
+    "Description": "",
+    "Price": "16.99",
+    "Category": "Pasta",
+    "Slug": "spaghetti-meat-sauce",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Chicken Parmigiana",
+    "Description": "With pasta",
+    "Price": "17.99",
+    "Category": "Pasta",
+    "Slug": "chicken-parmigiana",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Shrimp Parmigiana",
+    "Description": "With pasta",
+    "Price": "19.99",
+    "Category": "Pasta",
+    "Slug": "shrimp-parmigiana",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Seafood with Pasta",
+    "Description": "",
+    "Price": "22.99",
+    "Category": "Pasta",
+    "Slug": "seafood-pasta",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Baked Ravioli",
+    "Description": "Sauce & Mozzarella",
+    "Price": "14.99",
+    "Category": "Pasta",
+    "Slug": "baked-ravioli",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Lobster Ravioli",
+    "Description": "Rose sauce & Mozzarella",
+    "Price": "19.99",
+    "Category": "Pasta",
+    "Slug": "lobster-ravioli",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Baked Ziti",
+    "Description": "Sauce & Mozzarella",
+    "Price": "14.99",
+    "Category": "Pasta",
+    "Slug": "baked-ziti",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Eggplant Parmigiana",
+    "Description": "With pasta",
+    "Price": "14.99",
+    "Category": "Pasta",
+    "Slug": "eggplant-parmigiana",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Italian Trio",
+    "Description": "Sausage, meatball, cheese ravioli, and meatball",
+    "Price": "19.99",
+    "Category": "Pasta",
+    "Slug": "italian-trio",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Chicken Finger Platter",
+    "Description": "Served with Garlic Bread, Salad and Fries",
+    "Price": "13.99",
+    "Category": "Complete Dinners",
+    "Slug": "chicken-finger-platter",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Shrimp Basket",
+    "Description": "",
+    "Price": "14.99",
+    "Category": "Complete Dinners",
+    "Slug": "shrimp-basket",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Jumbo Shrimp Platter",
+    "Description": "",
+    "Price": "15.99",
+    "Category": "Complete Dinners",
+    "Slug": "jumbo-shrimp-platter",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Crab Cake Platter",
+    "Description": "",
+    "Price": "19.99",
+    "Category": "Complete Dinners",
+    "Slug": "crab-cake-platter",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Flounder Platter",
+    "Description": "",
+    "Price": "14.99",
+    "Category": "Complete Dinners",
+    "Slug": "flounder-platter",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Fried Seafood Combo",
+    "Description": "Flounder, shrimp, and crab cake",
+    "Price": "27.99",
+    "Category": "Complete Dinners",
+    "Slug": "fried-seafood-combo",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Beef Shish Kebab",
+    "Description": "With rice",
+    "Price": "22.99",
+    "Category": "Complete Dinners",
+    "Slug": "beef-shish-kebab",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Chicken Shish Kebab",
+    "Description": "With rice",
+    "Price": "19.99",
+    "Category": "Complete Dinners",
+    "Slug": "chicken-shish-kebab",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Gyro Platter",
+    "Description": "With rice & Greek salad",
+    "Price": "19.99",
+    "Category": "Complete Dinners",
+    "Slug": "gyro-platter",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Fried Seafood Combo",
+    "Description": "21 Shrimp, 2 Crab Cake, 1 Flounder",
+    "Price": "16.99",
+    "Category": "Seafood",
+    "Slug": "fried-seafood-combo-2",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Fried Filet of Flounder",
+    "Description": "1 piece",
+    "Price": "14.99",
+    "Category": "Seafood",
+    "Slug": "fried-flounder",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Crab Cake Dinner",
+    "Description": "2 pieces",
+    "Price": "26.99",
+    "Category": "Seafood",
+    "Slug": "crab-cake-dinner",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Chicken & Steak Quesadilla",
+    "Description": "",
+    "Price": "13.99",
+    "Category": "Quesadillas",
+    "Slug": "chicken-steak-quesadilla",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Crab Quesadilla",
+    "Description": "",
+    "Price": "15.99",
+    "Category": "Quesadillas",
+    "Slug": "crab-quesadilla",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "BBQ Chicken Quesadilla",
+    "Description": "",
+    "Price": "12.99",
+    "Category": "Quesadillas",
+    "Slug": "bbq-chicken-quesadilla",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Texas Chicken Quesadilla",
+    "Description": "",
+    "Price": "12.99",
+    "Category": "Quesadillas",
+    "Slug": "texas-chicken-quesadilla",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Buffalo Chicken Quesadilla",
+    "Description": "",
+    "Price": "12.99",
+    "Category": "Quesadillas",
+    "Slug": "buffalo-chicken-quesadilla",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Steak Quesadilla",
+    "Description": "",
+    "Price": "12.99",
+    "Category": "Quesadillas",
+    "Slug": "steak-quesadilla",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Seafood Quesadilla",
+    "Description": "",
+    "Price": "15.99",
+    "Category": "Quesadillas",
+    "Slug": "seafood-quesadilla",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Tacos",
+    "Description": "Choice of boneless / chicken tenders",
+    "Price": "11.99",
+    "Category": "Latin Food",
+    "Slug": "tacos",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Burritos",
+    "Description": "With cilantro, onions, and salsa",
+    "Price": "11.99",
+    "Category": "Latin Food",
+    "Slug": "burritos",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Empanadas",
+    "Description": "3 pieces",
+    "Price": "11.99",
+    "Category": "Latin Food",
+    "Slug": "empanadas",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Pupusas",
+    "Description": "3 pieces",
+    "Price": "11.99",
+    "Category": "Latin Food",
+    "Slug": "pupusas",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Nachos",
+    "Description": "Steak or chicken",
+    "Price": "11.99",
+    "Category": "Latin Food",
+    "Slug": "nachos-latin",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Carne Asada",
+    "Description": "Steak",
+    "Price": "17.99",
+    "Category": "Latin Food",
+    "Slug": "carne-asada-latin",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Shrimp",
+    "Description": "",
+    "Price": "19.99",
+    "Category": "Latin Food",
+    "Slug": "shrimp-latin",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Combination",
+    "Description": "Chicken, steak, shrimp",
+    "Price": "24.99",
+    "Category": "Latin Food",
+    "Slug": "combination-latin",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Italian Sub",
+    "Description": "Ham, capicola, Genoa salami, and American cheese",
+    "Price": "12.99",
+    "Category": "Subs + Grinders",
+    "Slug": "italian-sub",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Turkey Club",
+    "Description": "With cheese",
+    "Price": "12.99",
+    "Category": "Subs + Grinders",
+    "Slug": "turkey-club",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Turkey Bacon Club",
+    "Description": "With cheese",
+    "Price": "12.99",
+    "Category": "Subs + Grinders",
+    "Slug": "turkey-bacon-club",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Grilled Chicken BLT Club",
+    "Description": "",
+    "Price": "12.99",
+    "Category": "Subs + Grinders",
+    "Slug": "grilled-chicken-blt",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "American Cheese Club",
+    "Description": "With bacon",
+    "Price": "12.99",
+    "Category": "Subs + Grinders",
+    "Slug": "american-cheese-club",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "BLT Club",
+    "Description": "",
+    "Price": "12.99",
+    "Category": "Subs + Grinders",
+    "Slug": "blt-club",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Tuna Club",
+    "Description": "",
+    "Price": "12.99",
+    "Category": "Subs + Grinders",
+    "Slug": "tuna-club",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Fish Taco on Pita",
+    "Description": "",
+    "Price": "12.99",
+    "Category": "Subs + Grinders",
+    "Slug": "fish-taco-pita",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Ham & American Cheese on Pita",
+    "Description": "",
+    "Price": "12.99",
+    "Category": "Subs + Grinders",
+    "Slug": "ham-american-pita",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Cheese Stromboli",
+    "Description": "",
+    "Price": "14.99",
+    "Category": "Strombolis + Calzones",
+    "Slug": "cheese-stromboli",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Chicken Stromboli",
+    "Description": "",
+    "Price": "15.99",
+    "Category": "Strombolis + Calzones",
+    "Slug": "chicken-stromboli",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Buffalo Chicken Stromboli",
+    "Description": "",
+    "Price": "15.99",
+    "Category": "Strombolis + Calzones",
+    "Slug": "buffalo-chicken-stromboli",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Italian Stromboli",
+    "Description": "",
+    "Price": "15.99",
+    "Category": "Strombolis + Calzones",
+    "Slug": "italian-stromboli",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Meat Lovers Stromboli",
+    "Description": "",
+    "Price": "15.99",
+    "Category": "Strombolis + Calzones",
+    "Slug": "meat-lovers-stromboli",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Vegetable Stromboli",
+    "Description": "",
+    "Price": "14.99",
+    "Category": "Strombolis + Calzones",
+    "Slug": "vegetable-stromboli",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Philly Special Stromboli",
+    "Description": "Cheese, peppers, onions & mushrooms",
+    "Price": "18.99",
+    "Category": "Strombolis + Calzones",
+    "Slug": "philly-special-stromboli",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Philly Special Chicken Stromboli",
+    "Description": "Chicken, green peppers, onions, pepperoni & mushrooms",
+    "Price": "18.99",
+    "Category": "Strombolis + Calzones",
+    "Slug": "philly-chicken-stromboli",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "House",
+    "Description": "2 eggs, home fries, toast",
+    "Price": "10.99",
+    "Category": "Breakfast",
+    "Slug": "house-breakfast",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Ham Steak",
+    "Description": "3 eggs, 3 large shrimp & 2 eggs",
+    "Price": "11.99",
+    "Category": "Breakfast",
+    "Slug": "ham-steak-breakfast",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Seafood Omelette",
+    "Description": "Shrimp & Crab Meat",
+    "Price": "12.99",
+    "Category": "Breakfast",
+    "Slug": "seafood-omelette",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Crab Meat",
+    "Description": "3 eggs",
+    "Price": "12.99",
+    "Category": "Breakfast",
+    "Slug": "crab-meat-breakfast",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Steak & Eggs",
+    "Description": "2 eggs, home fries, toast",
+    "Price": "22.99",
+    "Category": "Breakfast",
+    "Slug": "steak-eggs",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Belgian Waffles",
+    "Description": "Waffle with home fries & toast",
+    "Price": "11.99",
+    "Category": "Breakfast",
+    "Slug": "belgian-waffles",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "French Toast",
+    "Description": "2 slices",
+    "Price": "6.99",
+    "Category": "Breakfast",
+    "Slug": "french-toast",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Pancakes",
+    "Description": "2 pancakes",
+    "Price": "7.99",
+    "Category": "Breakfast",
+    "Slug": "pancakes",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Italian Sausage Parm",
+    "Description": "Hot sausage with provolone cheese sauce",
+    "Price": "12.99",
+    "Category": "Hot Sandwiches",
+    "Slug": "italian-sausage-parm",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Special Chicken Cutlet",
+    "Description": "Onions, tomatoes, American cheese, and ranch dressing",
+    "Price": "12.99",
+    "Category": "Hot Sandwiches",
+    "Slug": "special-chicken-cutlet",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Meatball Parm",
+    "Description": "Homemade meatballs",
+    "Price": "12.99",
+    "Category": "Hot Sandwiches",
+    "Slug": "meatball-parm",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Cheeseburger Sandwich",
+    "Description": "1/2 oz of burger with American cheese",
+    "Price": "12.99",
+    "Category": "Hot Sandwiches",
+    "Slug": "cheeseburger-sandwich",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Flounder Sandwich",
+    "Description": "Fresh flounder breaded to perfection with tartar sauce",
+    "Price": "12.99",
+    "Category": "Hot Sandwiches",
+    "Slug": "flounder-sandwich",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Crispy Chicken",
+    "Description": "",
+    "Price": "12.99",
+    "Category": "Hot Sandwiches",
+    "Slug": "crispy-chicken",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Chicken Cheesesteak",
+    "Description": "Lettuce and tomatoes",
+    "Price": "12.99",
+    "Category": "Hot Sandwiches",
+    "Slug": "chicken-cheesesteak-sand",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Strawberry Cheesecake",
+    "Description": "",
+    "Price": "5.99",
+    "Category": "Desserts",
+    "Slug": "strawberry-cheesecake",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Carrot Cake",
+    "Description": "",
+    "Price": "5.99",
+    "Category": "Desserts",
+    "Slug": "carrot-cake",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Chocolate Cake",
+    "Description": "",
+    "Price": "5.99",
+    "Category": "Desserts",
+    "Slug": "chocolate-cake",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Tiramisu",
+    "Description": "",
+    "Price": "5.99",
+    "Category": "Desserts",
+    "Slug": "tiramisu",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Rice or Bread Pudding",
+    "Description": "",
+    "Price": "5.99",
+    "Category": "Desserts",
+    "Slug": "rice-bread-pudding",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Zeppoli",
+    "Description": "Powdered or Cinnamon Sugar",
+    "Price": "5.99",
+    "Category": "Desserts",
+    "Slug": "zeppoli",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Home Soup",
+    "Description": "16oz",
+    "Price": "5.99",
+    "Category": "Soups",
+    "Slug": "home-soup",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Soup of the Day",
+    "Description": "",
+    "Price": "5.99",
+    "Category": "Soups",
+    "Slug": "soup-of-the-day",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "2-liter Soda",
+    "Description": "",
+    "Price": "3.99",
+    "Category": "Drinks",
+    "Slug": "2-liter-soda",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Can Soda",
+    "Description": "",
+    "Price": "1.0",
+    "Category": "Drinks",
+    "Slug": "can-soda",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "20oz Bottle",
+    "Description": "",
+    "Price": "2.75",
+    "Category": "Drinks",
+    "Slug": "20oz-bottle",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Broccoli",
+    "Description": "",
+    "Price": "5.99",
+    "Category": "Side Orders",
+    "Slug": "broccoli",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Rice",
+    "Description": "",
+    "Price": "5.99",
+    "Category": "Side Orders",
+    "Slug": "rice",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Fried Beans",
+    "Description": "",
+    "Price": "5.99",
+    "Category": "Side Orders",
+    "Slug": "fried-beans",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Sausage",
+    "Description": "",
+    "Price": "5.99",
+    "Category": "Side Orders",
+    "Slug": "sausage",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Meatball",
+    "Description": "",
+    "Price": "5.99",
+    "Category": "Side Orders",
+    "Slug": "meatball",
+    "Featured": "False"
+  },
+  {
+    "Product Name": "Herr's Chips",
+    "Description": "",
+    "Price": "2.99",
+    "Category": "Side Orders",
+    "Slug": "herrs-chips",
+    "Featured": "False"
+  },
+  {
+    "Category": "Strombolis + Calzones",
+    "Product Name": "Cheese Calzone",
+    "Price": "15.99",
+    "Description": "Folded pizza dough stuffed with Grande Mozzarella, creamy Ricotta cheese, and served with a side of homemade marinara sauce.",
+    "Slug": "cheese-calzone",
+    "Featured": "false",
+    "Image": "/images/pizza-pepperoni-clean.png"
+  }
+]

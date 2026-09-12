@@ -3,6 +3,7 @@ import path from "path";
 import Papa from "papaparse";
 import { getMenuItemsFromContentful } from "./contentful";
 import type { MenuItem } from "./contentful";
+import mockData from "@/data/mockData.json";
 
 export type { MenuItem };
 
@@ -15,6 +16,8 @@ const EXTRA_CALZONES: MenuItem[] = [
       "Folded pizza dough stuffed with Grande Mozzarella, creamy Ricotta cheese, and served with a side of homemade marinara sauce.",
     Slug: "cheese-calzone",
     Featured: "false",
+    Image: "/images/pizza-pepperoni-clean.png",
+    image: "/images/pizza-pepperoni-clean.png",
   },
 ];
 
@@ -29,22 +32,34 @@ async function getMenuItemsFromCSV(): Promise<MenuItem[]> {
     return [...parsed.data, ...EXTRA_CALZONES];
   } catch (error) {
     console.error("[CSV] Failed to load menu:", error);
-    return EXTRA_CALZONES;
+    return (mockData as MenuItem[]) || EXTRA_CALZONES;
   }
 }
 
 export async function getMenuItems(): Promise<MenuItem[]> {
-  // Try Contentful first; fall back to CSV if not configured or fails
+  const isDev = process.env.NODE_ENV === "development";
+  const forceContentful = process.env.FORCE_CONTENTFUL === "true";
+
+  // 1. In development, use local mock data to avoid consuming Contentful API quota & asset bandwidth
+  if (isDev && !forceContentful) {
+    return (mockData as unknown as MenuItem[]) || getMenuItemsFromCSV();
+  }
+
+  // 2. Production: Use aggressively cached Contentful integration
   const spaceId = process.env.CONTENTFUL_SPACE_ID;
   const token = process.env.CONTENTFUL_ACCESS_TOKEN;
 
   if (spaceId && token) {
-    const items = await getMenuItemsFromContentful();
-    if (items.length > 0) {
-      return [...items, ...EXTRA_CALZONES];
+    try {
+      const items = await getMenuItemsFromContentful();
+      if (items && items.length > 0) {
+        return [...items, ...EXTRA_CALZONES];
+      }
+    } catch (err) {
+      console.warn("[Menu] Contentful fetch failed, falling back to local dataset:", err);
     }
   }
 
-  // Fallback to CSV
-  return getMenuItemsFromCSV();
+  // 3. Graceful fallback to mock data or CSV if Contentful is unconfigured or quota-exhausted
+  return (mockData as unknown as MenuItem[]) || getMenuItemsFromCSV();
 }

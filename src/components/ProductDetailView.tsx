@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import type { SizeVariant } from '@/data/sizePricing';
+import { optimizeContentfulImage } from '@/lib/contentful';
 
 interface ProductDetailViewProps {
   name: string;
@@ -78,14 +79,21 @@ export default function ProductDetailView({
     }
   };
 
+  const optimizedImage = optimizeContentfulImage(image, {
+    width: 800,
+    quality: 80,
+    format: 'webp',
+    fit: 'scale',
+  });
+
   return (
     <div className="bg-panel border border-panel-border rounded-2xl overflow-hidden shadow-2xl">
       <div className="flex flex-col lg:flex-row">
         {/* Left Side: Product Image or Brand Presentation */}
         <div className="w-full lg:w-1/2 min-h-[300px] sm:min-h-[380px] lg:min-h-[500px] relative bg-ink flex items-center justify-center border-b lg:border-b-0 lg:border-r border-panel-border/60 overflow-hidden">
-          {image ? (
+          {optimizedImage ? (
             <img
-              src={image}
+              src={optimizedImage}
               alt={name}
               className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
             />
