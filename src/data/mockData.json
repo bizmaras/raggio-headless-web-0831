@@ -151,9 +151,7 @@
     "Price": "23.99",
     "Category": "Sicilian Pizza",
     "Slug": "sicilian-meat-lover",
-    "Featured": "False",
-    "Image": "/images/products/product-meat-lover.jpg",
-    "image": "/images/products/product-meat-lover.jpg"
+    "Featured": "False"
   },
   {
     "Product Name": "Sicilian Special",
@@ -161,9 +159,7 @@
     "Price": "25.99",
     "Category": "Sicilian Pizza",
     "Slug": "sicilian-special",
-    "Featured": "False",
-    "Image": "/images/products/product-green-pepper-sausage.jpg",
-    "image": "/images/products/product-green-pepper-sausage.jpg"
+    "Featured": "False"
   },
   {
     "Product Name": "Shrimp Alfredo Sicilian",
@@ -179,9 +175,7 @@
     "Price": "23.99",
     "Category": "Sicilian Pizza",
     "Slug": "buffalo-chicken-sicilian",
-    "Featured": "False",
-    "Image": "/images/products/product-buffalo-chicken.jpg",
-    "image": "/images/products/product-buffalo-chicken.jpg"
+    "Featured": "False"
   },
   {
     "Product Name": "Chicken Ranch Sicilian",
@@ -205,9 +199,7 @@
     "Price": "23.99",
     "Category": "Sicilian Pizza",
     "Slug": "white-special-sicilian",
-    "Featured": "False",
-    "Image": "/images/products/product-spinach-white.jpg",
-    "image": "/images/products/product-spinach-white.jpg"
+    "Featured": "False"
   },
   {
     "Product Name": "Philly Steak Sicilian",
