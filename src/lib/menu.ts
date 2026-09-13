@@ -16,8 +16,6 @@ const EXTRA_CALZONES: MenuItem[] = [
       "Folded pizza dough stuffed with Grande Mozzarella, creamy Ricotta cheese, and served with a side of homemade marinara sauce.",
     Slug: "cheese-calzone",
     Featured: "false",
-    Image: "/images/pizza-pepperoni-clean.png",
-    image: "/images/pizza-pepperoni-clean.png",
   },
 ];
 

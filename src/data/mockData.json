@@ -6,7 +6,8 @@
     "Category": "Pizza",
     "Slug": "plain-cheese-pizza",
     "Featured": "True",
-    "Image": "/images/pizza-pepperoni-clean.png"
+    "Image": "/images/products/product-cheese.jpg",
+    "image": "/images/products/product-cheese.jpg"
   },
   {
     "Product Name": "White Cheese Pizza",
@@ -14,8 +15,7 @@
     "Price": "19.99",
     "Category": "Pizza",
     "Slug": "white-cheese-pizza",
-    "Featured": "False",
-    "Image": "/images/pizza-meatlover-clean.png"
+    "Featured": "False"
   },
   {
     "Product Name": "Pizza by the Slice",
@@ -23,8 +23,7 @@
     "Price": "2.5",
     "Category": "Pizza",
     "Slug": "pizza-by-the-slice",
-    "Featured": "False",
-    "Image": "/images/pizza-buffalo-clean.png"
+    "Featured": "False"
   },
   {
     "Product Name": "2 Slices + Can Drink",
@@ -32,8 +31,7 @@
     "Price": "6.0",
     "Category": "Pizza",
     "Slug": "2-slices-can-drink",
-    "Featured": "True",
-    "Image": "/images/pizza-spinach-clean.png"
+    "Featured": "True"
   },
   {
     "Product Name": "Our Signature Thin Crust",
@@ -42,7 +40,8 @@
     "Category": "Gourmet Pizza",
     "Slug": "signature-thin-crust",
     "Featured": "True",
-    "Image": "/images/pizza-pepperoni-clean.png"
+    "Image": "/images/products/product-green-pepper-sausage.jpg",
+    "image": "/images/products/product-green-pepper-sausage.jpg"
   },
   {
     "Product Name": "The Works Pizza",
@@ -51,7 +50,8 @@
     "Category": "Gourmet Pizza",
     "Slug": "the-works-pizza",
     "Featured": "False",
-    "Image": "/images/pizza-meatlover-clean.png"
+    "Image": "/images/products/product-green-pepper-sausage.jpg",
+    "image": "/images/products/product-green-pepper-sausage.jpg"
   },
   {
     "Product Name": "White Special Pizza",
@@ -60,7 +60,8 @@
     "Category": "Gourmet Pizza",
     "Slug": "white-special-pizza",
     "Featured": "False",
-    "Image": "/images/pizza-buffalo-clean.png"
+    "Image": "/images/products/product-spinach-white.jpg",
+    "image": "/images/products/product-spinach-white.jpg"
   },
   {
     "Product Name": "Buffalo Chicken Pizza",
@@ -69,7 +70,8 @@
     "Category": "Gourmet Pizza",
     "Slug": "buffalo-chicken-pizza",
     "Featured": "False",
-    "Image": "/images/pizza-spinach-clean.png"
+    "Image": "/images/products/product-buffalo-chicken.jpg",
+    "image": "/images/products/product-buffalo-chicken.jpg"
   },
   {
     "Product Name": "Chicken Ranch Pizza",
@@ -77,8 +79,7 @@
     "Price": "21.99",
     "Category": "Gourmet Pizza",
     "Slug": "chicken-ranch-pizza",
-    "Featured": "False",
-    "Image": "/images/pizza-pepperoni-clean.png"
+    "Featured": "False"
   },
   {
     "Product Name": "Chicken Parm Pizza",
@@ -86,8 +87,7 @@
     "Price": "21.99",
     "Category": "Gourmet Pizza",
     "Slug": "chicken-parm-pizza",
-    "Featured": "False",
-    "Image": "/images/pizza-meatlover-clean.png"
+    "Featured": "False"
   },
   {
     "Product Name": "Chicken Alfredo Pizza",
@@ -95,8 +95,7 @@
     "Price": "21.99",
     "Category": "Gourmet Pizza",
     "Slug": "chicken-alfredo-pizza",
-    "Featured": "False",
-    "Image": "/images/pizza-buffalo-clean.png"
+    "Featured": "False"
   },
   {
     "Product Name": "Shrimp Alfredo Pizza (XL)",
@@ -104,8 +103,7 @@
     "Price": "25.99",
     "Category": "Gourmet Pizza",
     "Slug": "shrimp-alfredo-pizza",
-    "Featured": "False",
-    "Image": "/images/pizza-spinach-clean.png"
+    "Featured": "False"
   },
   {
     "Product Name": "Greek Pizza",
@@ -113,8 +111,7 @@
     "Price": "21.99",
     "Category": "Gourmet Pizza",
     "Slug": "greek-pizza",
-    "Featured": "False",
-    "Image": "/images/pizza-pepperoni-clean.png"
+    "Featured": "False"
   },
   {
     "Product Name": "House Pizza",
@@ -122,8 +119,7 @@
     "Price": "21.99",
     "Category": "Gourmet Pizza",
     "Slug": "house-pizza",
-    "Featured": "False",
-    "Image": "/images/pizza-meatlover-clean.png"
+    "Featured": "False"
   },
   {
     "Product Name": "Philly Cheesesteak Pizza",
@@ -131,8 +127,7 @@
     "Price": "23.99",
     "Category": "Gourmet Pizza",
     "Slug": "philly-cheesesteak-pizza",
-    "Featured": "False",
-    "Image": "/images/pizza-buffalo-clean.png"
+    "Featured": "False"
   },
   {
     "Product Name": "Veggie Pizza",
@@ -140,8 +135,7 @@
     "Price": "21.99",
     "Category": "Gourmet Pizza",
     "Slug": "veggie-pizza",
-    "Featured": "False",
-    "Image": "/images/pizza-spinach-clean.png"
+    "Featured": "False"
   },
   {
     "Product Name": "White Cheese Sicilian",
@@ -149,8 +143,7 @@
     "Price": "18.99",
     "Category": "Sicilian Pizza",
     "Slug": "white-cheese-sicilian",
-    "Featured": "False",
-    "Image": "/images/pizza-pepperoni-clean.png"
+    "Featured": "False"
   },
   {
     "Product Name": "Sicilian Meat Lover",
@@ -159,7 +152,8 @@
     "Category": "Sicilian Pizza",
     "Slug": "sicilian-meat-lover",
     "Featured": "False",
-    "Image": "/images/pizza-meatlover-clean.png"
+    "Image": "/images/products/product-meat-lover.jpg",
+    "image": "/images/products/product-meat-lover.jpg"
   },
   {
     "Product Name": "Sicilian Special",
@@ -168,7 +162,8 @@
     "Category": "Sicilian Pizza",
     "Slug": "sicilian-special",
     "Featured": "False",
-    "Image": "/images/pizza-buffalo-clean.png"
+    "Image": "/images/products/product-green-pepper-sausage.jpg",
+    "image": "/images/products/product-green-pepper-sausage.jpg"
   },
   {
     "Product Name": "Shrimp Alfredo Sicilian",
@@ -176,8 +171,7 @@
     "Price": "25.99",
     "Category": "Sicilian Pizza",
     "Slug": "shrimp-alfredo-sicilian",
-    "Featured": "False",
-    "Image": "/images/pizza-spinach-clean.png"
+    "Featured": "False"
   },
   {
     "Product Name": "Buffalo Chicken Sicilian",
@@ -186,7 +180,8 @@
     "Category": "Sicilian Pizza",
     "Slug": "buffalo-chicken-sicilian",
     "Featured": "False",
-    "Image": "/images/pizza-pepperoni-clean.png"
+    "Image": "/images/products/product-buffalo-chicken.jpg",
+    "image": "/images/products/product-buffalo-chicken.jpg"
   },
   {
     "Product Name": "Chicken Ranch Sicilian",
@@ -194,8 +189,7 @@
     "Price": "23.99",
     "Category": "Sicilian Pizza",
     "Slug": "chicken-ranch-sicilian",
-    "Featured": "False",
-    "Image": "/images/pizza-meatlover-clean.png"
+    "Featured": "False"
   },
   {
     "Product Name": "Ham & American Cheese Sicilian",
@@ -203,8 +197,7 @@
     "Price": "21.99",
     "Category": "Sicilian Pizza",
     "Slug": "ham-american-sicilian",
-    "Featured": "False",
-    "Image": "/images/pizza-buffalo-clean.png"
+    "Featured": "False"
   },
   {
     "Product Name": "White Special Sicilian",
@@ -213,7 +206,8 @@
     "Category": "Sicilian Pizza",
     "Slug": "white-special-sicilian",
     "Featured": "False",
-    "Image": "/images/pizza-spinach-clean.png"
+    "Image": "/images/products/product-spinach-white.jpg",
+    "image": "/images/products/product-spinach-white.jpg"
   },
   {
     "Product Name": "Philly Steak Sicilian",
@@ -221,8 +215,7 @@
     "Price": "23.99",
     "Category": "Sicilian Pizza",
     "Slug": "philly-steak-sicilian",
-    "Featured": "False",
-    "Image": "/images/pizza-pepperoni-clean.png"
+    "Featured": "False"
   },
   {
     "Product Name": "Plain Chicken Wings",
@@ -1390,7 +1383,6 @@
     "Price": "15.99",
     "Description": "Folded pizza dough stuffed with Grande Mozzarella, creamy Ricotta cheese, and served with a side of homemade marinara sauce.",
     "Slug": "cheese-calzone",
-    "Featured": "false",
-    "Image": "/images/pizza-pepperoni-clean.png"
+    "Featured": "false"
   }
 ]
