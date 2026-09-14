@@ -35,7 +35,7 @@
     "contentful-management": "^12.16.0",
     "csv-parse": "^7.0.2",
     "eslint": "^9",
-    "eslint-config-next": "16.3.3",
+    "eslint-config-next": "16.3.5",
     "tailwindcss": "^4",
     "typescript": "^5"
   },
