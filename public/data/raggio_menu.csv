@@ -21,16 +21,16 @@ Sicilian Special,"Pepperoni, sausage, green peppers, mushrooms",25.99,Sicilian P
 Shrimp Alfredo Sicilian,"Fresh shrimp, Alfredo sauce and Grande mozzarella",25.99,Sicilian Pizza,shrimp-alfredo-sicilian,False
 Buffalo Chicken Sicilian,"Grilled chicken, hot sauce and Grande mozzarella",23.99,Sicilian Pizza,buffalo-chicken-sicilian,False
 Chicken Ranch Sicilian,"Grilled chicken, ranch, mozzarella and bacon",23.99,Sicilian Pizza,chicken-ranch-sicilian,False
-Ham & American Cheese Sicilian,,21.99,Sicilian Pizza,ham-american-sicilian,False
+Ham & American Cheese Sicilian,"Imported Italian ham, melted American cheese, herbs and 100% Grande Mozzarella on thick Sicilian crust",21.99,Sicilian Pizza,ham-american-sicilian,False
 White Special Sicilian,"Spinach, tomato, fresh garlic sauce and Grande mozzarella",23.99,Sicilian Pizza,white-special-sicilian,False
-Philly Steak Sicilian,"Grilled chicken, hot sauce and Grande mozzarella",23.99,Sicilian Pizza,philly-steak-sicilian,False
+Philly Steak Sicilian,"Tender sliced steak, sautéed peppers, onions, marinara and 100% Grande Mozzarella on thick crispy Sicilian focaccia crust",23.99,Sicilian Pizza,philly-steak-sicilian,False
 Plain Chicken Wings,Jumbo wings,8.99,Chicken Wings,plain-wings,False
 BBQ Wings,BBQ sauce,8.99,Chicken Wings,bbq-wings,False
 Garlic Parmesan Wings,Garlic parmesan sauce,8.99,Chicken Wings,garlic-parm-wings,False
 Spicy Wings,Hot sauce,8.99,Chicken Wings,spicy-wings,False
 Honey Habanero Wings,Sweet & spicy,8.99,Chicken Wings,honey-habanero-wings,False
 Mango Habanero Wings,Tropical sweet heat,8.99,Chicken Wings,mango-habanero-wings,False
-Philadelphia Cheesesteak,Fresh homemade 8oz beef burgers on burger bun,10.99,Cheesesteaks,philly-cheesesteak,True
+Philadelphia Cheesesteak,"Thinly sliced tender ribeye steak, melted provolone or American cheese, caramelized onions on freshly baked Italian sub roll",10.99,Cheesesteaks,philly-cheesesteak,True
 The Philly Special,"Mushrooms, sweet peppers, onions",12.99,Cheesesteaks,philly-special,False
 Cheesesteak Ranchero,"Jalapeños, ranch dressing",12.99,Cheesesteaks,cheesesteak-ranchero,False
 Pizza Steak or Chicken,Marinara sauce & mozzarella cheese,12.99,Cheesesteaks,pizza-steak-chicken,False
@@ -98,11 +98,11 @@ Shrimp Basket,,14.99,Complete Dinners,shrimp-basket,False
 Jumbo Shrimp Platter,,15.99,Complete Dinners,jumbo-shrimp-platter,False
 Crab Cake Platter,,19.99,Complete Dinners,crab-cake-platter,False
 Flounder Platter,,14.99,Complete Dinners,flounder-platter,False
-Fried Seafood Combo,"Flounder, shrimp, and crab cake",27.99,Complete Dinners,fried-seafood-combo,False
+Fried Seafood Combo Platter,"Flounder, jumbo shrimp, and crab cake served with garlic bread, salad and fries",27.99,Complete Dinners,fried-seafood-combo-platter,False
 Beef Shish Kebab,With rice,22.99,Complete Dinners,beef-shish-kebab,False
 Chicken Shish Kebab,With rice,19.99,Complete Dinners,chicken-shish-kebab,False
 Gyro Platter,With rice & Greek salad,19.99,Complete Dinners,gyro-platter,False
-Fried Seafood Combo,"21 Shrimp, 2 Crab Cake, 1 Flounder",16.99,Seafood,fried-seafood-combo-2,False
+Fried Seafood Snack Basket,"21 Popcorn Shrimp, 2 Crab Cakes, 1 Golden Flounder basket",16.99,Seafood,fried-seafood-basket,False
 Fried Filet of Flounder,1 piece,14.99,Seafood,fried-flounder,False
 Crab Cake Dinner,2 pieces,26.99,Seafood,crab-cake-dinner,False
 Chicken & Steak Quesadilla,,13.99,Quesadillas,chicken-steak-quesadilla,False
