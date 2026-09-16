@@ -945,19 +945,7 @@
     "Price": "11.99",
     "Category": "Latin Food",
     "Slug": "pupusas",
-    "Featured": "False",
-    "Image": "/images/products/cheese-bean-pupusas-luxury.jpg",
-    "image": "/images/products/cheese-bean-pupusas-luxury.jpg",
-    "delaware_local_keywords": [
-      "newark delaware food delivery",
-      "raggio gourmet pizza newark de",
-      "delaware no sales tax restaurant",
-      "cheese & bean pupusa's (queso con frijoles) newark de",
-      "best pizza near udel",
-      "late night food newark delaware"
-    ],
-    "pos_provider": "FOODTEC",
-    "pos_order_url": "https://phillystyleexpress.foodtecsolutions.com/"
+    "Featured": "False"
   },
   {
     "Product Name": "Nachos",

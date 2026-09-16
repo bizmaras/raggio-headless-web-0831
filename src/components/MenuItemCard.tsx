@@ -238,32 +238,54 @@ export default function MenuItemCard(props: MenuItemCardProps) {
 
       {isOpen && typeof document !== 'undefined' && createPortal(
         <div
-          className="fixed inset-0 z-[9999] flex items-center justify-center p-4 md:p-8 bg-black/85 backdrop-blur-md animate-in fade-in duration-200"
+          className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-6 md:p-8 bg-black/90 backdrop-blur-xl animate-in fade-in duration-200"
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsOpen(false);
           }}
           role="dialog"
           aria-modal="true"
         >
-          <div className="relative w-full max-w-lg md:max-w-4xl bg-panel border border-panel-border rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[85dvh] md:max-h-[80vh] my-auto animate-in zoom-in-95 duration-200">
+          <div className="relative w-full max-w-lg md:max-w-4xl bg-gradient-to-br from-[#141622] via-[#0d0e15] to-[#07080c] border border-amber-500/30 rounded-3xl overflow-hidden shadow-[0_30px_90px_rgba(0,0,0,0.95),0_0_50px_rgba(212,175,55,0.18)] flex flex-col md:flex-row max-h-[90dvh] md:max-h-[85vh] my-auto animate-in zoom-in-95 duration-200">
+            
+            {/* Ambient Lighting Orbs inside modal */}
+            <div className="absolute -top-24 -left-24 w-60 h-60 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div className="absolute -bottom-24 -right-24 w-60 h-60 bg-yellow-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            {/* Luxury Close Button */}
             <button
               type="button"
               onClick={() => setIsOpen(false)}
               aria-label={modalCloseAria}
-              className="absolute top-3.5 right-3.5 z-30 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-ink/90 text-stone hover:text-cream flex items-center justify-center border border-panel-border cursor-pointer transition-colors shadow-md"
+              className="absolute top-4 right-4 z-40 w-10 h-10 rounded-full bg-black/80 hover:bg-amber-950/70 text-slate-300 hover:text-amber-300 flex items-center justify-center border border-white/15 hover:border-amber-500/50 cursor-pointer transition-all duration-200 shadow-xl backdrop-blur-md group"
             >
-              ✕
+              <svg className="w-5 h-5 group-hover:rotate-90 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
             </button>
 
-            {/* Display Image or Elegant Brand Logo Fallback */}
-            <div className="w-full md:w-1/2 h-48 sm:h-56 md:h-auto relative bg-ink border-b md:border-b-0 md:border-r border-panel-border/50 flex-shrink-0 flex items-center justify-center">
+            {/* Left Image Showcase with Luxury Presentation */}
+            <div className="w-full md:w-1/2 h-56 sm:h-72 md:h-auto relative bg-[#090a0f] border-b md:border-b-0 md:border-r border-white/[0.08] flex-shrink-0 flex items-center justify-center overflow-hidden p-6 sm:p-8 group/img">
+              {/* Radial warm spotlight behind pizza */}
+              <div className="absolute inset-0 bg-radial from-amber-500/15 via-transparent to-transparent pointer-events-none"></div>
+
+              {/* Badges */}
+              <div className="absolute top-4 left-4 z-20 px-3 py-1 rounded-full bg-black/80 border border-amber-500/40 text-[10px] sm:text-[11px] font-mono font-bold text-amber-300 flex items-center gap-1.5 shadow-lg backdrop-blur-md">
+                <span>🔥</span>
+                <span>Stone-Deck Baked</span>
+              </div>
+
+              <div className="absolute bottom-4 left-4 z-20 px-3 py-1 rounded-full bg-black/80 border border-white/10 text-[9px] sm:text-[10px] font-mono text-slate-300 flex items-center gap-1.5 shadow-lg backdrop-blur-md">
+                <span>🥛</span>
+                <span>100% Grande Mozzarella</span>
+              </div>
+
               {modalImage ? (
                 <img
                   src={modalImage}
                   alt={seoAltText}
                   loading="lazy"
                   decoding="async"
-                  className="w-full h-full object-cover"
+                  className="max-h-full max-w-full object-contain drop-shadow-[0_20px_35px_rgba(0,0,0,0.9)] group-hover/img:scale-105 transition-transform duration-500"
                 />
               ) : (
                 <div className="flex flex-col items-center justify-center p-6 sm:p-8 text-center">
@@ -280,15 +302,35 @@ export default function MenuItemCard(props: MenuItemCardProps) {
               )}
             </div>
 
-            {/* Item Details Information */}
-            <div className="w-full md:w-1/2 p-5 sm:p-6 md:p-8 flex flex-col justify-between overflow-y-auto">
+            {/* Right Column: Gastronomic Details Information */}
+            <div className="w-full md:w-1/2 p-6 sm:p-8 flex flex-col justify-between overflow-y-auto custom-scrollbar relative z-20">
               <div>
-                <div className="flex justify-between items-start mb-3 sm:mb-4 pr-8 gap-2">
-                  <h3 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-cream leading-tight">{itemName}</h3>
-                  <span className="text-gold font-extrabold text-xl sm:text-2xl ml-3 flex-shrink-0 tabular-nums">{itemPrice}</span>
+                <div className="text-[10px] font-mono uppercase tracking-widest text-amber-400 font-bold mb-1.5 flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+                  <span>RAGGIO ARTISAN GOURMET</span>
                 </div>
 
-                <p className="text-xs sm:text-sm md:text-base text-stone mb-3 sm:mb-4 leading-relaxed">
+                <div className="flex justify-between items-start mb-3 sm:mb-4 pr-10 gap-3">
+                  <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-tight">{itemName}</h3>
+                  <div className="px-3.5 py-1 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-300 font-mono font-black text-xl sm:text-2xl tracking-tight shadow-inner flex items-center flex-shrink-0">
+                    {itemPrice}
+                  </div>
+                </div>
+
+                {/* Micro Trust Tags */}
+                <div className="flex flex-wrap gap-2 mb-3">
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-white/[0.04] text-slate-300 border border-white/[0.06]">
+                    ⏱️ 48h Soğuk Fermente
+                  </span>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-white/[0.04] text-slate-300 border border-white/[0.06]">
+                    🍅 San Marzano Sos
+                  </span>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-white/[0.04] text-slate-300 border border-white/[0.06]">
+                    🧀 %100 Grande Peyniri
+                  </span>
+                </div>
+
+                <p className="text-xs sm:text-sm text-slate-300 mb-4 leading-relaxed font-light">
                   {itemDescription}
                 </p>
 
@@ -296,10 +338,12 @@ export default function MenuItemCard(props: MenuItemCardProps) {
                   <div className="mb-4">
                     <Link
                       href={productUrl}
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-stone hover:text-gold transition-colors group/link"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-400 hover:text-amber-300 transition-colors group/link"
                     >
-                      <span>{currentLang === 'es' ? 'Ver página completa del plato' : 'View dedicated dish page'}</span>
-                      <svg className="w-3.5 h-3.5 text-gold group-hover/link:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <span className="underline underline-offset-4 decoration-amber-500/40">
+                        {currentLang === 'es' ? 'Ver página completa del plato' : 'View dedicated dish page'}
+                      </span>
+                      <svg className="w-3.5 h-3.5 group-hover/link:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                       </svg>
                     </Link>
@@ -308,12 +352,16 @@ export default function MenuItemCard(props: MenuItemCardProps) {
 
                 {/* Modal Size Selector (Synchronized with Card) */}
                 {sizes && sizes.length > 0 && (
-                  <div className="mb-5 sm:mb-6 p-3 rounded-xl bg-ink/70 border border-panel-border">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-xs font-bold text-gold uppercase tracking-wider">
+                  <div className="mb-5 sm:mb-6 p-3.5 rounded-2xl bg-black/60 border border-white/[0.08] shadow-inner">
+                    <div className="flex items-center justify-between mb-2.5">
+                      <span className="text-[11px] font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
+                        <svg className="w-3.5 h-3.5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                          <circle cx="12" cy="12" r="9" />
+                          <path d="M12 8v8M8 12h8" />
+                        </svg>
                         {chooseSizeText}
                       </span>
-                      <span className="text-xs text-cream/80 font-medium">
+                      <span className="text-xs text-white font-mono font-bold">
                         {activeSize?.fullName?.[currentLang] || activeSize?.label}
                       </span>
                     </div>
@@ -326,14 +374,19 @@ export default function MenuItemCard(props: MenuItemCardProps) {
                             type="button"
                             onClick={() => setSelectedSizeIndex(idx)}
                             aria-pressed={isSelected}
-                            className={`py-2 px-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all duration-150 flex flex-col items-center justify-center cursor-pointer ${
+                            className={`py-2 px-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 flex flex-col items-center justify-center cursor-pointer ${
                               isSelected
-                                ? 'bg-gold text-ink shadow-md scale-[1.02]'
-                                : 'bg-panel/80 text-stone hover:text-cream border border-panel-border hover:border-gold/40'
+                                ? 'bg-gradient-to-b from-amber-400 via-amber-500 to-[#c9a15c] text-neutral-950 font-black border border-amber-300 shadow-[0_0_20px_rgba(212,175,55,0.45)] scale-[1.03]'
+                                : 'bg-white/[0.03] text-slate-300 hover:text-white border border-white/10 hover:border-amber-500/40 hover:bg-white/[0.06]'
                             }`}
                           >
-                            <span>{s.label}</span>
-                            <span className={`text-[10px] sm:text-xs mt-0.5 tabular-nums ${isSelected ? 'text-ink/85 font-medium' : 'text-stone/60'}`}>
+                            <span className="leading-tight">{s.label}</span>
+                            {s.inches && (
+                              <span className={`text-[9px] font-mono mt-0.5 leading-none ${isSelected ? 'text-black/80 font-bold' : 'text-slate-500'}`}>
+                                {s.inches}
+                              </span>
+                            )}
+                            <span className={`text-[10px] sm:text-xs mt-1 tabular-nums font-mono ${isSelected ? 'text-black font-black' : 'text-amber-400/90'}`}>
                               ${s.price.toFixed(2)}
                             </span>
                           </button>
@@ -345,14 +398,15 @@ export default function MenuItemCard(props: MenuItemCardProps) {
 
                 {/* Key Ingredients (Rendered Only When Present) */}
                 {itemIngredients.length > 0 && (
-                  <div className="mb-6 sm:mb-8">
-                    <span className="text-[11px] sm:text-xs font-bold text-gold uppercase tracking-wider block mb-2 sm:mb-3">
+                  <div className="mb-6">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-2 font-mono">
                       {keyIngredientsText}
                     </span>
                     <div className="flex flex-wrap gap-1.5 sm:gap-2">
                       {itemIngredients.map((ing) => (
-                        <span key={ing} className="text-xs md:text-sm px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-md bg-ink text-cream border border-panel-border font-medium">
-                          {ing}
+                        <span key={ing} className="text-xs px-2.5 py-1 rounded-lg bg-black/60 text-slate-200 border border-white/10 font-medium flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                          <span>{ing}</span>
                         </span>
                       ))}
                     </div>
@@ -360,14 +414,18 @@ export default function MenuItemCard(props: MenuItemCardProps) {
                 )}
               </div>
 
+              {/* Luxury Call-to-Action Button */}
               <a
                 href={itemOrderUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full btn-gold py-3.5 sm:py-4 px-6 text-base sm:text-lg"
+                className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-[#D4AF37] text-neutral-950 font-black text-base sm:text-lg tracking-wide shadow-[0_12px_35px_rgba(212,175,55,0.4)] hover:shadow-[0_16px_45px_rgba(212,175,55,0.6)] hover:scale-[1.01] active:scale-[0.99] transition-all duration-200 flex items-center justify-center gap-3 cursor-pointer group"
               >
-                {orderOnlineText} {activeSize ? `(${activeSize.label})` : ''}
-                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <span>{orderOnlineText} {activeSize ? `(${activeSize.label})` : ''}</span>
+                <span className="text-xs font-mono font-bold bg-black/20 px-2 py-0.5 rounded-md text-black">
+                  {itemPrice}
+                </span>
+                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                 </svg>
               </a>
