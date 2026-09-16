@@ -941,13 +941,13 @@
   },
   {
     "Product Name": "Pupusas",
-    "Description": "3 pieces",
+    "Description": "3 pieces handmade Salvadoran pupusas. Choice of Cheese & Refried Beans, Revueltas (Seasoned Meat, Cheese & Beans), or Queso con Loroco. Served hot with fresh curtido & salsa roja.",
     "Price": "11.99",
     "Category": "Latin Food",
     "Slug": "pupusas",
     "Featured": "False",
-    "Image": "/images/products/cheese-bean-pupusas-luxury.jpg",
-    "image": "/images/products/cheese-bean-pupusas-luxury.jpg",
+    "Image": "/images/dishes/cheese-bean-pupusas-luxury.jpg",
+    "image": "/images/dishes/cheese-bean-pupusas-luxury.jpg",
     "delaware_local_keywords": [
       "newark delaware food delivery",
       "raggio gourmet pizza newark de",
