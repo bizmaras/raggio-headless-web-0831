@@ -921,7 +921,19 @@
     "Price": "11.99",
     "Category": "Latin Food",
     "Slug": "tacos",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/products/tacos-street-luxury.jpg",
+    "image": "/images/products/tacos-street-luxury.jpg",
+    "delaware_local_keywords": [
+      "newark delaware food delivery",
+      "raggio gourmet pizza newark de",
+      "delaware no sales tax restaurant",
+      "ribeye philly cheesesteak newark de",
+      "best pizza near udel",
+      "late night food newark delaware"
+    ],
+    "pos_provider": "FOODTEC",
+    "pos_order_url": "https://phillystyleexpress.foodtecsolutions.com/"
   },
   {
     "Product Name": "Burritos",
