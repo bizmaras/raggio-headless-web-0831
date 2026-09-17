@@ -941,7 +941,9 @@
     "Price": "11.99",
     "Category": "Latin Food",
     "Slug": "burritos",
-    "Featured": "False"
+    "Featured": "False",
+    "image": "/images/dishes/latin-burritos-luxury-8k.png",
+    "Image": "/images/dishes/latin-burritos-luxury-8k.png"
   },
   {
     "Product Name": "Empanadas",
@@ -949,7 +951,9 @@
     "Price": "11.99",
     "Category": "Latin Food",
     "Slug": "empanadas",
-    "Featured": "False"
+    "Featured": "False",
+    "image": "/images/dishes/latin-empanadas-luxury-8k.png",
+    "Image": "/images/dishes/latin-empanadas-luxury-8k.png"
   },
   {
     "Product Name": "Pupusas",
@@ -977,7 +981,9 @@
     "Price": "11.99",
     "Category": "Latin Food",
     "Slug": "nachos-latin",
-    "Featured": "False"
+    "Featured": "False",
+    "image": "/images/dishes/latin-nachos-luxury-8k.png",
+    "Image": "/images/dishes/latin-nachos-luxury-8k.png"
   },
   {
     "Product Name": "Carne Asada",
@@ -985,7 +991,9 @@
     "Price": "17.99",
     "Category": "Latin Food",
     "Slug": "carne-asada-latin",
-    "Featured": "False"
+    "Featured": "False",
+    "image": "/images/dishes/latin-carne-asada-luxury-8k.png",
+    "Image": "/images/dishes/latin-carne-asada-luxury-8k.png"
   },
   {
     "Product Name": "Shrimp",
@@ -993,7 +1001,9 @@
     "Price": "19.99",
     "Category": "Latin Food",
     "Slug": "shrimp-latin",
-    "Featured": "False"
+    "Featured": "False",
+    "image": "/images/dishes/latin-shrimp-luxury-8k.png",
+    "Image": "/images/dishes/latin-shrimp-luxury-8k.png"
   },
   {
     "Product Name": "Combination",
@@ -1001,7 +1011,9 @@
     "Price": "24.99",
     "Category": "Latin Food",
     "Slug": "combination-latin",
-    "Featured": "False"
+    "Featured": "False",
+    "image": "/images/dishes/latin-combination-luxury-8k.png",
+    "Image": "/images/dishes/latin-combination-luxury-8k.png"
   },
   {
     "Product Name": "Italian Sub",
