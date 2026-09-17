@@ -321,7 +321,9 @@
     "Price": "7.99",
     "Category": "Fresh Burgers",
     "Slug": "burger",
-    "Featured": "False"
+    "Featured": "False",
+    "image": "/images/dishes/burger-smash-luxury-8k.png",
+    "Image": "/images/dishes/burger-smash-luxury-8k.png"
   },
   {
     "Product Name": "Cheeseburger",
@@ -329,7 +331,9 @@
     "Price": "8.99",
     "Category": "Fresh Burgers",
     "Slug": "cheeseburger",
-    "Featured": "True"
+    "Featured": "True",
+    "image": "/images/dishes/burger-smash-luxury-8k.png",
+    "Image": "/images/dishes/burger-smash-luxury-8k.png"
   },
   {
     "Product Name": "Double Cheeseburger",
@@ -337,7 +341,9 @@
     "Price": "11.99",
     "Category": "Fresh Burgers",
     "Slug": "double-cheeseburger",
-    "Featured": "False"
+    "Featured": "False",
+    "image": "/images/dishes/burger-smash-luxury-8k.png",
+    "Image": "/images/dishes/burger-smash-luxury-8k.png"
   },
   {
     "Product Name": "Bacon Double Cheeseburger",
@@ -345,7 +351,9 @@
     "Price": "14.99",
     "Category": "Fresh Burgers",
     "Slug": "bacon-double-cheeseburger",
-    "Featured": "False"
+    "Featured": "False",
+    "image": "/images/dishes/burger-smash-luxury-8k.png",
+    "Image": "/images/dishes/burger-smash-luxury-8k.png"
   },
   {
     "Product Name": "Texas Cheeseburger",
@@ -353,7 +361,9 @@
     "Price": "12.99",
     "Category": "Fresh Burgers",
     "Slug": "texas-cheeseburger",
-    "Featured": "False"
+    "Featured": "False",
+    "image": "/images/dishes/burger-smash-luxury-8k.png",
+    "Image": "/images/dishes/burger-smash-luxury-8k.png"
   },
   {
     "Product Name": "Chicken Ranch Burger",
@@ -361,7 +371,9 @@
     "Price": "11.99",
     "Category": "Fresh Burgers",
     "Slug": "chicken-ranch-burger",
-    "Featured": "False"
+    "Featured": "False",
+    "image": "/images/dishes/burger-smash-luxury-8k.png",
+    "Image": "/images/dishes/burger-smash-luxury-8k.png"
   },
   {
     "Product Name": "Chicken Caesar",
@@ -369,7 +381,9 @@
     "Price": "11.99",
     "Category": "Fresh Burgers",
     "Slug": "chicken-caesar-burger",
-    "Featured": "False"
+    "Featured": "False",
+    "image": "/images/dishes/burger-smash-luxury-8k.png",
+    "Image": "/images/dishes/burger-smash-luxury-8k.png"
   },
   {
     "Product Name": "French Fries",
@@ -505,7 +519,9 @@
     "Price": "8.99",
     "Category": "Appetizers",
     "Slug": "mozzarella-sticks",
-    "Featured": "False"
+    "Featured": "False",
+    "image": "/images/dishes/appetizer-mozzarella-sticks-luxury-8k.png",
+    "Image": "/images/dishes/appetizer-mozzarella-sticks-luxury-8k.png"
   },
   {
     "Product Name": "Broccoli Bites",
@@ -657,7 +673,9 @@
     "Price": "11.99",
     "Category": "Fresh Salads",
     "Slug": "greek-salad",
-    "Featured": "False"
+    "Featured": "False",
+    "image": "/images/dishes/salad-greek-luxury-8k.png",
+    "Image": "/images/dishes/salad-greek-luxury-8k.png"
   },
   {
     "Product Name": "Greek Salad with Grilled Chicken",
@@ -665,7 +683,9 @@
     "Price": "13.99",
     "Category": "Fresh Salads",
     "Slug": "greek-chicken-salad",
-    "Featured": "False"
+    "Featured": "False",
+    "image": "/images/dishes/salad-greek-luxury-8k.png",
+    "Image": "/images/dishes/salad-greek-luxury-8k.png"
   },
   {
     "Product Name": "Steak Salad",
@@ -745,7 +765,9 @@
     "Price": "14.99",
     "Category": "Pasta",
     "Slug": "baked-ziti",
-    "Featured": "False"
+    "Featured": "False",
+    "image": "/images/dishes/pasta-baked-ziti-luxury-8k.png",
+    "Image": "/images/dishes/pasta-baked-ziti-luxury-8k.png"
   },
   {
     "Product Name": "Eggplant Parmigiana",
@@ -865,7 +887,9 @@
     "Price": "13.99",
     "Category": "Quesadillas",
     "Slug": "chicken-steak-quesadilla",
-    "Featured": "False"
+    "Featured": "False",
+    "image": "/images/dishes/quesadilla-chicken-luxury-8k.png",
+    "Image": "/images/dishes/quesadilla-chicken-luxury-8k.png"
   },
   {
     "Product Name": "Crab Quesadilla",
@@ -873,7 +897,9 @@
     "Price": "15.99",
     "Category": "Quesadillas",
     "Slug": "crab-quesadilla",
-    "Featured": "False"
+    "Featured": "False",
+    "image": "/images/dishes/quesadilla-chicken-luxury-8k.png",
+    "Image": "/images/dishes/quesadilla-chicken-luxury-8k.png"
   },
   {
     "Product Name": "BBQ Chicken Quesadilla",
@@ -881,7 +907,9 @@
     "Price": "12.99",
     "Category": "Quesadillas",
     "Slug": "bbq-chicken-quesadilla",
-    "Featured": "False"
+    "Featured": "False",
+    "image": "/images/dishes/quesadilla-chicken-luxury-8k.png",
+    "Image": "/images/dishes/quesadilla-chicken-luxury-8k.png"
   },
   {
     "Product Name": "Texas Chicken Quesadilla",
@@ -889,7 +917,9 @@
     "Price": "12.99",
     "Category": "Quesadillas",
     "Slug": "texas-chicken-quesadilla",
-    "Featured": "False"
+    "Featured": "False",
+    "image": "/images/dishes/quesadilla-chicken-luxury-8k.png",
+    "Image": "/images/dishes/quesadilla-chicken-luxury-8k.png"
   },
   {
     "Product Name": "Buffalo Chicken Quesadilla",
@@ -897,7 +927,9 @@
     "Price": "12.99",
     "Category": "Quesadillas",
     "Slug": "buffalo-chicken-quesadilla",
-    "Featured": "False"
+    "Featured": "False",
+    "image": "/images/dishes/quesadilla-chicken-luxury-8k.png",
+    "Image": "/images/dishes/quesadilla-chicken-luxury-8k.png"
   },
   {
     "Product Name": "Steak Quesadilla",
@@ -905,7 +937,9 @@
     "Price": "12.99",
     "Category": "Quesadillas",
     "Slug": "steak-quesadilla",
-    "Featured": "False"
+    "Featured": "False",
+    "image": "/images/dishes/quesadilla-chicken-luxury-8k.png",
+    "Image": "/images/dishes/quesadilla-chicken-luxury-8k.png"
   },
   {
     "Product Name": "Seafood Quesadilla",
@@ -913,7 +947,9 @@
     "Price": "15.99",
     "Category": "Quesadillas",
     "Slug": "seafood-quesadilla",
-    "Featured": "False"
+    "Featured": "False",
+    "image": "/images/dishes/quesadilla-chicken-luxury-8k.png",
+    "Image": "/images/dishes/quesadilla-chicken-luxury-8k.png"
   },
   {
     "Product Name": "Tacos",
@@ -1093,7 +1129,9 @@
     "Price": "14.99",
     "Category": "Strombolis + Calzones",
     "Slug": "cheese-stromboli",
-    "Featured": "False"
+    "Featured": "False",
+    "image": "/images/dishes/calzone-golden-luxury-8k.png",
+    "Image": "/images/dishes/calzone-golden-luxury-8k.png"
   },
   {
     "Product Name": "Chicken Stromboli",
@@ -1101,7 +1139,9 @@
     "Price": "15.99",
     "Category": "Strombolis + Calzones",
     "Slug": "chicken-stromboli",
-    "Featured": "False"
+    "Featured": "False",
+    "image": "/images/dishes/calzone-golden-luxury-8k.png",
+    "Image": "/images/dishes/calzone-golden-luxury-8k.png"
   },
   {
     "Product Name": "Buffalo Chicken Stromboli",
@@ -1109,7 +1149,9 @@
     "Price": "15.99",
     "Category": "Strombolis + Calzones",
     "Slug": "buffalo-chicken-stromboli",
-    "Featured": "False"
+    "Featured": "False",
+    "image": "/images/dishes/calzone-golden-luxury-8k.png",
+    "Image": "/images/dishes/calzone-golden-luxury-8k.png"
   },
   {
     "Product Name": "Italian Stromboli",
@@ -1117,7 +1159,9 @@
     "Price": "15.99",
     "Category": "Strombolis + Calzones",
     "Slug": "italian-stromboli",
-    "Featured": "False"
+    "Featured": "False",
+    "image": "/images/dishes/calzone-golden-luxury-8k.png",
+    "Image": "/images/dishes/calzone-golden-luxury-8k.png"
   },
   {
     "Product Name": "Meat Lovers Stromboli",
@@ -1125,7 +1169,9 @@
     "Price": "15.99",
     "Category": "Strombolis + Calzones",
     "Slug": "meat-lovers-stromboli",
-    "Featured": "False"
+    "Featured": "False",
+    "image": "/images/dishes/calzone-golden-luxury-8k.png",
+    "Image": "/images/dishes/calzone-golden-luxury-8k.png"
   },
   {
     "Product Name": "Vegetable Stromboli",
@@ -1133,7 +1179,9 @@
     "Price": "14.99",
     "Category": "Strombolis + Calzones",
     "Slug": "vegetable-stromboli",
-    "Featured": "False"
+    "Featured": "False",
+    "image": "/images/dishes/calzone-golden-luxury-8k.png",
+    "Image": "/images/dishes/calzone-golden-luxury-8k.png"
   },
   {
     "Product Name": "Philly Special Stromboli",
@@ -1141,7 +1189,9 @@
     "Price": "18.99",
     "Category": "Strombolis + Calzones",
     "Slug": "philly-special-stromboli",
-    "Featured": "False"
+    "Featured": "False",
+    "image": "/images/dishes/calzone-golden-luxury-8k.png",
+    "Image": "/images/dishes/calzone-golden-luxury-8k.png"
   },
   {
     "Product Name": "Philly Special Chicken Stromboli",
@@ -1149,7 +1199,9 @@
     "Price": "18.99",
     "Category": "Strombolis + Calzones",
     "Slug": "philly-chicken-stromboli",
-    "Featured": "False"
+    "Featured": "False",
+    "image": "/images/dishes/calzone-golden-luxury-8k.png",
+    "Image": "/images/dishes/calzone-golden-luxury-8k.png"
   },
   {
     "Product Name": "House",
@@ -1245,7 +1297,9 @@
     "Price": "12.99",
     "Category": "Hot Sandwiches",
     "Slug": "cheeseburger-sandwich",
-    "Featured": "False"
+    "Featured": "False",
+    "image": "/images/dishes/burger-smash-luxury-8k.png",
+    "Image": "/images/dishes/burger-smash-luxury-8k.png"
   },
   {
     "Product Name": "Flounder Sandwich",
@@ -1301,7 +1355,9 @@
     "Price": "5.99",
     "Category": "Desserts",
     "Slug": "tiramisu",
-    "Featured": "False"
+    "Featured": "False",
+    "image": "/images/dishes/dessert-tiramisu-luxury-8k.png",
+    "Image": "/images/dishes/dessert-tiramisu-luxury-8k.png"
   },
   {
     "Product Name": "Rice or Bread Pudding",
@@ -1413,6 +1469,8 @@
     "Price": "15.99",
     "Description": "Folded pizza dough stuffed with Grande Mozzarella, creamy Ricotta cheese, and served with a side of homemade marinara sauce.",
     "Slug": "cheese-calzone",
-    "Featured": "false"
+    "Featured": "false",
+    "image": "/images/dishes/calzone-golden-luxury-8k.png",
+    "Image": "/images/dishes/calzone-golden-luxury-8k.png"
   }
 ]
