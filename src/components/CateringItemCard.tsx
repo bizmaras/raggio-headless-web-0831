@@ -1,8 +1,21 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { createPortal } from 'react-dom';
-import { ORDER_LINKS } from '@/config/ordering';
+/**
+ * CateringItemCard v2 (Stage 2)
+ *
+ * Drop-in: same default export and props; `lang` is NEW (optional).
+ *
+ * Changes
+ *  1. PER-GUEST COST. Office/event buyers compare trays by $/person, not by tray price.
+ *     "Half $54.99 · serves 8–10" becomes "$5.50–6.87 per guest" — computed, never typed.
+ *  2. Language comes from `lang`, not from sniffing `halfLabel === 'MEDIANO'`.
+ *  3. Native <dialog> (focus trap, Esc, focus return) instead of a portal div.
+ *  4. Tray options are a real choice (radio) feeding ONE order button; v1 had two
+ *     price tiles that were both plain links to the same URL.
+ */
+
+import { useEffect, useRef, useState } from 'react';
+import { ORDER_LINKS, STORE } from '@/config/ordering';
 
 interface CateringItemCardProps {
   name: string;
@@ -13,9 +26,23 @@ interface CateringItemCardProps {
   servesFull?: string;
   halfLabel?: string;
   fullLabel?: string;
+  lang?: string;
 }
 
 const FOODTEC_URL = ORDER_LINKS.catering;
+
+const parsePrice = (v?: string | number): number =>
+  typeof v === 'number' ? v : parseFloat(String(v ?? '').replace(/[^0-9.]/g, '')) || 0;
+
+function perGuest(price: number, serves: string): string | null {
+  const nums = (serves.match(/\d+/g) || []).map(Number).filter((n) => n > 0);
+  if (!price || !nums.length) return null;
+  const lo = Math.min(...nums);
+  const hi = Math.max(...nums);
+  const a = price / hi;
+  const b = price / lo;
+  return lo === hi ? `$${a.toFixed(2)}` : `$${a.toFixed(2)}–${b.toFixed(2)}`;
+}
 
 export default function CateringItemCard({
   name,
@@ -26,164 +53,102 @@ export default function CateringItemCard({
   servesFull = '15-20',
   halfLabel = 'HALF',
   fullLabel = 'FULL',
+  lang,
 }: CateringItemCardProps) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const es = lang ? lang === 'es' : halfLabel === 'MEDIANO'; // legacy fallback only
+  const t = es
+    ? { guest: 'por invitado', serves: 'Sirve', people: 'personas', details: 'Ver porciones', order: 'Ordenar catering', close: 'Cerrar', tray: 'Bandeja', via: `Pago con ${STORE.checkoutBrand} · misma cocina`, fallback: 'Preparado al momento para sus eventos.' }
+    : { guest: 'per guest', serves: 'Serves', people: 'guests', details: 'Servings & details', order: 'Order catering', close: 'Close', tray: 'Tray', via: `Checkout by ${STORE.checkoutBrand} · same kitchen`, fallback: 'Made fresh to order for your event.' };
 
-  // Lock background body scroll while modal is open
+  const options = [
+    { id: 'half', label: halfLabel, price: parsePrice(half), serves: servesHalf },
+    { id: 'full', label: fullLabel, price: parsePrice(full), serves: servesFull },
+  ].filter((o) => o.price > 0);
+
+  const [sel, setSel] = useState(options.length > 1 ? 1 : 0);
+  const chosen = options[sel] ?? options[0];
+
+  const ref = useRef<HTMLDialogElement>(null);
+  const [mounted, setMounted] = useState(false);
+  const [openTick, setOpenTick] = useState(0);
   useEffect(() => {
-    if (!isModalOpen) return;
-    const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = originalOverflow;
-    };
-  }, [isModalOpen]);
+    if (openTick && ref.current && !ref.current.open) ref.current.showModal();
+  }, [openTick, mounted]);
 
-  // Close on Escape key press
-  useEffect(() => {
-    if (!isModalOpen) return;
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setIsModalOpen(false);
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isModalOpen]);
+  const optionGrid = (size: 'card' | 'dialog') => (
+    <div role="radiogroup" aria-label={`${t.tray} — ${name}`} className="grid grid-cols-2 gap-2">
+      {options.map((o, i) => {
+        const on = i === sel;
+        const pg = perGuest(o.price, o.serves);
+        return (
+          <button
+            key={o.id}
+            type="button"
+            role="radio"
+            aria-checked={on}
+            onClick={() => setSel(i)}
+            className={`text-left rounded-xl border px-3 ${size === 'card' ? 'py-2.5' : 'py-3.5'} transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-gold ${
+              on ? 'border-gold bg-gold/10' : 'border-panel-border bg-ink-2 hover:border-gold/50'
+            }`}
+          >
+            <span className="block text-[10.5px] font-bold uppercase tracking-[0.14em] text-stone">{o.label} · {o.serves}</span>
+            <span className="block font-display text-lg font-semibold text-gold tabular-nums">${o.price.toFixed(2)}</span>
+            {pg && <span className="block text-[11px] text-stone tabular-nums">{pg} {t.guest}</span>}
+          </button>
+        );
+      })}
+    </div>
+  );
 
-  const parsePrice = (priceVal?: string | number): number => {
-    if (!priceVal) return 0;
-    if (typeof priceVal === 'number') return priceVal;
-    return parseFloat(String(priceVal).replace(/[^0-9.]/g, '')) || 0;
-  };
-
-  const numericHalf = parsePrice(half);
-  const numericFull = parsePrice(full);
+  const orderBtn = (
+    <a
+      href={FOODTEC_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      data-dd-action-name={`catering_order:${name}:${chosen?.id ?? 'na'}`}
+      className="inline-flex w-full items-center justify-center gap-2 h-11 rounded-xl bg-ember hover:bg-ember-hover text-white text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+    >
+      {t.order}{chosen ? ` · ${chosen.label} $${chosen.price.toFixed(2)}` : ''}
+    </a>
+  );
 
   return (
     <>
-      <div className="bg-panel border border-panel-border hover:border-gold hover:shadow-[0_0_22px_rgba(201,161,92,0.35)] hover:-translate-y-0.5 rounded-xl p-5 transition-all duration-300 flex flex-col justify-between">
-        <div>
-          <div className="flex justify-between items-start mb-2">
-            <h4 className="text-lg font-bold text-cream">{name}</h4>
-          </div>
-          <p className="text-sm text-stone mb-4 line-clamp-2">
-            {desc || (halfLabel === 'MEDIANO' 
-              ? 'Preparado fresco al momento con ingredientes de primera calidad para sus eventos.' 
-              : 'Freshly prepared with premium ingredients for your events.')}
-          </p>
-        </div>
-
-        <div className="mt-auto space-y-3 pt-2">
-          {/* Direct External Links to FoodTec Ordering */}
-          <div className="grid grid-cols-2 gap-2">
-            <a
-              href={FOODTEC_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="py-2.5 px-3 rounded-lg border bg-ink border-panel-border hover:border-gold hover:bg-gold/10 transition-all text-center cursor-pointer group"
-            >
-              <div className="text-[10px] font-bold text-stone group-hover:text-gold uppercase tracking-wider">
-                {halfLabel} ({servesHalf})
-              </div>
-              <div className="text-sm font-extrabold text-gold">
-                ${numericHalf.toFixed(2)}
-              </div>
-            </a>
-
-            <a
-              href={FOODTEC_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="py-2.5 px-3 rounded-lg border bg-ink border-panel-border hover:border-gold hover:bg-gold/10 transition-all text-center cursor-pointer group"
-            >
-              <div className="text-[10px] font-bold text-stone group-hover:text-gold uppercase tracking-wider">
-                {fullLabel} ({servesFull})
-              </div>
-              <div className="text-sm font-extrabold text-gold">
-                ${numericFull.toFixed(2)}
-              </div>
-            </a>
-          </div>
-
+      <article className="h-full flex flex-col rounded-2xl border border-panel-border bg-panel p-5">
+        <h4 className="font-display text-xl font-semibold leading-tight text-cream">{name}</h4>
+        <p className="mt-1.5 text-sm text-stone line-clamp-2">{desc || t.fallback}</p>
+        <div className="mt-4">{optionGrid('card')}</div>
+        <div className="mt-4 space-y-2 mt-auto pt-4">
+          {orderBtn}
           <button
             type="button"
-            onClick={() => setIsModalOpen(true)}
-            className="w-full text-center text-xs font-semibold text-gold hover:text-gold-bright py-2.5 min-h-[44px] flex items-center justify-center transition-colors cursor-pointer"
+            onClick={() => { setMounted(true); setOpenTick((n) => n + 1); }}
+            className="w-full min-h-[44px] text-xs font-semibold text-gold hover:text-gold-bright cursor-pointer"
           >
-            {halfLabel === 'MEDIANO' ? 'Ver Detalles y Porciones' : 'View Details & Servings'}
+            {t.details}
           </button>
         </div>
-      </div>
+      </article>
 
-      {/* CATERING MODAL DIALOG */}
-      {isModalOpen && typeof document !== 'undefined' && createPortal(
-        <div
-          className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-200"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) setIsModalOpen(false);
-          }}
-          role="dialog"
-          aria-modal="true"
+      {mounted && (
+        <dialog
+          ref={ref}
+          onClick={(e) => { if (e.target === ref.current) ref.current?.close(); }}
+          className="m-auto w-[min(100vw-1.5rem,32rem)] p-0 rounded-3xl bg-panel text-cream border border-panel-border shadow-2xl backdrop:bg-black/70 backdrop:backdrop-blur-sm"
         >
-          <div className="relative w-full max-w-lg bg-panel border border-panel-border rounded-2xl p-6 sm:p-8 shadow-2xl my-auto animate-in zoom-in-95 duration-200">
-            <button
-              type="button"
-              onClick={() => setIsModalOpen(false)}
-              aria-label={halfLabel === 'MEDIANO' ? 'Cerrar detalles de catering' : 'Close catering details'}
-              className="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-ink/90 text-stone hover:text-cream flex items-center justify-center border border-panel-border cursor-pointer transition-colors shadow-md"
-            >
-              ✕
+          <div className="relative p-6 sm:p-8">
+            <button type="button" onClick={() => ref.current?.close()} aria-label={t.close} className="absolute top-4 right-4 w-10 h-10 grid place-items-center rounded-full border border-panel-border text-stone hover:text-cream cursor-pointer">
+              <svg aria-hidden="true" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" d="M6 6l12 12M18 6 6 18" /></svg>
             </button>
-
-            <h3 className="text-xl sm:text-2xl font-extrabold text-cream mb-2">
-              {name}
-            </h3>
-
-            <p className="text-stone text-sm leading-relaxed mb-6">
-              {desc || (halfLabel === 'MEDIANO'
-                ? 'Nuestras bandejas de catering se preparan frescas para reuniones corporativas, celebraciones familiares y eventos.'
-                : 'Our catering trays are made fresh for corporate meetings, family gatherings, and university tailgates.')}
-            </p>
-
-            <div className="grid grid-cols-2 gap-4 mb-8">
-              <div className="p-4 rounded-xl bg-ink border border-panel-border text-center">
-                <span className="text-xs font-bold text-stone uppercase tracking-wider block mb-1">
-                  {halfLabel}
-                </span>
-                <span className="text-xl font-extrabold text-gold block mb-1">
-                  ${numericHalf.toFixed(2)}
-                </span>
-                <span className="text-xs text-cream/70 font-medium">
-                  {halfLabel === 'MEDIANO' ? `Sirve ${servesHalf} personas` : `Serves ${servesHalf} guests`}
-                </span>
-              </div>
-
-              <div className="p-4 rounded-xl bg-ink border border-panel-border text-center">
-                <span className="text-xs font-bold text-stone uppercase tracking-wider block mb-1">
-                  {fullLabel}
-                </span>
-                <span className="text-xl font-extrabold text-gold block mb-1">
-                  ${numericFull.toFixed(2)}
-                </span>
-                <span className="text-xs text-cream/70 font-medium">
-                  {fullLabel === 'COMPLETO' ? `Sirve ${servesFull} personas` : `Serves ${servesFull} guests`}
-                </span>
-              </div>
+            <h3 className="pr-12 font-display text-2xl font-semibold">{name}</h3>
+            <p className="mt-2 text-sm leading-relaxed text-stone">{desc || t.fallback}</p>
+            <div className="mt-6">{optionGrid('dialog')}</div>
+            <div className="mt-6 space-y-2">
+              {orderBtn}
+              <p className="text-[11px] text-stone">{t.via}</p>
             </div>
-
-            <a
-              href={FOODTEC_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full btn-gold py-3 px-6 text-sm sm:text-base"
-            >
-              {halfLabel === 'MEDIANO' ? 'Ordenar Catering en Línea' : 'Order Catering Online'}
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
-            </a>
           </div>
-        </div>,
-        document.body
+        </dialog>
       )}
     </>
   );

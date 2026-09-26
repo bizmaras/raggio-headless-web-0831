@@ -1,125 +1,36 @@
-import { CHEESE_LADDER, gourmetLadderFor } from "./pizzaPricing";
+/**
+ * Size variants for menu cards — thin adapter over foodtecCatalog.ts.
+ *
+ * Stage 2: all arithmetic ladders ("LRG - $3", "LRG + $3", stromboli 14.99/17.99)
+ * were removed. Every size and price now comes from the FoodTec-verified catalog.
+ * Signature kept backward compatible; pass `slug` (4th arg) — it is language
+ * independent, whereas `productName` is translated on /es.
+ */
+import { resolveCatalogEntry } from './foodtecCatalog';
 
 export interface SizeVariant {
-  id: string; // 'sm' | 'med' | 'lrg' | 'xl'
-  label: string; // 'SM' | 'MED' | 'LRG' | 'XL'
-  fullName: {
-    en: string;
-    es: string;
-  };
+  id: string;
+  label: string;
+  fullName: { en: string; es: string };
   inches?: string;
   price: number;
 }
 
-/**
- * Returns the size variants for a menu item based on its category and name.
- * If the item does not have size variants (e.g. burger, salad, wings, slice of pizza),
- * it returns null.
- */
+function slugify(name: string) {
+  return (name || '')
+    .toLowerCase()
+    .replace(/&/g, 'and')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+}
+
 export function getSizeVariants(
   category: string,
   productName: string,
-  basePrice: number
+  basePrice: number,
+  slug?: string
 ): SizeVariant[] | null {
-  const normCat = (category || "").trim().toLowerCase();
-  const normName = (productName || "").trim().toLowerCase();
-
-  // Exclude single slices, combos, clubs (single size only), or taco/pita items that don't have standard sizes
-  if (
-    normName.includes("slice") ||
-    normName.includes("taco") ||
-    normName.includes("on pita") ||
-    normName.includes("club")
-  ) {
-    return null;
-  }
-
-  // 1. Classic Pizza (Cheese, White Cheese). FoodTec (2026-09-25) prices White Cheese
-  // identically to Cheese — the old +$1.00 "white" offset showed $16.99 for a $15.99 pizza.
-  if (normCat === "pizza") {
-    const l = CHEESE_LADDER;
-    return [
-      { id: "sm", label: "SM", inches: '12"', fullName: { en: 'Small (12")', es: 'Pequeña (12")' }, price: l.sm },
-      { id: "med", label: "MED", inches: '14"', fullName: { en: 'Medium (14")', es: 'Mediana (14")' }, price: l.med },
-      { id: "lrg", label: "LRG", inches: '16"', fullName: { en: 'Large (16")', es: 'Grande (16")' }, price: l.lrg },
-      { id: "xl", label: "XL", inches: '18"', fullName: { en: 'Extra Large (18")', es: 'Extra Grande (18")' }, price: l.xl },
-    ];
-  }
-
-  // 2. Gourmet Pizza — prices come from the FoodTec-verified ladder (pizzaPricing.ts).
-  // Previous code gave Shrimp Alfredo a private 18.99/21.99/23.99/25.99 ladder that
-  // does not exist in FoodTec (FoodTec: 15.99/17.99/20.99/25.99, verified 2026-09-25).
-  if (normCat === "gourmet pizza") {
-    const ladder = gourmetLadderFor(productName);
-    return [
-      { id: "sm", label: "SM", inches: '12"', fullName: { en: 'Small (12")', es: 'Pequeña (12")' }, price: ladder.sm },
-      { id: "med", label: "MED", inches: '14"', fullName: { en: 'Medium (14")', es: 'Mediana (14")' }, price: ladder.med },
-      { id: "lrg", label: "LRG", inches: '16"', fullName: { en: 'Large (16")', es: 'Grande (16")' }, price: ladder.lrg },
-      { id: "xl", label: "XL", inches: '18"', fullName: { en: 'Extra Large (18")', es: 'Extra Grande (18")' }, price: ladder.xl },
-    ];
-  }
-
-  // 3. Subs + Grinders, Cheesesteaks, Hot Sandwiches (SM / LRG / XL)
-  if (
-    normCat === "subs + grinders" ||
-    normCat === "cheesesteaks" ||
-    normCat === "hot sandwiches"
-  ) {
-    const lrgPrice = basePrice > 0 ? basePrice : 12.99;
-    const smPrice = Math.max(8.99, lrgPrice - 3.0);
-    const xlPrice = lrgPrice + 3.0;
-
-    return [
-      {
-        id: "sm",
-        label: "SM",
-        inches: '10"',
-        fullName: { en: 'Small (10")', es: 'Pequeño (10")' },
-        price: parseFloat(smPrice.toFixed(2)),
-      },
-      {
-        id: "lrg",
-        label: "LRG",
-        inches: '12"',
-        fullName: { en: 'Large (12")', es: 'Grande (12")' },
-        price: parseFloat(lrgPrice.toFixed(2)),
-      },
-      {
-        id: "xl",
-        label: "XL",
-        fullName: { en: "Extra Large (XL)", es: "Extra Grande (XL)" },
-        price: parseFloat(xlPrice.toFixed(2)),
-      },
-    ];
-  }
-
-  // 4. Strombolis + Calzones (MD / LG)
-  if (
-    normCat === "strombolis + calzones" ||
-    normCat.includes("stromboli") ||
-    normCat.includes("calzone")
-  ) {
-    const isSpecial = normName.includes("philly special");
-    const mdPrice = isSpecial ? 15.99 : 14.99;
-    const lgPrice = isSpecial ? 18.99 : 17.99;
-
-    return [
-      {
-        id: "med",
-        label: "MD",
-        inches: '14"',
-        fullName: { en: 'Medium (14")', es: 'Mediano (14")' },
-        price: mdPrice,
-      },
-      {
-        id: "lrg",
-        label: "LG",
-        inches: '16"',
-        fullName: { en: 'Large (16")', es: 'Grande (16")' },
-        price: lgPrice,
-      },
-    ];
-  }
-
-  return null;
+  const entry = resolveCatalogEntry(category, slug || slugify(productName), basePrice);
+  if (!entry.sizes) return null;
+  return entry.sizes.map((s) => ({ id: s.id, label: s.label, inches: s.inches, price: s.price, fullName: s.fullName }));
 }

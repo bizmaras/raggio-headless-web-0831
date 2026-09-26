@@ -1,238 +1,206 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+/**
+ * CategoryRail v2 (Stage 2)
+ *
+ * Drop-in: same default export, same props, `CATEGORIES` still exported.
+ *
+ * What changed and why
+ *  1. NO AUTO-SCROLLING MARQUEE on mobile. v1 animated the pills for 65 s on loop
+ *     (WCAG 2.2.2 Pause/Stop/Hide failure), rendered every link twice (48 links for
+ *     screen readers), and asked thumbs to hit moving targets. v2 = one row,
+ *     native horizontal scroll with scroll-snap and edge fades.
+ *  2. ONE ROW ON DESKTOP TOO. v1 wrapped 24 pills into 2–3 rows, so the sticky
+ *     stack (header + rail) reached ~260 px — a third of a laptop viewport — above
+ *     every card. v2 is a single scrollable row with prev/next buttons (~56 px).
+ *  3. DEMAND ORDER. "Pizza" was pill #22 of 24. Pizza-first now; the long tail after.
+ *  4. VIEW TOGGLE SLOT. The Showcase / Quick-order switch lives in the sticky rail,
+ *     so regulars can flip to Speed Order from anywhere on the page.
+ *  5. TOKENS, NOT HEX. v1 hard-coded #181c22 (Stage-0 blue-black) inside the Stage-1
+ *     warm-obsidian theme; v2 uses bg-panel / border-panel-border / text-gold.
+ *  6. No emoji in labels ("⭐ Reviews (4.2)" → "Reviews 4.2").
+ */
+
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import ViewModeToggle from './menu/ViewModeToggle';
 
 interface CategoryRailProps {
   categoriesDict?: Record<string, string>;
   lang?: string;
   activeSlug?: string;
+  /** Show the Showcase / Quick-order toggle at the rail's right edge (default true). */
+  showViewToggle?: boolean;
 }
 
 export const CATEGORIES = [
   { label: 'Deals & Specials', searchId: 'deals' },
+  { label: 'Pizza', searchId: 'pizza' },
   { label: 'Gourmet Pizza', searchId: 'gourmet-pizza' },
   { label: 'Sicilian Pizza', searchId: 'sicilian-pizza' },
   { label: 'Chicken Wings', searchId: 'chicken-wings' },
   { label: 'Cheesesteaks', searchId: 'cheesesteaks' },
+  { label: 'Strombolis & Calzones', searchId: 'strombolis-and-calzones' },
   { label: 'Fresh Burgers', searchId: 'fresh-burgers' },
   { label: 'Appetizers', searchId: 'appetizers' },
-  { label: 'Fresh Salads', searchId: 'fresh-salads' },
+  { label: 'Subs & Grinders', searchId: 'subs-and-grinders' },
+  { label: 'Hot Sandwiches', searchId: 'hot-sandwiches' },
+  { label: 'Latin Food', searchId: 'latin-food' },
+  { label: 'Quesadillas', searchId: 'quesadillas' },
   { label: 'Pasta', searchId: 'pasta' },
+  { label: 'Fresh Salads', searchId: 'fresh-salads' },
   { label: 'Complete Dinners', searchId: 'complete-dinners' },
   { label: 'Seafood', searchId: 'seafood' },
-  { label: 'Quesadillas', searchId: 'quesadillas' },
-  { label: 'Latin Food', searchId: 'latin-food' },
-  { label: 'Subs & Grinders', searchId: 'subs-and-grinders' },
-  { label: 'Strombolis & Calzones', searchId: 'strombolis-and-calzones' },
   { label: 'Breakfast', searchId: 'breakfast' },
-  { label: 'Hot Sandwiches', searchId: 'hot-sandwiches' },
   { label: 'Desserts', searchId: 'desserts' },
   { label: 'Soups', searchId: 'soups' },
-  { label: 'Drinks', searchId: 'drinks' },
   { label: 'Side Orders', searchId: 'side-orders' },
-  { label: 'Pizza', searchId: 'pizza' },
+  { label: 'Drinks', searchId: 'drinks' },
   { label: 'Catering', searchId: 'catering' },
-  { label: '⭐ Reviews (4.2)', searchId: 'reviews' },
+  { label: 'Reviews 4.2', searchId: 'reviews' },
 ];
 
-export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug }: CategoryRailProps) {
-  const router = useRouter();
-  const [activeCategory, setActiveCategory] = useState<string>(activeSlug || 'deals');
+const HOME_ANCHORS = new Set(['deals', 'reviews', 'catering']);
 
+export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug, showViewToggle = true }: CategoryRailProps) {
+  const router = useRouter();
+  const [spyActive, setActive] = useState<string>('deals');
+  const active = activeSlug || spyActive;
+  const [edges, setEdges] = useState({ start: true, end: false });
   const containerRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
 
+  // Keep the active pill visible — only when it changes, never while the user is dragging.
   useEffect(() => {
-    if (activeSlug) {
-      setActiveCategory(activeSlug);
-    }
-  }, [activeSlug]);
+    const track = trackRef.current;
+    const pill = track?.querySelector<HTMLElement>(`[data-cat-pill="${active}"]`);
+    if (!track || !pill) return;
+    const l = pill.offsetLeft - track.clientWidth / 2 + pill.offsetWidth / 2;
+    track.scrollTo({ left: Math.max(0, l), behavior: 'smooth' });
+  }, [active]);
 
-  // Active category is highlighted in place without auto-scrolling the track during vertical touch scroll
-
-
-  // ScrollSpy to highlight active category on scroll (Homepage only)
+  // Edge fades / arrow state
+  const updateEdges = useCallback(() => {
+    const t = trackRef.current;
+    if (!t) return;
+    setEdges({ start: t.scrollLeft < 4, end: t.scrollLeft + t.clientWidth > t.scrollWidth - 4 });
+  }, []);
   useEffect(() => {
-    if (activeSlug) return;
-    if (typeof window === 'undefined') return;
+    updateEdges();
+    const t = trackRef.current;
+    t?.addEventListener('scroll', updateEdges, { passive: true });
+    window.addEventListener('resize', updateEdges);
+    return () => { t?.removeEventListener('scroll', updateEdges); window.removeEventListener('resize', updateEdges); };
+  }, [updateEdges]);
 
-    const observer = new IntersectionObserver(
+  // Scroll-spy (homepage only)
+  useEffect(() => {
+    if (activeSlug || typeof window === 'undefined') return;
+    const io = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const id = entry.target.getAttribute('data-rail-id') || entry.target.id;
-            setActiveCategory(id);
-          }
-        });
+        for (const e of entries) if (e.isIntersecting) setActive(e.target.id);
       },
-      { root: null, rootMargin: '-140px 0px -60% 0px', threshold: 0 }
+      { rootMargin: '-150px 0px -60% 0px' }
     );
-
-    const timer = setTimeout(() => {
-      CATEGORIES.forEach((cat) => {
-        let el = document.getElementById(cat.searchId);
-        if (!el) {
-          el = Array.from(document.querySelectorAll('div[id],section[id]'))
-            .find(e => e.id.toLowerCase().includes(cat.searchId.replace('-and-', ''))) as HTMLElement | null;
-        }
-        if (el) {
-          el.setAttribute('data-rail-id', cat.searchId);
-          observer.observe(el);
-        }
-      });
-    }, 600);
-
-    return () => {
-      clearTimeout(timer);
-      observer.disconnect();
-    };
+    const timer = window.setTimeout(() => {
+      CATEGORIES.forEach((c) => { const el = document.getElementById(c.searchId); if (el) io.observe(el); });
+    }, 400);
+    return () => { window.clearTimeout(timer); io.disconnect(); };
   }, [activeSlug]);
 
-  // Set exact --sticky-category-top CSS variable (Header height + Rail height) with ResizeObserver
+  // --sticky-category-top = header + rail (consumed by sticky section headers + scroll-margin)
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    const updateStickyOffsets = () => {
-      const headerEl = document.querySelector('header');
-      const railEl = containerRef.current;
-      if (headerEl && railEl) {
-        const headerH = headerEl.offsetHeight;
-        const railH = railEl.offsetHeight;
-        const totalTop = Math.round(headerH + railH);
-        const currentVal = document.documentElement.style.getPropertyValue('--sticky-category-top');
-        const newVal = `${totalTop}px`;
-        if (currentVal !== newVal) {
-          document.documentElement.style.setProperty('--sticky-category-top', newVal);
-        }
-      }
+    const update = () => {
+      const header = document.querySelector('header');
+      const rail = containerRef.current;
+      if (!header || !rail) return;
+      document.documentElement.style.setProperty('--sticky-category-top', `${Math.round(header.offsetHeight + rail.offsetHeight)}px`);
     };
-
-    updateStickyOffsets();
-    const t1 = setTimeout(updateStickyOffsets, 150);
-    const t2 = setTimeout(updateStickyOffsets, 600);
-
-    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(updateStickyOffsets) : null;
-    if (ro) {
-      if (containerRef.current) ro.observe(containerRef.current);
-      const headerEl = document.querySelector('header');
-      if (headerEl) ro.observe(headerEl);
-    }
-
-    window.addEventListener('resize', updateStickyOffsets, { passive: true });
-    window.addEventListener('orientationchange', updateStickyOffsets, { passive: true });
-
-    return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-      if (ro) ro.disconnect();
-      window.removeEventListener('resize', updateStickyOffsets);
-      window.removeEventListener('orientationchange', updateStickyOffsets);
-    };
+    update();
+    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(update) : null;
+    const header = document.querySelector('header');
+    if (ro && containerRef.current) ro.observe(containerRef.current);
+    if (ro && header) ro.observe(header);
+    window.addEventListener('resize', update, { passive: true });
+    return () => { ro?.disconnect(); window.removeEventListener('resize', update); };
   }, []);
 
-  const handleCategoryClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, searchId: string) => {
-    e.preventDefault();
-    setActiveCategory(searchId);
+  const hrefFor = (id: string) =>
+    activeSlug ? (HOME_ANCHORS.has(id) ? `/${lang}/#${id}` : `/${lang}/menu/${id}`) : `#${id}`;
 
-    // Smoothly center clicked pill in mobile track on click:
-    if (trackRef.current && typeof window !== 'undefined' && window.innerWidth < 768) {
-      const pill = trackRef.current.querySelector(`[data-cat-pill="${searchId}"]`) as HTMLElement | null;
-      if (pill) {
-        const scrollLeft = pill.offsetLeft - (trackRef.current.offsetWidth / 2) + (pill.offsetWidth / 2);
-        trackRef.current.scrollTo({ left: Math.max(0, scrollLeft), behavior: 'smooth' });
-      }
-    }
+  const onClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+      e.preventDefault();
+      setActive(id);
+      if (activeSlug) { router.push(hrefFor(id)); return; }
+      const target = document.getElementById(id);
+      if (!target) return;
+      const offset = (document.querySelector('header')?.offsetHeight ?? 80) + (containerRef.current?.offsetHeight ?? 56);
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: Math.max(0, target.getBoundingClientRect().top + window.scrollY - offset), behavior: reduce ? 'auto' : 'smooth' });
+      history.replaceState(null, '', `#${id}`);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [activeSlug, lang, router]
+  );
 
-    // If on a dedicated category page or product page:
-    if (activeSlug) {
-      if (searchId === 'deals' || searchId === 'reviews' || searchId === 'catering') {
-        router.push(`/${lang}/#${searchId}`);
-      } else {
-        router.push(`/${lang}/menu/${searchId}`);
-      }
-      return;
-    }
+  const nudge = (dir: 1 | -1) => trackRef.current?.scrollBy({ left: dir * (trackRef.current.clientWidth * 0.7), behavior: 'smooth' });
 
-    let target = document.getElementById(searchId);
-    if (!target) {
-      target = Array.from(document.querySelectorAll('div[id],section[id]'))
-        .find(el => el.id.toLowerCase().includes(searchId.replace('-and-', ''))) as HTMLElement | null;
-    }
-
-    if (target) {
-      const headerEl = document.querySelector('header');
-      const railEl = containerRef.current;
-      const headerH = headerEl ? headerEl.offsetHeight : 80;
-      const railH = railEl ? railEl.offsetHeight : 56;
-      const totalOffset = headerH + railH;
-
-      const elementPosition = target.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - totalOffset;
-
-      window.scrollTo({
-        top: Math.max(0, Math.round(offsetPosition)),
-        behavior: 'smooth',
-      });
-    }
-  }, [activeSlug, lang, router]);
-
-  const renderPill = (cat: typeof CATEGORIES[number], key: string) => {
-    const isActive = activeCategory === cat.searchId;
-    const label = categoriesDict?.[cat.label] || cat.label;
-    const href = activeSlug
-      ? (cat.searchId === 'deals' || cat.searchId === 'reviews' || cat.searchId === 'catering'
-          ? `/${lang}/#${cat.searchId}`
-          : `/${lang}/menu/${cat.searchId}`)
-      : `#${cat.searchId}`;
-
-    return (
-      <a
-        key={key}
-        data-cat-pill={cat.searchId}
-        href={href}
-        onClick={(e) => handleCategoryClick(e, cat.searchId)}
-        className={`
-          flex-none inline-flex items-center justify-center px-4 py-2 md:px-4.5 md:py-2 rounded-xl text-xs sm:text-sm whitespace-nowrap
-          transition-all duration-200 touch-manipulation select-none cursor-pointer tracking-wide active:scale-95
-          ${isActive
-            ? 'bg-[#181c22] text-[#ebd092] font-bold border border-[#d4af62] shadow-[0_6px_20px_-2px_rgba(212,175,98,0.45)]'
-            : 'bg-[#181c22]/90 border border-white/10 text-cream/85 font-medium hover:text-[#ebd092] hover:border-[#d4af62]/50 hover:shadow-[0_4px_14px_-2px_rgba(212,175,98,0.25)]'
-          }
-        `}
-      >
-        {label}
-      </a>
-    );
-  };
+  const arrow = (dir: 1 | -1, hidden: boolean) => (
+    <button
+      type="button"
+      tabIndex={-1}
+      aria-hidden="true"
+      onClick={() => nudge(dir)}
+      className={`hidden md:grid shrink-0 place-items-center w-9 h-9 rounded-full border border-panel-border bg-panel text-stone hover:text-cream hover:border-gold transition-opacity cursor-pointer ${hidden ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+    >
+      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d={dir === 1 ? 'M9 5l7 7-7 7' : 'M15 5l-7 7 7 7'} />
+      </svg>
+    </button>
+  );
 
   return (
-    <div
-      ref={containerRef}
-      className="sticky top-20 z-40 bg-ink border-b border-panel-border py-2.5 md:py-4 shadow-sm select-none isolate"
-    >
-      {/* MOBILE: Seamless Hardware-Accelerated Infinite Marquee (Zero Jitter, Normal Speed) */}
-      <div className="md:hidden relative w-full overflow-hidden select-none">
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-6 bg-gradient-to-r from-ink to-transparent z-10" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-ink to-transparent z-10" />
-
-        <div
-          className="flex items-center gap-2 px-2 w-max will-change-transform active:[animation-play-state:paused] hover:[animation-play-state:paused]"
-          style={{
-            animation: 'category-marquee-smooth 65s linear infinite',
-          }}
-        >
-          {/* Set 1 */}
-          {CATEGORIES.map((cat, idx) => renderPill(cat, `m1-${cat.searchId}-${idx}`))}
-          {/* Set 2 for seamless loop */}
-          {CATEGORIES.map((cat, idx) => renderPill(cat, `m2-${cat.searchId}-${idx}`))}
+    <div ref={containerRef} className="sticky top-20 z-40 bg-ink/95 backdrop-blur border-b border-panel-border isolate">
+      <nav aria-label={lang === 'es' ? 'Categorías del menú' : 'Menu categories'} className="max-w-7xl mx-auto flex items-center gap-2 px-3 md:px-4 py-2.5">
+        {arrow(-1, edges.start)}
+        <div className="relative min-w-0 flex-1">
+          <div
+            ref={trackRef}
+            className="flex gap-1.5 overflow-x-auto overscroll-x-contain snap-x snap-proximity [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            style={{
+              maskImage: `linear-gradient(to right, ${edges.start ? '#000' : 'transparent'}, #000 24px, #000 calc(100% - 24px), ${edges.end ? '#000' : 'transparent'})`,
+              WebkitMaskImage: `linear-gradient(to right, ${edges.start ? '#000' : 'transparent'}, #000 24px, #000 calc(100% - 24px), ${edges.end ? '#000' : 'transparent'})`,
+            }}
+          >
+            {CATEGORIES.map((c) => {
+              const isActive = active === c.searchId;
+              return (
+                <a
+                  key={c.searchId}
+                  data-cat-pill={c.searchId}
+                  href={hrefFor(c.searchId)}
+                  onClick={(e) => onClick(e, c.searchId)}
+                  aria-current={isActive ? 'true' : undefined}
+                  className={`snap-start shrink-0 inline-flex items-center h-9 px-3.5 rounded-full text-[13px] whitespace-nowrap border transition-colors duration-150 touch-manipulation focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold ${
+                    isActive
+                      ? 'bg-gold text-ink border-gold font-bold'
+                      : 'bg-panel text-cream/85 border-panel-border font-medium hover:text-gold-bright hover:border-gold/50'
+                  }`}
+                >
+                  {categoriesDict?.[c.label] || c.label}
+                </a>
+              );
+            })}
+          </div>
         </div>
-      </div>
-
-      {/* DESKTOP: Multi-row wrapped centered grid matching Image 1 */}
-      <div className="hidden md:flex flex-wrap justify-center items-center gap-2 md:gap-2.5 px-4 max-w-7xl mx-auto w-full">
-        {CATEGORIES.map((cat, idx) => renderPill(cat, `d-${cat.searchId}-${idx}`))}
-      </div>
+        {arrow(1, edges.end)}
+        {showViewToggle && (
+          <div className="hidden md:block shrink-0">
+            <ViewModeToggle lang={lang} />
+          </div>
+        )}
+      </nav>
     </div>
   );
 }

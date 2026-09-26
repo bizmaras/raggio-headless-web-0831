@@ -203,6 +203,7 @@ export default function CateringSection({ dict, lang = 'en' }: CateringSectionPr
                       servesFull={item.servesFull}
                       halfLabel={halfLabel}
                       fullLabel={fullLabel}
+                      lang={lang}
                     />
                   </div>
                 );

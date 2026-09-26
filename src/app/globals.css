@@ -38,9 +38,10 @@
   --sticky-category-top: 136px;
 }
 
+/* Stage 2: the rail is a single row on every breakpoint (was 2–3 wrapped rows → 260px). */
 @media (min-width: 768px) {
   :root {
-    --sticky-category-top: 260px;
+    --sticky-category-top: 140px;
   }
 }
 

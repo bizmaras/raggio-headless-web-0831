@@ -15,6 +15,8 @@ import ScrollReveal from "../../components/ScrollReveal";
 import DealsSectionWrapper from "../../components/DealsSectionWrapper";
 import PromotionsSection from "../../components/PromotionsSection";
 import MenuItemCard from "../../components/MenuItemCard";
+import MenuCollection from "../../components/menu/MenuCollection";
+import ViewModeToggle from "../../components/menu/ViewModeToggle";
 import { getSizeVariants } from "../../data/sizePricing";
 import Footer from "../../components/Footer";
 import ScrollToTop from "../../components/ScrollToTop";
@@ -131,6 +133,8 @@ export default async function HomePage({
               <h2 className="text-3xl md:text-4xl font-extrabold text-gold-bright">
                 {dict.menu.title}
               </h2>
+              <div className="flex items-center gap-3 flex-wrap justify-center">
+              <ViewModeToggle lang={lang} />
               <a
                 href="/raggio-full-menu.pdf"
                 download
@@ -141,6 +145,7 @@ export default async function HomePage({
                 </svg>
                 {dict.menu.download_pdf}
               </a>
+              </div>
             </div>
           </ScrollReveal>
 
@@ -179,11 +184,11 @@ export default async function HomePage({
                     </svg>
                   </Link>
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <MenuCollection label={displayCategory}>
                   {itemsInCategory.map((item, idx) => {
                     const basePrice = parseFloat(item.Price) || 0;
-                    const sizes = getSizeVariants(item.Category, item["Product Name"], basePrice);
                     const itemSlug = productToSlug(item["Product Name"], item.Slug);
+                    const sizes = getSizeVariants(item.Category, item["Product Name"], basePrice, itemSlug);
                     return (
                       <MenuItemCard
                         key={idx}
@@ -191,6 +196,8 @@ export default async function HomePage({
                         price={basePrice}
                         description={item.Description}
                         sizes={sizes}
+                        category={item.Category}
+                        priority={catIdx === 0 && idx < 3}
                         lang={lang}
                         categorySlug={targetId}
                         slug={itemSlug}
@@ -199,7 +206,7 @@ export default async function HomePage({
                       />
                     );
                   })}
-                </div>
+                </MenuCollection>
               </div>
             );
           })}
