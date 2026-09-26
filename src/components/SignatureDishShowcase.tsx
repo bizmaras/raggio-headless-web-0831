@@ -2,6 +2,7 @@
 
 import React, { useState, useRef } from 'react';
 import Image from 'next/image';
+import { ORDER_LINKS } from '@/config/ordering';
 
 interface SignatureDishShowcaseProps {
   dict?: any;
@@ -22,7 +23,7 @@ export default function SignatureDishShowcase({ dict, lang = 'en' }: SignatureDi
 
   const dish = t?.dishes?.[currentDish] || {
     name: 'Raggio Artisan Pepperoni',
-    price: '$21.99',
+    price: '$15.99 + topping',
     topping_badge: 'Crispy Cupped Pepperoni',
     topping_sub: 'Cup & Char',
     crust_title: '48-Hour Cold-Fermented Dough',
@@ -305,7 +306,7 @@ export default function SignatureDishShowcase({ dict, lang = 'en' }: SignatureDi
             </span>
           </div>
           <a
-            href="https://phillystyleexpress.foodtecsolutions.com/"
+            href={ORDER_LINKS.root}
             target="_blank"
             rel="noopener noreferrer"
             className="px-6 py-3 rounded-xl bg-gold hover:bg-gold-bright text-ink text-xs font-extrabold shadow-lg transition-transform active:scale-95 flex items-center gap-2"

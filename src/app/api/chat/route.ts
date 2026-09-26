@@ -85,7 +85,7 @@ CRITICAL LINKING RULES
   * Soups: https://www.raggiogourmetpizza.com/#soups
   * Drinks: https://www.raggiogourmetpizza.com/#drinks
   * Catering: https://www.raggiogourmetpizza.com/#catering
-- Checkout link (only when ready to order): https://phillystyleexpress.foodtecsolutions.com/
+- Checkout link (only when ready to order): https://order.foodtecsolutions.com/ordering/phillystyleexpress/menu/Pizza
 
 ─────────────────────────────
 MISSING ITEMS (NOT ON MENU)

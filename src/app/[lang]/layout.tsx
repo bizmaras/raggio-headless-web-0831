@@ -5,9 +5,18 @@ import type { Locale } from "./dictionaries";
 import DatadogInit from "@/components/DatadogInit";
 import RestaurantJsonLd from "@/components/RestaurantJsonLd";
 import "../globals.css";
+import { Fraunces } from "next/font/google";
+
+// Display serif for headlines only (body keeps the system/sans stack).
+const display = Fraunces({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-fraunces",
+  axes: ["opsz", "SOFT"],
+});
 
 export const viewport: Viewport = {
-  themeColor: "#101216",
+  themeColor: "#1e1b17",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
@@ -115,7 +124,11 @@ export default async function LangLayout({
   if (!hasLocale(lang)) notFound();
 
   return (
-    <html lang={lang} className="scroll-smooth overflow-x-clip w-full max-w-full">
+    <html
+      lang={lang}
+      suppressHydrationWarning /* AnnouncementBar sets data-offer-dismissed pre-paint */
+      className={`${display.variable} scroll-smooth overflow-x-clip w-full max-w-full`}
+    >
       <body className="bg-ink text-cream antialiased overflow-x-clip w-full max-w-full relative">
         <RestaurantJsonLd />
         <DatadogInit />

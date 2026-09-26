@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 
 const AIChatBot = dynamic(() => import('./AIChatBot'), { ssr: false });
-const WelcomePopup = dynamic(() => import('./WelcomePopup'), { ssr: false });
+// WelcomePopup removed in Step 1 — replaced by <AnnouncementBar /> (no data capture, no confirmshaming).
 
 export default function DeferredWidgets() {
   const [shouldMount, setShouldMount] = useState(false);
@@ -30,7 +30,6 @@ export default function DeferredWidgets() {
   return (
     <>
       <AIChatBot />
-      <WelcomePopup />
     </>
   );
 }

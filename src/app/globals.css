@@ -1,30 +1,37 @@
 @import "tailwindcss";
 
 @theme {
-  /* Warm Artisan Charcoal & Volcanic Slate Palette */
-  --color-ink: #131518;
-  /* Ana Arka Plan (Warm Artisan Charcoal) */
-  --color-ink-2: #191c21;
-  /* Hero & Koyu Bölümler (Fırın Taşı Kömürü) */
-  --color-panel: #20252d;
-  /* Kartlar & Paneller */
-  --color-panel-2: #282f3a;
-  /* İkincil Vurgulu Paneller */
-  --color-panel-border: #303744;
-  /* İnce Sınır Çizgileri */
+  /* ============================================================
+     RAGGIO DUAL-TONE SYSTEM v2 (Step 1 redesign, 2026-09)
+     Dark "oven" surfaces = warm obsidian (brown-black, not blue-black)
+     Light "table" surfaces = milk / parchment (see .surface-milk below)
+     All utilities (bg-ink, text-gold, border-panel-border …) resolve through
+     these CSS variables, so .surface-milk can re-map them per section.
+     ============================================================ */
+  --color-ink: #1e1b17;          /* warm obsidian (was #131518 blue-black) */
+  --color-ink-2: #26221d;        /* oven-stone charcoal */
+  --color-panel: #2c2721;        /* cards on dark */
+  --color-panel-2: #353028;
+  --color-panel-border: #463f35;
 
-  /* Gold, Cream & Appetite Ember Accent Tokens */
-  --color-gold: #d4af62;
-  /* Sıcak Fırınlanmış Hamur & Zeytinyağı Sarısı */
-  --color-gold-bright: #ebd092;
-  --color-gold-deep: #856a3e;
-  --color-cream: #f6f1e5;
-  /* Yüksek Okunabilirlikli Sıcak İtalyan Kremi */
-  --color-stone: #a2aab7;
-  --color-stone-dim: #919baa;
-  --color-ember: #e54d2e;
-  /* San Marzano Domates & Fırın Köz Kırmızısı */
-  --color-ember-hover: #f05a39;
+  --color-gold: #c9a15c;         /* Tuscan gold — 7.1:1 on obsidian */
+  --color-gold-bright: #e3c78c;
+  --color-gold-deep: #8a6424;    /* gold for TEXT on light surfaces — 5.0:1 on milk */
+  --color-cream: #f4ede0;        /* parchment text on dark — 14.7:1 */
+  --color-stone: #b9ae9c;        /* secondary text on dark — 7.8:1 */
+  --color-stone-dim: #a39884;
+  --color-ember: #b8452b;        /* brick-oven tomato (white text 5.6:1) */
+  --color-ember-hover: #a63d26;
+
+  /* Light-surface primitives (used directly or via .surface-milk remap) */
+  --color-milk: #fbf7ef;
+  --color-parchment: #f4ede0;
+  --color-sand: #e9ddc6;
+  --color-espresso: #2b2620;     /* body text on milk — 14.0:1 */
+  --color-cocoa: #5e554a;        /* secondary text on milk — 6.8:1 */
+  --color-hairline: #e3d8c4;
+
+  --font-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
 }
 
 :root {
@@ -86,9 +93,9 @@
   justify-content: center;
   gap: 0.5rem;
   border-radius: 9999px; /* True pill */
-  background-color: #d4af62 !important;
+  background-color: var(--color-gold) !important;
   background-image: none !important;
-  color: #131518 !important;
+  color: #1e1b17 !important;
   font-weight: 700;
   letter-spacing: -0.01em;
   border: 1px solid rgba(255, 255, 255, 0.35);
@@ -100,7 +107,7 @@
 
 .btn-gold:hover {
   transform: translateY(-1px);
-  background-color: #e2be72 !important;
+  background-color: var(--color-gold-bright) !important;
   box-shadow: 0 6px 20px rgba(212, 175, 98, 0.4);
 }
 
@@ -115,7 +122,7 @@
   justify-content: center;
   gap: 0.5rem;
   border-radius: 9999px;
-  background-color: #e54d2e !important;
+  background-color: var(--color-ember) !important;
   background-image: none !important;
   color: #ffffff !important;
   font-weight: 700;
@@ -129,7 +136,7 @@
 
 .btn-ember:hover {
   transform: translateY(-1px);
-  background-color: #f05a39 !important;
+  background-color: var(--color-ember-hover) !important;
   box-shadow: 0 6px 20px rgba(229, 77, 46, 0.5);
 }
 
@@ -176,4 +183,66 @@
   100% {
     transform: translate3d(-50%, 0, 0);
   }
+}
+
+/* ========================================================
+   SURFACE SYSTEM — wrap any section in <div className="surface-milk">
+   and every token-based utility inside flips to the light palette.
+   Works because Tailwind v4 compiles utilities to var(--color-*) and
+   custom properties cascade to descendants.
+   ======================================================== */
+.surface-milk {
+  --color-ink: var(--color-milk);
+  --color-ink-2: var(--color-parchment);
+  --color-panel: #ffffff;
+  --color-panel-2: var(--color-parchment);
+  --color-panel-border: var(--color-hairline);
+  --color-cream: var(--color-espresso);   /* text-cream → dark text */
+  --color-stone: var(--color-cocoa);
+  --color-stone-dim: #6b6154;
+  --color-gold: #8a6424;                   /* text-gold on milk: 5.0:1 (AA) */
+  --color-gold-bright: #7a5820;            /* headings: 6.1:1 */
+  background-color: var(--color-milk);
+  color: var(--color-espresso);
+}
+.surface-milk .btn-gold {
+  background-color: var(--color-espresso) !important; /* obsidian CTA on milk */
+  color: var(--color-milk) !important;
+  border-color: transparent;
+  box-shadow: 0 4px 14px rgba(43, 38, 32, 0.18);
+}
+.surface-milk .btn-gold:hover { background-color: #3a332b !important; }
+.surface-milk .btn-charcoal {
+  background-color: #ffffff !important;
+  color: var(--color-espresso) !important;
+  border-color: var(--color-hairline);
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+/* Subtle warm grain for dark "oven" surfaces (no images, ~0 KB) */
+.surface-oven {
+  background-color: var(--color-ink);
+  background-image:
+    radial-gradient(120% 80% at 85% 10%, rgba(201, 161, 92, 0.10), transparent 60%),
+    radial-gradient(90% 60% at 10% 100%, rgba(184, 69, 43, 0.08), transparent 60%);
+}
+
+.font-display { font-family: var(--font-display); font-optical-sizing: auto; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Offer bar dismissal (set pre-paint by AnnouncementBar inline script) */
+html[data-offer-dismissed] .offer-bar { display: none; }
+
+@keyframes heroFade {
+  from { opacity: 0; transform: translateY(6px) scale(0.985); }
+  to   { opacity: 1; transform: none; }
 }

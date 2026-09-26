@@ -1,3 +1,5 @@
+import { CHEESE_LADDER, gourmetLadderFor } from "./pizzaPricing";
+
 export interface SizeVariant {
   id: string; // 'sm' | 'med' | 'lrg' | 'xl'
   label: string; // 'SM' | 'MED' | 'LRG' | 'XL'
@@ -32,108 +34,28 @@ export function getSizeVariants(
     return null;
   }
 
-  // 1. Classic Pizza (Plain Cheese, White Cheese)
+  // 1. Classic Pizza (Cheese, White Cheese). FoodTec (2026-09-25) prices White Cheese
+  // identically to Cheese — the old +$1.00 "white" offset showed $16.99 for a $15.99 pizza.
   if (normCat === "pizza") {
-    const isWhite = normName.includes("white");
-    const offset = isWhite ? 1.0 : 0.0;
+    const l = CHEESE_LADDER;
     return [
-      {
-        id: "sm",
-        label: "SM",
-        inches: '12"',
-        fullName: { en: 'Small (12")', es: 'Pequeña (12")' },
-        price: 11.99 + offset,
-      },
-      {
-        id: "med",
-        label: "MED",
-        inches: '14"',
-        fullName: { en: 'Medium (14")', es: 'Mediana (14")' },
-        price: 13.99 + offset,
-      },
-      {
-        id: "lrg",
-        label: "LRG",
-        inches: '16"',
-        fullName: { en: 'Large (16")', es: 'Grande (16")' },
-        price: 15.99 + offset,
-      },
-      {
-        id: "xl",
-        label: "XL",
-        inches: '18"',
-        fullName: { en: 'Extra Large (18")', es: 'Extra Grande (18")' },
-        price: 17.99 + offset,
-      },
+      { id: "sm", label: "SM", inches: '12"', fullName: { en: 'Small (12")', es: 'Pequeña (12")' }, price: l.sm },
+      { id: "med", label: "MED", inches: '14"', fullName: { en: 'Medium (14")', es: 'Mediana (14")' }, price: l.med },
+      { id: "lrg", label: "LRG", inches: '16"', fullName: { en: 'Large (16")', es: 'Grande (16")' }, price: l.lrg },
+      { id: "xl", label: "XL", inches: '18"', fullName: { en: 'Extra Large (18")', es: 'Extra Grande (18")' }, price: l.xl },
     ];
   }
 
-  // 2. Gourmet Pizza
+  // 2. Gourmet Pizza — prices come from the FoodTec-verified ladder (pizzaPricing.ts).
+  // Previous code gave Shrimp Alfredo a private 18.99/21.99/23.99/25.99 ladder that
+  // does not exist in FoodTec (FoodTec: 15.99/17.99/20.99/25.99, verified 2026-09-25).
   if (normCat === "gourmet pizza") {
-    // Special gourmet items with unique base price
-    if (normName.includes("shrimp alfredo")) {
-      return [
-        {
-          id: "sm",
-          label: "SM",
-          inches: '12"',
-          fullName: { en: 'Small (12")', es: 'Pequeña (12")' },
-          price: 18.99,
-        },
-        {
-          id: "med",
-          label: "MED",
-          inches: '14"',
-          fullName: { en: 'Medium (14")', es: 'Mediana (14")' },
-          price: 21.99,
-        },
-        {
-          id: "lrg",
-          label: "LRG",
-          inches: '16"',
-          fullName: { en: 'Large (16")', es: 'Grande (16")' },
-          price: 23.99,
-        },
-        {
-          id: "xl",
-          label: "XL",
-          inches: '18"',
-          fullName: { en: 'Extra Large (18")', es: 'Extra Grande (18")' },
-          price: 25.99,
-        },
-      ];
-    }
-
-    // Standard Gourmet Pizzas (Works, White Special, BBQ Chicken, Buffalo, Greek, etc.)
+    const ladder = gourmetLadderFor(productName);
     return [
-      {
-        id: "sm",
-        label: "SM",
-        inches: '12"',
-        fullName: { en: 'Small (12")', es: 'Pequeña (12")' },
-        price: 15.99,
-      },
-      {
-        id: "med",
-        label: "MED",
-        inches: '14"',
-        fullName: { en: 'Medium (14")', es: 'Mediana (14")' },
-        price: 17.99,
-      },
-      {
-        id: "lrg",
-        label: "LRG",
-        inches: '16"',
-        fullName: { en: 'Large (16")', es: 'Grande (16")' },
-        price: 20.99,
-      },
-      {
-        id: "xl",
-        label: "XL",
-        inches: '18"',
-        fullName: { en: 'Extra Large (18")', es: 'Extra Grande (18")' },
-        price: 25.99,
-      },
+      { id: "sm", label: "SM", inches: '12"', fullName: { en: 'Small (12")', es: 'Pequeña (12")' }, price: ladder.sm },
+      { id: "med", label: "MED", inches: '14"', fullName: { en: 'Medium (14")', es: 'Mediana (14")' }, price: ladder.med },
+      { id: "lrg", label: "LRG", inches: '16"', fullName: { en: 'Large (16")', es: 'Grande (16")' }, price: ladder.lrg },
+      { id: "xl", label: "XL", inches: '18"', fullName: { en: 'Extra Large (18")', es: 'Extra Grande (18")' }, price: ladder.xl },
     ];
   }
 

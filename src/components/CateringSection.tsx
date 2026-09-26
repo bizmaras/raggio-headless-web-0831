@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import CateringItemCard from './CateringItemCard';
 import * as cateringModule from '../data/cateringData';
 import { getLocalizedCateringItem } from '../data/cateringTranslations';
+import { ORDER_LINKS } from '@/config/ordering';
 
 interface CateringSectionProps {
   lang?: string;
@@ -237,7 +238,7 @@ export default function CateringSection({ dict, lang = 'en' }: CateringSectionPr
               <span>{isEs ? 'Llamar: (302) 369-0553' : 'Call: (302) 369-0553'}</span>
             </a>
             <a
-              href="https://phillystyleexpress.foodtecsolutions.com/"
+              href={ORDER_LINKS.root}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-auto py-3 px-6 rounded-full border border-panel-border bg-panel text-cream hover:border-gold/60 text-sm font-bold text-center transition-all"

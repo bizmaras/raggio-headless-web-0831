@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { ORDER_LINKS } from '@/config/ordering';
 
 interface CateringItemCardProps {
   name: string;
@@ -14,7 +15,7 @@ interface CateringItemCardProps {
   fullLabel?: string;
 }
 
-const FOODTEC_URL = 'https://order.foodtecsolutions.com/ordering/phillystyleexpress/menu/Catering';
+const FOODTEC_URL = ORDER_LINKS.catering;
 
 export default function CateringItemCard({
   name,

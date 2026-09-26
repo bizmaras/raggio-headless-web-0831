@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import type { SizeVariant } from '@/data/sizePricing';
 import { optimizeContentfulImage } from '@/lib/contentful';
+import { ORDER_LINKS } from '@/config/ordering';
 
 interface MenuItemCardProps {
   item?: {
@@ -86,7 +87,7 @@ export default function MenuItemCard(props: MenuItemCardProps) {
       : 'Prepared fresh to order with premium ingredients.');
   const itemDescription = props.description || props.item?.description || defaultDesc;
 
-  const itemOrderUrl = props.orderUrl || props.item?.orderUrl || 'https://phillystyleexpress.foodtecsolutions.com/';
+  const itemOrderUrl = props.orderUrl || props.item?.orderUrl || ORDER_LINKS.root;
 
   // Key ingredients list (fallback to empty array)
   const itemIngredients = props.ingredients || props.item?.ingredients || [];

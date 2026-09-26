@@ -215,7 +215,7 @@
     "dishes": {
       "pepperoni": {
         "name": "Raggio Pepperoni Artesanal",
-        "price": "$21.99",
+        "price": "$15.99 + ingrediente",
         "topping_badge": "Pepperoni Crujiente",
         "topping_sub": "Cup & Char",
         "crust_title": "Masa Fermentada en Frío por 48 Horas",
@@ -229,7 +229,7 @@
       },
       "meatlover": {
         "name": "Banquete Exclusivo Meat Lover's",
-        "price": "$24.99",
+        "price": "$20.99",
         "topping_badge": "4 Carnes Gourmet",
         "topping_sub": "Salchicha, Tocino, Albóndigas",
         "crust_title": "Masa Fermentada en Frío por 48 Horas",
@@ -243,7 +243,7 @@
       },
       "buffalo": {
         "name": "Pollo Buffalo Picante con Ranch",
-        "price": "$23.99",
+        "price": "$20.99",
         "topping_badge": "Pollo Buffalo y Ranch",
         "topping_sub": "Pollo a la Parrilla y Remolino Ranch",
         "crust_title": "Masa Fermentada en Frío por 48 Horas",

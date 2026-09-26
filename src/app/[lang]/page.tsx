@@ -22,6 +22,9 @@ import FAQ from "../../components/FAQ";
 import StickyMobileBar from "../../components/StickyMobileBar";
 
 import CateringSection from "../../components/CateringSection";
+import AnnouncementBar from "../../components/AnnouncementBar";
+import OrderTrustBadge from "../../components/OrderTrustBadge";
+import { ORDER_LINKS } from "../../config/ordering";
 const GoogleReviewsSection = dynamic(() => import("../../components/GoogleReviewsSection"));
 const DeferredWidgets = dynamic(() => import("../../components/DeferredWidgets"));
 
@@ -71,7 +74,7 @@ const jsonLd = {
     "@type": "OrderAction",
     target: {
       "@type": "EntryPoint",
-      urlTemplate: "https://phillystyleexpress.foodtecsolutions.com/",
+      urlTemplate: ORDER_LINKS.pizza,
       inLanguage: "en-US",
       actionPlatform: [
         "http://schema.org/DesktopWebPlatform",
@@ -101,6 +104,7 @@ export default async function HomePage({
 
   return (
     <>
+      <AnnouncementBar lang={lang} />
       <Header lang={lang} dict={dict} />
       <main className="min-h-screen bg-ink text-cream w-full max-w-full">
         <script
@@ -108,12 +112,15 @@ export default async function HomePage({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }}
         />
         <HeroSlider dict={dict} lang={lang} />
+        <OrderTrustBadge lang={lang} variant="panel" />
         <CategoryRail categoriesDict={dict.categories} lang={lang} />
 
         <ScrollReveal>
           <SignatureDishShowcase dict={dict} lang={lang} />
         </ScrollReveal>
 
+        {/* ===== LIGHT "TABLE" ZONE: menu, pricing, deals, catering, FAQ, reviews ===== */}
+        <div className="surface-milk">
         <section
           id="menu"
           className="max-w-7xl mx-auto px-6 py-12 scroll-mt-[150px] md:scroll-mt-[270px]"
@@ -207,6 +214,7 @@ export default async function HomePage({
         <ScrollReveal>
           <GoogleReviewsSection dict={dict} />
         </ScrollReveal>
+        </div>
       </main>
       <Footer dict={dict} lang={lang} />
       <ScrollToTop />
