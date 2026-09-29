@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import LanguageSwitcher from './LanguageSwitcher';
+import { ORDER_LINKS } from '@/config/ordering';
 
 interface HeaderProps {
   lang?: string;
@@ -135,7 +136,7 @@ export default function Header({ lang = 'en', dict }: HeaderProps) {
               <span>(302) 369-0553</span>
             </a>
             <a
-              href="https://phillystyleexpress.foodtecsolutions.com/"
+              href={ORDER_LINKS.root}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-gold px-6 py-2.5 text-base"
@@ -159,7 +160,7 @@ export default function Header({ lang = 'en', dict }: HeaderProps) {
             </a>
 
             <a
-              href="https://phillystyleexpress.foodtecsolutions.com/"
+              href={ORDER_LINKS.root}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-gold text-xs px-3.5 py-2"

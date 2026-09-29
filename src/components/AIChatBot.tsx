@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageSquare, X, Send, Bot, ThumbsUp, ThumbsDown, ExternalLink } from 'lucide-react';
+import { ORDER_LINKS } from '@/config/ordering';
 
 interface Message {
     sender: 'user' | 'bot';
@@ -9,7 +10,7 @@ interface Message {
     feedback?: 'up' | 'down' | null;
 }
 
-const ORDER_URL = 'https://phillystyleexpress.foodtecsolutions.com/';
+const ORDER_URL = ORDER_LINKS.root;
 const SESSION_KEY = 'raggio_chat_history';
 
 const QUICK_REPLIES_EN = [

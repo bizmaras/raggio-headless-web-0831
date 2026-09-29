@@ -4,6 +4,9 @@ import React, { useState, useEffect } from 'react';
 import CateringItemCard from './CateringItemCard';
 import * as cateringModule from '../data/cateringData';
 import { getLocalizedCateringItem } from '../data/cateringTranslations';
+import { ORDER_LINKS, STORE } from '@/config/ordering';
+import CateringCalculator from './CateringCalculator';
+import CorporateInvoicingPanel from './CorporateInvoicingPanel';
 
 interface CateringSectionProps {
   lang?: string;
@@ -131,7 +134,7 @@ export default function CateringSection({ dict, lang = 'en' }: CateringSectionPr
           </div>
 
           <a
-            href="tel:3023690553"
+            href={STORE.phoneHref}
             className="btn-gold py-1.5 px-3.5 text-xs font-bold shrink-0"
             aria-label="Call Raggio for Catering: (302) 369-0553"
           >
@@ -163,6 +166,10 @@ export default function CateringSection({ dict, lang = 'en' }: CateringSectionPr
           <span><strong className="text-gold">{fullLabel}:</strong> 15–20</span>
         </div>
       </div>
+
+      {/* Stage 3: planner + B2B invoicing sit above the full tray catalog */}
+      <CateringCalculator lang={lang} />
+      <CorporateInvoicingPanel lang={lang} />
 
       {/* Category Sections & Tray Items */}
       {categories.map((categoryName) => {
@@ -202,6 +209,7 @@ export default function CateringSection({ dict, lang = 'en' }: CateringSectionPr
                       servesFull={item.servesFull}
                       halfLabel={halfLabel}
                       fullLabel={fullLabel}
+                      lang={lang}
                     />
                   </div>
                 );
@@ -230,14 +238,14 @@ export default function CateringSection({ dict, lang = 'en' }: CateringSectionPr
 
           <div className="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto shrink-0">
             <a
-              href="tel:3023690553"
+              href={STORE.phoneHref}
               className="btn-gold w-full sm:w-auto py-3 px-6 text-sm font-bold shadow-lg"
             >
               <span>📞</span>
               <span>{isEs ? 'Llamar: (302) 369-0553' : 'Call: (302) 369-0553'}</span>
             </a>
             <a
-              href="https://phillystyleexpress.foodtecsolutions.com/"
+              href={ORDER_LINKS.catering}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-auto py-3 px-6 rounded-full border border-panel-border bg-panel text-cream hover:border-gold/60 text-sm font-bold text-center transition-all"

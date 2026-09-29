@@ -141,7 +141,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const displayCategory =
     (dict.categories as Record<string, string>)?.[matchedCategory] || matchedCategory;
 
-  const sizes = getSizeVariants(rawItem.Category, rawItem["Product Name"], basePrice);
+  const sizes = getSizeVariants(rawItem.Category, rawItem["Product Name"], basePrice, rawItem.Slug);
 
   // Suggested complementary items (e.g. Wings, Drinks, Appetizers)
   const complementaryItems = menuItems
@@ -250,7 +250,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {complementaryItems.map((item, idx) => {
                   const compPrice = parseFloat(item.Price) || 0;
-                  const compSizes = getSizeVariants(item.Category, item["Product Name"], compPrice);
+                  const compSizes = getSizeVariants(item.Category, item["Product Name"], compPrice, item.Slug);
                   return (
                     <MenuItemCard
                       key={idx}
@@ -258,6 +258,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
                       price={compPrice}
                       description={item.Description}
                       sizes={compSizes}
+                      category={item.Category}
+                      slug={item.Slug}
+                      categorySlug={categoryToSlug(item.Category)}
+                      variant="editorial"
                       image={(item as any).Image || (item as any).image}
                       lang={lang}
                       dict={dict}

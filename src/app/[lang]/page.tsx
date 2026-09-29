@@ -15,6 +15,8 @@ import ScrollReveal from "../../components/ScrollReveal";
 import DealsSectionWrapper from "../../components/DealsSectionWrapper";
 import PromotionsSection from "../../components/PromotionsSection";
 import MenuItemCard from "../../components/MenuItemCard";
+import MenuCollection from "../../components/menu/MenuCollection";
+import ViewModeToggle from "../../components/menu/ViewModeToggle";
 import { getSizeVariants } from "../../data/sizePricing";
 import Footer from "../../components/Footer";
 import ScrollToTop from "../../components/ScrollToTop";
@@ -22,6 +24,9 @@ import FAQ from "../../components/FAQ";
 import StickyMobileBar from "../../components/StickyMobileBar";
 
 import CateringSection from "../../components/CateringSection";
+import AnnouncementBar from "../../components/AnnouncementBar";
+import OrderTrustBadge from "../../components/OrderTrustBadge";
+import { ORDER_LINKS } from "../../config/ordering";
 const GoogleReviewsSection = dynamic(() => import("../../components/GoogleReviewsSection"));
 const DeferredWidgets = dynamic(() => import("../../components/DeferredWidgets"));
 
@@ -71,7 +76,7 @@ const jsonLd = {
     "@type": "OrderAction",
     target: {
       "@type": "EntryPoint",
-      urlTemplate: "https://phillystyleexpress.foodtecsolutions.com/",
+      urlTemplate: ORDER_LINKS.pizza,
       inLanguage: "en-US",
       actionPlatform: [
         "http://schema.org/DesktopWebPlatform",
@@ -101,6 +106,7 @@ export default async function HomePage({
 
   return (
     <>
+      <AnnouncementBar lang={lang} />
       <Header lang={lang} dict={dict} />
       <main className="min-h-screen bg-ink text-cream w-full max-w-full">
         <script
@@ -108,12 +114,15 @@ export default async function HomePage({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }}
         />
         <HeroSlider dict={dict} lang={lang} />
+        <OrderTrustBadge lang={lang} variant="panel" />
         <CategoryRail categoriesDict={dict.categories} lang={lang} />
 
         <ScrollReveal>
           <SignatureDishShowcase dict={dict} lang={lang} />
         </ScrollReveal>
 
+        {/* ===== LIGHT "TABLE" ZONE: menu, pricing, deals, catering, FAQ, reviews ===== */}
+        <div className="surface-milk">
         <section
           id="menu"
           className="max-w-7xl mx-auto px-6 py-12 scroll-mt-[150px] md:scroll-mt-[270px]"
@@ -124,6 +133,8 @@ export default async function HomePage({
               <h2 className="text-3xl md:text-4xl font-extrabold text-gold-bright">
                 {dict.menu.title}
               </h2>
+              <div className="flex items-center gap-3 flex-wrap justify-center">
+              <ViewModeToggle lang={lang} />
               <a
                 href="/raggio-full-menu.pdf"
                 download
@@ -134,6 +145,7 @@ export default async function HomePage({
                 </svg>
                 {dict.menu.download_pdf}
               </a>
+              </div>
             </div>
           </ScrollReveal>
 
@@ -172,11 +184,11 @@ export default async function HomePage({
                     </svg>
                   </Link>
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <MenuCollection label={displayCategory}>
                   {itemsInCategory.map((item, idx) => {
                     const basePrice = parseFloat(item.Price) || 0;
-                    const sizes = getSizeVariants(item.Category, item["Product Name"], basePrice);
                     const itemSlug = productToSlug(item["Product Name"], item.Slug);
+                    const sizes = getSizeVariants(item.Category, item["Product Name"], basePrice, itemSlug);
                     return (
                       <MenuItemCard
                         key={idx}
@@ -184,6 +196,8 @@ export default async function HomePage({
                         price={basePrice}
                         description={item.Description}
                         sizes={sizes}
+                        category={item.Category}
+                        priority={catIdx === 0 && idx < 3}
                         lang={lang}
                         categorySlug={targetId}
                         slug={itemSlug}
@@ -192,7 +206,7 @@ export default async function HomePage({
                       />
                     );
                   })}
-                </div>
+                </MenuCollection>
               </div>
             );
           })}
@@ -207,6 +221,7 @@ export default async function HomePage({
         <ScrollReveal>
           <GoogleReviewsSection dict={dict} />
         </ScrollReveal>
+        </div>
       </main>
       <Footer dict={dict} lang={lang} />
       <ScrollToTop />

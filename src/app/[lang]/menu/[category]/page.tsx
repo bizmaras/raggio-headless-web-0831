@@ -10,6 +10,8 @@ import type { Locale } from "../../dictionaries";
 import Header from "@/components/Header";
 import CategoryRail from "@/components/CategoryRail";
 import MenuItemCard from "@/components/MenuItemCard";
+import MenuCollection from "@/components/menu/MenuCollection";
+import ViewModeToggle from "@/components/menu/ViewModeToggle";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
 import StickyMobileBar from "@/components/StickyMobileBar";
@@ -184,11 +186,12 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           </div>
 
           {/* Menu Items Grid with Identical Card Structure & Size Variant Pills */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="flex justify-end mb-6"><ViewModeToggle lang={lang} /></div>
+          <MenuCollection label={displayCategory}>
             {itemsInCategory.map((item, idx) => {
               const basePrice = parseFloat(item.Price) || 0;
-              const sizes = getSizeVariants(item.Category, item["Product Name"], basePrice);
               const itemSlug = productToSlug(item["Product Name"], item.Slug);
+              const sizes = getSizeVariants(item.Category, item["Product Name"], basePrice, itemSlug);
               return (
                 <MenuItemCard
                   key={idx}
@@ -196,6 +199,8 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                   price={basePrice}
                   description={item.Description}
                   sizes={sizes}
+                  category={item.Category}
+                  priority={idx < 3}
                   lang={lang}
                   categorySlug={categorySlug}
                   slug={itemSlug}
@@ -204,7 +209,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                 />
               );
             })}
-          </div>
+          </MenuCollection>
 
           {/* Quick Return to All Categories */}
           <div className="mt-16 pt-8 border-t border-panel-border/60 flex flex-col sm:flex-row items-center justify-between gap-4">

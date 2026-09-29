@@ -1,318 +1,232 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
-import Image from 'next/image';
+/**
+ * SignatureDishShowcase v2 — "Anatomy of a Raggio Pie" (Stage 2)
+ *
+ * Drop-in: same default export, same props ({ dict, lang }). Uses dict.showcase only for
+ * badge / title / subtitle; RECIPES AND PRICES NO LONGER COME FROM THE DICTIONARY.
+ *
+ * Why: the v1 dictionary copy contradicted the checkout the customer lands on.
+ *   Meat Lover  v1: sausage, MEATBALLS, bacon, pepperoni, "mozzarella & PROVOLONE"
+ *               FoodTec: Pizza Sauce, Grande Mozzarella, Ham, Bacon, Pepperoni, Sausage
+ *   Buffalo     v1: "RANCH swirl", "mozzarella & CHEDDAR"
+ *               FoodTec: Buffalo Sauce, BLUE CHEESE dressing, Grande Mozzarella, Grilled Chicken
+ *   Pepperoni   v1: "Fior di Latte", "San Marzano D.O.P.", "48-hour" — none evidenced;
+ *               FoodTec/PDF say "Grande Mozzarella"; Fior di latte is a different cheese.
+ *
+ * Layers use the claim ledger: an unverified layer (48 h dough, San Marzano) renders
+ * only in preview (NEXT_PUBLIC_SHOW_UNVERIFIED_CLAIMS=true), with a dashed rule.
+ */
 
-interface SignatureDishShowcaseProps {
-  dict?: any;
-  lang?: string;
+import { useId, useState } from 'react';
+import Image from 'next/image';
+import { CLAIMS, SHOW_UNVERIFIED, type ClaimId } from '@/data/craftClaims';
+import { CHEESE_LADDER, GOURMET_LADDER, formatUSD } from '@/data/pizzaPricing';
+import { foodtecUrl } from '@/data/foodtecCatalog';
+
+type Lang = 'en' | 'es';
+type DishKey = 'pepperoni' | 'meatlover' | 'buffalo';
+
+interface Layer {
+  n: number;
+  /** hotspot position on the 1:1 pizza image, % */
+  at: { x: number; y: number };
+  title: { en: string; es: string };
+  body: { en: string; es: string };
+  claim?: ClaimId; // if set, layer obeys the ledger
 }
 
-export default function SignatureDishShowcase({ dict, lang = 'en' }: SignatureDishShowcaseProps) {
+interface Dish {
+  key: DishKey;
+  name: { en: string; es: string };
+  image: string;
+  price: number;
+  priceNote: { en: string; es: string };
+  foodtecItem: string;
+  layers: Layer[];
+}
+
+const crust = (claim: ClaimId = 'brick-oven'): Layer => ({
+  n: 1,
+  at: { x: 14, y: 50 },
+  title: { en: CLAIMS[claim].chip.en, es: CLAIMS[claim].chip.es },
+  body: CLAIMS[claim].story,
+  claim,
+});
+const cheese: Layer = {
+  n: 3,
+  at: { x: 46, y: 55 },
+  title: CLAIMS['grande-mozzarella'].chip,
+  body: CLAIMS['grande-mozzarella'].story,
+  claim: 'grande-mozzarella',
+};
+
+const DISHES: Dish[] = [
+  {
+    key: 'pepperoni',
+    name: { en: 'Pepperoni', es: 'Pepperoni' },
+    image: '/images/pizza-pepperoni-clean.png',
+    price: CHEESE_LADDER.lrg + 1, // PDF: "Each topping 1.00" on the plain cheese pie
+    priceNote: { en: 'Large 16" cheese + 1 topping', es: 'Grande 16" de queso + 1 ingrediente' },
+    foodtecItem: 'Pizza › Cheese › add Pepperoni',
+    layers: [
+      crust(),
+      { n: 2, at: { x: 72, y: 62 }, title: { en: 'House pizza sauce', es: 'Salsa de pizza de la casa' }, body: { en: 'Our red pizza sauce, spread edge to edge.', es: 'Nuestra salsa roja, de borde a borde.' } },
+      cheese,
+      { n: 4, at: { x: 62, y: 40 }, title: { en: 'Pepperoni', es: 'Pepperoni' }, body: { en: 'Added as a topping on our Large cheese pie.', es: 'Agregado como ingrediente a nuestra grande de queso.' } },
+    ],
+  },
+  {
+    key: 'meatlover',
+    name: { en: 'Meat Lover', es: 'Amante de la Carne' },
+    image: '/images/pizza-meatlover-clean.png',
+    price: GOURMET_LADDER.lrg,
+    priceNote: { en: 'Large 16"', es: 'Grande 16"' },
+    foodtecItem: 'Pizza › Meat Lover',
+    layers: [
+      crust(),
+      { n: 2, at: { x: 72, y: 62 }, title: { en: 'Pizza sauce', es: 'Salsa de pizza' }, body: { en: 'Red sauce base to carry four meats.', es: 'Base de salsa roja para cuatro carnes.' } },
+      cheese,
+      { n: 4, at: { x: 62, y: 40 }, title: { en: 'Ham · Bacon · Pepperoni · Sausage', es: 'Jamón · Tocino · Pepperoni · Salchicha' }, body: { en: 'Exactly the four meats on the checkout recipe.', es: 'Las cuatro carnes exactas de la receta.' } },
+    ],
+  },
+  {
+    key: 'buffalo',
+    name: { en: 'Buffalo Chicken', es: 'Pollo Búfalo' },
+    image: '/images/pizza-buffalo-clean.png',
+    price: GOURMET_LADDER.lrg,
+    priceNote: { en: 'Large 16"', es: 'Grande 16"' },
+    foodtecItem: 'Pizza › Buffalo Chicken',
+    layers: [
+      crust(),
+      { n: 2, at: { x: 72, y: 62 }, title: { en: 'Buffalo sauce + blue cheese', es: 'Salsa búfalo + queso azul' }, body: { en: 'Buffalo sauce base finished with blue cheese dressing.', es: 'Base de salsa búfalo con aderezo de queso azul.' } },
+      cheese,
+      { n: 4, at: { x: 62, y: 40 }, title: { en: 'Grilled chicken', es: 'Pollo a la parrilla' }, body: { en: 'Grilled chicken over the Grande.', es: 'Pollo a la parrilla sobre la Grande.' } },
+    ],
+  },
+];
+
+// Preview-only layer: dough fermentation (renders only if the ledger allows it)
+const FERMENT: Layer = { n: 5, at: { x: 30, y: 68 }, title: CLAIMS['cold-ferment-48h'].chip, body: CLAIMS['cold-ferment-48h'].story, claim: 'cold-ferment-48h' };
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function SignatureDishShowcase({ dict, lang = 'en' }: { dict?: any; lang?: string }) {
+  const L: Lang = lang === 'es' ? 'es' : 'en';
   const t = dict?.showcase || {};
-  const [currentDish, setCurrentDish] = useState<'pepperoni' | 'meatlover' | 'buffalo'>('pepperoni');
-  const [activeSpot, setActiveSpot] = useState<number>(1);
-  const tiltRef = useRef<HTMLDivElement>(null);
+  const [dishIdx, setDishIdx] = useState(0);
+  const [spot, setSpot] = useState(1);
+  const uid = useId();
+  const dish = DISHES[dishIdx];
 
-  const images = {
-    pepperoni: '/images/pizza-pepperoni-clean.png',
-    meatlover: '/images/pizza-meatlover-clean.png',
-    buffalo: '/images/pizza-buffalo-clean.png'
+  const layers = [...dish.layers, ...(SHOW_UNVERIFIED ? [FERMENT] : [])].filter(
+    (l) => !l.claim || CLAIMS[l.claim].status === 'verified' || SHOW_UNVERIFIED
+  );
+  const activeLayer = layers.find((l) => l.n === spot) ?? layers[0];
+
+  const onTabKey = (e: React.KeyboardEvent) => {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    e.preventDefault();
+    const next = (dishIdx + (e.key === 'ArrowRight' ? 1 : -1) + DISHES.length) % DISHES.length;
+    setDishIdx(next);
+    setSpot(1);
+    document.getElementById(`${uid}-tab-${next}`)?.focus();
   };
-
-  const dish = t?.dishes?.[currentDish] || {
-    name: 'Raggio Artisan Pepperoni',
-    price: '$21.99',
-    topping_badge: 'Crispy Cupped Pepperoni',
-    topping_sub: 'Cup & Char',
-    crust_title: '48-Hour Cold-Fermented Dough',
-    crust_desc: 'Naturally fermented for 48 hours with Italian flour. Super light, airy cornicione crust that never feels heavy.',
-    sauce_title: 'San Marzano D.O.P. Plum Tomato Sauce',
-    sauce_desc: 'Sun-ripened tomatoes grown in the volcanic soil of Mount Vesuvius, crushed raw with extra virgin olive oil and oregano.',
-    cheese_title: 'Whole-Milk Fior di Latte Mozzarella',
-    cheese_desc: '100% whole milk creamy mozzarella that melts into rich golden blisters across every single slice.',
-    topping_title: 'Crispy Cupped (Cup & Char) Pepperoni',
-    topping_desc: 'Beef pepperoni that crisps into savory chalices under high stone-oven heat, releasing rich smoky aroma.'
-  };
-
-  const handleTilt = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!tiltRef.current) return;
-    const rect = tiltRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
-    const rotateX = -(y / (rect.height / 2)) * 14;
-    const rotateY = (x / (rect.width / 2)) * 14;
-    tiltRef.current.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-  };
-
-  const resetTilt = () => {
-    if (!tiltRef.current) return;
-    tiltRef.current.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-  };
-
-  const getActiveSpotData = () => {
-    switch (activeSpot) {
-      case 1:
-        return { icon: '🌿', title: dish.crust_title, desc: dish.crust_desc };
-      case 2:
-        return { icon: '🍅', title: dish.sauce_title, desc: dish.sauce_desc };
-      case 3:
-        return { icon: '🧀', title: dish.cheese_title, desc: dish.cheese_desc };
-      case 4:
-      default:
-        return { icon: '🥩', title: dish.topping_title, desc: dish.topping_desc };
-    }
-  };
-
-  const activeData = getActiveSpotData();
 
   return (
-    <section className="max-w-6xl mx-auto px-6 py-12 relative overflow-hidden">
-      {/* Ambient background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 md:w-[560px] md:h-[560px] bg-gradient-to-tr from-gold/20 via-orange-500/15 to-amber-300/10 rounded-full blur-[90px] pointer-events-none -z-10" />
-
-      {/* Section Header */}
-      <div className="text-center max-w-2xl mx-auto mb-6">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-gold/30 bg-gold/10 text-xs text-gold-bright font-semibold tracking-wider uppercase mb-3">
-          {t.badge || 'SIGNATURE ARTISANAL PIZZAS'}
-        </div>
-        <h2 className="text-3xl md:text-4xl font-extrabold text-gold-bright mb-2">
-          {t.title || 'Crafted with Passion, Stone-Baked to Perfection'}
+    <section className="max-w-6xl mx-auto px-6 py-16" aria-labelledby={`${uid}-h`}>
+      <header className="max-w-2xl">
+        <p className="text-[11px] font-semibold tracking-[0.2em] text-gold">{(t.badge || 'Signature pies').toUpperCase()}</p>
+        <h2 id={`${uid}-h`} className="mt-2 font-display text-3xl md:text-5xl font-semibold leading-[1.05] text-cream">
+          {L === 'es' ? 'Anatomía de una pizza Raggio' : 'Anatomy of a Raggio pie'}
         </h2>
-        <p className="text-stone text-xs md:text-sm leading-relaxed">
-          {t.subtitle || 'Explore our signature pizzas in detail. Hover or tap the markers to discover our authentic Italian ingredients and craftsmanship.'}
+        <p className="mt-3 text-sm md:text-base text-stone leading-relaxed">
+          {L === 'es'
+            ? 'Toque cada número. Todo lo que ve aquí es exactamente lo que encontrará al pagar.'
+            : 'Tap each number. Everything here is exactly what you’ll find at checkout.'}
         </p>
+      </header>
+
+      <div role="tablist" aria-label={L === 'es' ? 'Pizzas' : 'Pizzas'} onKeyDown={onTabKey} className="mt-8 flex gap-1 border-b border-panel-border">
+        {DISHES.map((d, i) => (
+          <button
+            key={d.key}
+            id={`${uid}-tab-${i}`}
+            role="tab"
+            aria-selected={i === dishIdx}
+            aria-controls={`${uid}-panel`}
+            tabIndex={i === dishIdx ? 0 : -1}
+            onClick={() => { setDishIdx(i); setSpot(1); }}
+            className={`-mb-px px-4 h-11 text-sm font-semibold border-b-2 transition-colors cursor-pointer ${
+              i === dishIdx ? 'border-gold text-cream' : 'border-transparent text-stone hover:text-cream'
+            }`}
+          >
+            {d.name[L]}
+          </button>
+        ))}
       </div>
 
-      {/* Dish Selector Tabs */}
-      <div className="flex justify-center gap-2 mb-6 flex-wrap">
-        <button
-          type="button"
-          onClick={() => { setCurrentDish('pepperoni'); setActiveSpot(1); }}
-          className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all shadow-md ${
-            currentDish === 'pepperoni'
-              ? 'bg-gold text-ink shadow-gold/20'
-              : 'bg-panel-2 border border-panel-border text-stone hover:text-cream hover:border-gold/40'
-          }`}
-        >
-          🍕 {t.dishes?.pepperoni?.name || 'Raggio Artisan Pepperoni'}
-        </button>
-
-        <button
-          type="button"
-          onClick={() => { setCurrentDish('meatlover'); setActiveSpot(1); }}
-          className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all shadow-md ${
-            currentDish === 'meatlover'
-              ? 'bg-gold text-ink shadow-gold/20'
-              : 'bg-panel-2 border border-panel-border text-stone hover:text-cream hover:border-gold/40'
-          }`}
-        >
-          🥩 {t.dishes?.meatlover?.name || "Meat Lover's Feast"}
-        </button>
-
-        <button
-          type="button"
-          onClick={() => { setCurrentDish('buffalo'); setActiveSpot(1); }}
-          className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all shadow-md ${
-            currentDish === 'buffalo'
-              ? 'bg-gold text-ink shadow-gold/20'
-              : 'bg-panel-2 border border-panel-border text-stone hover:text-cream hover:border-gold/40'
-          }`}
-        >
-          🍗 {t.dishes?.buffalo?.name || 'Buffalo Chicken & Ranch'}
-        </button>
-      </div>
-
-      {/* Main Showcase Area */}
-      <div className="flex flex-col items-center justify-center">
-        {/* 3D Tilt Container */}
-        <div
-          ref={tiltRef}
-          onMouseMove={handleTilt}
-          onMouseLeave={resetTilt}
-          className="relative w-80 h-80 sm:w-[460px] sm:h-[460px] md:w-[520px] md:h-[520px] flex items-center justify-center select-none cursor-pointer transition-transform duration-150 ease-out"
-          style={{ perspective: 1000, transformStyle: 'preserve-3d' }}
-        >
-          {/* Ground shadow */}
-          <div className="absolute w-[82%] h-[32%] bottom-2 bg-black/90 rounded-full blur-2xl pointer-events-none -z-10 transform scale-90" />
-
-          {/* Pizza Image Cutout */}
-          <div className="relative w-full h-full">
-            <Image
-              src={images[currentDish]}
-              alt={dish.name}
-              fill
-              sizes="(max-width: 768px) 320px, 520px"
-              priority
-              className="object-contain pointer-events-none drop-shadow-[0_30px_45px_rgba(0,0,0,0.95)]"
-            />
-          </div>
-
-          {/* HOTSPOT 1: CRUST */}
-          <button
-            type="button"
-            onClick={(e) => { e.stopPropagation(); setActiveSpot(1); }}
-            style={{ top: '12%', left: '6%' }}
-            className="absolute z-20 transition-transform duration-200 hover:scale-105 active:scale-95"
-            aria-label={dish.crust_title}
-          >
-            <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-md shadow-2xl transition-colors ${
-              activeSpot === 1 ? 'bg-ink/95 border-2 border-gold text-gold-bright' : 'bg-ink/80 border border-gold/60 text-white hover:border-gold'
-            }`}>
-              <span className="w-2 h-2 rounded-full bg-gold-bright animate-ping" />
-              <span className="text-xs font-bold text-gold-bright">
-                🌿 {lang === 'es' ? '48h Masa Crujiente' : '48h Crust'}
-              </span>
-            </div>
-          </button>
-
-          {/* HOTSPOT 2: SAUCE */}
-          <button
-            type="button"
-            onClick={(e) => { e.stopPropagation(); setActiveSpot(2); }}
-            style={{ top: '36%', right: '4%' }}
-            className="absolute z-20 transition-transform duration-200 hover:scale-105 active:scale-95"
-            aria-label={dish.sauce_title}
-          >
-            <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-md shadow-2xl transition-colors ${
-              activeSpot === 2 ? 'bg-ink/95 border-2 border-gold text-gold-bright' : 'bg-ink/80 border border-gold/60 text-white hover:border-gold'
-            }`}>
-              <span className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
-              <span className="text-xs font-bold text-white">
-                🍅 {lang === 'es' ? 'Salsa San Marzano' : 'San Marzano Sauce'}
-              </span>
-            </div>
-          </button>
-
-          {/* HOTSPOT 3: CHEESE */}
-          <button
-            type="button"
-            onClick={(e) => { e.stopPropagation(); setActiveSpot(3); }}
-            style={{ bottom: '24%', left: '4%' }}
-            className="absolute z-20 transition-transform duration-200 hover:scale-105 active:scale-95"
-            aria-label={dish.cheese_title}
-          >
-            <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-md shadow-2xl transition-colors ${
-              activeSpot === 3 ? 'bg-ink/95 border-2 border-gold text-gold-bright' : 'bg-ink/80 border border-gold/60 text-white hover:border-gold'
-            }`}>
-              <span className="w-2 h-2 rounded-full bg-amber-300 animate-ping" />
-              <span className="text-xs font-bold text-white">
-                🧀 {lang === 'es' ? 'Mozzarella Fresca' : 'Fior di Latte'}
-              </span>
-            </div>
-          </button>
-
-          {/* HOTSPOT 4: TOPPING */}
-          <button
-            type="button"
-            onClick={(e) => { e.stopPropagation(); setActiveSpot(4); }}
-            style={{ bottom: '12%', right: '8%' }}
-            className="absolute z-20 transition-transform duration-200 hover:scale-105 active:scale-95"
-            aria-label={dish.topping_title}
-          >
-            <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-md shadow-2xl transition-colors ${
-              activeSpot === 4 ? 'bg-ink/95 border-2 border-gold text-gold-bright' : 'bg-ink/80 border border-gold/60 text-white hover:border-gold'
-            }`}>
-              <span className="w-2 h-2 rounded-full bg-orange-500 animate-ping" />
-              <span className="text-xs font-bold text-white">
-                🥩 {dish.topping_badge}
-              </span>
-            </div>
-          </button>
+      <div id={`${uid}-panel`} role="tabpanel" aria-labelledby={`${uid}-tab-${dishIdx}`} className="mt-8 grid md:grid-cols-[1.1fr_1fr] gap-10 items-center">
+        <div className="relative aspect-square max-w-[520px] w-full mx-auto">
+          <div aria-hidden="true" className="absolute inset-[8%] rounded-full bg-[radial-gradient(closest-side,rgba(201,161,92,.22),transparent)]" />
+          <Image src={dish.image} alt={`${dish.name[L]} pizza — Raggio Gourmet & Pizza`} fill sizes="(min-width:768px) 520px, 90vw" className="object-contain drop-shadow-[0_24px_40px_rgba(0,0,0,.55)]" />
+          {layers.map((l) => (
+            <button
+              key={l.n}
+              type="button"
+              onClick={() => setSpot(l.n)}
+              aria-pressed={activeLayer?.n === l.n}
+              aria-label={`${l.n}. ${l.title[L]}`}
+              style={{ left: `${l.at.x}%`, top: `${l.at.y}%` }}
+              className={`absolute -translate-x-1/2 -translate-y-1/2 w-9 h-9 rounded-full grid place-items-center text-sm font-bold border-2 transition-transform cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold ${
+                activeLayer?.n === l.n ? 'bg-gold text-ink border-gold scale-110' : 'bg-ink/80 text-cream border-cream/70 backdrop-blur-sm'
+              }`}
+            >
+              {l.n}
+            </button>
+          ))}
         </div>
 
-        {/* INGREDIENT DETAIL CARD */}
-        <div className="w-full max-w-2xl mt-4 bg-panel border border-panel-border rounded-2xl p-5 shadow-2xl transition-all">
-          <div className="flex items-center justify-between border-b border-panel-border pb-3 mb-3">
-            <div className="flex items-center gap-2">
-              <span className="text-xl">{activeData.icon}</span>
-              <h3 className="text-base font-extrabold text-gold-bright">
-                {activeData.title}
-              </h3>
+        <div>
+          <ol className="space-y-4">
+            {layers.map((l) => {
+              const on = activeLayer?.n === l.n;
+              const dashed = l.claim && CLAIMS[l.claim].status === 'owner-confirm';
+              return (
+                <li key={l.n}>
+                  <button
+                    type="button"
+                    onClick={() => setSpot(l.n)}
+                    className={`w-full text-left pl-4 border-l-2 ${dashed ? 'border-dashed' : ''} ${on ? 'border-gold' : 'border-panel-border'} cursor-pointer`}
+                  >
+                    <span className="flex items-baseline gap-2">
+                      <span className="font-display text-gold tabular-nums">{String(l.n).padStart(2, '0')}</span>
+                      <span className={`font-semibold ${on ? 'text-cream' : 'text-cream/75'}`}>{l.title[L]}</span>
+                    </span>
+                    {on && <span className="block mt-1 text-sm leading-relaxed text-stone">{l.body[L]}</span>}
+                  </button>
+                </li>
+              );
+            })}
+          </ol>
+
+          <div className="mt-8 pt-6 border-t border-panel-border flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="font-display text-3xl font-semibold text-gold tabular-nums">{formatUSD(dish.price)}</p>
+              <p className="text-xs text-stone">{dish.priceNote[L]}</p>
             </div>
-            <span className="text-xs text-gold font-bold px-2 py-0.5 rounded bg-gold/15 uppercase">
-              {t.secret_badge || "Chef's Secret"}
-            </span>
+            <a
+              href={foodtecUrl('pizza')}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-dd-action-name={`showcase_order:${dish.key}`}
+              className="inline-flex items-center gap-2 h-12 px-5 rounded-xl bg-ember hover:bg-ember-hover text-white font-bold transition-colors"
+            >
+              {t.order_pizza || (L === 'es' ? 'Ordenar esta pizza' : 'Order this pizza')}
+            </a>
           </div>
-          <p className="text-xs md:text-sm text-cream/90 leading-relaxed mb-4">
-            {activeData.desc}
+          <p className="mt-2 text-[11px] text-stone">
+            {L === 'es' ? 'Al pagar' : 'On checkout'}: <span className="text-cream/85">{dish.foodtecItem}</span>
           </p>
-
-          {/* 4 Bottom Pills */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-panel-border">
-            <button
-              type="button"
-              onClick={() => setActiveSpot(1)}
-              className={`p-2.5 rounded-xl text-left transition-all ${
-                activeSpot === 1 ? 'bg-gold/20 border border-gold' : 'bg-panel-2 border border-panel-border hover:border-gold/40'
-              }`}
-            >
-              <span className={`text-xs font-bold block ${activeSpot === 1 ? 'text-gold-bright' : 'text-cream'}`}>
-                🌿 {t.crust_tab || '1. Crust'}
-              </span>
-              <span className="text-[10px] text-stone block">48h Ferment</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setActiveSpot(2)}
-              className={`p-2.5 rounded-xl text-left transition-all ${
-                activeSpot === 2 ? 'bg-gold/20 border border-gold' : 'bg-panel-2 border border-panel-border hover:border-gold/40'
-              }`}
-            >
-              <span className={`text-xs font-bold block ${activeSpot === 2 ? 'text-gold-bright' : 'text-cream'}`}>
-                🍅 {t.sauce_tab || '2. Sauce'}
-              </span>
-              <span className="text-[10px] text-stone block">San Marzano</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setActiveSpot(3)}
-              className={`p-2.5 rounded-xl text-left transition-all ${
-                activeSpot === 3 ? 'bg-gold/20 border border-gold' : 'bg-panel-2 border border-panel-border hover:border-gold/40'
-              }`}
-            >
-              <span className={`text-xs font-bold block ${activeSpot === 3 ? 'text-gold-bright' : 'text-cream'}`}>
-                🧀 {t.cheese_tab || '3. Cheese'}
-              </span>
-              <span className="text-[10px] text-stone block">Fior di Latte</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setActiveSpot(4)}
-              className={`p-2.5 rounded-xl text-left transition-all ${
-                activeSpot === 4 ? 'bg-gold/20 border border-gold' : 'bg-panel-2 border border-panel-border hover:border-gold/40'
-              }`}
-            >
-              <span className={`text-xs font-bold block ${activeSpot === 4 ? 'text-gold-bright' : 'text-cream'}`}>
-                🥩 {t.topping_tab || '4. Topping'}
-              </span>
-              <span className="text-[10px] text-stone block">{dish.topping_sub}</span>
-            </button>
-          </div>
-        </div>
-
-        {/* Immediate Order Bar */}
-        <div className="w-full max-w-2xl mt-4 flex items-center justify-between p-4 rounded-2xl bg-ink-2 border border-panel-border shadow-xl">
-          <div>
-            <span className="text-xs text-stone block">
-              {t.size_label || 'Large 16" Stone-Baked'}
-            </span>
-            <span className="text-2xl font-black text-gold-bright">
-              {dish.price}
-            </span>
-          </div>
-          <a
-            href="https://phillystyleexpress.foodtecsolutions.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-6 py-3 rounded-xl bg-gold hover:bg-gold-bright text-ink text-xs font-extrabold shadow-lg transition-transform active:scale-95 flex items-center gap-2"
-          >
-            <span>🛒</span>
-            <span>{t.order_pizza || 'Order This Pizza'}</span>
-          </a>
         </div>
       </div>
     </section>

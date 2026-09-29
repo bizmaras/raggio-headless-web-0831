@@ -1,26 +1,30 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+/**
+ * HeroSlider v2 — "The Oven Pass"
+ * Drop-in replacement: same default export, same props ({ dict, lang }).
+ *
+ * What changed vs v1 and why:
+ * 1. NO AUTO-ROTATION. v1 advanced every 6.5s with no pause control, which fails
+ *    WCAG 2.2.2 (Pause, Stop, Hide) and hides each pizza ~75% of the time.
+ *    v2 is a user-driven pizza picker (ARIA tabs, arrow-key + swipe support).
+ * 2. VISIBLE H1. v1's only H1 was sr-only. v2 shows a real headline.
+ * 3. HONEST PRICE ON THE CTA. Each pizza shows its FoodTec Large 16" price, derived
+ *    from src/data/pizzaPricing.ts — never a hard-coded string.
+ * 4. RECIPES MATCH FOODTEC. Buffalo uses Blue Cheese Dressing (FoodTec recipe),
+ *    not "ranch drizzle"; unverifiable claims (San Marzano D.O.P., basil, garlic-
+ *    infused oil) are removed until the owner confirms them.
+ * 5. DEEP LINK. CTAs go straight to FoodTec's Pizza menu (the old root URL
+ *    redirects to an "intro" screen first).
+ * 6. LIGHTER DARK. Warm obsidian with gold/ember light pools instead of a
+ *    blue-black box with an 85%-black drop shadow.
+ */
+
+import { useCallback, useId, useRef, useState } from 'react';
 import Image from 'next/image';
-import InstallAppButton from './InstallAppButton';
-
-interface PinItem {
-  label: string;
-  top: number;
-  left: number;
-}
-
-interface SlideItem {
-  tag: string;
-  title: string;
-  description: string;
-  ctaText: string;
-  ctaLink: string;
-  image: string;
-  seoAlt: string;
-  pins: PinItem[];
-  glowColor: string;
-}
+import OrderTrustBadge from './OrderTrustBadge';
+import { ORDER_LINKS } from '@/config/ordering';
+import { CHEESE_LADDER, GOURMET_LADDER, GOURMET_EXCEPTIONS, formatUSD } from '@/data/pizzaPricing';
 
 interface HeroSliderProps {
   lang?: string;
@@ -31,301 +35,319 @@ interface HeroSliderProps {
       cta?: string;
       cta_order?: string;
       badge?: string;
-      slides?: Array<{
-        tag: string;
-        title: string;
-        description: string;
-        ctaText: string;
-        seoAlt: string;
-        highlight?: string;
-      }>;
     };
   };
 }
 
-const DEFAULT_SLIDES: SlideItem[] = [
+type Loc = 'en' | 'es';
+
+interface Pizza {
+  id: string;
+  image: string;
+  glow: string;
+  /** Price label for the Large 16" — derived, never typed by hand. */
+  largePrice: string;
+  copy: Record<Loc, { name: string; tag: string; description: string; notes: [string, string]; alt: string }>;
+}
+
+const PIZZAS: Pizza[] = [
   {
-    tag: 'SPECIALTY PIZZA',
-    title: 'Signature Meat Lover’s',
-    description: 'Packed with beef pepperoni, sausage, bacon, and ham on our stone-baked crust for true meat lovers.',
-    ctaText: 'Order Meat Lover’s',
-    ctaLink: 'https://phillystyleexpress.foodtecsolutions.com/',
+    id: 'meat-lover',
     image: '/images/pizza-meatlover-clean.png',
-    seoAlt: 'Signature Meat Lovers Pizza - Raggio Gourmet Newark DE',
-    pins: [
-      { label: 'Loaded with 4 Artisan Meats', top: 22, left: 24 },
-      { label: 'Grande Mozzarella', top: 18, left: 62 },
-    ],
-    glowColor: 'rgba(212, 154, 85, 0.28)',
+    glow: 'rgba(201, 161, 92, 0.30)',
+    largePrice: formatUSD(GOURMET_LADDER.lrg),
+    copy: {
+      en: {
+        name: 'Meat Lover',
+        tag: 'Gourmet pizza',
+        description: 'Ham, bacon, pepperoni and sausage over pizza sauce and Grande Mozzarella, stone-baked until the edges crackle.',
+        notes: ['4 meats', 'Grande Mozzarella'],
+        alt: 'Meat Lover pizza with ham, bacon, pepperoni and sausage — Raggio Gourmet, Newark DE',
+      },
+      es: {
+        name: 'Meat Lover',
+        tag: 'Pizza gourmet',
+        description: 'Jamón, tocino, pepperoni y salchicha sobre salsa de pizza y Grande Mozzarella, horneada en piedra.',
+        notes: ['4 carnes', 'Grande Mozzarella'],
+        alt: 'Pizza Meat Lover con jamón, tocino, pepperoni y salchicha — Raggio Gourmet, Newark DE',
+      },
+    },
   },
   {
-    tag: 'HOUSE FAVORITE',
-    title: 'Spicy Buffalo Chicken',
-    description: 'Tender chicken tossed in fiery buffalo glaze with artisanal spiral ranch drizzle and melted mozzarella on stone-baked crust.',
-    ctaText: 'Try Buffalo Chicken',
-    ctaLink: 'https://phillystyleexpress.foodtecsolutions.com/',
+    id: 'buffalo-chicken',
     image: '/images/pizza-buffalo-clean.png',
-    seoAlt: 'Spicy Buffalo Chicken Pizza - Raggio Gourmet Newark DE',
-    pins: [
-      { label: 'Fiery Buffalo Glaze', top: 24, left: 22 },
-      { label: 'Creamy Ranch Drizzle', top: 54, left: 58 },
-    ],
-    glowColor: 'rgba(234, 88, 12, 0.26)',
+    glow: 'rgba(184, 69, 43, 0.26)',
+    largePrice: formatUSD(GOURMET_LADDER.lrg),
+    copy: {
+      en: {
+        name: 'Buffalo Chicken',
+        tag: 'House favorite',
+        description: 'Grilled chicken in buffalo sauce with blue cheese dressing and Grande Mozzarella.',
+        notes: ['Buffalo sauce', 'Blue cheese dressing'],
+        alt: 'Buffalo Chicken pizza with grilled chicken and blue cheese dressing — Raggio Gourmet, Newark DE',
+      },
+      es: {
+        name: 'Buffalo Chicken',
+        tag: 'Favorito de la casa',
+        description: 'Pollo a la parrilla en salsa búfalo con aderezo de queso azul y Grande Mozzarella.',
+        notes: ['Salsa búfalo', 'Queso azul'],
+        alt: 'Pizza Buffalo Chicken con pollo y aderezo de queso azul — Raggio Gourmet, Newark DE',
+      },
+    },
   },
   {
-    tag: 'CLASSIC SPECIALTY',
-    title: 'Artisanal Pepperoni',
-    description: 'Crispy cupped beef pepperoni, melted Grande Mozzarella, rich San Marzano tomato sauce, and fresh basil on stone-baked crust.',
-    ctaText: 'Order Pepperoni',
-    ctaLink: 'https://phillystyleexpress.foodtecsolutions.com/',
+    id: 'pepperoni',
     image: '/images/pizza-pepperoni-clean.png',
-    seoAlt: 'Artisanal Pepperoni Pizza - Raggio Gourmet Newark DE',
-    pins: [
-      { label: 'Crispy Cupped Pepperoni', top: 26, left: 30 },
-      { label: 'Fresh Basil Leaves', top: 46, left: 48 },
-    ],
-    glowColor: 'rgba(225, 29, 72, 0.25)',
+    glow: 'rgba(184, 69, 43, 0.22)',
+    // Pepperoni = Cheese pizza + 1 topping on FoodTec. Topping price is added at checkout.
+    largePrice: `${formatUSD(CHEESE_LADDER.lrg)} + topping`,
+    copy: {
+      en: {
+        name: 'Pepperoni',
+        tag: 'The classic',
+        description: 'Our cheese pie — pizza sauce and Grande Mozzarella — with pepperoni that cups and crisps in the oven.',
+        notes: ['Crisp-edged pepperoni', 'Grande Mozzarella'],
+        alt: 'Pepperoni pizza with Grande Mozzarella — Raggio Gourmet, Newark DE',
+      },
+      es: {
+        name: 'Pepperoni',
+        tag: 'El clásico',
+        description: 'Nuestra pizza de queso — salsa de pizza y Grande Mozzarella — con pepperoni que se dora en el horno.',
+        notes: ['Pepperoni crujiente', 'Grande Mozzarella'],
+        alt: 'Pizza de pepperoni con Grande Mozzarella — Raggio Gourmet, Newark DE',
+      },
+    },
   },
   {
-    tag: "CHEF'S SIGNATURE",
-    title: 'White Spinach & Ricotta',
-    description: 'Fresh baby spinach, velvety whole-milk ricotta, garlic-infused olive oil, and melted mozzarella on stone-baked blistered crust.',
-    ctaText: 'Try White Spinach',
-    ctaLink: 'https://phillystyleexpress.foodtecsolutions.com/',
+    id: 'spinach-white',
     image: '/images/pizza-spinach-clean.png',
-    seoAlt: 'White Spinach and Ricotta Pizza - Raggio Gourmet Newark DE',
-    pins: [
-      { label: 'Whole Milk Ricotta', top: 28, left: 50 },
-      { label: 'Garlic Infused Oil', top: 52, left: 38 },
-    ],
-    glowColor: 'rgba(34, 197, 94, 0.22)',
+    glow: 'rgba(120, 150, 90, 0.22)',
+    largePrice: formatUSD(GOURMET_EXCEPTIONS['spinach white'].lrg),
+    copy: {
+      en: {
+        name: 'Spinach White',
+        tag: 'No red sauce',
+        description: 'Garlic white sauce, spinach, ricotta and tomatoes under Grande Mozzarella.',
+        notes: ['Ricotta', 'Garlic white sauce'],
+        alt: 'Spinach White pizza with ricotta and tomatoes — Raggio Gourmet, Newark DE',
+      },
+      es: {
+        name: 'Spinach White',
+        tag: 'Sin salsa roja',
+        description: 'Salsa blanca de ajo, espinaca, ricotta y tomate bajo Grande Mozzarella.',
+        notes: ['Ricotta', 'Salsa blanca de ajo'],
+        alt: 'Pizza blanca de espinaca con ricotta y tomate — Raggio Gourmet, Newark DE',
+      },
+    },
   },
 ];
 
-export default function HeroSlider({ dict, lang = 'en' }: HeroSliderProps) {
+const UI = {
+  en: {
+    eyebrow: 'Newark, DE · Pickup & delivery',
+    h1a: 'Stone-baked gourmet pizza',
+    h1b: '& catering, made to order.',
+    large: 'Large 16"',
+    order: 'Order',
+    catering: 'Catering for a group',
+    menu: 'See the full menu',
+    picker: 'Choose a pizza',
+    prev: 'Previous pizza',
+    next: 'Next pizza',
+  },
+  es: {
+    eyebrow: 'Newark, DE · Para llevar y entrega',
+    h1a: 'Pizza gourmet horneada en piedra',
+    h1b: 'y catering, hecha al momento.',
+    large: 'Grande 16"',
+    order: 'Ordenar',
+    catering: 'Catering para grupos',
+    menu: 'Ver el menú completo',
+    picker: 'Elige una pizza',
+    prev: 'Pizza anterior',
+    next: 'Pizza siguiente',
+  },
+} as const;
+
+export default function HeroSlider({ lang = 'en' }: HeroSliderProps) {
+  const loc: Loc = lang === 'es' ? 'es' : 'en';
+  const ui = UI[loc];
   const [current, setCurrent] = useState(0);
-  const [touchStartX, setTouchStartX] = useState<number | null>(null);
-  const [touchStartY, setTouchStartY] = useState<number | null>(null);
-  const [touchEndX, setTouchEndX] = useState<number | null>(null);
-  const [touchEndY, setTouchEndY] = useState<number | null>(null);
+  const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const touchX = useRef<number | null>(null);
+  const baseId = useId();
 
-  const minSwipeDistance = 45;
+  const pizza = PIZZAS[current];
+  const c = pizza.copy[loc];
 
-  const slides = DEFAULT_SLIDES.map((slide, idx) => {
-    const localized = dict?.hero?.slides?.[idx];
-    if (!localized) return slide;
-    return {
-      ...slide,
-      tag: localized.tag || slide.tag,
-      title: localized.title || slide.title,
-      description: localized.description || slide.description,
-      ctaText: localized.ctaText || slide.ctaText,
-      seoAlt: localized.seoAlt || slide.seoAlt,
-    };
-  });
+  const go = useCallback((i: number, focus = false) => {
+    const n = (i + PIZZAS.length) % PIZZAS.length;
+    setCurrent(n);
+    if (focus) tabRefs.current[n]?.focus();
+  }, []);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % slides.length);
-    }, 6500);
-    return () => clearInterval(timer);
-  }, [slides.length]);
-
-  const prevSlide = () => setCurrent((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
-  const nextSlide = () => setCurrent((prev) => (prev + 1) % slides.length);
-
-  const onTouchStart = (e: React.TouchEvent) => {
-    setTouchEndX(null);
-    setTouchEndY(null);
-    setTouchStartX(e.targetTouches[0].clientX);
-    setTouchStartY(e.targetTouches[0].clientY);
+  const onTabKey = (e: React.KeyboardEvent) => {
+    if (e.key === 'ArrowRight') { e.preventDefault(); go(current + 1, true); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); go(current - 1, true); }
+    if (e.key === 'Home') { e.preventDefault(); go(0, true); }
+    if (e.key === 'End') { e.preventDefault(); go(PIZZAS.length - 1, true); }
   };
-
-  const onTouchMove = (e: React.TouchEvent) => {
-    setTouchEndX(e.targetTouches[0].clientX);
-    setTouchEndY(e.targetTouches[0].clientY);
-  };
-
-  const onTouchEnd = () => {
-    if (!touchStartX || !touchEndX || !touchStartY || !touchEndY) return;
-    const diffX = touchStartX - touchEndX;
-    const diffY = touchStartY - touchEndY;
-    if (Math.abs(diffX) > minSwipeDistance && Math.abs(diffX) > Math.abs(diffY) * 1.2) {
-      if (diffX > 0) {
-        nextSlide();
-      } else {
-        prevSlide();
-      }
-    }
-  };
-
-  const activeSlide = slides[current] || slides[0];
 
   return (
     <section
-      className="relative w-full overflow-hidden bg-ink pt-4 sm:pt-6 lg:pt-8 pb-10 sm:pb-16 lg:pb-24 select-none"
-      onTouchStart={onTouchStart}
-      onTouchMove={onTouchMove}
-      onTouchEnd={onTouchEnd}
-      aria-roledescription="carousel"
-      aria-label="Cinematic Featured Specials"
+      aria-labelledby={`${baseId}-h1`}
+      className="relative w-full surface-oven text-cream overflow-hidden"
+      onTouchStart={(e) => { touchX.current = e.touches[0].clientX; }}
+      onTouchEnd={(e) => {
+        if (touchX.current == null) return;
+        const dx = e.changedTouches[0].clientX - touchX.current;
+        if (Math.abs(dx) > 48) go(current + (dx < 0 ? 1 : -1));
+        touchX.current = null;
+      }}
     >
-      {/* Semantic Headings for SEO & Accessibility */}
-      <h1 className="sr-only">
-        Raggio Gourmet &amp; Pizza - Artisanal Stone-Baked Pizzas &amp; Italian Kitchen in Newark, DE
-      </h1>
+      <div className="max-w-7xl 2xl:max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-12 lg:pt-16 pb-10 sm:pb-14 lg:pb-16">
+        {/* Grid areas — mobile: headline → pizza → panel; desktop: headline+panel left, pizza right */}
+        <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:grid-rows-[auto_auto] gap-x-4 gap-y-5 sm:gap-y-6 items-center">
 
-      {/* CONSTRAINED LUXURY CONTAINER: Anchored to max-w-7xl to prevent wide-screen dispersion */}
-      <div className="max-w-7xl 2xl:max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8 overflow-visible relative">
-        
-        {/* MASTER HERO CARD PRESENTATION */}
-        <div className="w-full relative min-h-[480px] sm:min-h-[540px] lg:min-h-[600px] xl:min-h-[640px] rounded-2xl sm:rounded-3xl lg:rounded-[36px] bg-gradient-to-b from-[#15171d]/90 via-[#101216]/95 to-[#0b0c0f] border border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.85)] flex items-center overflow-visible">
+          {/* HEADLINE */}
+          <div className="order-1 lg:order-none relative z-10 lg:col-start-1 lg:row-start-1 lg:self-end">
+            <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-[0.18em] text-gold">
+              {ui.eyebrow}
+            </p>
 
-          <div className="w-full h-full flex flex-col lg:flex-row items-center justify-between px-6 sm:px-10 lg:px-12 xl:px-14 py-8 lg:py-12 relative overflow-visible">
-
-            {/* LEFT EDITORIAL COLUMN */}
-            <div className="w-full lg:max-w-[48%] xl:max-w-[46%] z-20 flex flex-col justify-center text-left">
-              
-              {/* Badge */}
-              <div className="inline-flex items-center gap-2 self-start px-3.5 py-1.5 rounded-full bg-white/[0.06] border border-white/12 text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#e6c884] mb-3 sm:mb-4 shadow-sm">
-                <span className="w-2 h-2 rounded-full bg-[#d8b467] shadow-[0_0_8px_rgba(216,180,103,0.9)]" />
-                <span>{activeSlide.tag}</span>
-              </div>
-
-              {/* Title - Bold & Impactful */}
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-extrabold text-white tracking-tight leading-[1.06] mb-3 sm:mb-4 drop-shadow-md">
-                {activeSlide.title}
-              </h2>
-
-              {/* Description */}
-              <p className="text-white/70 text-xs sm:text-sm lg:text-base leading-relaxed max-w-md mb-6 sm:mb-8">
-                {activeSlide.description}
-              </p>
-
-              {/* SIGNATURE FLAT BUTTONS (NO GRADIENTS) */}
-              <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
-                <a
-                  href={activeSlide.ctaLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-gold px-5 sm:px-6 lg:px-7 py-2.5 sm:py-3 text-xs sm:text-sm lg:text-base font-bold shadow-md"
-                >
-                  <span>{activeSlide.ctaText}</span>
-                  <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7V17" />
-                  </svg>
-                </a>
-
-                <a
-                  href="#menu"
-                  className="btn-charcoal px-4 sm:px-5 lg:px-6 py-2.5 sm:py-3 text-xs sm:text-sm lg:text-base font-medium shadow-md"
-                >
-                  <span>{dict?.hero?.cta || 'View Menu'}</span>
-                </a>
-
-                <InstallAppButton lang={lang}>
-                  <button
-                    type="button"
-                    className="btn-charcoal px-4 sm:px-5 lg:px-6 py-2.5 sm:py-3 text-xs sm:text-sm lg:text-base font-medium shadow-md inline-flex items-center gap-2 text-gold hover:text-gold-bright hover:border-gold/50 transition-all cursor-pointer"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                    </svg>
-                    <span>{lang === 'es' ? 'Instalar App' : 'Install App'}</span>
-                  </button>
-                </InstallAppButton>
-              </div>
-
-              {/* STORYLINE PROGRESS INDICATOR (Segmented Gold Bars) */}
-              <div className="flex items-center gap-2 mt-8 lg:mt-12">
-                {slides.map((_, dotIdx) => (
-                  <button
-                    key={dotIdx}
-                    type="button"
-                    onClick={() => setCurrent(dotIdx)}
-                    aria-label={`Go to slide ${dotIdx + 1}`}
-                    className="py-2 cursor-pointer focus:outline-none group"
-                  >
-                    <div className="w-8 sm:w-14 h-1 rounded-full bg-white/20 overflow-hidden transition-colors group-hover:bg-white/40">
-                      <div
-                        className={`h-full bg-[#c9a15c] transition-all duration-500 rounded-full ${
-                          current === dotIdx ? 'w-full shadow-[0_0_10px_rgba(201,161,92,0.9)]' : 'w-0'
-                        }`}
-                      />
-                    </div>
-                  </button>
-                ))}
-              </div>
-
-            </div>
-
-            {/* RIGHT 3D PRODUCT COLUMN WITH OVERFLOW (ANCHORED & PROPORTIONAL) */}
-            <div className="w-full lg:w-auto lg:absolute lg:right-[-6%] xl:right-[-7%] 2xl:right-[-8%] lg:top-[53%] lg:-translate-y-1/2 flex items-center justify-center overflow-visible z-20 pointer-events-none mt-6 lg:mt-0">
-              
-              {/* Ambient Glow */}
-              <div
-                className="absolute w-[340px] sm:w-[480px] lg:w-[680px] xl:w-[760px] 2xl:w-[820px] h-[340px] sm:h-[480px] lg:h-[680px] xl:h-[760px] 2xl:h-[820px] rounded-full blur-3xl pointer-events-none -z-10"
-                style={{
-                  background: `radial-gradient(circle, ${activeSlide.glowColor} 0%, transparent 65%)`,
-                }}
-              />
-
-              {/* 3D Overflowing Product Container */}
-              <div className="relative w-[320px] sm:w-[460px] md:w-[560px] lg:w-[680px] xl:w-[760px] 2xl:w-[820px] aspect-[16/11] overflow-visible">
-                
-                {/* Hotspot Pins */}
-                {activeSlide.pins && activeSlide.pins.map((pin, pIdx) => (
-                  <div
-                    key={pIdx}
-                    style={{ top: `${pin.top}%`, left: `${pin.left}%` }}
-                    className="absolute z-30 hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#121417]/85 backdrop-blur-md border border-white/20 text-[11px] font-semibold text-white/95 shadow-[0_4px_16px_rgba(0,0,0,0.6)] pointer-events-auto select-none"
-                  >
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#e3c383] shadow-[0_0_6px_#e3c383]" />
-                    <span>{pin.label}</span>
-                  </div>
-                ))}
-
-                <Image
-                  src={activeSlide.image}
-                  alt={activeSlide.seoAlt}
-                  fill
-                  priority
-                  quality={92}
-                  sizes="(max-width: 640px) 340px, (max-width: 1024px) 640px, (max-width: 1440px) 980px, 1120px"
-                  className="object-contain filter drop-shadow-[0_28px_40px_rgba(0,0,0,0.85)] select-none"
-                />
-              </div>
-
-            </div>
-
-            {/* GLOBAL NAVIGATION ARROWS (BOTTOM RIGHT) */}
-            <div className="absolute z-30 right-4 sm:right-8 lg:right-10 bottom-4 sm:bottom-6 flex items-center gap-2">
-              <button
-                type="button"
-                onClick={prevSlide}
-                aria-label="Previous pizza"
-                className="p-2 sm:p-2.5 rounded-xl backdrop-blur-md bg-black/60 border border-white/15 text-cream hover:text-gold hover:border-gold/60 transition-all active:scale-95 shadow-lg cursor-pointer"
-              >
-                <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-              <button
-                type="button"
-                onClick={nextSlide}
-                aria-label="Next pizza"
-                className="p-2 sm:p-2.5 rounded-xl backdrop-blur-md bg-black/60 border border-white/15 text-cream hover:text-gold hover:border-gold/60 transition-all active:scale-95 shadow-lg cursor-pointer"
-              >
-                <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-            </div>
-
+            <h1
+              id={`${baseId}-h1`}
+              className="font-display mt-2 sm:mt-3 text-[1.85rem] leading-[1.06] sm:text-5xl lg:text-[3.6rem] font-semibold tracking-tight text-cream"
+            >
+              {ui.h1a}
+              <span className="block text-gold-bright italic font-normal">{ui.h1b}</span>
+            </h1>
           </div>
 
-        </div>
+          {/* PANEL */}
+          <div className="order-3 lg:order-none relative z-10 lg:col-start-1 lg:row-start-2 lg:self-start">
+            <div
+              role="tabpanel"
+              id={`${baseId}-panel`}
+              aria-labelledby={`${baseId}-tab-${current}`}
+              aria-live="polite"
+              className="rounded-2xl border border-panel-border bg-ink-2/70 p-4 sm:p-5 max-w-xl"
+            >
+              <div className="flex items-baseline justify-between gap-4">
+                <div>
+                  <p className="text-[11px] uppercase tracking-[0.14em] text-stone">{c.tag}</p>
+                  <h2 className="text-xl sm:text-2xl font-semibold text-cream mt-0.5">{c.name}</h2>
+                </div>
+                <p className="text-right shrink-0">
+                  <span className="block text-[11px] uppercase tracking-[0.14em] text-stone">{ui.large}</span>
+                  <span className="block text-xl sm:text-2xl font-semibold text-gold-bright tabular-nums">{pizza.largePrice}</span>
+                </p>
+              </div>
+              <p className="text-sm sm:text-[15px] leading-relaxed text-stone mt-2">{c.description}</p>
 
+              <div className="mt-4 flex flex-wrap items-center gap-3">
+                <a
+                  href={ORDER_LINKS.pizza}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-gold px-6 py-3 text-sm sm:text-base"
+                >
+                  {ui.order} {c.name}
+                  <svg aria-hidden="true" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H8M17 7v9" />
+                  </svg>
+                </a>
+                <a href="#catering" className="btn-charcoal px-5 py-3 text-sm sm:text-base">
+                  {ui.catering}
+                </a>
+              </div>
+              <OrderTrustBadge lang={loc} variant="inline" className="mt-4" />
+            </div>
+
+            <a
+              href="#menu"
+              className="inline-block mt-5 text-sm font-medium text-stone underline underline-offset-4 decoration-gold/40 hover:text-cream hover:decoration-gold"
+            >
+              {ui.menu} ↓
+            </a>
+          </div>
+
+          {/* RIGHT — product */}
+          <div className="order-2 lg:order-none relative lg:col-start-2 lg:row-start-1 lg:row-span-2">
+            <div
+              aria-hidden="true"
+              className="absolute inset-[-10%] rounded-full blur-3xl transition-[background] duration-700"
+              style={{ background: `radial-gradient(circle at 50% 55%, ${pizza.glow} 0%, transparent 62%)` }}
+            />
+            <div className="relative w-full aspect-[16/10] sm:aspect-[16/11] max-w-[360px] sm:max-w-[560px] lg:max-w-[760px] mx-auto">
+              {/* Ingredient notes (desktop) */}
+              <span className="hidden sm:inline-flex absolute z-10 top-[12%] left-[6%] items-center gap-1.5 rounded-full border border-panel-border bg-ink/80 backdrop-blur px-3 py-1 text-[11px] font-medium text-cream">
+                <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-gold" />{c.notes[0]}
+              </span>
+              <span className="hidden sm:inline-flex absolute z-10 bottom-[14%] right-[6%] items-center gap-1.5 rounded-full border border-panel-border bg-ink/80 backdrop-blur px-3 py-1 text-[11px] font-medium text-cream">
+                <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-gold" />{c.notes[1]}
+              </span>
+
+              <Image
+                key={pizza.id}
+                src={pizza.image}
+                alt={c.alt}
+                fill
+                priority={current === 0}
+                quality={85}
+                sizes="(max-width: 640px) 92vw, (max-width: 1024px) 80vw, 720px"
+                className="object-contain drop-shadow-[0_24px_32px_rgba(20,14,8,0.55)] motion-safe:animate-[heroFade_420ms_ease-out]"
+              />
+            </div>
+
+            {/* Picker */}
+            <div className="mt-2 flex items-center justify-center gap-2">
+              <button
+                type="button"
+                onClick={() => go(current - 1)}
+                aria-label={ui.prev}
+                className="hidden sm:inline-flex p-2 rounded-full border border-panel-border text-stone hover:text-cream hover:border-gold/60 cursor-pointer"
+              >
+                <svg aria-hidden="true" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4}><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
+              </button>
+
+              <div role="tablist" aria-label={ui.picker} className="flex flex-wrap justify-center gap-1.5 sm:gap-2" onKeyDown={onTabKey}>
+                {PIZZAS.map((p, i) => {
+                  const selected = i === current;
+                  return (
+                    <button
+                      key={p.id}
+                      ref={(el) => { tabRefs.current[i] = el; }}
+                      id={`${baseId}-tab-${i}`}
+                      role="tab"
+                      type="button"
+                      aria-selected={selected}
+                      aria-controls={`${baseId}-panel`}
+                      tabIndex={selected ? 0 : -1}
+                      onClick={() => go(i)}
+                      className={`px-3.5 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-colors cursor-pointer border ${
+                        selected
+                          ? 'bg-gold text-[#1e1b17] border-gold'
+                          : 'bg-transparent text-stone border-panel-border hover:text-cream hover:border-gold/50'
+                      }`}
+                    >
+                      {p.copy[loc].name}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <button
+                type="button"
+                onClick={() => go(current + 1)}
+                aria-label={ui.next}
+                className="hidden sm:inline-flex p-2 rounded-full border border-panel-border text-stone hover:text-cream hover:border-gold/60 cursor-pointer"
+              >
+                <svg aria-hidden="true" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

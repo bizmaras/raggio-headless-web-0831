@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { BookOpen } from 'lucide-react';
+import { ORDER_LINKS } from '@/config/ordering';
 
 interface PromoItem {
   id: string;
@@ -36,7 +37,7 @@ interface PromotionsSectionProps {
   };
 }
 
-const FOODTEC_BASE_URL = 'https://phillystyleexpress.foodtecsolutions.com/';
+const FOODTEC_BASE_URL = ORDER_LINKS.specials;
 
 const DEFAULT_PROMOTIONS: PromoItem[] = [
   {
@@ -45,9 +46,9 @@ const DEFAULT_PROMOTIONS: PromoItem[] = [
     title: '2 XL Pizzas 1 Topping Each',
     description: 'Present coupon when receiving your order. Not to be combined with any other offer. For take-out & delivery only.',
     price: '$29.99',
-    details: 'Get two of our generous 16-inch XL thin-crust or hand-tossed pizzas topped with your choice of savory topping on each pie.',
-    ingredients: ['Two 16" Extra Large Pizzas', '1 Premium Topping Each', 'Grande Mozzarella', 'Homemade Marinara'],
-    orderUrl: `${FOODTEC_BASE_URL}`,
+    details: 'Get two of our generous 18-inch XL thin-crust or hand-tossed pizzas topped with your choice of savory topping on each pie.',
+    ingredients: ['Two 18" Extra Large Pizzas', '1 Premium Topping Each', 'Grande Mozzarella', 'Homemade Marinara'],
+    orderUrl: FOODTEC_BASE_URL,
   },
   {
     id: 'promo-2',
@@ -55,9 +56,9 @@ const DEFAULT_PROMOTIONS: PromoItem[] = [
     title: '1 Large 1-Topping + 10 Wings',
     description: 'The ultimate game day fuel. Choice of bone-in or boneless wings tossed in your signature sauce.',
     price: '$24.99',
-    details: 'One large 14-inch pizza paired with 10 jumbo fresh roaster chicken wings with celery, carrots, and house bleu cheese.',
-    ingredients: ['1 Large 14" Pizza', '10 Jumbo Wings', 'Choice of Wing Sauce', 'House Ranch or Bleu Cheese'],
-    orderUrl: `${FOODTEC_BASE_URL}`,
+    details: 'One large 16-inch pizza paired with 10 jumbo fresh roaster chicken wings with celery, carrots, and house bleu cheese.',
+    ingredients: ['1 Large 16" Pizza', '10 Jumbo Wings', 'Choice of Wing Sauce', 'House Ranch or Bleu Cheese'],
+    orderUrl: FOODTEC_BASE_URL,
   },
   {
     id: 'promo-3',

@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { X, Plus, Minus, Trash2, ShoppingBag } from 'lucide-react';
 import { useCartStore } from '../store/useCartStore';
+import { ORDER_LINKS } from '@/config/ordering';
 
 export default function CartDrawer() {
   const { cart, isCartOpen, closeCart, updateQuantity, removeFromCart, clearCart } = useCartStore();
@@ -116,7 +117,7 @@ export default function CartDrawer() {
 
               <div className="space-y-3">
                 <a
-                  href="https://phillystyleexpress.foodtecsolutions.com/"
+                  href={ORDER_LINKS.root}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={closeCart}
@@ -126,7 +127,7 @@ export default function CartDrawer() {
                 </a>
 
                 <a
-                  href="https://order.foodtecsolutions.com/ordering/phillystyleexpress/menu/Catering"
+                  href={ORDER_LINKS.catering}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={closeCart}

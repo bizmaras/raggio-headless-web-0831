@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { ORDER_LINKS } from '@/config/ordering';
 
 interface StickyMobileBarProps {
   dict?: {
@@ -70,7 +71,7 @@ export default function StickyMobileBar({ dict }: StickyMobileBarProps) {
         </a>
 
         <a
-          href="https://phillystyleexpress.foodtecsolutions.com/"
+          href={ORDER_LINKS.root}
           target="_blank"
           rel="noopener noreferrer"
           className="flex-1 btn-gold py-2.5 px-4 text-sm"

@@ -1,6 +1,7 @@
 'use client';
 
 import { X, Utensils, ExternalLink } from 'lucide-react';
+import { ORDER_LINKS } from '@/config/ordering';
 
 interface ItemDetailModalProps {
   isOpen: boolean;
@@ -90,7 +91,7 @@ export default function ItemDetailModal({
 
             {/* Direct Order CTA */}
             <a
-              href="https://phillystyleexpress.foodtecsolutions.com/"
+              href={ORDER_LINKS.root}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-br from-gold-bright via-gold to-gold-deep text-[#1c1408] font-extrabold text-sm py-3 rounded-xl shadow-lg hover:shadow-gold/30 hover:scale-[1.02] transition-all duration-200 cursor-pointer"

@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import type { SizeVariant } from '@/data/sizePricing';
 import { optimizeContentfulImage } from '@/lib/contentful';
+import { ORDER_LINKS } from '@/config/ordering';
 
 interface ProductDetailViewProps {
   name: string;
@@ -38,7 +39,7 @@ export default function ProductDetailView({
   ingredients = [],
   image,
   sizes,
-  orderUrl = 'https://phillystyleexpress.foodtecsolutions.com/',
+  orderUrl = ORDER_LINKS.root,
   lang,
   dict,
 }: ProductDetailViewProps) {

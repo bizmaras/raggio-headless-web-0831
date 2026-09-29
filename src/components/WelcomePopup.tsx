@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { X, Gift, Pizza, CheckCircle2, AlertCircle } from 'lucide-react';
+import { ORDER_LINKS } from '@/config/ordering';
 
 export default function WelcomePopup() {
     const [isOpen, setIsOpen] = useState(false);
@@ -15,7 +16,7 @@ export default function WelcomePopup() {
     const [phone, setPhone] = useState('');
     const [isEs, setIsEs] = useState(false);
 
-    const FOODTEC_ORDER_URL = 'https://phillystyleexpress.foodtecsolutions.com/';
+    const FOODTEC_ORDER_URL = ORDER_LINKS.root;
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
