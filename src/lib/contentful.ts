@@ -112,7 +112,7 @@ async function fetchFromContentfulRaw(): Promise<MenuItem[]> {
     });
 
     return entries.items.map((entry) => {
-      const imgField = entry.fields.image as any;
+      const imgField = entry.fields.image as unknown as string | { fields?: { file?: { url?: string } } } | undefined;
       let rawImgUrl: string | undefined;
       if (typeof imgField === 'string') {
         rawImgUrl = imgField;

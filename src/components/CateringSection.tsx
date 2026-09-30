@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import CateringItemCard from './CateringItemCard';
 import * as cateringModule from '../data/cateringData';
+import type { CateringItem } from '../data/cateringData';
 import { getLocalizedCateringItem } from '../data/cateringTranslations';
 import { ORDER_LINKS, STORE } from '@/config/ordering';
 // Rendered server-side on the dedicated /[lang]/catering page (no lazy mount → no layout shift).
@@ -26,14 +27,9 @@ interface CateringSectionProps {
 }
 
 export default function CateringSection({ dict, lang = 'en' }: CateringSectionProps) {
-  const rawItems: any[] = (
-    (cateringModule as any).CATERING_ITEMS ||
-    (cateringModule as any).cateringItems ||
-    (cateringModule as any).default ||
-    []
-  ).map((item: any) => getLocalizedCateringItem(item, lang));
+  const rawItems: CateringItem[] = cateringModule.CATERING_ITEMS.map((item) => getLocalizedCateringItem(item, lang));
 
-  const categoriesMap: Record<string, any[]> = {};
+  const categoriesMap: Record<string, CateringItem[]> = {};
   rawItems.forEach((item) => {
     const catName = item.category || 'Other Catering';
     if (!categoriesMap[catName]) {
@@ -53,16 +49,16 @@ export default function CateringSection({ dict, lang = 'en' }: CateringSectionPr
 
   const isEs = lang === 'es';
 
-  const [activeSubcat, setActiveSubcat] = useState<{ name: string; count: number } | null>(null);
+  const [activeSubcat, setActiveSubcat] = useState<{ name: string; count: number } | null>(() => {
+    const firstCat = categories[0];
+    return firstCat ? { name: dict?.categories?.[firstCat] || firstCat, count: categoriesMap[firstCat]?.length || 0 } : null;
+  });
 
   // Track active subcategory as user scrolls through catering items
   useEffect(() => {
     if (typeof window === 'undefined') return;
     if (categories.length === 0) return;
 
-    const firstCat = categories[0];
-    const firstDisplayName = dict?.categories?.[firstCat] || firstCat;
-    setActiveSubcat({ name: firstDisplayName, count: categoriesMap[firstCat]?.length || 0 });
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -203,9 +199,9 @@ export default function CateringSection({ dict, lang = 'en' }: CateringSectionPr
                   >
                     <CateringItemCard
                       name={item.name}
-                      desc={item.description || item.desc}
-                      half={item.halfTrayPrice || item.half}
-                      full={item.fullTrayPrice || item.full}
+                      desc={item.description}
+                      half={item.halfTrayPrice}
+                      full={item.fullTrayPrice}
                       servesHalf={item.servesHalf}
                       servesFull={item.servesFull}
                       halfLabel={halfLabel}

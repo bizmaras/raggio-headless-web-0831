@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: 'Raggio Gourmet & Pizza',
     short_name: 'Raggio Pizza',
-    description: 'Authentic stone-baked pizza, strombolis, calzones, cheesesteaks and gourmet catering in Newark, DE.',
+    description: 'Deck-oven gourmet pizza, strombolis, calzones, cheesesteaks and gourmet catering in Newark, DE.',
     start_url: '/',
     scope: '/',
     id: '/',

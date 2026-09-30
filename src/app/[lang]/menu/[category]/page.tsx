@@ -180,8 +180,8 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               </div>
               <p className="text-sm sm:text-base text-stone mt-3 max-w-2xl leading-relaxed">
                 {lang === "es"
-                  ? "Preparado fresco al momento con queso 100% Grande Mozzarella, masa artesanal horneada a la piedra e ingredientes de máxima calidad."
-                  : "Prepared fresh to order with 100% Grande Mozzarella, stone-baked artisanal crust, and premium quality ingredients."}
+                  ? "Preparado fresco al momento con queso 100% Grande Mozzarella, masa artesanal horneada en horno de piso e ingredientes de máxima calidad."
+                  : "Prepared fresh to order with 100% Grande Mozzarella, deck-oven baked artisanal crust, and premium quality ingredients."}
               </p>
             </div>
           </div>
@@ -205,7 +205,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                   lang={lang}
                   categorySlug={categorySlug}
                   slug={itemSlug}
-                  image={(item as any).Image || (item as any).image}
+                  image={item.Image || item.image}
                   dict={dict}
                 />
               );

@@ -21,7 +21,7 @@ export type ClaimStatus = 'verified' | 'owner-confirm';
 
 export type ClaimId =
   | 'grande-mozzarella'
-  | 'brick-oven'
+  | 'deck-oven'
   | 'signature-thin-crust'
   | 'homemade-garlic-sauce'
   | 'size-16'
@@ -55,15 +55,15 @@ export const CLAIMS: Record<ClaimId, CraftClaim> = {
     },
     evidence: '[PDF] "100% Grande Mozzarella" on Pizza, Sicilian and Gourmet headers; [FT] "Grande Mozzarella" in every pizza description',
   },
-  'brick-oven': {
-    id: 'brick-oven',
+  'deck-oven': {
+    id: 'deck-oven',
     status: 'verified',
-    chip: { en: 'Brick-oven baked', es: 'Horno de ladrillo' },
+    chip: { en: 'Deck-oven baked', es: 'Horno de piso' },
     story: {
       en: 'Baked directly on the oven deck for a crisp, leopard-spotted underside.',
       es: 'Horneada directamente sobre la piedra del horno para una base crujiente.',
     },
-    evidence: '[PDF] section header "Brick Oven Pizza". NOTE: site copy says "stone-baked" — keep one term; the owner\'s menu says brick oven.',
+    evidence: 'OWNER CORRECTION 2026-09-30: the oven is a DECK OVEN (not brick). The old PDF header "Brick Oven Pizza" is outdated; use "deck oven" everywhere.',
   },
   'signature-thin-crust': {
     id: 'signature-thin-crust',
@@ -156,9 +156,9 @@ export const SHOW_UNVERIFIED =
 
 /** Claim sets per website category (order = visual priority on the card). */
 const CLAIMS_BY_CATEGORY: Record<string, ClaimId[]> = {
-  'pizza': ['size-16', 'grande-mozzarella', 'brick-oven', 'cold-ferment-48h', 'san-marzano', 'eight-slices-16'],
-  'gourmet pizza': ['size-16', 'grande-mozzarella', 'brick-oven', 'cold-ferment-48h', 'san-marzano', 'eight-slices-16'],
-  'sicilian pizza': ['grande-mozzarella', 'brick-oven', 'cold-ferment-48h'],
+  'pizza': ['size-16', 'grande-mozzarella', 'deck-oven', 'cold-ferment-48h', 'san-marzano', 'eight-slices-16'],
+  'gourmet pizza': ['size-16', 'grande-mozzarella', 'deck-oven', 'cold-ferment-48h', 'san-marzano', 'eight-slices-16'],
+  'sicilian pizza': ['grande-mozzarella', 'deck-oven', 'cold-ferment-48h'],
   'strombolis + calzones': ['stromboli-16', 'grande-mozzarella'],
   'cheesesteaks': ['ribeye-marinated'],
   'subs + grinders': ['meats-sliced-to-order'],

@@ -27,38 +27,40 @@ const QUICK_REPLIES_ES = [
     { label: '🎉 Catering', message: "Quiero consultar sobre catering para un evento grupal." },
 ];
 
+function initialChatState(): { isEs: boolean; messages: Message[]; quick: boolean } {
+    const spanish = typeof window !== 'undefined' && (window.location.pathname.startsWith('/es') || document.documentElement.lang === 'es');
+    try {
+        const savedHistory = sessionStorage.getItem(SESSION_KEY);
+        if (savedHistory) {
+            return { isEs: spanish, messages: JSON.parse(savedHistory), quick: false };
+        } else {
+            return { isEs: spanish, quick: true, messages: [
+                {
+                    sender: 'bot',
+                    text: spanish
+                        ? "¡Hola! 🍕 ¿Se te antoja una **pizza gourmet** recién horneada, auténtica **comida latina**, **alitas** o **cheesesteaks**? Estás en el lugar correcto — ¿en qué te puedo ayudar hoy?"
+                        : "Hey there! 🍕 Craving a fresh-out-of-the-oven **gourmet pizza**, **authentic Latin food**, **wings**, or **cheesesteaks**? You're in the right place — what can I get started for you today?",
+                },
+            ] };
+        }
+    } catch {
+        return { isEs: spanish, quick: true, messages: [{ sender: 'bot', text: spanish ? "¡Hola! ¿Cómo te puedo ayudar hoy?" : "Hello! How can I help you today?" }] };
+    }
+}
+
 export default function AIChatBot() {
     const [isOpen, setIsOpen] = useState(false);
-    const [isEs, setIsEs] = useState(false);
+    // Mounted client-only (ssr:false via DeferredWidgets), so reading window/sessionStorage here is safe.
+    const [init] = useState(initialChatState);
+    const isEs = init.isEs;
     const [input, setInput] = useState('');
-    const [messages, setMessages] = useState<Message[]>([]);
+    const [messages, setMessages] = useState<Message[]>(init.messages);
     const [loading, setLoading] = useState(false);
-    const [showQuickReplies, setShowQuickReplies] = useState(true);
+    const [showQuickReplies, setShowQuickReplies] = useState(init.quick);
     const chatEndRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
-    useEffect(() => {
-        const spanish = typeof window !== 'undefined' && (window.location.pathname.startsWith('/es') || document.documentElement.lang === 'es');
-        setIsEs(spanish);
-        try {
-            const savedHistory = sessionStorage.getItem(SESSION_KEY);
-            if (savedHistory) {
-                setMessages(JSON.parse(savedHistory));
-                setShowQuickReplies(false);
-            } else {
-                setMessages([
-                    {
-                        sender: 'bot',
-                        text: spanish
-                            ? "¡Hola! 🍕 ¿Se te antoja una **pizza gourmet** recién horneada, auténtica **comida latina**, **alitas** o **cheesesteaks**? Estás en el lugar correcto — ¿en qué te puedo ayudar hoy?"
-                            : "Hey there! 🍕 Craving a fresh-out-of-the-oven **gourmet pizza**, **authentic Latin food**, **wings**, or **cheesesteaks**? You're in the right place — what can I get started for you today?",
-                    },
-                ]);
-            }
-        } catch (e) {
-            setMessages([{ sender: 'bot', text: spanish ? "¡Hola! ¿Cómo te puedo ayudar hoy?" : "Hello! How can I help you today?" }]);
-        }
-    }, []);
+
 
     useEffect(() => {
         if (messages.length > 0) {
@@ -124,10 +126,10 @@ export default function AIChatBot() {
                         window.scrollTo({ top: y, behavior: 'smooth' });
                     }, 250);
                 } else {
-                    window.location.hash = url.split('#')[1];
+                    window.location.assign(url);
                 }
             } catch (err) {
-                window.location.hash = url.split('#')[1];
+                window.location.assign(url);
             }
         }
     };

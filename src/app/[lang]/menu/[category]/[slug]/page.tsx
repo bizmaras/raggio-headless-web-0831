@@ -263,7 +263,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                       slug={item.Slug}
                       categorySlug={categoryToSlug(item.Category)}
                       variant="editorial"
-                      image={(item as any).Image || (item as any).image}
+                      image={item.Image || item.image}
                       lang={lang}
                       dict={dict}
                     />

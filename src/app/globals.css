@@ -20,7 +20,7 @@
   --color-cream: #f4ede0;        /* parchment text on dark — 14.7:1 */
   --color-stone: #b9ae9c;        /* secondary text on dark — 7.8:1 */
   --color-stone-dim: #a39884;
-  --color-ember: #b8452b;        /* brick-oven tomato (white text 5.6:1) */
+  --color-ember: #b8452b;        /* oven tomato (white text 5.6:1) */
   --color-ember-hover: #a63d26;
 
   /* Light-surface primitives (used directly or via .surface-milk remap) */

@@ -120,8 +120,8 @@ const FAVORITES: Favorite[] = [
     menuHref: '#gourmet-pizza',
     orderHref: ORDER_LINKS.pizza,
     copy: {
-      en: { eyebrow: 'Brick-oven', title: 'Signature Pizza', body: '16" pies with Grande Mozzarella, from classic pepperoni to gourmet.', alt: 'Signature thin-crust pizza — Raggio Gourmet, Newark DE' },
-      es: { eyebrow: 'Horno de ladrillo', title: 'Pizza de la casa', body: 'Pizzas de 16" con Grande Mozzarella, del pepperoni clásico a las gourmet.', alt: 'Pizza de masa fina de la casa — Raggio Gourmet, Newark DE' },
+      en: { eyebrow: 'Deck oven', title: 'Signature Pizza', body: '16" pies with Grande Mozzarella, from classic pepperoni to gourmet.', alt: 'Signature thin-crust pizza — Raggio Gourmet, Newark DE' },
+      es: { eyebrow: 'Horno de piso', title: 'Pizza de la casa', body: 'Pizzas de 16" con Grande Mozzarella, del pepperoni clásico a las gourmet.', alt: 'Pizza de masa fina de la casa — Raggio Gourmet, Newark DE' },
     },
   },
   {
@@ -170,7 +170,7 @@ const UI = {
     pause: 'Pause slideshow',
     play: 'Play slideshow',
     goTo: (name: string) => `Show ${name}`,
-    facts: ['Brick-oven baked', '100% Grande Mozzarella', 'Open daily from 9 AM'],
+    facts: ['Deck-oven baked', '100% Grande Mozzarella', 'Open daily from 9 AM'],
     favEyebrow: 'Raggio Favorites',
     favTitle: 'What are you craving?',
     see: 'See menu',
@@ -189,7 +189,7 @@ const UI = {
     pause: 'Pausar presentación',
     play: 'Reproducir presentación',
     goTo: (name: string) => `Mostrar ${name}`,
-    facts: ['Horno de ladrillo', '100% Grande Mozzarella', 'Abierto a diario desde las 9 AM'],
+    facts: ['Horneada en horno de piso', '100% Grande Mozzarella', 'Abierto a diario desde las 9 AM'],
     favEyebrow: 'Favoritos Raggio',
     favTitle: '¿Qué se te antoja?',
     see: 'Ver menú',

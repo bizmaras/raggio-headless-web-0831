@@ -1,4 +1,5 @@
 'use client';
+import { useIsClient } from '@/hooks/useIsClient';
 
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
@@ -17,10 +18,12 @@ interface InstallAppButtonProps {
 export default function InstallAppButton({ className = '', children, lang }: InstallAppButtonProps) {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [, setIsInstallable] = useState(false);
-  const [isIOS, setIsIOS] = useState(false);
-  const [isChromeIOS, setIsChromeIOS] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const mounted = useIsClient();
+  // UA never changes during a visit: derive instead of storing in state.
+  const ua = mounted ? window.navigator.userAgent : '';
+  const isIOS = mounted && (/iphone|ipad|ipod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1));
+  const isChromeIOS = isIOS && /crios/i.test(ua);
 
   // Detect locale
   const activeLang = lang || (typeof window !== 'undefined' && window.location.pathname.startsWith('/es') ? 'es' : 'en');
@@ -28,7 +31,6 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
   const isTr = activeLang === 'tr' || (typeof window !== 'undefined' && (navigator.language?.toLowerCase().startsWith('tr') || document.documentElement.lang === 'tr'));
 
   useEffect(() => {
-    setMounted(true);
     if (window.matchMedia('(display-mode: standalone)').matches) {
       return;
     }
@@ -40,16 +42,6 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
     };
 
     window.addEventListener('beforeinstallprompt', handler);
-
-    const ua = window.navigator.userAgent;
-    const isIosDevice = /iphone|ipad|ipod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-    if (isIosDevice) {
-      setIsIOS(true);
-      setIsInstallable(true);
-      if (/crios/i.test(ua)) {
-        setIsChromeIOS(true);
-      }
-    }
 
     return () => {
       window.removeEventListener('beforeinstallprompt', handler);
@@ -224,7 +216,7 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
                     </>
                   ) : (
                     <>
-                      Tap the <strong className="text-white">Share</strong> button in Safari's bottom toolbar:
+                      Tap the <strong className="text-white">Share</strong> button in Safari&apos;s bottom toolbar:
                       <span className="inline-flex items-center gap-1 ml-1.5 px-2 py-0.5 rounded bg-white/10 text-[#ebd092] font-medium align-middle">
                         <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
@@ -245,15 +237,15 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
               <div className="pt-0.5 leading-snug">
                 {isTr ? (
                   <>
-                    Açılan menüde aşağı kaydırıp <strong className="text-[#ebd092]">"Ana Ekrana Ekle"</strong> seçeneğini seçin.
+                    Açılan menüde aşağı kaydırıp <strong className="text-[#ebd092]">&ldquo;Ana Ekrana Ekle&rdquo;</strong> seçeneğini seçin.
                   </>
                 ) : isEs ? (
                   <>
-                    Desplácese y seleccione <strong className="text-[#ebd092]">"Agregar a pantalla de inicio"</strong>.
+                    Desplácese y seleccione <strong className="text-[#ebd092]">&ldquo;Agregar a pantalla de inicio&rdquo;</strong>.
                   </>
                 ) : (
                   <>
-                    Scroll down and tap <strong className="text-[#ebd092]">"Add to Home Screen"</strong>.
+                    Scroll down and tap <strong className="text-[#ebd092]">&ldquo;Add to Home Screen&rdquo;</strong>.
                   </>
                 )}
               </div>
@@ -267,15 +259,15 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
               <div className="pt-0.5 leading-snug">
                 {isTr ? (
                   <>
-                    Sağ üst köşedeki <strong className="text-white">"Ekle"</strong> butonuna basın. Raggio VIP App ana ekranınıza eklendi!
+                    Sağ üst köşedeki <strong className="text-white">&ldquo;Ekle&rdquo;</strong> butonuna basın. Raggio VIP App ana ekranınıza eklendi!
                   </>
                 ) : isEs ? (
                   <>
-                    Toque <strong className="text-white">"Agregar"</strong> en la esquina superior. ¡Disfrute su App!
+                    Toque <strong className="text-white">&ldquo;Agregar&rdquo;</strong> en la esquina superior. ¡Disfrute su App!
                   </>
                 ) : (
                   <>
-                    Tap <strong className="text-white">"Add"</strong> in top right. Enjoy full-screen VIP ordering!
+                    Tap <strong className="text-white">&ldquo;Add&rdquo;</strong> in top right. Enjoy full-screen VIP ordering!
                   </>
                 )}
               </div>
@@ -314,11 +306,11 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
               </div>
               <div className="pt-0.5 leading-snug">
                 {isTr ? (
-                  <>Adres çubuğundaki <strong className="text-[#ebd092]">"Uygulamayı Yükle"</strong> simgesine tıklayın.</>
+                  <>Adres çubuğundaki <strong className="text-[#ebd092]">&ldquo;Uygulamayı Yükle&rdquo;</strong> simgesine tıklayın.</>
                 ) : isEs ? (
-                  <>Haga clic en el icono <strong className="text-[#ebd092]">"Instalar aplicación"</strong> en la barra de direcciones.</>
+                  <>Haga clic en el icono <strong className="text-[#ebd092]">&ldquo;Instalar aplicación&rdquo;</strong> en la barra de direcciones.</>
                 ) : (
-                  <>Click the <strong className="text-[#ebd092]">"Install App"</strong> icon in your browser address bar.</>
+                  <>Click the <strong className="text-[#ebd092]">&ldquo;Install App&rdquo;</strong> icon in your browser address bar.</>
                 )}
               </div>
             </div>
@@ -328,11 +320,11 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
               </div>
               <div className="pt-0.5 leading-snug">
                 {isTr ? (
-                  <>Çıkan onay penceresinde <strong className="text-white">"Yükle"</strong> butonuna basın.</>
+                  <>Çıkan onay penceresinde <strong className="text-white">&ldquo;Yükle&rdquo;</strong> butonuna basın.</>
                 ) : isEs ? (
-                  <>Haga clic en <strong className="text-white">"Instalar"</strong> para confirmar.</>
+                  <>Haga clic en <strong className="text-white">&ldquo;Instalar&rdquo;</strong> para confirmar.</>
                 ) : (
-                  <>Click <strong className="text-white">"Install"</strong> to confirm.</>
+                  <>Click <strong className="text-white">&ldquo;Install&rdquo;</strong> to confirm.</>
                 )}
               </div>
             </div>

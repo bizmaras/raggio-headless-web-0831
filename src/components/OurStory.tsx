@@ -4,7 +4,7 @@ import { STORE } from '@/config/ordering';
 /**
  * "Our story" — DRAFT COPY, OWNER MUST APPROVE before production.
  * Uses only facts already published on the site (address, daily hours from 9 AM,
- * brick oven, 100% Grande Mozzarella, Philly Express sister kitchen). No founding
+ * deck oven, 100% Grande Mozzarella, Philly Express sister kitchen). No founding
  * year, awards or founder claims are made until the owner supplies them.
  */
 const COPY = {
@@ -12,11 +12,11 @@ const COPY = {
     eyebrow: 'Our story',
     title: 'A neighborhood pizzeria, done the careful way.',
     body: [
-      'Raggio is an independent kitchen on East Chestnut Hill Road in Newark. We bake our pies in a brick oven, top them with 100% Grande Mozzarella, and cook every order when you place it.',
+      'Raggio is an independent kitchen on East Chestnut Hill Road in Newark. We bake our pies right on the stone deck of our deck oven, top them with 100% Grande Mozzarella, and cook every order when you place it.',
       'Our sister kitchen, Philly Express, cooks the cheesesteaks and hoagies at the same address and runs our online checkout. So one order can include pizza, steaks, wings and trays for a group.',
     ],
     pillars: [
-      { k: 'Brick oven', v: 'Crisp, blistered crust' },
+      { k: 'Deck oven', v: 'Baked right on the stone' },
       { k: 'Grande Mozzarella', v: '100%, on every pie' },
       { k: 'Open daily', v: 'From 9 AM' },
     ],
@@ -26,11 +26,11 @@ const COPY = {
     eyebrow: 'Nuestra historia',
     title: 'Una pizzería de barrio, hecha con cuidado.',
     body: [
-      'Raggio es una cocina independiente en East Chestnut Hill Road, en Newark. Horneamos nuestras pizzas en horno de ladrillo, con queso 100% Grande Mozzarella, y preparamos cada pedido en el momento.',
+      'Raggio es una cocina independiente en East Chestnut Hill Road, en Newark. Horneamos nuestras pizzas directamente sobre la piedra de nuestro horno de piso, con queso 100% Grande Mozzarella, y preparamos cada pedido en el momento.',
       'Nuestra cocina hermana, Philly Express, prepara los cheesesteaks y hoagies en la misma dirección y gestiona el pago en línea. Así, un solo pedido puede incluir pizza, steaks, alitas y bandejas para grupos.',
     ],
     pillars: [
-      { k: 'Horno de ladrillo', v: 'Masa crujiente y dorada' },
+      { k: 'Horno de piso', v: 'Directo sobre la piedra' },
       { k: 'Grande Mozzarella', v: '100%, en cada pizza' },
       { k: 'Abierto a diario', v: 'Desde las 9 AM' },
     ],

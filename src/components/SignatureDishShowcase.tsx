@@ -46,7 +46,7 @@ interface Dish {
   layers: Layer[];
 }
 
-const crust = (claim: ClaimId = 'brick-oven'): Layer => ({
+const crust = (claim: ClaimId = 'deck-oven'): Layer => ({
   n: 1,
   at: { x: 14, y: 50 },
   title: { en: CLAIMS[claim].chip.en, es: CLAIMS[claim].chip.es },

@@ -40,7 +40,7 @@ export async function generateMetadata({
 
   const description = isEs
     ? "Ordena pizzas gourmet frescas, strombolis, calzones, alitas y catering en línea. Entrega rápida en Newark, DE. 681 E Chestnut Hill Rd."
-    : "Brick-oven gourmet pizza, Philly cheesesteaks, wings and catering at 681 E Chestnut Hill Rd, Newark, DE. Order online for pickup or delivery. (302) 369-0553.";
+    : "Deck-oven gourmet pizza, Philly cheesesteaks, wings and catering at 681 E Chestnut Hill Rd, Newark, DE. Order online for pickup or delivery. (302) 369-0553.";
 
   return {
     metadataBase: new URL("https://www.raggiogourmetpizza.com"),

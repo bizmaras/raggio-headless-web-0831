@@ -14,11 +14,8 @@ function buildSystemPrompt() {
     const day = nyTime.getDay(); // 0 = Sunday, 1 = Monday ... 6 = Saturday
     const hour = nyTime.getHours();
 
-    let openHour = 9, closeHour = 21;
-
-    if (day === 5 || day === 6) {
-        closeHour = 22;
-    }
+    const openHour = 9;
+    const closeHour = day === 5 || day === 6 ? 22 : 21;
 
     const isOpenNow = hour >= openHour && hour < closeHour;
     const openAmPm = "9:00 AM";

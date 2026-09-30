@@ -13,11 +13,11 @@ export default function DeferredWidgets() {
     // Defer mounting heavy interactive widgets until the browser main thread is idle
     if (typeof window !== 'undefined') {
       if ('requestIdleCallback' in window) {
-        const handle = (window as any).requestIdleCallback(
+        const handle = window.requestIdleCallback(
           () => setShouldMount(true),
           { timeout: 2500 }
         );
-        return () => (window as any).cancelIdleCallback(handle);
+        return () => window.cancelIdleCallback(handle);
       } else {
         const timer = setTimeout(() => setShouldMount(true), 1500);
         return () => clearTimeout(timer);

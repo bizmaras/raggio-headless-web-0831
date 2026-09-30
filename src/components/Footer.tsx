@@ -23,7 +23,7 @@ interface FooterProps {
 
 export default function Footer({ dict, lang }: FooterProps) {
   const descriptionText = dict?.footer?.description ||
-    'Serving Newark, Delaware with artisanal stone-baked pizzas, authentic Philly cheesesteaks, fresh pastas, and full-service event catering.';
+    'Serving Newark, Delaware with deck-oven gourmet pizzas, authentic Philly cheesesteaks, fresh pastas, and full-service event catering.';
   const storeHoursText = dict?.footer?.store_hours || 'Store Hours';
   const hoursWeekText = dict?.footer?.hours_week || 'Sunday – Thursday: 9:00 AM – 9:00 PM';
   const hoursWeekendText = dict?.footer?.hours_weekend || 'Friday – Saturday: 9:00 AM – 10:00 PM';

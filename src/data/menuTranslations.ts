@@ -9,7 +9,7 @@ export interface MenuTranslation {
 export const MENU_TRANSLATIONS_ES: Record<string, MenuTranslation> = {
   "Plain Cheese Pizza": {
     "name": "Pizza Clásica de Queso",
-    "desc": "100% Mozzarella Grande, salsa marinara casera y masa horneada a la piedra."
+    "desc": "100% Mozzarella Grande, salsa marinara casera y masa horneada en horno de piso."
   },
   "White Cheese Pizza": {
     "name": "Pizza Blanca de Tres Quesos",
@@ -17,7 +17,7 @@ export const MENU_TRANSLATIONS_ES: Record<string, MenuTranslation> = {
   },
   "Pizza by the Slice": {
     "name": "Porción de Pizza",
-    "desc": "1 porción generosa de pizza recién horneada a la piedra."
+    "desc": "1 porción generosa de pizza recién horneada en horno de piso."
   },
   "2 Slices + Can Drink": {
     "name": "Combo 2 Porciones + Refresco",

@@ -141,7 +141,7 @@ export default async function HomePage({
                         lang={lang}
                         categorySlug={targetId}
                         slug={itemSlug}
-                        image={(item as any).Image || (item as any).image}
+                        image={item.Image || item.image}
                         dict={dict}
                       />
                     );
@@ -175,7 +175,7 @@ export default async function HomePage({
                 const prices = items.map((i) => parseFloat(i.Price) || 0).filter((n) => n > 0);
                 const from = prices.length ? Math.min(...prices) : 0;
                 const cover = items
-                  .map((i) => ((i as any).Image || (i as any).image) as string | undefined)
+                  .map((i) => i.Image || i.image)
                   .find((src) => typeof src === "string" && src.startsWith("/images/"));
                 return (
                   <li

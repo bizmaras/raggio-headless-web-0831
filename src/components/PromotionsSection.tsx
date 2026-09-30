@@ -1,4 +1,5 @@
 'use client';
+import { useIsClient } from '@/hooks/useIsClient';
 
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
@@ -104,11 +105,8 @@ const DEFAULT_PROMOTIONS: PromoItem[] = [
 
 export default function PromotionsSection({ dict }: PromotionsSectionProps) {
   const [selectedPromo, setSelectedPromo] = useState<PromoItem | null>(null);
-  const [mounted, setMounted] = useState(false);
+  const mounted = useIsClient();
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   // Lock background body scroll while modal is open
   useEffect(() => {
