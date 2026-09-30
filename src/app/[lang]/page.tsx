@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import Image from "next/image";
 import { getMenuItems } from "../../lib/menu";
 import { getLocalizedMenuItem } from "../../data/menuTranslations";
 import { categoryToSlug, productToSlug } from "../../lib/slug";
@@ -9,7 +10,6 @@ import type { Locale } from "./dictionaries";
 import Header from "../../components/Header";
 import HeroSlider from "../../components/HeroSlider";
 import CategoryRail from "../../components/CategoryRail";
-import ScrollReveal from "../../components/ScrollReveal";
 import PromotionsSection from "../../components/PromotionsSection";
 import MenuItemCard from "../../components/MenuItemCard";
 import MenuCollection from "../../components/menu/MenuCollection";
@@ -27,6 +27,10 @@ const GoogleReviewsSection = dynamic(() => import("../../components/GoogleReview
 const DeferredWidgets = dynamic(() => import("../../components/DeferredWidgets"));
 
 const HOME_PREVIEW_COUNT = 3;
+
+// Signature categories rendered as full interactive cards on the home page;
+// every other category is a lightweight tile linking to its full category page.
+const FEATURED_CATEGORIES = new Set(["Pizza", "Gourmet Pizza", "Sicilian Pizza"]);
 
 export default async function HomePage({
   params,
@@ -59,8 +63,7 @@ export default async function HomePage({
           className="max-w-7xl mx-auto px-6 py-12 scroll-mt-[150px] md:scroll-mt-[270px]"
           style={{ scrollMarginTop: 'calc(var(--sticky-category-top, 250px) + 20px)' }}
         >
-          <ScrollReveal>
-            <div className="flex flex-col sm:flex-row items-center justify-between mb-12 gap-4">
+                      <div className="flex flex-col sm:flex-row items-center justify-between mb-12 gap-4">
               <h2 className="text-3xl md:text-4xl font-extrabold text-gold-bright">
                 {dict.menu.title}
               </h2>
@@ -78,9 +81,8 @@ export default async function HomePage({
               </a>
               </div>
             </div>
-          </ScrollReveal>
-
-          {categories.map((category, catIdx) => {
+          
+          {categories.filter((c) => FEATURED_CATEGORIES.has(c)).map((category) => {
             const targetId = categoryToSlug(category);
             const allInCategory = menuItems
               .filter((item) => item.Category === category)
@@ -133,7 +135,7 @@ export default async function HomePage({
                         description={item.Description}
                         sizes={sizes}
                         category={item.Category}
-                        priority={catIdx === 0 && idx < 3}
+                        priority={false}
                         lang={lang}
                         categorySlug={targetId}
                         slug={itemSlug}
@@ -156,18 +158,68 @@ export default async function HomePage({
               </div>
             );
           })}
+
+          {/* ===== Rest of the menu: lightweight category tiles → full, indexable category pages ===== */}
+          <div className="mt-4">
+            <h3 className="font-display text-2xl md:text-3xl font-semibold text-gold-bright mb-6">
+              {lang === "es" ? "Más de nuestra cocina" : "More from our kitchen"}
+            </h3>
+            <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
+              {categories.filter((c) => !FEATURED_CATEGORIES.has(c)).map((category) => {
+                const targetId = categoryToSlug(category);
+                const items = menuItems.filter((item) => item.Category === category);
+                const displayCategory =
+                  (dict.categories as Record<string, string>)?.[category] || category;
+                const prices = items.map((i) => parseFloat(i.Price) || 0).filter((n) => n > 0);
+                const from = prices.length ? Math.min(...prices) : 0;
+                const cover = items
+                  .map((i) => ((i as any).Image || (i as any).image) as string | undefined)
+                  .find((src) => typeof src === "string" && src.startsWith("/images/"));
+                return (
+                  <li
+                    key={category}
+                    id={targetId}
+                    style={{ scrollMarginTop: "calc(var(--sticky-category-top, 136px) + 20px)" }}
+                  >
+                    <Link
+                      href={`/${lang}/menu/${targetId}`}
+                      className="group block h-full overflow-hidden rounded-2xl border border-panel-border bg-panel hover:border-gold transition-colors"
+                    >
+                      <div className="relative aspect-[4/3] bg-ink-2 overflow-hidden">
+                        {cover ? (
+                          <Image
+                            src={cover}
+                            alt={`${displayCategory} — Raggio Gourmet & Pizza, Newark DE`}
+                            fill
+                            loading="lazy"
+                            sizes="(max-width: 639px) 46vw, (max-width: 1023px) 30vw, 280px"
+                            className="object-cover transition-transform duration-700 ease-out motion-safe:group-hover:scale-[1.04]"
+                          />
+                        ) : (
+                          <span aria-hidden="true" className="absolute inset-0 grid place-items-center font-display text-3xl text-gold/60">
+                            {displayCategory.charAt(0)}
+                          </span>
+                        )}
+                      </div>
+                      <div className="p-3 sm:p-4">
+                        <span className="block font-semibold text-cream leading-snug">{displayCategory}</span>
+                        <span className="mt-1 block text-xs text-stone tabular-nums">
+                          {items.length} {lang === "es" ? "opciones" : "items"}
+                          {from > 0 ? ` · ${lang === "es" ? "desde" : "from"} $${from.toFixed(2)}` : ""}
+                        </span>
+                      </div>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         </section>
-        <ScrollReveal>
-          <PromotionsSection dict={dict} />
-        </ScrollReveal>
-        <CateringSection dict={dict} lang={lang} />
-        <ScrollReveal>
-          <FAQ dict={dict} />
-        </ScrollReveal>
-        <ScrollReveal>
-          <GoogleReviewsSection dict={dict} />
-        </ScrollReveal>
-        </div>
+                  <PromotionsSection dict={dict} />
+                <CateringSection dict={dict} lang={lang} />
+                  <FAQ dict={dict} />
+                          <GoogleReviewsSection dict={dict} />
+                </div>
       </main>
       <Footer dict={dict} lang={lang} />
       <ScrollToTop />

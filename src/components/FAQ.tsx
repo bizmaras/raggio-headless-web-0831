@@ -80,12 +80,12 @@ export default function FAQ({ dict }: FAQProps) {
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className="bg-black/40 border border-white/5 rounded-xl p-6 hover:border-gold/30 transition-colors"
+              className="bg-panel border border-panel-border rounded-xl p-6 hover:border-gold/40 transition-colors"
             >
               <h3 className="text-xl font-bold text-gold-bright mb-3">
                 {faq.question}
               </h3>
-              <p className="text-cream/90 leading-relaxed">
+              <p className="text-cream leading-relaxed">
                 {faq.answer}
               </p>
             </div>

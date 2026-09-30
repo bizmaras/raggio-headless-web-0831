@@ -253,7 +253,7 @@ export default function GoogleReviewsSection({ dict }: GoogleReviewsSectionProps
                 <Clock className="w-3 h-3" />
                 {review.relativeTime}
               </span>
-              <span className="text-[10px] uppercase font-mono tracking-wider text-gold/60">
+              <span className="text-[10px] uppercase font-mono tracking-wider text-stone">
                 Google Verified
               </span>
             </div>

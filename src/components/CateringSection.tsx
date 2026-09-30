@@ -5,8 +5,12 @@ import CateringItemCard from './CateringItemCard';
 import * as cateringModule from '../data/cateringData';
 import { getLocalizedCateringItem } from '../data/cateringTranslations';
 import { ORDER_LINKS, STORE } from '@/config/ordering';
-import CateringCalculator from './CateringCalculator';
-import CorporateInvoicingPanel from './CorporateInvoicingPanel';
+import dynamic from 'next/dynamic';
+import LazyMount from './LazyMount';
+
+// Heavy interactive widgets: loaded only when the catering section nears the viewport.
+const CateringCalculator = dynamic(() => import('./CateringCalculator'), { ssr: false });
+const CorporateInvoicingPanel = dynamic(() => import('./CorporateInvoicingPanel'), { ssr: false });
 
 interface CateringSectionProps {
   lang?: string;
@@ -168,8 +172,12 @@ export default function CateringSection({ dict, lang = 'en' }: CateringSectionPr
       </div>
 
       {/* Stage 3: planner + B2B invoicing sit above the full tray catalog */}
-      <CateringCalculator lang={lang} />
-      <CorporateInvoicingPanel lang={lang} />
+      <LazyMount minHeight={1100} label={isEs ? 'Planificador de catering' : 'Catering planner'}>
+        <CateringCalculator lang={lang} />
+      </LazyMount>
+      <LazyMount minHeight={760} label={isEs ? 'Facturación corporativa' : 'Corporate invoicing'}>
+        <CorporateInvoicingPanel lang={lang} />
+      </LazyMount>
 
       {/* Category Sections & Tray Items */}
       {categories.map((categoryName) => {

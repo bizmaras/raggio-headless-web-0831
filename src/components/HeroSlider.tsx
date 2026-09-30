@@ -227,6 +227,17 @@ export default function HeroSlider({ lang = 'en' }: HeroSliderProps) {
   const [reduced, setReduced] = useState(false);
   const [visible, setVisible] = useState(true);
   const touchX = useRef<number | null>(null);
+  // Only the first slide's photo is requested up front (LCP). The rest are
+  // requested after the page has loaded, so they never compete with the LCP image.
+  const [armed, setArmed] = useState(false);
+  useEffect(() => {
+    const arm = () => window.setTimeout(() => setArmed(true), 1500);
+    if (document.readyState === 'complete') { const t = arm(); return () => window.clearTimeout(t); }
+    let t = 0;
+    const onLoad = () => { t = arm(); };
+    window.addEventListener('load', onLoad, { once: true });
+    return () => { window.removeEventListener('load', onLoad); window.clearTimeout(t); };
+  }, []);
 
   useEffect(() => {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -238,7 +249,7 @@ export default function HeroSlider({ lang = 'en' }: HeroSliderProps) {
     return () => { mq.removeEventListener('change', apply); document.removeEventListener('visibilitychange', onVis); };
   }, []);
 
-  const go = useCallback((i: number) => setCurrent(((i % n) + n) % n), [n]);
+  const go = useCallback((i: number) => { setArmed(true); setCurrent(((i % n) + n) % n); }, [n]);
 
   const running = playing && !hold && !reduced && visible;
 
@@ -286,17 +297,19 @@ export default function HeroSlider({ lang = 'en' }: HeroSliderProps) {
               aria-hidden={i !== current}
               className={`rg-slide ${i === current ? 'is-active' : ''}`}
             >
-              <Image
-                src={s.image}
-                alt={s.copy[loc].alt}
-                fill
-                priority={i === 0}
-                fetchPriority={i === 0 ? 'high' : 'low'}
-                loading={i === 0 ? undefined : 'lazy'}
-                quality={80}
-                sizes="(max-width: 1023px) 100vw, 64vw"
-                className="object-cover object-[50%_40%]"
-              />
+              {(i === 0 || armed) && (
+                <Image
+                  src={s.image}
+                  alt={s.copy[loc].alt}
+                  fill
+                  priority={i === 0}
+                  fetchPriority={i === 0 ? 'high' : 'low'}
+                  loading={i === 0 ? undefined : 'lazy'}
+                  quality={80}
+                  sizes="(max-width: 1023px) 100vw, 64vw"
+                  className="object-cover object-[50%_40%]"
+                />
+              )}
             </div>
           ))}
           <div className="rg-hero-scrim" aria-hidden="true" />
@@ -425,7 +438,7 @@ export default function HeroSlider({ lang = 'en' }: HeroSliderProps) {
               const fc = f.copy[loc];
               return (
                 <li key={f.id} className="rg-fav-card group">
-                  <a href={f.menuHref} className="rg-focus block" aria-label={`${fc.title} — ${ui.see}`}>
+                  <a href={f.menuHref} className="block" tabIndex={-1} aria-hidden="true">
                     <div className="relative aspect-[4/3] overflow-hidden">
                       <Image
                         src={f.image}

@@ -55,7 +55,6 @@ export default function SizeSelector({ sizes, value, onChange, lang = 'en', dens
             role="radio"
             aria-checked={checked}
             tabIndex={checked ? 0 : -1}
-            aria-label={`${s.fullName[lang]} $${s.price.toFixed(2)}`}
             onClick={(e) => { e.stopPropagation(); onChange(i); }}
             className={`flex flex-col items-center justify-center rounded-lg transition-colors duration-150 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-gold ${
               compact ? 'min-h-[36px] px-1 py-1' : 'min-h-[48px] px-1 py-1.5'
@@ -70,6 +69,7 @@ export default function SizeSelector({ sizes, value, onChange, lang = 'en', dens
                 ${s.price.toFixed(2)}
               </span>
             )}
+            <span className="sr-only">{` — ${s.fullName[lang]}${compact ? ` $${s.price.toFixed(2)}` : ''}`}</span>
           </button>
         );
       })}
