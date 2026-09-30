@@ -415,7 +415,7 @@ export default function CateringCalculator({ lang = 'en' }: { lang?: string; dic
               <dt className="text-cream">{t.total}</dt>
               <dd className="font-display text-4xl tabular-nums text-cream">{usd(plan.total)}</dd>
             </div>
-            <div className="text-right text-xs tabular-nums text-gold">≈ {usd(plan.perGuest)} {t.perGuest}</div>
+            <div className="text-right text-xs tabular-nums text-gold"><dt className="sr-only">{t.perGuest}</dt><dd>≈ {usd(plan.perGuest)} {t.perGuest}</dd></div>
           </dl>
 
           {/* Context-aware advisories */}

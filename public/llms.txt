@@ -1,23 +1,37 @@
 # Raggio Gourmet & Pizza
 
-> Premium artisanal pizza, handcrafted calzones, strombolis, wings, and catering services in Newark, Delaware.
+> Independent pizzeria in Newark, Delaware serving brick-oven gourmet pizza made with 100% Grande Mozzarella, thick-crust Sicilian squares, Philly-style cheesesteaks, chicken wings, strombolis, pasta, Latin dishes and group catering. Pickup and delivery. Online checkout is processed by our sister kitchen, Philly Style Express ("Philly Express"), on the FoodTec platform — same kitchen, same address.
 
-## Core Resources
+## Key facts
 
-- [Online Ordering Portal](https://phillystyleexpress.foodtecsolutions.com/): Official FoodTec online ordering portal for instant delivery and pickup orders.
-- [Official Website](https://raggiogourmetpizza.com/): Main web portal for Raggio Gourmet & Pizza.
-- [Sitemap](https://raggiogourmetpizza.com/sitemap.xml): Complete XML sitemap listing taranabilir site yapısı.
-- [Robots Directives](https://raggiogourmetpizza.com/robots.txt): Crawler rules and accessibility policy.
+- Address: 681 E Chestnut Hill Rd, Newark, DE 19713, United States
+- Phone: (302) 369-0553
+- Hours: Sunday–Thursday 9:00 AM–9:00 PM; Friday–Saturday 9:00 AM–10:00 PM (America/New_York)
+- Service: pickup and delivery; no reservations
+- Price range: $$ — Large 16" cheese pizza $15.99; Large 16" gourmet pizza $20.99 (prices verified 2026-09-25)
+- Languages: English, Spanish
 
-## Menu & Services
+## Order
 
-- [Gourmet Pizzas](https://raggiogourmetpizza.com/#menu): Fresh artisanal pizzas made with Grande Mozzarella and signature sauces.
-- [Calzones & Strombolis](https://raggiogourmetpizza.com/#menu): Traditional handcrafted folded Italian pies.
-- [Salads & Appetizers](https://raggiogourmetpizza.com/#menu): Fresh garden salads, wings, and side starters.
-- [Catering Services](https://raggiogourmetpizza.com/#catering): Event catering and group dining solutions in Delaware.
+- [Order pizza online](https://order.foodtecsolutions.com/ordering/phillystyleexpress/menu/Pizza): FoodTec checkout (Philly Style Express)
+- [Order catering](https://order.foodtecsolutions.com/ordering/phillystyleexpress/menu/Catering)
+- [Order wings](https://order.foodtecsolutions.com/ordering/phillystyleexpress/menu/Wings)
+- [Order cheesesteaks](https://order.foodtecsolutions.com/ordering/phillystyleexpress/menu/Steaks)
 
-## Location & Contact
+## Pages
 
-- **Address**: Newark, Delaware
-- **Phone**: (302) 369-0553
-- **Order URL**: https://phillystyleexpress.foodtecsolutions.com/
+- [Home (English)](https://www.raggiogourmetpizza.com/en): featured pizzas, full menu, deals, catering, FAQ, reviews
+- [Inicio (Español)](https://www.raggiogourmetpizza.com/es)
+- [Full menu](https://www.raggiogourmetpizza.com/en#menu)
+- [Catering](https://www.raggiogourmetpizza.com/en#catering)
+- [Printable menu (PDF)](https://www.raggiogourmetpizza.com/raggio-full-menu.pdf)
+- [Sitemap](https://www.raggiogourmetpizza.com/sitemap.xml)
+
+## Popular items
+
+- The Works Pizza — meat, green pepper, mushrooms, fried onions
+- Buffalo Chicken Pizza — grilled chicken, buffalo sauce
+- White Special Pizza — spinach, ricotta, mozzarella, fresh garlic sauce
+- Sicilian Meat Lover — sausage, ham, pepperoni, bacon on thick Sicilian crust
+- Philly Cheesesteak
+- Chicken wings — buffalo, BBQ, garlic parm, honey habanero, mango habanero

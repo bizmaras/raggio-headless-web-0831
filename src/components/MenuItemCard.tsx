@@ -268,7 +268,7 @@ export default function MenuItemCard(props: MenuItemCardProps) {
 
   // ====================== EDITORIAL SHOWCASE ======================
   const editorialCard = (
-    <article role="listitem" className="group flex flex-col">
+    <div role="listitem" className="group flex flex-col">
       <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-panel-border bg-ink-2">
         {imageSrc ? (
           <Image
@@ -335,7 +335,7 @@ export default function MenuItemCard(props: MenuItemCardProps) {
         </div>
         {entry.priceSource === 'menu-data' && <p className="mt-2 text-[10.5px] text-stone-dim">{t.menuPrice}</p>}
       </div>
-    </article>
+    </div>
   );
 
   return (

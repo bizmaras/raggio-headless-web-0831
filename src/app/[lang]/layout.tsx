@@ -40,10 +40,10 @@ export async function generateMetadata({
 
   const description = isEs
     ? "Ordena pizzas gourmet frescas, strombolis, calzones, alitas y catering en línea. Entrega rápida en Newark, DE. 681 E Chestnut Hill Rd."
-    : "Order fresh artisan stone-baked pizzas, calzones, Philly cheesesteaks, and catering in Newark, DE. Fast local delivery & pickup.";
+    : "Brick-oven gourmet pizza, Philly cheesesteaks, wings and catering at 681 E Chestnut Hill Rd, Newark, DE. Order online for pickup or delivery. (302) 369-0553.";
 
   return {
-    metadataBase: new URL("https://raggiogourmetpizza.com"),
+    metadataBase: new URL("https://www.raggiogourmetpizza.com"),
     title,
     description,
     keywords: [
@@ -71,21 +71,24 @@ export async function generateMetadata({
     },
     alternates: {
       canonical: `/${lang}`,
-      languages: { en: "/en", es: "/es" },
+      languages: { en: "/en", es: "/es", "x-default": "/en" },
     },
     openGraph: {
       title,
       description,
-      url: `https://raggiogourmetpizza.com/${lang}`,
+      url: `https://www.raggiogourmetpizza.com/${lang}`,
       siteName: "Raggio Gourmet & Pizza",
       locale: isEs ? "es_US" : "en_US",
       type: "website",
       images: [
         {
-          url: "https://raggiogourmetpizza.com/window.svg",
+          url: "https://www.raggiogourmetpizza.com/images/og/raggio-og.jpg",
           width: 1200,
           height: 630,
-          alt: "Raggio Gourmet & Pizza Newark DE",
+          type: "image/jpeg",
+          alt: isEs
+            ? "Pizza The Works de Raggio Gourmet & Pizza, Newark DE"
+            : "The Works pizza from Raggio Gourmet & Pizza, Newark DE",
         },
       ],
     },
@@ -93,7 +96,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title,
       description,
-      images: ["https://raggiogourmetpizza.com/window.svg"],
+      images: ["https://www.raggiogourmetpizza.com/images/og/raggio-og.jpg"],
     },
     icons: {
       icon: [
@@ -130,7 +133,7 @@ export default async function LangLayout({
       className={`${display.variable} scroll-smooth overflow-x-clip w-full max-w-full`}
     >
       <body className="bg-ink text-cream antialiased overflow-x-clip w-full max-w-full relative">
-        <RestaurantJsonLd />
+        <RestaurantJsonLd lang={lang} />
         <DatadogInit />
         {children}
       </body>

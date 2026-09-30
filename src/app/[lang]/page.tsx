@@ -9,10 +9,7 @@ import type { Locale } from "./dictionaries";
 import Header from "../../components/Header";
 import HeroSlider from "../../components/HeroSlider";
 import CategoryRail from "../../components/CategoryRail";
-import StatsCounter from "../../components/StatsCounter";
-import SignatureDishShowcase from "../../components/SignatureDishShowcase";
 import ScrollReveal from "../../components/ScrollReveal";
-import DealsSectionWrapper from "../../components/DealsSectionWrapper";
 import PromotionsSection from "../../components/PromotionsSection";
 import MenuItemCard from "../../components/MenuItemCard";
 import MenuCollection from "../../components/menu/MenuCollection";
@@ -26,69 +23,10 @@ import StickyMobileBar from "../../components/StickyMobileBar";
 import CateringSection from "../../components/CateringSection";
 import AnnouncementBar from "../../components/AnnouncementBar";
 import OrderTrustBadge from "../../components/OrderTrustBadge";
-import { ORDER_LINKS } from "../../config/ordering";
 const GoogleReviewsSection = dynamic(() => import("../../components/GoogleReviewsSection"));
 const DeferredWidgets = dynamic(() => import("../../components/DeferredWidgets"));
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Restaurant",
-  name: "Raggio Gourmet & Pizza",
-  image: "https://www.raggiogourmetpizza.com/images/raggio-logo.png",
-  "@id": "https://www.raggiogourmetpizza.com/#restaurant",
-  url: "https://www.raggiogourmetpizza.com",
-  telephone: "+13023690553",
-  priceRange: "$$",
-  servesCuisine: ["Pizza", "Italian", "American", "Wings", "Latin American"],
-  acceptsReservations: "false",
-  currenciesAccepted: "USD",
-  paymentAccepted: "Cash, Credit Card",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "681 E Chestnut Hill Rd",
-    addressLocality: "Newark",
-    addressRegion: "DE",
-    postalCode: "19713",
-    addressCountry: "US",
-  },
-  geo: {
-    "@type": "GeoCoordinates",
-    latitude: 39.6385108,
-    longitude: -75.7289352,
-  },
-  openingHoursSpecification: [
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
-      opens: "09:00",
-      closes: "21:00",
-    },
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Friday", "Saturday"],
-      opens: "09:00",
-      closes: "22:00",
-    },
-  ],
-  menu: "https://www.raggiogourmetpizza.com/#menu",
-  hasMenu: "https://www.raggiogourmetpizza.com/#menu",
-  potentialAction: {
-    "@type": "OrderAction",
-    target: {
-      "@type": "EntryPoint",
-      urlTemplate: ORDER_LINKS.pizza,
-      inLanguage: "en-US",
-      actionPlatform: [
-        "http://schema.org/DesktopWebPlatform",
-        "http://schema.org/MobileWebPlatform",
-      ],
-    },
-    deliveryMethod: [
-      "http://purl.org/goodrelations/v1#DeliveryModePickUp",
-      "http://purl.org/goodrelations/v1#DeliveryModeOwnFleet",
-    ],
-  },
-};
+const HOME_PREVIEW_COUNT = 3;
 
 export default async function HomePage({
   params,
@@ -109,17 +47,10 @@ export default async function HomePage({
       <AnnouncementBar lang={lang} />
       <Header lang={lang} dict={dict} />
       <main className="min-h-screen bg-ink text-cream w-full max-w-full">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }}
-        />
         <HeroSlider dict={dict} lang={lang} />
         <OrderTrustBadge lang={lang} variant="panel" />
         <CategoryRail categoriesDict={dict.categories} lang={lang} />
 
-        <ScrollReveal>
-          <SignatureDishShowcase dict={dict} lang={lang} />
-        </ScrollReveal>
 
         {/* ===== LIGHT "TABLE" ZONE: menu, pricing, deals, catering, FAQ, reviews ===== */}
         <div className="surface-milk">
@@ -151,9 +82,14 @@ export default async function HomePage({
 
           {categories.map((category, catIdx) => {
             const targetId = categoryToSlug(category);
-            const itemsInCategory = menuItems
+            const allInCategory = menuItems
               .filter((item) => item.Category === category)
               .map((item) => getLocalizedMenuItem(item, lang));
+            // Home page shows a preview per category; the full list lives on the
+            // indexable category page (/[lang]/menu/[category]). This keeps the home
+            // DOM small (was ~8,300 nodes) for LCP/INP without hiding any item from search.
+            const itemsInCategory = allInCategory.slice(0, HOME_PREVIEW_COUNT);
+            const hiddenCount = allInCategory.length - itemsInCategory.length;
             const displayCategory =
               (dict.categories as Record<string, string>)?.[category] || category;
 
@@ -171,7 +107,7 @@ export default async function HomePage({
                   <Link href={`/${lang}/menu/${targetId}`} className="flex items-baseline gap-2.5 hover:text-gold transition-colors group/title">
                     <span className="group-hover/title:underline decoration-gold/40">{displayCategory}</span>
                     <span className="text-xs sm:text-sm font-normal text-cream/80 md:text-gold-bright tracking-normal">
-                      ({itemsInCategory.length})
+                      ({allInCategory.length})
                     </span>
                   </Link>
                   <Link
@@ -207,6 +143,16 @@ export default async function HomePage({
                     );
                   })}
                 </MenuCollection>
+                {hiddenCount > 0 && (
+                  <div className="mt-8 flex justify-center">
+                    <Link
+                      href={`/${lang}/menu/${targetId}`}
+                      className="btn-charcoal px-6 py-3 text-sm"
+                    >
+                      {(dict.menu.view_category || "View Category")} · {displayCategory} ({allInCategory.length})
+                    </Link>
+                  </div>
+                )}
               </div>
             );
           })}

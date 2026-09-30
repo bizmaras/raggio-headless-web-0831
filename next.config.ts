@@ -1,8 +1,11 @@
 import type { NextConfig } from 'next';
 
+// 'unsafe-eval' is only needed by the Next.js dev server (React refresh); never ship it.
+const isDev = process.env.NODE_ENV !== 'production';
+
 const cspHeader = `
   default-src 'self';
-  script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.datadoghq.com;
+  script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ''} https://*.datadoghq.com;
   style-src 'self' 'unsafe-inline';
   img-src 'self' data: blob: https://*.googleusercontent.com https://*.googleapis.com https://*.gstatic.com https://images.ctfassets.net https://raggiogourmetpizza.com;
   font-src 'self' data: https://fonts.gstatic.com;
@@ -53,8 +56,9 @@ const securityHeaders = [
     value: 'https://www.raggiogourmetpizza.com',
   },
   {
+    // Legacy XSS auditor is removed from modern browsers and can introduce leaks; OWASP recommends 0.
     key: 'X-XSS-Protection',
-    value: '1; mode=block',
+    value: '0',
   },
   {
     key: 'Strict-Transport-Security',

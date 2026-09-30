@@ -249,8 +249,8 @@ html[data-offer-dismissed] .offer-bar { display: none; }
 }
 
 /* ========================================================
-   PREMIUM LANDING (preview/raggio-premium-landing)
-   Hero: photo right on desktop / top on mobile, copy on warm obsidian.
+   PREMIUM LANDING v2 (preview/raggio-premium-landing)
+   Hero carousel: photo stack right on desktop / top on mobile.
    ======================================================== */
 .rg-hero {
   background-color: var(--color-ink);
@@ -261,24 +261,36 @@ html[data-offer-dismissed] .offer-bar { display: none; }
 .rg-hero-media {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;
-  max-height: 46vh;
+  aspect-ratio: 3 / 2;
+  max-height: 52vh;
+  overflow: hidden;
+}
+.rg-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(1.02);
+  transition: opacity 900ms ease, transform 7000ms linear;
+}
+.rg-slide.is-active { opacity: 1; transform: scale(1.06); }
+@media (prefers-reduced-motion: reduce) {
+  .rg-slide, .rg-slide.is-active { transform: none; transition: none; }
 }
 .rg-hero-scrim {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(30, 27, 23, 0) 45%, var(--color-ink) 100%);
+  background: linear-gradient(180deg, rgba(30, 27, 23, 0) 50%, var(--color-ink) 100%);
   pointer-events: none;
 }
 .rg-hero-copy {
   position: relative;
-  padding: 0.25rem 0 3rem;
-  margin-top: -2.5rem;
-  max-width: 40rem;
+  padding: 0 0 3rem;
+  margin-top: -2rem;
+  max-width: 36rem;
 }
 @media (min-width: 1024px) {
   .rg-hero {
-    min-height: min(84vh, 760px);
+    min-height: min(88vh, 800px);
     display: flex;
     align-items: center;
   }
@@ -286,21 +298,71 @@ html[data-offer-dismissed] .offer-bar { display: none; }
   .rg-hero-media {
     position: absolute;
     inset: 0 0 0 auto;
-    width: 62%;
+    width: 64%;
     max-height: none;
     aspect-ratio: auto;
   }
   .rg-hero-scrim {
     background:
-      linear-gradient(90deg, var(--color-ink) 0%, rgba(30, 27, 23, 0.82) 22%, rgba(30, 27, 23, 0) 58%),
-      linear-gradient(0deg, rgba(30, 27, 23, 0.55) 0%, rgba(30, 27, 23, 0) 30%);
+      linear-gradient(90deg, var(--color-ink) 0%, rgba(30, 27, 23, 0.85) 16%, rgba(30, 27, 23, 0) 52%),
+      linear-gradient(0deg, rgba(30, 27, 23, 0.6) 0%, rgba(30, 27, 23, 0) 28%);
   }
-  .rg-hero-copy {
-    margin-top: 0;
-    padding: 5rem 0;
-    max-width: 36rem;
-  }
+  .rg-hero-copy { margin-top: 0; padding: 4.5rem 0; }
 }
+
+.rg-slide-card {
+  border-radius: 1.25rem;
+  border: 1px solid var(--color-panel-border);
+  background: rgba(38, 34, 29, 0.78);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 1rem 1.1rem 0.9rem;
+  max-width: 34rem;
+  min-height: 9.5rem;
+}
+.rg-progress {
+  height: 2px;
+  width: 100%;
+  background: rgba(244, 237, 224, 0.12);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.rg-progress > span {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--color-gold);
+}
+.rg-progress > span.is-running { animation: rgProgress linear forwards; }
+@keyframes rgProgress { from { width: 0; } to { width: 100%; } }
+
+.rg-ctrl {
+  display: inline-grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  border: 1px solid var(--color-panel-border);
+  color: var(--color-cream);
+  background: rgba(30, 27, 23, 0.6);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.rg-ctrl:hover { border-color: var(--color-gold); color: var(--color-gold-bright); }
+.rg-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 9999px;
+  background: rgba(244, 237, 224, 0.35);
+  cursor: pointer;
+  transition: width 0.3s ease, background-color 0.3s ease;
+  /* 24px minimum target via transparent padding (WCAG 2.5.8) */
+  box-sizing: content-box;
+  padding: 0;
+  border: 8px solid transparent;
+  background-clip: padding-box;
+}
+.rg-dot.is-active { width: 1.6rem; background-color: var(--color-gold); }
 
 .rg-fav-card {
   display: flex;

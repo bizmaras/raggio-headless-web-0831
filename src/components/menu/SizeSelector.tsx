@@ -63,7 +63,7 @@ export default function SizeSelector({ sizes, value, onChange, lang = 'en', dens
           >
             <span className={`font-bold leading-none tracking-wide ${compact ? 'text-[10.5px]' : 'text-[11px]'}`}>
               {s.label}
-              {s.inches && !compact ? <span className="font-medium opacity-80"> {s.inches}</span> : null}
+              {s.inches && !compact ? <span className="font-medium"> {s.inches}</span> : null}
             </span>
             {!compact && (
               <span className={`mt-1 text-[11.5px] tabular-nums leading-none ${checked ? 'font-bold' : 'font-medium text-stone-dim'}`}>
