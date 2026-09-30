@@ -60,7 +60,9 @@ export const CATEGORIES = [
   { label: 'Reviews 4.2', searchId: 'reviews' },
 ];
 
-const HOME_ANCHORS = new Set(['deals', 'reviews', 'catering']);
+const HOME_ANCHORS = new Set(['deals', 'reviews']);
+// Routes that live on their own page (not a home anchor or a menu category).
+const PAGE_ROUTES: Record<string, string> = { catering: 'catering' };
 
 export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug, showViewToggle = true }: CategoryRailProps) {
   const router = useRouter();
@@ -126,13 +128,20 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug, 
   }, []);
 
   const hrefFor = (id: string) =>
-    activeSlug ? (HOME_ANCHORS.has(id) ? `/${lang}/#${id}` : `/${lang}/menu/${id}`) : `#${id}`;
+    PAGE_ROUTES[id] ? `/${lang}/${PAGE_ROUTES[id]}` : activeSlug ? (HOME_ANCHORS.has(id) ? `/${lang}/#${id}` : `/${lang}/menu/${id}`) : `#${id}`;
 
   const onClick = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
       e.preventDefault();
       setActive(id);
-      if (activeSlug) { router.push(hrefFor(id)); return; }
+      if (activeSlug || PAGE_ROUTES[id]) {
+        const href = hrefFor(id);
+        // Page's first node is the sticky header (always "in view"), so Next's
+        // automatic scroll-to-segment never fires — reset scroll ourselves.
+        if (!href.includes('#')) window.scrollTo(0, 0);
+        if (href.includes('#')) router.push(href); else router.push(href, { scroll: false });
+        return;
+      }
       const target = document.getElementById(id);
       if (!target) return;
       const offset = (document.querySelector('header')?.offsetHeight ?? 80) + (containerRef.current?.offsetHeight ?? 56);

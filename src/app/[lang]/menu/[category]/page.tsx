@@ -76,16 +76,17 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
       languages: {
         en: `/en/menu/${categorySlug}`,
         es: `/es/menu/${categorySlug}`,
+        "x-default": `/en/menu/${categorySlug}`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `https://raggiogourmetpizza.com/${lang}/menu/${categorySlug}`,
+      url: `/${lang}/menu/${categorySlug}`,
       siteName: "Raggio Gourmet & Pizza",
       images: [
         {
-          url: "https://raggiogourmetpizza.com/images/hero-pizza.png",
+          url: "/images/og/raggio-og.jpg",
           width: 1200,
           height: 630,
           alt: `${displayCategory} - Raggio Gourmet`,

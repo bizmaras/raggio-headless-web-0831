@@ -20,7 +20,8 @@ import ScrollToTop from "../../components/ScrollToTop";
 import FAQ from "../../components/FAQ";
 import StickyMobileBar from "../../components/StickyMobileBar";
 
-import CateringSection from "../../components/CateringSection";
+import CateringTeaser from "../../components/CateringTeaser";
+import OurStory from "../../components/OurStory";
 import AnnouncementBar from "../../components/AnnouncementBar";
 import OrderTrustBadge from "../../components/OrderTrustBadge";
 const GoogleReviewsSection = dynamic(() => import("../../components/GoogleReviewsSection"));
@@ -53,6 +54,7 @@ export default async function HomePage({
       <main className="min-h-screen bg-ink text-cream w-full max-w-full">
         <HeroSlider dict={dict} lang={lang} />
         <OrderTrustBadge lang={lang} variant="panel" />
+        <OurStory lang={lang} />
         <CategoryRail categoriesDict={dict.categories} lang={lang} />
 
 
@@ -216,7 +218,7 @@ export default async function HomePage({
           </div>
         </section>
                   <PromotionsSection dict={dict} />
-                <CateringSection dict={dict} lang={lang} />
+                <CateringTeaser lang={lang} />
                   <FAQ dict={dict} />
                           <GoogleReviewsSection dict={dict} />
                 </div>

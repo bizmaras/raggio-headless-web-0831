@@ -26,7 +26,7 @@ export default function Header({ lang = 'en', dict }: HeaderProps) {
     { name: dict?.nav?.menu || 'Menu', href: `/${lang}#menu` },
     { name: dict?.nav?.deals || 'Deals & Specials', href: `/${lang}#deals` },
     { name: dict?.nav?.reviews || 'Reviews', href: `/${lang}#reviews` },
-    { name: dict?.nav?.catering || 'Catering', href: `/${lang}#catering` },
+    { name: dict?.nav?.catering || 'Catering', href: `/${lang}/catering` },
     { name: dict?.nav?.hours_location || 'Hours & Location', href: `/${lang}#location` },
   ];
 

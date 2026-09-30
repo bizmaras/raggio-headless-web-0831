@@ -147,7 +147,7 @@ const FAVORITES: Favorite[] = [
   {
     id: 'catering',
     image: '/images/dishes/sicilian-sicilian-special-luxury-8k.png',
-    menuHref: '#catering',
+    menuHref: '/catering',
     orderHref: ORDER_LINKS.catering,
     copy: {
       en: { eyebrow: 'Offices & events', title: 'Catering & Family Feasts', body: 'Trays, Sicilian squares and platters sized for your group.', alt: 'Sicilian Special square pizza for catering trays — Raggio Gourmet, Newark DE' },
@@ -438,7 +438,7 @@ export default function HeroSlider({ lang = 'en' }: HeroSliderProps) {
               const fc = f.copy[loc];
               return (
                 <li key={f.id} className="rg-fav-card group">
-                  <a href={f.menuHref} className="block" tabIndex={-1} aria-hidden="true">
+                  <a href={f.menuHref.startsWith('/') ? `/${lang}${f.menuHref}` : f.menuHref} className="block" tabIndex={-1} aria-hidden="true">
                     <div className="relative aspect-[4/3] overflow-hidden">
                       <Image
                         src={f.image}
@@ -461,7 +461,7 @@ export default function HeroSlider({ lang = 'en' }: HeroSliderProps) {
                       <p className="mt-1 text-sm leading-relaxed text-stone">{fc.body}</p>
                     </div>
                     <div className="mt-auto flex items-center justify-between gap-3 pt-1">
-                      <a href={f.menuHref} className="rg-focus text-sm font-semibold text-stone hover:text-cream underline underline-offset-4 decoration-gold/40">
+                      <a href={f.menuHref.startsWith('/') ? `/${lang}${f.menuHref}` : f.menuHref} className="rg-focus text-sm font-semibold text-stone hover:text-cream underline underline-offset-4 decoration-gold/40">
                         {ui.see}
                       </a>
                       <a

@@ -45,6 +45,12 @@ export async function generateStaticParams() {
   return paths;
 }
 
+/** Item photo if it is a local catalog image, else the site OG image (old path 404'd). */
+function itemImage(item: unknown): string {
+  const src = (item as { Image?: string; image?: string })?.Image || (item as { image?: string })?.image;
+  return typeof src === "string" && src.startsWith("/images/") ? src : "/images/og/raggio-og.jpg";
+}
+
 export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
   const { lang, category: categorySlug, slug: itemSlug } = await params;
   if (!hasLocale(lang)) return {};
@@ -64,6 +70,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   if (!matchedItem) return {};
 
   const localizedItem = getLocalizedMenuItem(matchedItem, lang as Locale);
+  const ogImg = itemImage(matchedItem);
   const itemName = localizedItem["Product Name"];
   const itemDesc = localizedItem.Description || "Prepared fresh to order with premium Grande Mozzarella.";
   const price = parseFloat(matchedItem.Price) || 0;
@@ -85,21 +92,15 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
       languages: {
         en: `/en/menu/${categorySlug}/${itemSlug}`,
         es: `/es/menu/${categorySlug}/${itemSlug}`,
+        "x-default": `/en/menu/${categorySlug}/${itemSlug}`,
       },
     },
     openGraph: {
       title,
       description,
-      url: `https://raggiogourmetpizza.com/${lang}/menu/${categorySlug}/${itemSlug}`,
+      url: `/${lang}/menu/${categorySlug}/${itemSlug}`,
       siteName: "Raggio Gourmet & Pizza",
-      images: [
-        {
-          url: "https://raggiogourmetpizza.com/images/hero-pizza.png",
-          width: 1200,
-          height: 630,
-          alt: itemName,
-        },
-      ],
+      images: [{ url: ogImg, alt: itemName }],
     },
   };
 }
@@ -165,13 +166,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
     "@type": "MenuItem",
     name: itemName,
     description: description,
-    image: "https://raggiogourmetpizza.com/images/hero-pizza.png",
+    image: `https://www.raggiogourmetpizza.com${itemImage(rawItem)}`,
     offers: {
       "@type": "Offer",
       price: basePrice.toFixed(2),
       priceCurrency: "USD",
       availability: "https://schema.org/InStock",
-      url: `https://raggiogourmetpizza.com/${lang}/menu/${categorySlug}/${itemSlug}`,
+      url: `https://www.raggiogourmetpizza.com/${lang}/menu/${categorySlug}/${itemSlug}`,
     },
   };
 

@@ -20,10 +20,10 @@
 
 ## Pages
 
-- [Home (English)](https://www.raggiogourmetpizza.com/en): featured pizzas, full menu, deals, catering, FAQ, reviews
+- [Home (English)](https://www.raggiogourmetpizza.com/en): featured pizzas, menu by category, deals, FAQ, reviews
 - [Inicio (Español)](https://www.raggiogourmetpizza.com/es)
 - [Full menu](https://www.raggiogourmetpizza.com/en#menu)
-- [Catering](https://www.raggiogourmetpizza.com/en#catering)
+- [Catering](https://www.raggiogourmetpizza.com/en/catering): trays, headcount planner, corporate invoicing
 - [Printable menu (PDF)](https://www.raggiogourmetpizza.com/raggio-full-menu.pdf)
 - [Sitemap](https://www.raggiogourmetpizza.com/sitemap.xml)
 
