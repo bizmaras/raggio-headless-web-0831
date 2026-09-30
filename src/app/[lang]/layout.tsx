@@ -12,7 +12,7 @@ const display = Fraunces({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-fraunces",
-  axes: ["opsz", "SOFT"],
+  axes: ["opsz"],
 });
 
 export const viewport: Viewport = {

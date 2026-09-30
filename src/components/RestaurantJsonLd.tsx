@@ -7,7 +7,8 @@
  *
  * Canonical host: https://www.raggiogourmetpizza.com (apex 308-redirects to www).
  * NAP + hours must match Google Business Profile and src/config/ordering.ts.
- * OWNER-CONFIRM: geo coordinates — verify against the Google Business Profile pin.
+ * geo: taken from Google's own place pin for 681 E Chestnut Hill Rd (footer Maps embed center,
+ *   verified 2026-09-30: pin renders on the building). Earlier 39.6644/-75.7297 was ~2.9 km off.
  */
 import { ORDER_LINKS, STORE } from '@/config/ordering';
 
@@ -44,7 +45,7 @@ export default function RestaurantJsonLd({ lang = 'en' }: { lang?: string }) {
           postalCode: '19713',
           addressCountry: 'US',
         },
-        geo: { '@type': 'GeoCoordinates', latitude: 39.6644, longitude: -75.7297 },
+        geo: { '@type': 'GeoCoordinates', latitude: 39.6385, longitude: -75.7289 },
         hasMap: 'https://www.google.com/maps/search/?api=1&query=681+E+Chestnut+Hill+Rd,+Newark,+DE+19713',
         areaServed: [
           { '@type': 'City', name: 'Newark, Delaware' },

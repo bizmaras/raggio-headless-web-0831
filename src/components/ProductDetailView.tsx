@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import type { SizeVariant } from '@/data/sizePricing';
-import { optimizeContentfulImage } from '@/lib/contentful';
+import { optimizeContentfulImage } from '@/lib/contentfulImage';
 import { ORDER_LINKS } from '@/config/ordering';
 
 interface ProductDetailViewProps {

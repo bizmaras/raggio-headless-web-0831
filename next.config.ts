@@ -47,10 +47,8 @@ const securityHeaders = [
     key: 'Cross-Origin-Resource-Policy',
     value: 'same-origin',
   },
-  {
-    key: 'Cross-Origin-Embedder-Policy',
-    value: 'credentialless',
-  },
+  // No Cross-Origin-Embedder-Policy: the site needs no SharedArrayBuffer, and COEP
+  // blocked the Google Maps embed (Lighthouse "Blocked by cross-origin policy").
   {
     key: 'Access-Control-Allow-Origin',
     value: 'https://www.raggiogourmetpizza.com',
@@ -76,6 +74,9 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  experimental: {
+    optimizePackageImports: ['lucide-react'],
+  },
   images: {
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [390, 430, 640, 750, 828, 1080, 1200, 1920],
@@ -89,9 +90,6 @@ const nextConfig: NextConfig = {
         headers: securityHeaders,
       },
     ];
-  },
-  experimental: {
-    optimizePackageImports: ['lucide-react'],
   },
 };
 

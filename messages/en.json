@@ -17,7 +17,7 @@
       {
         "tag": "SPECIALTY PIZZA",
         "title": "Signature Meat Lover’s",
-        "description": "Packed with beef pepperoni, sausage, bacon, and ham on our stone-baked crust for true meat lovers.",
+        "description": "Packed with beef pepperoni, sausage, bacon, and ham on our deck-oven baked crust for true meat lovers.",
         "ctaText": "Order Meat Lover’s",
         "seoAlt": "Signature Meat Lovers Pizza Delivery in Newark, DE"
       },
@@ -31,14 +31,14 @@
       {
         "tag": "CLASSIC SPECIALTY",
         "title": "Artisanal Pepperoni",
-        "description": "Crispy cupped beef pepperoni, melted Grande Mozzarella, rich San Marzano tomato sauce, and fresh basil on stone-baked crust.",
+        "description": "Crispy cupped beef pepperoni, melted Grande Mozzarella, rich San Marzano tomato sauce, and fresh basil on deck-oven baked crust.",
         "ctaText": "Order Pepperoni",
         "seoAlt": "Artisanal Pepperoni Pizza - Raggio Gourmet Newark DE"
       },
       {
         "tag": "CHEF'S SIGNATURE",
         "title": "White Spinach & Ricotta",
-        "description": "Fresh baby spinach, velvety whole-milk ricotta, garlic-infused olive oil, and melted mozzarella on stone-baked blistered crust.",
+        "description": "Fresh baby spinach, velvety whole-milk ricotta, garlic-infused olive oil, and melted mozzarella on deck-oven baked blistered crust.",
         "ctaText": "Try White Spinach",
         "seoAlt": "White Spinach and Ricotta Pizza - Raggio Gourmet Newark DE"
       }
@@ -183,7 +183,7 @@
     ]
   },
   "footer": {
-    "description": "Serving Newark, Delaware with artisanal stone-baked pizzas, authentic Philly cheesesteaks, fresh pastas, and full-service event catering.",
+    "description": "Serving Newark, Delaware with deck-oven gourmet pizzas, authentic Philly cheesesteaks, fresh pastas, and full-service event catering.",
     "address": "681 E Chestnut Hill Rd, Newark, DE 19713",
     "phone": "(302) 369-0553",
     "store_hours": "Store Hours",
@@ -217,9 +217,9 @@
   },
   "showcase": {
     "badge": "SIGNATURE ARTISANAL PIZZAS",
-    "title": "Crafted with Passion, Stone-Baked to Perfection",
+    "title": "Crafted with Passion, Deck-Oven Baked to Perfection",
     "subtitle": "Explore our signature pizzas in detail. Hover or tap the markers to discover our authentic Italian ingredients and craftsmanship.",
-    "size_label": "Large 16\" Stone-Baked",
+    "size_label": "Large 16\" Deck-Oven Baked",
     "order_pizza": "Order This Pizza",
     "secret_badge": "Chef's Secret",
     "crust_tab": "1. Crust",
@@ -239,7 +239,7 @@
         "cheese_title": "Whole-Milk Fior di Latte Mozzarella",
         "cheese_desc": "100% whole milk creamy mozzarella that melts into rich golden blisters across every single slice.",
         "topping_title": "Crispy Cupped (Cup & Char) Pepperoni",
-        "topping_desc": "Beef pepperoni that crisps into savory chalices under high stone-oven heat, releasing rich smoky aroma."
+        "topping_desc": "Beef pepperoni that crisps into savory chalices under high deck-oven heat, releasing rich smoky aroma."
       },
       "meatlover": {
         "name": "Signature Meat Lover's Feast",
@@ -247,13 +247,13 @@
         "topping_badge": "4 Gourmet Meats",
         "topping_sub": "Sausage, Bacon, Meatballs",
         "crust_title": "48-Hour Cold-Fermented Dough",
-        "crust_desc": "Heavy-duty stone-baked crust engineered to hold generous savory meat toppings with a crisp bite.",
+        "crust_desc": "Heavy-duty deck-oven baked crust engineered to hold generous savory meat toppings with a crisp bite.",
         "sauce_title": "Rich Raggio Signature Pizza Sauce",
         "sauce_desc": "Balanced acidity and aromatic herbs designed to complement hearty meats without overwhelming them.",
         "cheese_title": "Double Layer Mozzarella & Provolone",
         "cheese_desc": "A double layer of whole-milk mozzarella binding the meats together with a velvety pull.",
         "topping_title": "Italian Sausage, Meatballs, Bacon & Pepperoni",
-        "topping_desc": "Italian sausage, seasoned meatballs, crispy smoked bacon, and pepperoni caramelized in stone-oven heat."
+        "topping_desc": "Italian sausage, seasoned meatballs, crispy smoked bacon, and pepperoni caramelized in deck-oven heat."
       },
       "buffalo": {
         "name": "Spicy Buffalo Chicken & Ranch",

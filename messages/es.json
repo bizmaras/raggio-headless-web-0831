@@ -17,7 +17,7 @@
       {
         "tag": "PIZZA ESPECIAL",
         "title": "Meat Lover's Exclusiva",
-        "description": "Cargada con pepperoni de res, salchicha italiana, tocino y jamón sobre nuestra masa horneada a la piedra para amantes de la carne.",
+        "description": "Cargada con pepperoni de res, salchicha italiana, tocino y jamón sobre nuestra masa horneada en horno de piso para amantes de la carne.",
         "ctaText": "Pedir Meat Lover's",
         "seoAlt": "Entrega de Pizza Meat Lovers en Newark, DE"
       },
@@ -170,7 +170,7 @@
     ]
   },
   "footer": {
-    "description": "Sirviendo a Newark, Delaware con pizzas artesanales horneadas a la piedra, auténticos Philly cheesesteaks, pastas frescas y servicio completo de catering para eventos.",
+    "description": "Sirviendo a Newark, Delaware con pizzas gourmet horneadas en horno de piso, auténticos Philly cheesesteaks, pastas frescas y servicio completo de catering para eventos.",
     "address": "681 E Chestnut Hill Rd, Newark, DE 19713",
     "phone": "(302) 369-0553",
     "store_hours": "Horario de Atención",
@@ -206,7 +206,7 @@
     "badge": "PIZZAS ARTESANALES EXCLUSIVAS",
     "title": "Elaboradas con Pasión, Horneadas a la Perfección",
     "subtitle": "Descubre nuestras pizzas exclusivas en detalle. Pasa el cursor o toca los marcadores para conocer nuestros auténticos ingredientes italianos y artesanía.",
-    "size_label": "Grande 16\" Al Horno de Piedra",
+    "size_label": "Grande 16\" en Horno de Piso",
     "order_pizza": "Pedir Esta Pizza",
     "secret_badge": "Secreto del Chef",
     "crust_tab": "1. Masa",
@@ -226,7 +226,7 @@
         "cheese_title": "Mozzarella Entera Fior di Latte",
         "cheese_desc": "Mozzarella 100% cremosa de leche entera que se funde en ricas burbujas doradas en cada porción.",
         "topping_title": "Pepperoni Crujiente en Forma de Copa (Cup & Char)",
-        "topping_desc": "Pepperoni de res que se riza bajo el intenso calor del horno de piedra, liberando un rico aroma ahumado."
+        "topping_desc": "Pepperoni de res que se riza bajo el intenso calor del horno de piso, liberando un rico aroma ahumado."
       },
       "meatlover": {
         "name": "Banquete Exclusivo Meat Lover's",
@@ -234,7 +234,7 @@
         "topping_badge": "4 Carnes Gourmet",
         "topping_sub": "Salchicha, Tocino, Albóndigas",
         "crust_title": "Masa Fermentada en Frío por 48 Horas",
-        "crust_desc": "Corteza horneada en piedra diseñada para sostener generosas carnes con un mordisco crujiente.",
+        "crust_desc": "Corteza horneada en horno de piso diseñada para sostener generosas carnes con un mordisco crujiente.",
         "sauce_title": "Rica Salsa de Pizza Firma Raggio",
         "sauce_desc": "Acidez equilibrada y hierbas aromáticas diseñadas para complementar las carnes sin abrumarlas.",
         "cheese_title": "Doble Capa de Mozzarella y Provolone",

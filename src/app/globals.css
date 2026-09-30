@@ -35,7 +35,7 @@
 }
 
 :root {
-  --sticky-category-top: 136px;
+  --sticky-category-top: 137px;
 }
 
 /* Stage 2: the rail is a single row on every breakpoint (was 2–3 wrapped rows → 260px). */
@@ -327,14 +327,18 @@ html[data-offer-dismissed] .offer-bar { display: none; }
   border-radius: 2px;
   overflow: hidden;
 }
+/* transform-only (compositor) — animating width forced a layout every frame */
 .rg-progress > span {
   display: block;
   height: 100%;
-  width: 0;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left center;
   background: var(--color-gold);
+  will-change: transform;
 }
 .rg-progress > span.is-running { animation: rgProgress linear forwards; }
-@keyframes rgProgress { from { width: 0; } to { width: 100%; } }
+@keyframes rgProgress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
 .rg-ctrl {
   display: inline-grid;

@@ -73,7 +73,11 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug, 
   const trackRef = useRef<HTMLDivElement>(null);
 
   // Keep the active pill visible — only when it changes, never while the user is dragging.
+  const firstPillEffect = useRef(true);
   useEffect(() => {
+    // Skip on mount: the initial pill is already in view; reading offsetLeft here
+    // forced a full-page layout during hydration (mobile TBT/LCP).
+    if (firstPillEffect.current) { firstPillEffect.current = false; return; }
     const track = trackRef.current;
     const pill = track?.querySelector<HTMLElement>(`[data-cat-pill="${active}"]`);
     if (!track || !pill) return;
@@ -88,11 +92,15 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug, 
     setEdges({ start: t.scrollLeft < 4, end: t.scrollLeft + t.clientWidth > t.scrollWidth - 4 });
   }, []);
   useEffect(() => {
-    updateEdges();
+    // Initial edge state is correct at scrollLeft 0; measure once the page is idle.
+    const idle = window.requestIdleCallback ? window.requestIdleCallback(updateEdges, { timeout: 3000 }) : window.setTimeout(updateEdges, 1500);
     const t = trackRef.current;
     t?.addEventListener('scroll', updateEdges, { passive: true });
     window.addEventListener('resize', updateEdges);
-    return () => { t?.removeEventListener('scroll', updateEdges); window.removeEventListener('resize', updateEdges); };
+    return () => {
+      if (window.cancelIdleCallback) window.cancelIdleCallback(idle as number); else window.clearTimeout(idle as number);
+      t?.removeEventListener('scroll', updateEdges); window.removeEventListener('resize', updateEdges);
+    };
   }, [updateEdges]);
 
   // Scroll-spy (homepage only)
@@ -116,9 +124,14 @@ export default function CategoryRail({ categoriesDict, lang = 'en', activeSlug, 
       const header = document.querySelector('header');
       const rail = containerRef.current;
       if (!header || !rail) return;
-      document.documentElement.style.setProperty('--sticky-category-top', `${Math.round(header.offsetHeight + rail.offsetHeight)}px`);
+      const next = `${Math.round(header.offsetHeight + rail.offsetHeight)}px`;
+      // Only write when it differs from the CSS default: any write on <html>
+      // invalidates style for the whole document.
+      const root = document.documentElement;
+      if (getComputedStyle(root).getPropertyValue('--sticky-category-top').trim() !== next) {
+        root.style.setProperty('--sticky-category-top', next);
+      }
     };
-    update();
     const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(update) : null;
     const header = document.querySelector('header');
     if (ro && containerRef.current) ro.observe(containerRef.current);

@@ -31,7 +31,7 @@ import type { SizeVariant } from '@/data/sizePricing';
 import { resolveCatalogEntry, foodtecUrl, FOODTEC_CATEGORY } from '@/data/foodtecCatalog';
 import { claimsFor, type CraftClaim } from '@/data/craftClaims';
 import { imageMeta, isBlocked } from '@/data/dishImages';
-import { optimizeContentfulImage } from '@/lib/contentful';
+import { optimizeContentfulImage } from '@/lib/contentfulImage';
 import { ORDER_LINKS, STORE } from '@/config/ordering';
 import { useMenuViewMode } from '@/hooks/useMenuViewMode';
 import SizeSelector from './menu/SizeSelector';
