@@ -133,7 +133,7 @@ export default function SignatureDishShowcase({ dict, lang = 'en' }: { dict?: an
   };
 
   return (
-    <section className="max-w-6xl mx-auto px-6 py-16" aria-labelledby={`${uid}-h`}>
+    <section className="max-w-6xl mx-auto px-5 sm:px-6 py-14 sm:py-20" aria-labelledby={`${uid}-h`}>
       <header className="max-w-2xl">
         <p className="text-[11px] font-semibold tracking-[0.2em] text-gold">{(t.badge || 'Signature pies').toUpperCase()}</p>
         <h2 id={`${uid}-h`} className="mt-2 font-display text-3xl md:text-5xl font-semibold leading-[1.05] text-cream">
@@ -156,7 +156,7 @@ export default function SignatureDishShowcase({ dict, lang = 'en' }: { dict?: an
             aria-controls={`${uid}-panel`}
             tabIndex={i === dishIdx ? 0 : -1}
             onClick={() => { setDishIdx(i); setSpot(1); }}
-            className={`-mb-px px-4 h-11 text-sm font-semibold border-b-2 transition-colors cursor-pointer ${
+            className={`rg-focus -mb-px px-4 h-11 text-sm font-semibold border-b-2 transition-colors cursor-pointer ${
               i === dishIdx ? 'border-gold text-cream' : 'border-transparent text-stone hover:text-cream'
             }`}
           >
@@ -165,7 +165,7 @@ export default function SignatureDishShowcase({ dict, lang = 'en' }: { dict?: an
         ))}
       </div>
 
-      <div id={`${uid}-panel`} role="tabpanel" aria-labelledby={`${uid}-tab-${dishIdx}`} className="mt-8 grid md:grid-cols-[1.1fr_1fr] gap-10 items-center">
+      <div id={`${uid}-panel`} role="tabpanel" aria-labelledby={`${uid}-tab-${dishIdx}`} className="mt-8 grid md:grid-cols-[1.1fr_1fr] gap-8 md:gap-10 items-center rounded-3xl border border-panel-border bg-ink-2/60 p-5 sm:p-8 md:p-10">
         <div className="relative aspect-square max-w-[520px] w-full mx-auto">
           <div aria-hidden="true" className="absolute inset-[8%] rounded-full bg-[radial-gradient(closest-side,rgba(201,161,92,.22),transparent)]" />
           <Image src={dish.image} alt={`${dish.name[L]} pizza — Raggio Gourmet & Pizza`} fill sizes="(min-width:768px) 520px, 90vw" className="object-contain drop-shadow-[0_24px_40px_rgba(0,0,0,.55)]" />
@@ -219,7 +219,7 @@ export default function SignatureDishShowcase({ dict, lang = 'en' }: { dict?: an
               target="_blank"
               rel="noopener noreferrer"
               data-dd-action-name={`showcase_order:${dish.key}`}
-              className="inline-flex items-center gap-2 h-12 px-5 rounded-xl bg-ember hover:bg-ember-hover text-white font-bold transition-colors"
+              className="btn-gold rg-focus h-12 px-6 text-base"
             >
               {t.order_pizza || (L === 'es' ? 'Ordenar esta pizza' : 'Order this pizza')}
             </a>

@@ -247,3 +247,79 @@ html[data-offer-dismissed] .offer-bar { display: none; }
   from { opacity: 0; transform: translateY(6px) scale(0.985); }
   to   { opacity: 1; transform: none; }
 }
+
+/* ========================================================
+   PREMIUM LANDING (preview/raggio-premium-landing)
+   Hero: photo right on desktop / top on mobile, copy on warm obsidian.
+   ======================================================== */
+.rg-hero {
+  background-color: var(--color-ink);
+  background-image:
+    radial-gradient(70% 90% at 0% 100%, rgba(184, 69, 43, 0.10), transparent 60%),
+    radial-gradient(60% 70% at 20% 0%, rgba(201, 161, 92, 0.08), transparent 60%);
+}
+.rg-hero-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  max-height: 46vh;
+}
+.rg-hero-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(30, 27, 23, 0) 45%, var(--color-ink) 100%);
+  pointer-events: none;
+}
+.rg-hero-copy {
+  position: relative;
+  padding: 0.25rem 0 3rem;
+  margin-top: -2.5rem;
+  max-width: 40rem;
+}
+@media (min-width: 1024px) {
+  .rg-hero {
+    min-height: min(84vh, 760px);
+    display: flex;
+    align-items: center;
+  }
+  .rg-hero > .relative { width: 100%; }
+  .rg-hero-media {
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: 62%;
+    max-height: none;
+    aspect-ratio: auto;
+  }
+  .rg-hero-scrim {
+    background:
+      linear-gradient(90deg, var(--color-ink) 0%, rgba(30, 27, 23, 0.82) 22%, rgba(30, 27, 23, 0) 58%),
+      linear-gradient(0deg, rgba(30, 27, 23, 0.55) 0%, rgba(30, 27, 23, 0) 30%);
+  }
+  .rg-hero-copy {
+    margin-top: 0;
+    padding: 5rem 0;
+    max-width: 36rem;
+  }
+}
+
+.rg-fav-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 1.25rem;
+  background-color: var(--color-panel);
+  border: 1px solid var(--color-panel-border);
+  box-shadow: 0 10px 30px rgba(10, 8, 6, 0.28);
+  transition: border-color 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.rg-fav-card:hover { border-color: rgba(201, 161, 92, 0.55); }
+@media (prefers-reduced-motion: no-preference) {
+  .rg-fav-card:hover { transform: translateY(-2px); }
+}
+
+.rg-focus:focus-visible {
+  outline: 2px solid var(--color-gold-bright);
+  outline-offset: 3px;
+  border-radius: 9999px;
+}
+.rg-fav-card a.block.rg-focus:focus-visible { border-radius: 1.25rem 1.25rem 0 0; outline-offset: -2px; }
