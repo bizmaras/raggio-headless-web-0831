@@ -24,6 +24,21 @@ import CateringTeaser from "../../components/CateringTeaser";
 import OurStory from "../../components/OurStory";
 import AnnouncementBar from "../../components/AnnouncementBar";
 import OrderTrustBadge from "../../components/OrderTrustBadge";
+
+/** Tile covers approved before the full photo catalog was wired; keep them stable. */
+const CATEGORY_COVERS: Record<string, string> = {
+  "Chicken Wings": "/images/dishes/wings-buffalo-jumbo-luxury-8k.png",
+  Cheesesteaks: "/images/products/raggio-cheesesteak-luxury-8k.png",
+  "Fresh Burgers": "/images/dishes/burger-smash-luxury-8k.png",
+  Appetizers: "/images/dishes/appetizer-mozzarella-sticks-luxury-8k.png",
+  "Fresh Salads": "/images/dishes/salad-greek-luxury-8k.png",
+  Pasta: "/images/dishes/pasta-baked-ziti-luxury-8k.png",
+  Quesadillas: "/images/dishes/quesadilla-chicken-luxury-8k.png",
+  "Latin Food": "/images/products/tacos-street-luxury.jpg",
+  Desserts: "/images/dishes/dessert-tiramisu-luxury-8k.png",
+  "Strombolis + Calzones": "/images/dishes/calzone-golden-luxury-8k.png",
+};
+
 const GoogleReviewsSection = dynamic(() => import("../../components/GoogleReviewsSection"));
 const DeferredWidgets = dynamic(() => import("../../components/DeferredWidgets"));
 
@@ -174,9 +189,11 @@ export default async function HomePage({
                   (dict.categories as Record<string, string>)?.[category] || category;
                 const prices = items.map((i) => parseFloat(i.Price) || 0).filter((n) => n > 0);
                 const from = prices.length ? Math.min(...prices) : 0;
-                const cover = items
-                  .map((i) => i.Image || i.image)
-                  .find((src) => typeof src === "string" && src.startsWith("/images/"));
+                const cover =
+                  CATEGORY_COVERS[category] ??
+                  items
+                    .map((i) => i.Image || i.image)
+                    .find((src) => typeof src === "string" && src.startsWith("/images/"));
                 return (
                   <li
                     key={category}

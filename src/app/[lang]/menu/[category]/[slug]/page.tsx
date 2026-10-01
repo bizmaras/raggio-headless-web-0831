@@ -230,6 +230,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             basePrice={basePrice}
             description={description}
             sizes={sizes}
+            image={rawItem.Image || rawItem.image}
             lang={lang as "en" | "es"}
             dict={dict}
           />

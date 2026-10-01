@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import type { SizeVariant } from '@/data/sizePricing';
+import Image from 'next/image';
 import { optimizeContentfulImage } from '@/lib/contentfulImage';
 import { ORDER_LINKS } from '@/config/ordering';
 
@@ -93,10 +94,14 @@ export default function ProductDetailView({
         {/* Left Side: Product Image or Brand Presentation */}
         <div className="w-full lg:w-1/2 min-h-[300px] sm:min-h-[380px] lg:min-h-[500px] relative bg-ink flex items-center justify-center border-b lg:border-b-0 lg:border-r border-panel-border/60 overflow-hidden">
           {optimizedImage ? (
-            <img
+            <Image
               src={optimizedImage}
               alt={name}
-              className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
+              fill
+              priority
+              unoptimized={!optimizedImage.startsWith('/')}
+              sizes="(min-width: 1024px) 576px, 100vw"
+              className="object-cover object-center transition-transform duration-700 hover:scale-105"
             />
           ) : (
             <div className="flex flex-col items-center justify-center p-8 sm:p-12 text-center relative z-10">

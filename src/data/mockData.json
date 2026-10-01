@@ -15,7 +15,9 @@
     "Price": "15.99",
     "Category": "Pizza",
     "Slug": "white-cheese-pizza",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/pizza-white-cheese-pizza-luxury-8k.png",
+    "image": "/images/dishes/pizza-white-cheese-pizza-luxury-8k.png"
   },
   {
     "Product Name": "Pizza by the Slice",
@@ -79,7 +81,9 @@
     "Price": "20.99",
     "Category": "Gourmet Pizza",
     "Slug": "chicken-ranch-pizza",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/pizza-chicken-ranch-pizza-luxury-8k.png",
+    "image": "/images/dishes/pizza-chicken-ranch-pizza-luxury-8k.png"
   },
   {
     "Product Name": "Chicken Parm Pizza",
@@ -87,7 +91,9 @@
     "Price": "20.99",
     "Category": "Gourmet Pizza",
     "Slug": "chicken-parm-pizza",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/pizza-chicken-parm-pizza-luxury-8k.png",
+    "image": "/images/dishes/pizza-chicken-parm-pizza-luxury-8k.png"
   },
   {
     "Product Name": "Chicken Alfredo Pizza",
@@ -95,7 +101,9 @@
     "Price": "20.99",
     "Category": "Gourmet Pizza",
     "Slug": "chicken-alfredo-pizza",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/pizza-chicken-alfredo-pizza-luxury-8k.png",
+    "image": "/images/dishes/pizza-chicken-alfredo-pizza-luxury-8k.png"
   },
   {
     "Product Name": "Shrimp Alfredo Pizza (XL)",
@@ -103,7 +111,9 @@
     "Price": "20.99",
     "Category": "Gourmet Pizza",
     "Slug": "shrimp-alfredo-pizza",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/pizza-shrimp-alfredo-pizza-luxury-8k.png",
+    "image": "/images/dishes/pizza-shrimp-alfredo-pizza-luxury-8k.png"
   },
   {
     "Product Name": "Greek Pizza",
@@ -111,7 +121,9 @@
     "Price": "20.99",
     "Category": "Gourmet Pizza",
     "Slug": "greek-pizza",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/pizza-greek-pizza-luxury-8k.png",
+    "image": "/images/dishes/pizza-greek-pizza-luxury-8k.png"
   },
   {
     "Product Name": "House Pizza",
@@ -129,7 +141,9 @@
     "Price": "20.99",
     "Category": "Gourmet Pizza",
     "Slug": "philly-cheesesteak-pizza",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/pizza-philly-cheesesteak-pizza-luxury-8k.png",
+    "image": "/images/dishes/pizza-philly-cheesesteak-pizza-luxury-8k.png"
   },
   {
     "Product Name": "Veggie Pizza",
@@ -137,7 +151,9 @@
     "Price": "20.99",
     "Category": "Gourmet Pizza",
     "Slug": "veggie-pizza",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/pizza-veggie-pizza-luxury-8k.png",
+    "image": "/images/dishes/pizza-veggie-pizza-luxury-8k.png"
   },
   {
     "Product Name": "White Cheese Sicilian",
@@ -145,7 +161,9 @@
     "Price": "18.99",
     "Category": "Sicilian Pizza",
     "Slug": "white-cheese-sicilian",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/sicilian-white-cheese-sicilian-luxury-8k.png",
+    "image": "/images/dishes/sicilian-white-cheese-sicilian-luxury-8k.png"
   },
   {
     "Product Name": "Sicilian Meat Lover",
@@ -163,7 +181,9 @@
     "Price": "25.99",
     "Category": "Sicilian Pizza",
     "Slug": "sicilian-special",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/sicilian-sicilian-special-luxury-8k.png",
+    "image": "/images/dishes/sicilian-sicilian-special-luxury-8k.png"
   },
   {
     "Product Name": "Shrimp Alfredo Sicilian",
@@ -171,7 +191,9 @@
     "Price": "25.99",
     "Category": "Sicilian Pizza",
     "Slug": "shrimp-alfredo-sicilian",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/sicilian-shrimp-alfredo-sicilian-luxury-8k.png",
+    "image": "/images/dishes/sicilian-shrimp-alfredo-sicilian-luxury-8k.png"
   },
   {
     "Product Name": "Buffalo Chicken Sicilian",
@@ -179,7 +201,9 @@
     "Price": "23.99",
     "Category": "Sicilian Pizza",
     "Slug": "buffalo-chicken-sicilian",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/sicilian-buffalo-chicken-sicilian-luxury-8k.png",
+    "image": "/images/dishes/sicilian-buffalo-chicken-sicilian-luxury-8k.png"
   },
   {
     "Product Name": "Chicken Ranch Sicilian",
@@ -187,7 +211,9 @@
     "Price": "23.99",
     "Category": "Sicilian Pizza",
     "Slug": "chicken-ranch-sicilian",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/sicilian-chicken-ranch-sicilian-luxury-8k.png",
+    "image": "/images/dishes/sicilian-chicken-ranch-sicilian-luxury-8k.png"
   },
   {
     "Product Name": "Ham & American Cheese Sicilian",
@@ -195,7 +221,9 @@
     "Price": "21.99",
     "Category": "Sicilian Pizza",
     "Slug": "ham-american-sicilian",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/sicilian-ham-american-sicilian-luxury-8k.png",
+    "image": "/images/dishes/sicilian-ham-american-sicilian-luxury-8k.png"
   },
   {
     "Product Name": "White Special Sicilian",
@@ -203,7 +231,9 @@
     "Price": "23.99",
     "Category": "Sicilian Pizza",
     "Slug": "white-special-sicilian",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/sicilian-white-special-sicilian-luxury-8k.png",
+    "image": "/images/dishes/sicilian-white-special-sicilian-luxury-8k.png"
   },
   {
     "Product Name": "Philly Steak Sicilian",
@@ -211,7 +241,9 @@
     "Price": "23.99",
     "Category": "Sicilian Pizza",
     "Slug": "philly-steak-sicilian",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/sicilian-philly-steak-sicilian-luxury-8k.png",
+    "image": "/images/dishes/sicilian-philly-steak-sicilian-luxury-8k.png"
   },
   {
     "Product Name": "Plain Chicken Wings",
@@ -219,7 +251,9 @@
     "Price": "14.99",
     "Category": "Chicken Wings",
     "Slug": "plain-wings",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/wings-plain-wings-luxury-8k.png",
+    "image": "/images/dishes/wings-plain-wings-luxury-8k.png"
   },
   {
     "Product Name": "BBQ Wings",
@@ -227,7 +261,9 @@
     "Price": "14.99",
     "Category": "Chicken Wings",
     "Slug": "bbq-wings",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/wings-bbq-wings-luxury-8k.png",
+    "image": "/images/dishes/wings-bbq-wings-luxury-8k.png"
   },
   {
     "Product Name": "Garlic Parmesan Wings",
@@ -235,7 +271,9 @@
     "Price": "14.99",
     "Category": "Chicken Wings",
     "Slug": "garlic-parm-wings",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/wings-garlic-parm-wings-luxury-8k.png",
+    "image": "/images/dishes/wings-garlic-parm-wings-luxury-8k.png"
   },
   {
     "Product Name": "Spicy Wings",
@@ -253,7 +291,9 @@
     "Price": "14.99",
     "Category": "Chicken Wings",
     "Slug": "honey-habanero-wings",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/wings-honey-habanero-wings-luxury-8k.png",
+    "image": "/images/dishes/wings-honey-habanero-wings-luxury-8k.png"
   },
   {
     "Product Name": "Mango Habanero Wings",
@@ -261,7 +301,9 @@
     "Price": "14.99",
     "Category": "Chicken Wings",
     "Slug": "mango-habanero-wings",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/wings-mango-habanero-wings-luxury-8k.png",
+    "image": "/images/dishes/wings-mango-habanero-wings-luxury-8k.png"
   },
   {
     "Product Name": "Philadelphia Cheesesteak",
@@ -279,7 +321,9 @@
     "Price": "10.99",
     "Category": "Cheesesteaks",
     "Slug": "philly-special",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/cheesesteak-philly-special-luxury-8k.png",
+    "image": "/images/dishes/cheesesteak-philly-special-luxury-8k.png"
   },
   {
     "Product Name": "Cheesesteak Ranchero",
@@ -287,7 +331,9 @@
     "Price": "10.99",
     "Category": "Cheesesteaks",
     "Slug": "cheesesteak-ranchero",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/cheesesteak-cheesesteak-ranchero-luxury-8k.png",
+    "image": "/images/dishes/cheesesteak-cheesesteak-ranchero-luxury-8k.png"
   },
   {
     "Product Name": "Pizza Steak or Chicken",
@@ -295,7 +341,9 @@
     "Price": "10.99",
     "Category": "Cheesesteaks",
     "Slug": "pizza-steak-chicken",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/cheesesteak-pizza-steak-chicken-luxury-8k.png",
+    "image": "/images/dishes/cheesesteak-pizza-steak-chicken-luxury-8k.png"
   },
   {
     "Product Name": "BBQ Chicken Cheesesteak",
@@ -303,7 +351,9 @@
     "Price": "10.99",
     "Category": "Cheesesteaks",
     "Slug": "bbq-chicken-cheesesteak",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/cheesesteak-bbq-chicken-cheesesteak-luxury-8k.png",
+    "image": "/images/dishes/cheesesteak-bbq-chicken-cheesesteak-luxury-8k.png"
   },
   {
     "Product Name": "Italian Vegetable Cheesesteak",
@@ -311,7 +361,9 @@
     "Price": "12.99",
     "Category": "Cheesesteaks",
     "Slug": "italian-veg-cheesesteak",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/cheesesteak-italian-veg-cheesesteak-luxury-8k.png",
+    "image": "/images/dishes/cheesesteak-italian-veg-cheesesteak-luxury-8k.png"
   },
   {
     "Product Name": "Ham & American Cheese",
@@ -319,7 +371,9 @@
     "Price": "12.99",
     "Category": "Cheesesteaks",
     "Slug": "ham-american-cheese",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/cheesesteak-ham-american-cheese-luxury-8k.png",
+    "image": "/images/dishes/cheesesteak-ham-american-cheese-luxury-8k.png"
   },
   {
     "Product Name": "Burger",
@@ -327,7 +381,9 @@
     "Price": "7.99",
     "Category": "Fresh Burgers",
     "Slug": "burger",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/burger-burger-luxury-8k.png",
+    "image": "/images/dishes/burger-burger-luxury-8k.png"
   },
   {
     "Product Name": "Cheeseburger",
@@ -335,7 +391,9 @@
     "Price": "8.99",
     "Category": "Fresh Burgers",
     "Slug": "cheeseburger",
-    "Featured": "True"
+    "Featured": "True",
+    "Image": "/images/dishes/burger-cheeseburger-luxury-8k.png",
+    "image": "/images/dishes/burger-cheeseburger-luxury-8k.png"
   },
   {
     "Product Name": "Double Cheeseburger",
@@ -353,7 +411,9 @@
     "Price": "14.99",
     "Category": "Fresh Burgers",
     "Slug": "bacon-double-cheeseburger",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/burger-bacon-double-cheeseburger-luxury-8k.png",
+    "image": "/images/dishes/burger-bacon-double-cheeseburger-luxury-8k.png"
   },
   {
     "Product Name": "Texas Cheeseburger",
@@ -361,7 +421,9 @@
     "Price": "12.99",
     "Category": "Fresh Burgers",
     "Slug": "texas-cheeseburger",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/burger-texas-cheeseburger-luxury-8k.png",
+    "image": "/images/dishes/burger-texas-cheeseburger-luxury-8k.png"
   },
   {
     "Product Name": "Chicken Ranch Burger",
@@ -369,7 +431,9 @@
     "Price": "11.99",
     "Category": "Fresh Burgers",
     "Slug": "chicken-ranch-burger",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/burger-chicken-ranch-burger-luxury-8k.png",
+    "image": "/images/dishes/burger-chicken-ranch-burger-luxury-8k.png"
   },
   {
     "Product Name": "Chicken Caesar",
@@ -377,7 +441,9 @@
     "Price": "11.99",
     "Category": "Fresh Burgers",
     "Slug": "chicken-caesar-burger",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/burger-chicken-caesar-burger-luxury-8k.png",
+    "image": "/images/dishes/burger-chicken-caesar-burger-luxury-8k.png"
   },
   {
     "Product Name": "French Fries",
@@ -385,7 +451,9 @@
     "Price": "4.99",
     "Category": "Appetizers",
     "Slug": "french-fries",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/appetizer-french-fries-luxury-8k.png",
+    "image": "/images/dishes/appetizer-french-fries-luxury-8k.png"
   },
   {
     "Product Name": "Cheese Fries",
@@ -393,7 +461,9 @@
     "Price": "5.99",
     "Category": "Appetizers",
     "Slug": "cheese-fries",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/appetizer-cheese-fries-luxury-8k.png",
+    "image": "/images/dishes/appetizer-cheese-fries-luxury-8k.png"
   },
   {
     "Product Name": "Old Bay Fries",
@@ -401,7 +471,9 @@
     "Price": "5.99",
     "Category": "Appetizers",
     "Slug": "old-bay-fries",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/appetizer-old-bay-fries-luxury-8k.png",
+    "image": "/images/dishes/appetizer-old-bay-fries-luxury-8k.png"
   },
   {
     "Product Name": "Onion Rings",
@@ -409,7 +481,9 @@
     "Price": "7.99",
     "Category": "Appetizers",
     "Slug": "onion-rings",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/appetizer-onion-rings-luxury-8k.png",
+    "image": "/images/dishes/appetizer-onion-rings-luxury-8k.png"
   },
   {
     "Product Name": "Cheesesteak Fries",
@@ -417,7 +491,9 @@
     "Price": "12.00",
     "Category": "Appetizers",
     "Slug": "cheesesteak-fries",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/appetizer-cheesesteak-fries-luxury-8k.png",
+    "image": "/images/dishes/appetizer-cheesesteak-fries-luxury-8k.png"
   },
   {
     "Product Name": "Mega Fries",
@@ -425,7 +501,9 @@
     "Price": "9.99",
     "Category": "Appetizers",
     "Slug": "mega-fries",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/appetizer-mega-fries-luxury-8k.png",
+    "image": "/images/dishes/appetizer-mega-fries-luxury-8k.png"
   },
   {
     "Product Name": "Buffalo Chicken",
@@ -433,7 +511,9 @@
     "Price": "10.99",
     "Category": "Appetizers",
     "Slug": "buffalo-chicken-app",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/appetizer-buffalo-chicken-app-luxury-8k.png",
+    "image": "/images/dishes/appetizer-buffalo-chicken-app-luxury-8k.png"
   },
   {
     "Product Name": "Pizza Fries",
@@ -441,7 +521,9 @@
     "Price": "7.99",
     "Category": "Appetizers",
     "Slug": "pizza-fries",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/appetizer-pizza-fries-luxury-8k.png",
+    "image": "/images/dishes/appetizer-pizza-fries-luxury-8k.png"
   },
   {
     "Product Name": "Jalapeno Poppers",
@@ -449,7 +531,9 @@
     "Price": "8.99",
     "Category": "Appetizers",
     "Slug": "jalapeno-poppers",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/appetizer-jalapeno-poppers-luxury-8k.png",
+    "image": "/images/dishes/appetizer-jalapeno-poppers-luxury-8k.png"
   },
   {
     "Product Name": "Mac & Cheese Bites",
@@ -457,7 +541,9 @@
     "Price": "6.99",
     "Category": "Appetizers",
     "Slug": "mac-cheese-bites",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/appetizer-mac-cheese-bites-luxury-8k.png",
+    "image": "/images/dishes/appetizer-mac-cheese-bites-luxury-8k.png"
   },
   {
     "Product Name": "Carne Asada",
@@ -465,7 +551,9 @@
     "Price": "17.99",
     "Category": "Appetizers",
     "Slug": "carne-asada",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/appetizer-carne-asada-luxury-8k.png",
+    "image": "/images/dishes/appetizer-carne-asada-luxury-8k.png"
   },
   {
     "Product Name": "Nachos",
@@ -473,7 +561,9 @@
     "Price": "11.99",
     "Category": "Appetizers",
     "Slug": "nachos",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/appetizer-nachos-luxury-8k.png",
+    "image": "/images/dishes/appetizer-nachos-luxury-8k.png"
   },
   {
     "Product Name": "Fajitas",
@@ -481,7 +571,9 @@
     "Price": "17.99",
     "Category": "Appetizers",
     "Slug": "fajitas",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/appetizer-fajitas-luxury-8k.png",
+    "image": "/images/dishes/appetizer-fajitas-luxury-8k.png"
   },
   {
     "Product Name": "Garlic Bread",
@@ -489,7 +581,9 @@
     "Price": "4.99",
     "Category": "Appetizers",
     "Slug": "garlic-bread",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/appetizer-garlic-bread-luxury-8k.png",
+    "image": "/images/dishes/appetizer-garlic-bread-luxury-8k.png"
   },
   {
     "Product Name": "Bread Sticks",
@@ -497,7 +591,9 @@
     "Price": "7.99",
     "Category": "Appetizers",
     "Slug": "bread-sticks",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/appetizer-bread-sticks-luxury-8k.png",
+    "image": "/images/dishes/appetizer-bread-sticks-luxury-8k.png"
   },
   {
     "Product Name": "Garlic Knots",
@@ -505,7 +601,9 @@
     "Price": "7.99",
     "Category": "Appetizers",
     "Slug": "garlic-knots",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/appetizer-garlic-knots-luxury-8k.png",
+    "image": "/images/dishes/appetizer-garlic-knots-luxury-8k.png"
   },
   {
     "Product Name": "Mozzarella Sticks",
@@ -523,7 +621,9 @@
     "Price": "8.99",
     "Category": "Appetizers",
     "Slug": "broccoli-bites",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/appetizer-broccoli-bites-luxury-8k.png",
+    "image": "/images/dishes/appetizer-broccoli-bites-luxury-8k.png"
   },
   {
     "Product Name": "Fried Mushrooms",
@@ -531,7 +631,9 @@
     "Price": "7.99",
     "Category": "Appetizers",
     "Slug": "fried-mushrooms",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/appetizer-fried-mushrooms-luxury-8k.png",
+    "image": "/images/dishes/appetizer-fried-mushrooms-luxury-8k.png"
   },
   {
     "Product Name": "Chicken Tenders",
@@ -539,7 +641,9 @@
     "Price": "11.99",
     "Category": "Appetizers",
     "Slug": "chicken-tenders",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/appetizer-chicken-tenders-luxury-8k.png",
+    "image": "/images/dishes/appetizer-chicken-tenders-luxury-8k.png"
   },
   {
     "Product Name": "Fried Calamari",
@@ -547,7 +651,9 @@
     "Price": "11.99",
     "Category": "Appetizers",
     "Slug": "fried-calamari",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/appetizer-fried-calamari-luxury-8k.png",
+    "image": "/images/dishes/appetizer-fried-calamari-luxury-8k.png"
   },
   {
     "Product Name": "Fried Shrimp",
@@ -555,7 +661,9 @@
     "Price": "10.99",
     "Category": "Appetizers",
     "Slug": "fried-shrimp",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/appetizer-fried-shrimp-luxury-8k.png",
+    "image": "/images/dishes/appetizer-fried-shrimp-luxury-8k.png"
   },
   {
     "Product Name": "Sampler Platter",
@@ -563,7 +671,9 @@
     "Price": "16.99",
     "Category": "Appetizers",
     "Slug": "sampler-platter",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/appetizer-sampler-platter-luxury-8k.png",
+    "image": "/images/dishes/appetizer-sampler-platter-luxury-8k.png"
   },
   {
     "Product Name": "Octopus Skins",
@@ -571,7 +681,9 @@
     "Price": "8.99",
     "Category": "Appetizers",
     "Slug": "octopus-skins",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/appetizer-octopus-skins-luxury-8k.png",
+    "image": "/images/dishes/appetizer-octopus-skins-luxury-8k.png"
   },
   {
     "Product Name": "Cinnamon Bites",
@@ -579,7 +691,9 @@
     "Price": "10.99",
     "Category": "Appetizers",
     "Slug": "cinnamon-bites",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/appetizer-cinnamon-bites-luxury-8k.png",
+    "image": "/images/dishes/appetizer-cinnamon-bites-luxury-8k.png"
   },
   {
     "Product Name": "Small Garden Salad",
@@ -587,7 +701,9 @@
     "Price": "5.99",
     "Category": "Fresh Salads",
     "Slug": "small-garden-salad",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/salad-small-garden-salad-luxury-8k.png",
+    "image": "/images/dishes/salad-small-garden-salad-luxury-8k.png"
   },
   {
     "Product Name": "Garden Salad",
@@ -595,7 +711,9 @@
     "Price": "8.99",
     "Category": "Fresh Salads",
     "Slug": "garden-salad",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/salad-garden-salad-luxury-8k.png",
+    "image": "/images/dishes/salad-garden-salad-luxury-8k.png"
   },
   {
     "Product Name": "Grilled or Crispy Chicken Salad",
@@ -603,7 +721,9 @@
     "Price": "12.99",
     "Category": "Fresh Salads",
     "Slug": "chicken-salad",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/salad-chicken-salad-luxury-8k.png",
+    "image": "/images/dishes/salad-chicken-salad-luxury-8k.png"
   },
   {
     "Product Name": "Avocado Grilled Chicken Salad",
@@ -611,7 +731,9 @@
     "Price": "13.99",
     "Category": "Fresh Salads",
     "Slug": "avocado-chicken-salad",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/salad-avocado-chicken-salad-luxury-8k.png",
+    "image": "/images/dishes/salad-avocado-chicken-salad-luxury-8k.png"
   },
   {
     "Product Name": "Grilled Shrimp Salad",
@@ -619,7 +741,9 @@
     "Price": "15.99",
     "Category": "Fresh Salads",
     "Slug": "grilled-shrimp-salad",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/salad-grilled-shrimp-salad-luxury-8k.png",
+    "image": "/images/dishes/salad-grilled-shrimp-salad-luxury-8k.png"
   },
   {
     "Product Name": "Grilled Chicken and Shrimp Combo Salad",
@@ -627,7 +751,9 @@
     "Price": "16.99",
     "Category": "Fresh Salads",
     "Slug": "chicken-shrimp-salad",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/salad-chicken-shrimp-salad-luxury-8k.png",
+    "image": "/images/dishes/salad-chicken-shrimp-salad-luxury-8k.png"
   },
   {
     "Product Name": "Caesar Salad",
@@ -635,7 +761,9 @@
     "Price": "8.99",
     "Category": "Fresh Salads",
     "Slug": "caesar-salad",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/salad-caesar-salad-luxury-8k.png",
+    "image": "/images/dishes/salad-caesar-salad-luxury-8k.png"
   },
   {
     "Product Name": "Chef Salad",
@@ -643,7 +771,9 @@
     "Price": "12.99",
     "Category": "Fresh Salads",
     "Slug": "chef-salad",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/salad-chef-salad-luxury-8k.png",
+    "image": "/images/dishes/salad-chef-salad-luxury-8k.png"
   },
   {
     "Product Name": "Grilled Chicken Caesar Salad",
@@ -651,7 +781,9 @@
     "Price": "12.99",
     "Category": "Fresh Salads",
     "Slug": "chicken-caesar-salad",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/salad-chicken-caesar-salad-luxury-8k.png",
+    "image": "/images/dishes/salad-chicken-caesar-salad-luxury-8k.png"
   },
   {
     "Product Name": "Crispy Chicken Caesar Salad",
@@ -659,7 +791,9 @@
     "Price": "12.99",
     "Category": "Fresh Salads",
     "Slug": "crispy-caesar-salad",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/salad-crispy-caesar-salad-luxury-8k.png",
+    "image": "/images/dishes/salad-crispy-caesar-salad-luxury-8k.png"
   },
   {
     "Product Name": "Greek Salad",
@@ -677,7 +811,9 @@
     "Price": "13.99",
     "Category": "Fresh Salads",
     "Slug": "greek-chicken-salad",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/salad-greek-chicken-salad-luxury-8k.png",
+    "image": "/images/dishes/salad-greek-chicken-salad-luxury-8k.png"
   },
   {
     "Product Name": "Steak Salad",
@@ -685,7 +821,9 @@
     "Price": "13.99",
     "Category": "Fresh Salads",
     "Slug": "steak-salad",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/salad-steak-salad-luxury-8k.png",
+    "image": "/images/dishes/salad-steak-salad-luxury-8k.png"
   },
   {
     "Product Name": "Antipasto Salad",
@@ -693,7 +831,9 @@
     "Price": "12.99",
     "Category": "Fresh Salads",
     "Slug": "antipasto-salad",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/salad-antipasto-salad-luxury-8k.png",
+    "image": "/images/dishes/salad-antipasto-salad-luxury-8k.png"
   },
   {
     "Product Name": "Cobb Salad",
@@ -701,7 +841,9 @@
     "Price": "14.99",
     "Category": "Fresh Salads",
     "Slug": "cobb-salad",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/salad-cobb-salad-luxury-8k.png",
+    "image": "/images/dishes/salad-cobb-salad-luxury-8k.png"
   },
   {
     "Product Name": "Spaghetti with Meat Sauce",
@@ -709,7 +851,9 @@
     "Price": "16.99",
     "Category": "Pasta",
     "Slug": "spaghetti-meat-sauce",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/pasta-spaghetti-meat-sauce-luxury-8k.png",
+    "image": "/images/dishes/pasta-spaghetti-meat-sauce-luxury-8k.png"
   },
   {
     "Product Name": "Chicken Parmigiana",
@@ -717,7 +861,9 @@
     "Price": "16.99",
     "Category": "Pasta",
     "Slug": "chicken-parmigiana",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/pasta-chicken-parmigiana-luxury-8k.png",
+    "image": "/images/dishes/pasta-chicken-parmigiana-luxury-8k.png"
   },
   {
     "Product Name": "Shrimp Parmigiana",
@@ -725,7 +871,9 @@
     "Price": "17.99",
     "Category": "Pasta",
     "Slug": "shrimp-parmigiana",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/pasta-shrimp-parmigiana-luxury-8k.png",
+    "image": "/images/dishes/pasta-shrimp-parmigiana-luxury-8k.png"
   },
   {
     "Product Name": "Seafood with Pasta",
@@ -733,7 +881,9 @@
     "Price": "22.99",
     "Category": "Pasta",
     "Slug": "seafood-pasta",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/pasta-seafood-pasta-luxury-8k.png",
+    "image": "/images/dishes/pasta-seafood-pasta-luxury-8k.png"
   },
   {
     "Product Name": "Baked Ravioli",
@@ -741,7 +891,9 @@
     "Price": "14.99",
     "Category": "Pasta",
     "Slug": "baked-ravioli",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/pasta-baked-ravioli-luxury-8k.png",
+    "image": "/images/dishes/pasta-baked-ravioli-luxury-8k.png"
   },
   {
     "Product Name": "Lobster Ravioli",
@@ -749,7 +901,9 @@
     "Price": "18.99",
     "Category": "Pasta",
     "Slug": "lobster-ravioli",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/pasta-lobster-ravioli-luxury-8k.png",
+    "image": "/images/dishes/pasta-lobster-ravioli-luxury-8k.png"
   },
   {
     "Product Name": "Baked Ziti",
@@ -767,7 +921,9 @@
     "Price": "14.99",
     "Category": "Pasta",
     "Slug": "eggplant-parmigiana",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/pasta-eggplant-parmigiana-luxury-8k.png",
+    "image": "/images/dishes/pasta-eggplant-parmigiana-luxury-8k.png"
   },
   {
     "Product Name": "Italian Trio",
@@ -775,7 +931,9 @@
     "Price": "17.99",
     "Category": "Pasta",
     "Slug": "italian-trio",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/pasta-italian-trio-luxury-8k.png",
+    "image": "/images/dishes/pasta-italian-trio-luxury-8k.png"
   },
   {
     "Product Name": "Chicken Finger Platter",
@@ -783,7 +941,9 @@
     "Price": "13.99",
     "Category": "Complete Dinners",
     "Slug": "chicken-finger-platter",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/dinner-chicken-finger-platter-luxury-8k.png",
+    "image": "/images/dishes/dinner-chicken-finger-platter-luxury-8k.png"
   },
   {
     "Product Name": "Shrimp Basket",
@@ -791,7 +951,9 @@
     "Price": "14.99",
     "Category": "Complete Dinners",
     "Slug": "shrimp-basket",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/dinner-shrimp-basket-luxury-8k.png",
+    "image": "/images/dishes/dinner-shrimp-basket-luxury-8k.png"
   },
   {
     "Product Name": "Jumbo Shrimp Platter",
@@ -799,7 +961,9 @@
     "Price": "15.99",
     "Category": "Complete Dinners",
     "Slug": "jumbo-shrimp-platter",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/dinner-jumbo-shrimp-platter-luxury-8k.png",
+    "image": "/images/dishes/dinner-jumbo-shrimp-platter-luxury-8k.png"
   },
   {
     "Product Name": "Crab Cake Platter",
@@ -807,7 +971,9 @@
     "Price": "26.99",
     "Category": "Complete Dinners",
     "Slug": "crab-cake-platter",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/dinner-crab-cake-platter-luxury-8k.png",
+    "image": "/images/dishes/dinner-crab-cake-platter-luxury-8k.png"
   },
   {
     "Product Name": "Flounder Platter",
@@ -815,7 +981,9 @@
     "Price": "14.99",
     "Category": "Complete Dinners",
     "Slug": "flounder-platter",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/dinner-flounder-platter-luxury-8k.png",
+    "image": "/images/dishes/dinner-flounder-platter-luxury-8k.png"
   },
   {
     "Product Name": "Fried Seafood Combo",
@@ -823,7 +991,9 @@
     "Price": "27.99",
     "Category": "Complete Dinners",
     "Slug": "fried-seafood-combo",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/dinner-fried-seafood-combo-platter-luxury-8k.png",
+    "image": "/images/dishes/dinner-fried-seafood-combo-platter-luxury-8k.png"
   },
   {
     "Product Name": "Beef Shish Kebab",
@@ -831,7 +1001,9 @@
     "Price": "22.99",
     "Category": "Complete Dinners",
     "Slug": "beef-shish-kebab",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/dinner-beef-shish-kebab-luxury-8k.png",
+    "image": "/images/dishes/dinner-beef-shish-kebab-luxury-8k.png"
   },
   {
     "Product Name": "Chicken Shish Kebab",
@@ -839,7 +1011,9 @@
     "Price": "19.99",
     "Category": "Complete Dinners",
     "Slug": "chicken-shish-kebab",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/dinner-chicken-shish-kebab-luxury-8k.png",
+    "image": "/images/dishes/dinner-chicken-shish-kebab-luxury-8k.png"
   },
   {
     "Product Name": "Gyro Platter",
@@ -847,7 +1021,9 @@
     "Price": "19.99",
     "Category": "Complete Dinners",
     "Slug": "gyro-platter",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/dinner-gyro-platter-luxury-8k.png",
+    "image": "/images/dishes/dinner-gyro-platter-luxury-8k.png"
   },
   {
     "Product Name": "Fried Seafood Combo",
@@ -855,7 +1031,9 @@
     "Price": "16.99",
     "Category": "Seafood",
     "Slug": "fried-seafood-combo-2",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/seafood-fried-seafood-basket-luxury-8k.png",
+    "image": "/images/dishes/seafood-fried-seafood-basket-luxury-8k.png"
   },
   {
     "Product Name": "Fried Filet of Flounder",
@@ -863,7 +1041,9 @@
     "Price": "14.99",
     "Category": "Seafood",
     "Slug": "fried-flounder",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/seafood-fried-flounder-luxury-8k.png",
+    "image": "/images/dishes/seafood-fried-flounder-luxury-8k.png"
   },
   {
     "Product Name": "Crab Cake Dinner",
@@ -871,7 +1051,9 @@
     "Price": "26.99",
     "Category": "Seafood",
     "Slug": "crab-cake-dinner",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/seafood-crab-cake-dinner-luxury-8k.png",
+    "image": "/images/dishes/seafood-crab-cake-dinner-luxury-8k.png"
   },
   {
     "Product Name": "Chicken & Steak Quesadilla",
@@ -889,7 +1071,9 @@
     "Price": "15.99",
     "Category": "Quesadillas",
     "Slug": "crab-quesadilla",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/quesadilla-crab-quesadilla-luxury-8k.png",
+    "image": "/images/dishes/quesadilla-crab-quesadilla-luxury-8k.png"
   },
   {
     "Product Name": "BBQ Chicken Quesadilla",
@@ -897,7 +1081,9 @@
     "Price": "12.99",
     "Category": "Quesadillas",
     "Slug": "bbq-chicken-quesadilla",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/quesadilla-bbq-chicken-quesadilla-luxury-8k.png",
+    "image": "/images/dishes/quesadilla-bbq-chicken-quesadilla-luxury-8k.png"
   },
   {
     "Product Name": "Texas Chicken Quesadilla",
@@ -905,7 +1091,9 @@
     "Price": "12.99",
     "Category": "Quesadillas",
     "Slug": "texas-chicken-quesadilla",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/quesadilla-texas-chicken-quesadilla-luxury-8k.png",
+    "image": "/images/dishes/quesadilla-texas-chicken-quesadilla-luxury-8k.png"
   },
   {
     "Product Name": "Buffalo Chicken Quesadilla",
@@ -913,7 +1101,9 @@
     "Price": "12.99",
     "Category": "Quesadillas",
     "Slug": "buffalo-chicken-quesadilla",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/quesadilla-buffalo-chicken-quesadilla-luxury-8k.png",
+    "image": "/images/dishes/quesadilla-buffalo-chicken-quesadilla-luxury-8k.png"
   },
   {
     "Product Name": "Steak Quesadilla",
@@ -921,7 +1111,9 @@
     "Price": "12.99",
     "Category": "Quesadillas",
     "Slug": "steak-quesadilla",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/quesadilla-steak-quesadilla-luxury-8k.png",
+    "image": "/images/dishes/quesadilla-steak-quesadilla-luxury-8k.png"
   },
   {
     "Product Name": "Seafood Quesadilla",
@@ -929,7 +1121,9 @@
     "Price": "15.99",
     "Category": "Quesadillas",
     "Slug": "seafood-quesadilla",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/quesadilla-seafood-quesadilla-luxury-8k.png",
+    "image": "/images/dishes/quesadilla-seafood-quesadilla-luxury-8k.png"
   },
   {
     "Product Name": "Tacos",
@@ -1037,7 +1231,9 @@
     "Price": "9.99",
     "Category": "Subs + Grinders",
     "Slug": "italian-sub",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/sub-italian-sub-luxury-8k.png",
+    "image": "/images/dishes/sub-italian-sub-luxury-8k.png"
   },
   {
     "Product Name": "Turkey Club",
@@ -1045,7 +1241,9 @@
     "Price": "12.99",
     "Category": "Subs + Grinders",
     "Slug": "turkey-club",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/sub-turkey-club-luxury-8k.png",
+    "image": "/images/dishes/sub-turkey-club-luxury-8k.png"
   },
   {
     "Product Name": "Turkey Bacon Club",
@@ -1053,7 +1251,9 @@
     "Price": "12.99",
     "Category": "Subs + Grinders",
     "Slug": "turkey-bacon-club",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/sub-turkey-bacon-club-luxury-8k.png",
+    "image": "/images/dishes/sub-turkey-bacon-club-luxury-8k.png"
   },
   {
     "Product Name": "Grilled Chicken BLT Club",
@@ -1061,7 +1261,9 @@
     "Price": "12.99",
     "Category": "Subs + Grinders",
     "Slug": "grilled-chicken-blt",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/sub-grilled-chicken-blt-luxury-8k.png",
+    "image": "/images/dishes/sub-grilled-chicken-blt-luxury-8k.png"
   },
   {
     "Product Name": "American Cheese Club",
@@ -1069,7 +1271,9 @@
     "Price": "12.99",
     "Category": "Subs + Grinders",
     "Slug": "american-cheese-club",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/sub-american-cheese-club-luxury-8k.png",
+    "image": "/images/dishes/sub-american-cheese-club-luxury-8k.png"
   },
   {
     "Product Name": "BLT Club",
@@ -1077,7 +1281,9 @@
     "Price": "12.99",
     "Category": "Subs + Grinders",
     "Slug": "blt-club",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/sub-blt-club-luxury-8k.png",
+    "image": "/images/dishes/sub-blt-club-luxury-8k.png"
   },
   {
     "Product Name": "Tuna Club",
@@ -1085,7 +1291,9 @@
     "Price": "12.99",
     "Category": "Subs + Grinders",
     "Slug": "tuna-club",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/sub-tuna-club-luxury-8k.png",
+    "image": "/images/dishes/sub-tuna-club-luxury-8k.png"
   },
   {
     "Product Name": "Fish Taco on Pita",
@@ -1093,7 +1301,9 @@
     "Price": "12.99",
     "Category": "Subs + Grinders",
     "Slug": "fish-taco-pita",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/sub-fish-taco-pita-luxury-8k.png",
+    "image": "/images/dishes/sub-fish-taco-pita-luxury-8k.png"
   },
   {
     "Product Name": "Ham & American Cheese on Pita",
@@ -1109,7 +1319,9 @@
     "Price": "15.99",
     "Category": "Strombolis + Calzones",
     "Slug": "cheese-stromboli",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/stromboli-cheese-stromboli-luxury-8k.png",
+    "image": "/images/dishes/stromboli-cheese-stromboli-luxury-8k.png"
   },
   {
     "Product Name": "Chicken Stromboli",
@@ -1117,7 +1329,9 @@
     "Price": "15.99",
     "Category": "Strombolis + Calzones",
     "Slug": "chicken-stromboli",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/stromboli-chicken-stromboli-luxury-8k.png",
+    "image": "/images/dishes/stromboli-chicken-stromboli-luxury-8k.png"
   },
   {
     "Product Name": "Buffalo Chicken Stromboli",
@@ -1125,7 +1339,9 @@
     "Price": "15.99",
     "Category": "Strombolis + Calzones",
     "Slug": "buffalo-chicken-stromboli",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/stromboli-buffalo-chicken-stromboli-luxury-8k.png",
+    "image": "/images/dishes/stromboli-buffalo-chicken-stromboli-luxury-8k.png"
   },
   {
     "Product Name": "Italian Stromboli",
@@ -1133,7 +1349,9 @@
     "Price": "15.99",
     "Category": "Strombolis + Calzones",
     "Slug": "italian-stromboli",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/stromboli-italian-stromboli-luxury-8k.png",
+    "image": "/images/dishes/stromboli-italian-stromboli-luxury-8k.png"
   },
   {
     "Product Name": "Meat Lovers Stromboli",
@@ -1141,7 +1359,9 @@
     "Price": "15.99",
     "Category": "Strombolis + Calzones",
     "Slug": "meat-lovers-stromboli",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/stromboli-meat-lovers-stromboli-luxury-8k.png",
+    "image": "/images/dishes/stromboli-meat-lovers-stromboli-luxury-8k.png"
   },
   {
     "Product Name": "Vegetable Stromboli",
@@ -1149,7 +1369,9 @@
     "Price": "15.99",
     "Category": "Strombolis + Calzones",
     "Slug": "vegetable-stromboli",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/stromboli-vegetable-stromboli-luxury-8k.png",
+    "image": "/images/dishes/stromboli-vegetable-stromboli-luxury-8k.png"
   },
   {
     "Product Name": "Philly Special Stromboli",
@@ -1157,7 +1379,9 @@
     "Price": "15.99",
     "Category": "Strombolis + Calzones",
     "Slug": "philly-special-stromboli",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/stromboli-philly-special-stromboli-luxury-8k.png",
+    "image": "/images/dishes/stromboli-philly-special-stromboli-luxury-8k.png"
   },
   {
     "Product Name": "Philly Special Chicken Stromboli",
@@ -1165,7 +1389,9 @@
     "Price": "15.99",
     "Category": "Strombolis + Calzones",
     "Slug": "philly-chicken-stromboli",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/stromboli-philly-chicken-stromboli-luxury-8k.png",
+    "image": "/images/dishes/stromboli-philly-chicken-stromboli-luxury-8k.png"
   },
   {
     "Product Name": "House",
@@ -1173,7 +1399,9 @@
     "Price": "10.99",
     "Category": "Breakfast",
     "Slug": "house-breakfast",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/breakfast-house-breakfast-luxury-8k.png",
+    "image": "/images/dishes/breakfast-house-breakfast-luxury-8k.png"
   },
   {
     "Product Name": "Ham Steak",
@@ -1189,7 +1417,9 @@
     "Price": "12.99",
     "Category": "Breakfast",
     "Slug": "seafood-omelette",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/breakfast-seafood-omelette-luxury-8k.png",
+    "image": "/images/dishes/breakfast-seafood-omelette-luxury-8k.png"
   },
   {
     "Product Name": "Crab Meat",
@@ -1197,7 +1427,9 @@
     "Price": "12.99",
     "Category": "Breakfast",
     "Slug": "crab-meat-breakfast",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/breakfast-crab-meat-breakfast-luxury-8k.png",
+    "image": "/images/dishes/breakfast-crab-meat-breakfast-luxury-8k.png"
   },
   {
     "Product Name": "Steak & Eggs",
@@ -1205,7 +1437,9 @@
     "Price": "22.99",
     "Category": "Breakfast",
     "Slug": "steak-eggs",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/breakfast-steak-eggs-luxury-8k.png",
+    "image": "/images/dishes/breakfast-steak-eggs-luxury-8k.png"
   },
   {
     "Product Name": "Belgian Waffles",
@@ -1213,7 +1447,9 @@
     "Price": "11.99",
     "Category": "Breakfast",
     "Slug": "belgian-waffles",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/breakfast-belgian-waffles-luxury-8k.png",
+    "image": "/images/dishes/breakfast-belgian-waffles-luxury-8k.png"
   },
   {
     "Product Name": "French Toast",
@@ -1221,7 +1457,9 @@
     "Price": "6.99",
     "Category": "Breakfast",
     "Slug": "french-toast",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/breakfast-french-toast-luxury-8k.png",
+    "image": "/images/dishes/breakfast-french-toast-luxury-8k.png"
   },
   {
     "Product Name": "Pancakes",
@@ -1229,7 +1467,9 @@
     "Price": "7.99",
     "Category": "Breakfast",
     "Slug": "pancakes",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/breakfast-pancakes-luxury-8k.png",
+    "image": "/images/dishes/breakfast-pancakes-luxury-8k.png"
   },
   {
     "Product Name": "Italian Sausage Parm",
@@ -1237,7 +1477,9 @@
     "Price": "9.99",
     "Category": "Hot Sandwiches",
     "Slug": "italian-sausage-parm",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/sandwich-italian-sausage-parm-luxury-8k.png",
+    "image": "/images/dishes/sandwich-italian-sausage-parm-luxury-8k.png"
   },
   {
     "Product Name": "Special Chicken Cutlet",
@@ -1245,7 +1487,9 @@
     "Price": "9.99",
     "Category": "Hot Sandwiches",
     "Slug": "special-chicken-cutlet",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/sandwich-special-chicken-cutlet-luxury-8k.png",
+    "image": "/images/dishes/sandwich-special-chicken-cutlet-luxury-8k.png"
   },
   {
     "Product Name": "Meatball Parm",
@@ -1253,7 +1497,9 @@
     "Price": "9.99",
     "Category": "Hot Sandwiches",
     "Slug": "meatball-parm",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/sandwich-meatball-parm-luxury-8k.png",
+    "image": "/images/dishes/sandwich-meatball-parm-luxury-8k.png"
   },
   {
     "Product Name": "Cheeseburger Sandwich",
@@ -1261,7 +1507,9 @@
     "Price": "12.99",
     "Category": "Hot Sandwiches",
     "Slug": "cheeseburger-sandwich",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/sandwich-cheeseburger-sandwich-luxury-8k.png",
+    "image": "/images/dishes/sandwich-cheeseburger-sandwich-luxury-8k.png"
   },
   {
     "Product Name": "Flounder Sandwich",
@@ -1269,7 +1517,9 @@
     "Price": "12.99",
     "Category": "Hot Sandwiches",
     "Slug": "flounder-sandwich",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/sandwich-flounder-sandwich-luxury-8k.png",
+    "image": "/images/dishes/sandwich-flounder-sandwich-luxury-8k.png"
   },
   {
     "Product Name": "Crispy Chicken",
@@ -1277,7 +1527,9 @@
     "Price": "12.99",
     "Category": "Hot Sandwiches",
     "Slug": "crispy-chicken",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/sandwich-crispy-chicken-luxury-8k.png",
+    "image": "/images/dishes/sandwich-crispy-chicken-luxury-8k.png"
   },
   {
     "Product Name": "Chicken Cheesesteak",
@@ -1285,7 +1537,9 @@
     "Price": "10.99",
     "Category": "Hot Sandwiches",
     "Slug": "chicken-cheesesteak-sand",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/sandwich-chicken-cheesesteak-sand-luxury-8k.png",
+    "image": "/images/dishes/sandwich-chicken-cheesesteak-sand-luxury-8k.png"
   },
   {
     "Product Name": "Strawberry Cheesecake",
@@ -1293,7 +1547,9 @@
     "Price": "6.95",
     "Category": "Desserts",
     "Slug": "strawberry-cheesecake",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/dessert-strawberry-cheesecake-luxury-8k.png",
+    "image": "/images/dishes/dessert-strawberry-cheesecake-luxury-8k.png"
   },
   {
     "Product Name": "Carrot Cake",
@@ -1301,7 +1557,9 @@
     "Price": "6.50",
     "Category": "Desserts",
     "Slug": "carrot-cake",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/dessert-carrot-cake-luxury-8k.png",
+    "image": "/images/dishes/dessert-carrot-cake-luxury-8k.png"
   },
   {
     "Product Name": "Chocolate Cake",
@@ -1309,7 +1567,9 @@
     "Price": "6.50",
     "Category": "Desserts",
     "Slug": "chocolate-cake",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/dessert-chocolate-cake-luxury-8k.png",
+    "image": "/images/dishes/dessert-chocolate-cake-luxury-8k.png"
   },
   {
     "Product Name": "Tiramisu",
@@ -1327,7 +1587,9 @@
     "Price": "5.99",
     "Category": "Desserts",
     "Slug": "rice-bread-pudding",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/dessert-rice-bread-pudding-luxury-8k.png",
+    "image": "/images/dishes/dessert-rice-bread-pudding-luxury-8k.png"
   },
   {
     "Product Name": "Zeppoli",
@@ -1335,7 +1597,9 @@
     "Price": "5.99",
     "Category": "Desserts",
     "Slug": "zeppoli",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/dessert-zeppoli-luxury-8k.png",
+    "image": "/images/dishes/dessert-zeppoli-luxury-8k.png"
   },
   {
     "Product Name": "Home Soup",
@@ -1343,7 +1607,9 @@
     "Price": "5.99",
     "Category": "Soups",
     "Slug": "home-soup",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/soup-home-soup-luxury-8k.png",
+    "image": "/images/dishes/soup-home-soup-luxury-8k.png"
   },
   {
     "Product Name": "Soup of the Day",
@@ -1351,7 +1617,9 @@
     "Price": "5.99",
     "Category": "Soups",
     "Slug": "soup-of-the-day",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/soup-soup-of-the-day-luxury-8k.png",
+    "image": "/images/dishes/soup-soup-of-the-day-luxury-8k.png"
   },
   {
     "Product Name": "2-liter Soda",
@@ -1367,7 +1635,9 @@
     "Price": "1.50",
     "Category": "Drinks",
     "Slug": "can-soda",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/drink-can-soda-luxury-8k.png",
+    "image": "/images/dishes/drink-can-soda-luxury-8k.png"
   },
   {
     "Product Name": "20oz Bottle",
@@ -1383,7 +1653,9 @@
     "Price": "5.99",
     "Category": "Side Orders",
     "Slug": "broccoli",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/side-broccoli-luxury-8k.png",
+    "image": "/images/dishes/side-broccoli-luxury-8k.png"
   },
   {
     "Product Name": "Rice",
@@ -1391,7 +1663,9 @@
     "Price": "5.99",
     "Category": "Side Orders",
     "Slug": "rice",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/side-rice-luxury-8k.png",
+    "image": "/images/dishes/side-rice-luxury-8k.png"
   },
   {
     "Product Name": "Fried Beans",
@@ -1399,7 +1673,9 @@
     "Price": "5.99",
     "Category": "Side Orders",
     "Slug": "fried-beans",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/side-fried-beans-luxury-8k.png",
+    "image": "/images/dishes/side-fried-beans-luxury-8k.png"
   },
   {
     "Product Name": "Sausage",
@@ -1407,7 +1683,9 @@
     "Price": "5.99",
     "Category": "Side Orders",
     "Slug": "sausage",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/side-sausage-luxury-8k.png",
+    "image": "/images/dishes/side-sausage-luxury-8k.png"
   },
   {
     "Product Name": "Meatball",
@@ -1415,7 +1693,9 @@
     "Price": "5.99",
     "Category": "Side Orders",
     "Slug": "meatball",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/side-meatball-luxury-8k.png",
+    "image": "/images/dishes/side-meatball-luxury-8k.png"
   },
   {
     "Product Name": "Herr's Chips",
@@ -1423,7 +1703,9 @@
     "Price": "2.99",
     "Category": "Side Orders",
     "Slug": "herrs-chips",
-    "Featured": "False"
+    "Featured": "False",
+    "Image": "/images/dishes/side-herrs-chips-luxury-8k.png",
+    "image": "/images/dishes/side-herrs-chips-luxury-8k.png"
   },
   {
     "Category": "Strombolis + Calzones",
