@@ -50,7 +50,7 @@ export default function StickyMobileBar({ dict }: StickyMobileBarProps) {
       <div className="flex items-center justify-between gap-3 max-w-lg mx-auto">
         <a
           href="tel:3023690553"
-          className="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl btn-ember text-white font-bold text-sm active:scale-95 transition-all shadow-md"
+          className="flex-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl btn-charcoal text-white font-bold text-sm active:scale-95 transition-all shadow-md"
           aria-label="Call Raggio Gourmet Pizza at (302) 369-0553"
         >
           <svg

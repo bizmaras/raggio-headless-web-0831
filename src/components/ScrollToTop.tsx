@@ -32,7 +32,7 @@ export default function ScrollToTop() {
             className={`
                 md:hidden 
                 fixed bottom-24 left-4 z-40 h-12 w-12 rounded-full 
-                bg-[#1e1b17] border border-gold text-gold
+                bg-ink border border-gold text-gold
                 shadow-[0_0_15px_rgba(201,161,92,0.25)] 
                 transition-all duration-300 ease-in-out touch-manipulation
                 active:scale-90 active:bg-gold/20 flex items-center justify-center cursor-pointer

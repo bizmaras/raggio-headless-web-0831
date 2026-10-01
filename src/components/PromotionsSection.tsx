@@ -24,6 +24,7 @@ interface PromotionsSectionProps {
       order_deal?: string;
       view_deal?: string;
       coupon_tag?: string;
+      valid_note?: string;
       items?: Array<{
         id: string;
         tag: string;
@@ -167,7 +168,7 @@ export default function PromotionsSection({ dict }: PromotionsSectionProps) {
             {sectionTitle}
           </h2>
           <p className="text-xs sm:text-sm text-stone mt-1">
-            {dict?.promotions?.coupon_tag ? 'Válido para llevar y entrega a domicilio' : 'Valid for takeout & delivery online'}
+            {dict?.promotions?.valid_note ?? 'Valid for takeout & delivery online'}
           </p>
         </div>
 

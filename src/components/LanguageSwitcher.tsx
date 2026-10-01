@@ -24,7 +24,7 @@ export default function LanguageSwitcher({ currentLang }: LanguageSwitcherProps)
   };
 
   return (
-    <div className="inline-flex items-center p-1 rounded-xl bg-[#1e1b17] border border-panel-border text-xs font-bold text-stone shadow-inner">
+    <div className="inline-flex items-center p-1 rounded-xl bg-ink border border-panel-border text-xs font-bold text-stone shadow-inner">
       <button
         type="button"
         onClick={() => handleSwitch('en')}

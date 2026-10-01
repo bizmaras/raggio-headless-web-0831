@@ -64,6 +64,7 @@
     "order_deal": "Ordenar Esta Oferta",
     "view_deal": "Ver Detalles de la Oferta",
     "coupon_tag": "CUPÓN ESPECIAL",
+    "valid_note": "Válido para llevar y entrega a domicilio",
     "items": [
       {
         "id": "promo-1",

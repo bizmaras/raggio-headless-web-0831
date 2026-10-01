@@ -77,6 +77,7 @@
     "order_deal": "Order This Deal",
     "view_deal": "View Deal Details",
     "coupon_tag": "COUPON SPECIAL",
+    "valid_note": "Valid for takeout & delivery online",
     "items": [
       {
         "id": "promo-1",

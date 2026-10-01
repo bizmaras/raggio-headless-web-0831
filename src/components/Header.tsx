@@ -88,7 +88,7 @@ export default function Header({ lang = 'en', dict }: HeaderProps) {
             <a
               href={`/${lang}`}
               aria-label="Back to Home"
-              className="flex lg:hidden items-center justify-center p-2.5 rounded-xl bg-[#1e1b17] border border-gold/60 text-gold shadow-[0_0_8px_rgba(201,161,92,0.12)] hover:bg-gold/20 transition-all cursor-pointer active:scale-95 shrink-0"
+              className="flex lg:hidden items-center justify-center p-2.5 rounded-xl bg-ink border border-gold/60 text-gold shadow-[0_0_8px_rgba(201,161,92,0.12)] hover:bg-gold/20 transition-all cursor-pointer active:scale-95 shrink-0"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -171,7 +171,7 @@ export default function Header({ lang = 'en', dict }: HeaderProps) {
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="flex items-center justify-center p-2.5 rounded-xl bg-[#1e1b17] border border-panel-border text-cream hover:text-gold hover:border-gold/60 transition-colors cursor-pointer active:scale-95"
+              className="flex items-center justify-center p-2.5 rounded-xl bg-ink border border-panel-border text-cream hover:text-gold hover:border-gold/60 transition-colors cursor-pointer active:scale-95"
               aria-label="Toggle Menu"
               aria-expanded={isMobileMenuOpen}
               aria-controls="mobile-menu"

@@ -2,20 +2,26 @@
 
 @theme {
   /* ============================================================
-     RAGGIO DUAL-TONE SYSTEM v2 (Step 1 redesign, 2026-09)
+     RAGGIO "OVEN & PARCHMENT" SYSTEM v3 (2026-09-30)
+     Benchmarked on 17 reference sites (Pizzeria Bianco, Pizzeria Mozza, Lucali,
+     Pepe in Grani, Carbone, Roberta's, Joe's ...): none use gold as the action
+     colour; the norm is a light/charcoal base + ONE warm accent. So:
+       charcoal + parchment = surfaces, oven red = action/accent,
+       brass (logo colour) = fine detail only (eyebrows, rules, icons).
+     ---- v2 notes ----
      Dark "oven" surfaces = warm obsidian (brown-black, not blue-black)
      Light "table" surfaces = milk / parchment (see .surface-milk below)
      All utilities (bg-ink, text-gold, border-panel-border …) resolve through
      these CSS variables, so .surface-milk can re-map them per section.
      ============================================================ */
-  --color-ink: #1e1b17;          /* warm obsidian (was #131518 blue-black) */
-  --color-ink-2: #26221d;        /* oven-stone charcoal */
-  --color-panel: #2c2721;        /* cards on dark */
-  --color-panel-2: #353028;
-  --color-panel-border: #463f35;
+  --color-ink: #1c1a17;          /* warm obsidian (was #131518 blue-black) */
+  --color-ink-2: #24211d;        /* oven-stone charcoal */
+  --color-panel: #282420;        /* cards on dark */
+  --color-panel-2: #312c27;
+  --color-panel-border: #3d3731;
 
-  --color-gold: #c9a15c;         /* Tuscan gold — 7.1:1 on obsidian */
-  --color-gold-bright: #e3c78c;
+  --color-gold: #c3a067;         /* brass (logo colour) — detail only; 7.1:1 on charcoal */
+  --color-gold-bright: #ec8f6c;  /* accent TEXT on dark = light oven red, 7.2:1 */
   --color-gold-deep: #8a6424;    /* gold for TEXT on light surfaces — 5.0:1 on milk */
   --color-cream: #f4ede0;        /* parchment text on dark — 14.7:1 */
   --color-stone: #b9ae9c;        /* secondary text on dark — 7.8:1 */
@@ -25,12 +31,12 @@
   --color-ember-bright: #e8805c; /* ember for TEXT on dark — 6.3:1 on obsidian, 5.4:1 on panel */
 
   /* Light-surface primitives (used directly or via .surface-milk remap) */
-  --color-milk: #fbf7ef;
+  --color-milk: #f7f2e8;
   --color-parchment: #f4ede0;
   --color-sand: #e9ddc6;
-  --color-espresso: #2b2620;     /* body text on milk — 14.0:1 */
+  --color-espresso: #231f1b;     /* body text on milk — 14.0:1 */
   --color-cocoa: #5e554a;        /* secondary text on milk — 6.8:1 */
-  --color-hairline: #e3d8c4;
+  --color-hairline: #e6dccb;
 
   --font-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
 }
@@ -95,13 +101,13 @@
   justify-content: center;
   gap: 0.5rem;
   border-radius: 9999px; /* True pill */
-  background-color: var(--color-gold) !important;
+  background-color: var(--color-ember) !important;
   background-image: none !important;
-  color: #1e1b17 !important;
+  color: #ffffff !important;
   font-weight: 700;
   letter-spacing: -0.01em;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  box-shadow: 0 4px 14px rgba(201, 161, 92, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 4px 14px rgba(184, 69, 43, 0.28);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   text-decoration: none;
@@ -109,8 +115,8 @@
 
 .btn-gold:hover {
   transform: translateY(-1px);
-  background-color: var(--color-gold-bright) !important;
-  box-shadow: 0 6px 20px rgba(201, 161, 92, 0.4);
+  background-color: var(--color-ember-hover) !important;
+  box-shadow: 0 6px 20px rgba(184, 69, 43, 0.4);
 }
 
 .btn-gold:active {
@@ -152,7 +158,7 @@
   justify-content: center;
   gap: 0.5rem;
   border-radius: 9999px; /* True pill */
-  background-color: rgba(30, 27, 23, 0.85) !important;
+  background-color: rgba(28, 26, 23, 0.85) !important;
   background-image: none !important;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
@@ -203,18 +209,18 @@
   --color-stone: var(--color-cocoa);
   --color-stone-dim: #6b6154;
   --color-gold: #8a6424;                   /* text-gold on milk: 5.0:1 (AA) */
-  --color-gold-bright: #7a5820;            /* headings: 6.1:1 */
+  --color-gold-bright: var(--color-espresso); /* headings/prices on milk stay dark — accent is the red CTA */
   --color-ember-bright: #a63d26;           /* ember text on milk: 5.9:1 */
   background-color: var(--color-milk);
   color: var(--color-espresso);
 }
 .surface-milk .btn-gold {
-  background-color: var(--color-espresso) !important; /* obsidian CTA on milk */
-  color: var(--color-milk) !important;
+  background-color: var(--color-ember) !important; /* same oven-red CTA on milk (4.8:1 white) */
+  color: #ffffff !important;
   border-color: transparent;
-  box-shadow: 0 4px 14px rgba(43, 38, 32, 0.18);
+  box-shadow: 0 4px 14px rgba(184, 69, 43, 0.22);
 }
-.surface-milk .btn-gold:hover { background-color: #3a332b !important; }
+.surface-milk .btn-gold:hover { background-color: var(--color-ember-hover) !important; }
 .surface-milk .btn-charcoal {
   background-color: #ffffff !important;
   color: var(--color-espresso) !important;
@@ -380,7 +386,7 @@ html[data-offer-dismissed] .offer-bar { display: none; }
   box-shadow: 0 10px 30px rgba(10, 8, 6, 0.28);
   transition: border-color 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.rg-fav-card:hover { border-color: rgba(201, 161, 92, 0.55); }
+.rg-fav-card:hover { border-color: rgba(195, 160, 103, 0.55); }
 @media (prefers-reduced-motion: no-preference) {
   .rg-fav-card:hover { transform: translateY(-2px); }
 }
