@@ -72,7 +72,9 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   const localizedItem = getLocalizedMenuItem(matchedItem, lang as Locale);
   const ogImg = itemImage(matchedItem);
   const itemName = localizedItem["Product Name"];
-  const itemDesc = localizedItem.Description || "Prepared fresh to order with premium Grande Mozzarella.";
+  const itemDesc =
+    localizedItem.Description ||
+    (matchedItem.Category === "Drinks" ? "" : "Prepared fresh to order with premium ingredients.");
   const price = parseFloat(matchedItem.Price) || 0;
 
   const title = `${itemName} | Raggio Gourmet & Pizza Newark, DE`;
@@ -136,8 +138,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const basePrice = parseFloat(rawItem.Price) || 0;
   const description =
     localizedItem.Description ||
-    dict.menu.default_description ||
-    "Prepared fresh to order with premium ingredients.";
+    (rawItem.Category === "Drinks"
+      ? ""
+      : dict.menu.default_description || "Prepared fresh to order with premium ingredients.");
 
   const displayCategory =
     (dict.categories as Record<string, string>)?.[matchedCategory] || matchedCategory;
@@ -243,13 +246,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   <span className="text-xs font-bold uppercase tracking-wider text-gold block mb-1">
                     {lang === "es" ? "Completa tu Pedido" : "Perfect Pairings"}
                   </span>
-                  <h3 className="text-2xl font-extrabold text-cream">
+                  <h2 className="text-2xl font-extrabold text-cream">
                     {lang === "es" ? "Acompaña tu Plato Con" : "Frequently Ordered Together"}
-                  </h3>
+                  </h2>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div role="list" className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {complementaryItems.map((item, idx) => {
                   const compPrice = parseFloat(item.Price) || 0;
                   const compSizes = getSizeVariants(item.Category, item["Product Name"], compPrice, item.Slug);

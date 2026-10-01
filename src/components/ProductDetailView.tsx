@@ -1,11 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import type { SizeVariant } from '@/data/sizePricing';
 import Image from 'next/image';
 import { optimizeContentfulImage } from '@/lib/contentfulImage';
 import { ORDER_LINKS } from '@/config/ordering';
+
+const MOZZARELLA_CATEGORY_SLUGS = new Set(['pizza', 'gourmet-pizza', 'sicilian-pizza', 'strombolis-and-calzones']);
 
 interface ProductDetailViewProps {
   name: string;
@@ -45,6 +47,29 @@ export default function ProductDetailView({
   dict,
 }: ProductDetailViewProps) {
   const [copied, setCopied] = useState(false);
+  const detailsRef = useRef<HTMLDivElement>(null);
+
+  // Only claim Grande Mozzarella / prep time where it is true for the item.
+  const hasMozzarella = MOZZARELLA_CATEGORY_SLUGS.has(categorySlug);
+  const isDrink = categorySlug === 'drinks';
+
+  // Mobile: fade the floating chat / scroll-top buttons while they would cover
+  // the size selector or the Order button (thin band where the buttons sit).
+  useEffect(() => {
+    const el = detailsRef.current;
+    if (!el || typeof IntersectionObserver === 'undefined') return;
+    const root = document.documentElement;
+    const band = Math.max(0, window.innerHeight - 150);
+    const io = new IntersectionObserver(
+      ([entry]) => root.toggleAttribute('data-fab-clear', entry.isIntersecting),
+      { rootMargin: `-${band}px 0px -90px 0px` }
+    );
+    io.observe(el);
+    return () => {
+      io.disconnect();
+      root.removeAttribute('data-fab-clear');
+    };
+  }, []);
 
   // Default to LRG if present, otherwise first size
   const defaultSizeIdx = sizes && sizes.length > 0
@@ -114,7 +139,8 @@ export default function ProductDetailView({
                 Raggio Gourmet
               </span>
               <span className="text-stone text-xs sm:text-sm mt-1.5 font-medium tracking-wider">
-                {freshlyPreparedText} • 100% Grande Mozzarella
+                {isDrink ? 'Raggio Gourmet & Pizza' : freshlyPreparedText}
+                {hasMozzarella ? ' • 100% Grande Mozzarella' : ''}
               </span>
             </div>
           )}
@@ -144,7 +170,7 @@ export default function ProductDetailView({
         </div>
 
         {/* Right Side: Product Details, Size Selector, CTA */}
-        <div className="w-full lg:w-1/2 p-6 sm:p-8 lg:p-10 flex flex-col justify-between">
+        <div ref={detailsRef} className="w-full lg:w-1/2 p-6 sm:p-8 lg:p-10 flex flex-col justify-between">
           <div>
             <div className="flex justify-between items-start mb-4 gap-3">
               <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-cream tracking-tight leading-tight">
@@ -162,9 +188,11 @@ export default function ProductDetailView({
               </div>
             </div>
 
-            <p className="text-sm sm:text-base text-stone mb-6 leading-relaxed">
-              {description}
-            </p>
+            {description && (
+              <p className="text-sm sm:text-base text-stone mb-6 leading-relaxed">
+                {description}
+              </p>
+            )}
 
             {/* Interactive Size Variant Pills */}
             {sizes && sizes.length > 0 && (
@@ -199,7 +227,7 @@ export default function ProductDetailView({
                       >
                         <span className="leading-tight">{s.label}</span>
                         {s.inches && (
-                          <span className={`text-[10px] font-normal mt-0.5 leading-none ${isSelected ? 'text-ink/85 font-semibold' : 'text-stone/60'}`}>
+                          <span className={`text-[11px] font-normal mt-0.5 leading-none ${isSelected ? 'text-ink/85 font-semibold' : 'text-stone'}`}>
                             {s.inches}
                           </span>
                         )}
@@ -247,20 +275,26 @@ export default function ProductDetailView({
               </svg>
             </a>
 
+            {(!isDrink || hasMozzarella) && (
             <div className="flex items-center justify-between text-xs text-stone pt-1">
+              {!isDrink && (
               <span className="flex items-center gap-1.5">
                 <svg className="w-4 h-4 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 {lang === 'es' ? 'Preparado en ~20-30 min' : 'Prepared fresh in ~20-30 mins'}
               </span>
+              )}
+              {hasMozzarella && (
               <span className="flex items-center gap-1.5">
                 <svg className="w-4 h-4 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
                 {lang === 'es' ? 'Calidad Grande Mozzarella' : '100% Grande Mozzarella'}
               </span>
+              )}
             </div>
+            )}
           </div>
         </div>
       </div>

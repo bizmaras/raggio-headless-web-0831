@@ -121,8 +121,9 @@ export default function MenuItemCard(props: MenuItemCardProps) {
   const description =
     props.description ||
     props.item?.description ||
-    props.dict?.menu?.default_description ||
-    (lang === 'es' ? 'Preparado al momento.' : 'Made to order.');
+    (category === 'Drinks'
+      ? ''
+      : props.dict?.menu?.default_description || (lang === 'es' ? 'Preparado al momento.' : 'Made to order.'));
   const ingredients = props.ingredients || props.item?.ingredients || [];
 
   // ---------- checkout truth ----------

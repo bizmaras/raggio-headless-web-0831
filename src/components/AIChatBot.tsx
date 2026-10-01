@@ -209,7 +209,7 @@ export default function AIChatBot() {
     return (
         <>
             {!isOpen && (
-                <div className="fixed bottom-24 right-4 sm:bottom-6 sm:right-6 z-40">
+                <div className="rg-fab fixed bottom-24 right-4 sm:bottom-6 sm:right-6 z-40">
                     <button
                         onClick={() => setIsOpen(true)}
                         className="flex h-12 w-12 items-center justify-center rounded-full bg-ink border border-gold text-gold shadow-[0_0_15px_rgba(201,161,92,0.25)] transition-all duration-300 ease-in-out touch-manipulation hover:scale-105 active:scale-90 active:bg-gold/20 cursor-pointer"

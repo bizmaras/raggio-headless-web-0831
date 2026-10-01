@@ -30,7 +30,7 @@ export default function ScrollToTop() {
             onClick={scrollToTop}
             aria-label="Scroll to top"
             className={`
-                md:hidden 
+                md:hidden rg-fab
                 fixed bottom-24 left-4 z-40 h-12 w-12 rounded-full 
                 bg-ink border border-gold text-gold
                 shadow-[0_0_15px_rgba(201,161,92,0.25)] 

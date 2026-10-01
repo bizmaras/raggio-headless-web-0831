@@ -692,11 +692,17 @@ export const MENU_TRANSLATIONS_ES: Record<string, MenuTranslation> = {
 export const DEFAULT_FALLBACK_DESCRIPTION_ES = "Preparado fresco al momento con ingredientes de primera calidad.";
 export const DEFAULT_FALLBACK_DESCRIPTION_EN = "Prepared fresh to order with premium ingredients.";
 
+/** Packaged items are not "prepared fresh" — never give them the kitchen fallback copy. */
+function isPackagedItem(item: MenuItem): boolean {
+  return item.Category === "Drinks" || (item.Slug || "").toLowerCase() === "herrs-chips";
+}
+
 export function getLocalizedMenuItem(item: MenuItem, lang: string): MenuItem {
+  const packaged = isPackagedItem(item);
   if (lang !== 'es') {
     return {
       ...item,
-      Description: item.Description || DEFAULT_FALLBACK_DESCRIPTION_EN,
+      Description: item.Description || (packaged ? "" : DEFAULT_FALLBACK_DESCRIPTION_EN),
     };
   }
 
@@ -705,12 +711,12 @@ export function getLocalizedMenuItem(item: MenuItem, lang: string): MenuItem {
     return {
       ...item,
       "Product Name": translated.name,
-      Description: translated.desc || item.Description || DEFAULT_FALLBACK_DESCRIPTION_ES,
+      Description: translated.desc || item.Description || (packaged ? "" : DEFAULT_FALLBACK_DESCRIPTION_ES),
     };
   }
 
   return {
     ...item,
-    Description: item.Description || DEFAULT_FALLBACK_DESCRIPTION_ES,
+    Description: item.Description || (packaged ? "" : DEFAULT_FALLBACK_DESCRIPTION_ES),
   };
 }

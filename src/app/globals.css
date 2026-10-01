@@ -397,3 +397,9 @@ html[data-offer-dismissed] .offer-bar { display: none; }
   border-radius: 9999px;
 }
 .rg-fav-card a.block.rg-focus:focus-visible { border-radius: 1.25rem 1.25rem 0 0; outline-offset: -2px; }
+
+/* Floating chat / scroll-top: step aside while they would cover product CTAs (mobile). */
+@media (max-width: 639px) {
+  .rg-fab { transition: opacity 0.2s ease, transform 0.2s ease; }
+  html[data-fab-clear] .rg-fab { opacity: 0 !important; pointer-events: none; transform: translateY(8px); }
+}
