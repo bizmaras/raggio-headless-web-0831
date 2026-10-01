@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getMenuItems } from "@/lib/menu";
-import { getLocalizedMenuItem } from "@/data/menuTranslations";
+import { getLocalizedMenuItem, isPackagedItem } from "@/data/menuTranslations";
 import { getSizeVariants } from "@/data/sizePricing";
 import { categoryToSlug, slugToCategory, productToSlug } from "@/lib/slug";
 import { hasLocale, getDictionary, supportedLocales } from "../../../dictionaries";
@@ -74,7 +74,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   const itemName = localizedItem["Product Name"];
   const itemDesc =
     localizedItem.Description ||
-    (matchedItem.Category === "Drinks" ? "" : "Prepared fresh to order with premium ingredients.");
+    (isPackagedItem(matchedItem) ? "" : "Prepared fresh to order with premium ingredients.");
   const price = parseFloat(matchedItem.Price) || 0;
 
   const title = `${itemName} | Raggio Gourmet & Pizza Newark, DE`;
@@ -138,7 +138,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const basePrice = parseFloat(rawItem.Price) || 0;
   const description =
     localizedItem.Description ||
-    (rawItem.Category === "Drinks"
+    (isPackagedItem(rawItem)
       ? ""
       : dict.menu.default_description || "Prepared fresh to order with premium ingredients.");
 
@@ -234,6 +234,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             description={description}
             sizes={sizes}
             image={rawItem.Image || rawItem.image}
+            packaged={isPackagedItem(rawItem)}
             lang={lang as "en" | "es"}
             dict={dict}
           />

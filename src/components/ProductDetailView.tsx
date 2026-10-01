@@ -17,6 +17,8 @@ interface ProductDetailViewProps {
   description: string;
   ingredients?: string[];
   image?: string;
+  /** Packaged goods (drinks, bagged chips): no prep-time / "freshly prepared" claims. */
+  packaged?: boolean;
   sizes?: SizeVariant[] | null;
   orderUrl?: string;
   lang: 'en' | 'es';
@@ -41,6 +43,7 @@ export default function ProductDetailView({
   description,
   ingredients = [],
   image,
+  packaged = false,
   sizes,
   orderUrl = ORDER_LINKS.root,
   lang,
@@ -51,7 +54,7 @@ export default function ProductDetailView({
 
   // Only claim Grande Mozzarella / prep time where it is true for the item.
   const hasMozzarella = MOZZARELLA_CATEGORY_SLUGS.has(categorySlug);
-  const isDrink = categorySlug === 'drinks';
+  const isDrink = packaged || categorySlug === 'drinks';
 
   // Mobile: fade the floating chat / scroll-top buttons while they would cover
   // the size selector or the Order button (thin band where the buttons sit).

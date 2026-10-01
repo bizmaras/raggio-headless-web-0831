@@ -693,7 +693,7 @@ export const DEFAULT_FALLBACK_DESCRIPTION_ES = "Preparado fresco al momento con 
 export const DEFAULT_FALLBACK_DESCRIPTION_EN = "Prepared fresh to order with premium ingredients.";
 
 /** Packaged items are not "prepared fresh" — never give them the kitchen fallback copy. */
-function isPackagedItem(item: MenuItem): boolean {
+export function isPackagedItem(item: MenuItem): boolean {
   return item.Category === "Drinks" || (item.Slug || "").toLowerCase() === "herrs-chips";
 }
 
