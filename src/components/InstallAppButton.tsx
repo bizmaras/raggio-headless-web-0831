@@ -28,7 +28,6 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
   // Detect locale
   const activeLang = lang || (typeof window !== 'undefined' && window.location.pathname.startsWith('/es') ? 'es' : 'en');
   const isEs = activeLang === 'es';
-  const isTr = activeLang === 'tr' || (typeof window !== 'undefined' && (navigator.language?.toLowerCase().startsWith('tr') || document.documentElement.lang === 'tr'));
 
   useEffect(() => {
     if (window.matchMedia('(display-mode: standalone)').matches) {
@@ -114,7 +113,7 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
         <button
           type="button"
           onClick={() => setShowModal(false)}
-          aria-label={isTr ? 'Kapat' : isEs ? 'Cerrar' : 'Close'}
+          aria-label={isEs ? 'Cerrar' : 'Close'}
           className="absolute top-4 right-4 text-stone hover:text-white w-8 h-8 flex items-center justify-center rounded-full bg-white/5 border border-white/10 hover:border-[#d4af62]/50 cursor-pointer transition-colors"
         >
           ✕
@@ -133,7 +132,7 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
               </span>
             </div>
             <p className="text-xs text-[#d4af62] font-medium mt-0.5">
-              {isTr ? 'Kurulum Rehberi (3 Kolay Adım)' : isEs ? 'Guía de Instalación (3 Pasos)' : 'Installation Guide (3 Simple Steps)'}
+              {isEs ? 'Guía de Instalación (3 Pasos)' : 'Installation Guide (3 Simple Steps)'}
             </p>
           </div>
         </div>
@@ -143,14 +142,10 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
           <div className="space-y-3 text-xs text-stone leading-relaxed">
             <p className="text-cream font-semibold text-xs sm:text-sm">
               {isChromeIOS
-                ? (isTr
-                    ? "iPhone'da Google Chrome ile yüklemek için:"
-                    : isEs
+                ? (isEs
                     ? 'Para instalar en Chrome en iPhone o iPad:'
                     : 'To install via Chrome on your iPhone or iPad:')
-                : (isTr
-                    ? "iPhone veya iPad'inize Safari ile yüklemek için:"
-                    : isEs
+                : (isEs
                     ? 'Para instalar en Safari en su iPhone o iPad:'
                     : 'To install via Safari on your iPhone or iPad:')}
             </p>
@@ -162,17 +157,7 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
               </div>
               <div className="pt-0.5 leading-snug">
                 {isChromeIOS ? (
-                  isTr ? (
-                    <>
-                      En üstteki adres çubuğunun sağındaki <strong className="text-white">Paylaş</strong> simgesine veya en sağ alttaki <strong className="text-white">[ ··· ]</strong> menüsüne dokunun:
-                      <span className="inline-flex items-center gap-1 ml-1.5 px-2 py-0.5 rounded bg-white/10 text-[#ebd092] font-medium align-middle">
-                        <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                        </svg>
-                        Paylaş
-                      </span>
-                    </>
-                  ) : isEs ? (
+                  isEs ? (
                     <>
                       Toque el icono <strong className="text-white">Compartir</strong> a la derecha de la barra superior o el menú <strong className="text-white">[ ··· ]</strong> abajo:
                       <span className="inline-flex items-center gap-1 ml-1.5 px-2 py-0.5 rounded bg-white/10 text-[#ebd092] font-medium align-middle">
@@ -194,17 +179,7 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
                     </>
                   )
                 ) : (
-                  isTr ? (
-                    <>
-                      Safari ekranının en altındaki <strong className="text-white">Paylaş</strong> simgesine dokunun:
-                      <span className="inline-flex items-center gap-1 ml-1.5 px-2 py-0.5 rounded bg-white/10 text-[#ebd092] font-medium align-middle">
-                        <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                        </svg>
-                        Paylaş
-                      </span>
-                    </>
-                  ) : isEs ? (
+                  isEs ? (
                     <>
                       Toque el botón <strong className="text-white">Compartir</strong> en la barra inferior de Safari:
                       <span className="inline-flex items-center gap-1 ml-1.5 px-2 py-0.5 rounded bg-white/10 text-[#ebd092] font-medium align-middle">
@@ -235,11 +210,7 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
                 2
               </div>
               <div className="pt-0.5 leading-snug">
-                {isTr ? (
-                  <>
-                    Açılan menüde aşağı kaydırıp <strong className="text-[#ebd092]">&ldquo;Ana Ekrana Ekle&rdquo;</strong> seçeneğini seçin.
-                  </>
-                ) : isEs ? (
+                {isEs ? (
                   <>
                     Desplácese y seleccione <strong className="text-[#ebd092]">&ldquo;Agregar a pantalla de inicio&rdquo;</strong>.
                   </>
@@ -257,11 +228,7 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
                 3
               </div>
               <div className="pt-0.5 leading-snug">
-                {isTr ? (
-                  <>
-                    Sağ üst köşedeki <strong className="text-white">&ldquo;Ekle&rdquo;</strong> butonuna basın. Raggio VIP App ana ekranınıza eklendi!
-                  </>
-                ) : isEs ? (
+                {isEs ? (
                   <>
                     Toque <strong className="text-white">&ldquo;Agregar&rdquo;</strong> en la esquina superior. ¡Disfrute su App!
                   </>
@@ -278,14 +245,10 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
               <span>{isChromeIOS ? '⬆️' : '⬇️'}</span>
               <span>
                 {isChromeIOS
-                  ? (isTr
-                      ? "Ekranın üstündeki Paylaş veya en sağ alttaki [ ··· ] simgesine dokunun"
-                      : isEs
+                  ? (isEs
                       ? "Toque Compartir arriba o [ ··· ] abajo a la derecha"
                       : "Tap Share at top right or [ ··· ] at bottom right")
-                  : (isTr
-                      ? "Safari'nin en alt çubuğundaki Paylaş butonuna dokunun"
-                      : isEs
+                  : (isEs
                       ? "Toque el icono Compartir en la barra de Safari abajo"
                       : "Tap the Share icon at the bottom of Safari")}
               </span>
@@ -294,9 +257,7 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
         ) : (
           <div className="space-y-3 text-xs text-stone leading-relaxed">
             <p className="text-cream font-semibold text-xs sm:text-sm">
-              {isTr
-                ? 'Google Chrome veya Microsoft Edge:'
-                : isEs
+              {isEs
                 ? 'En Google Chrome o Microsoft Edge:'
                 : 'In Google Chrome or Microsoft Edge:'}
             </p>
@@ -305,9 +266,7 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
                 1
               </div>
               <div className="pt-0.5 leading-snug">
-                {isTr ? (
-                  <>Adres çubuğundaki <strong className="text-[#ebd092]">&ldquo;Uygulamayı Yükle&rdquo;</strong> simgesine tıklayın.</>
-                ) : isEs ? (
+                {isEs ? (
                   <>Haga clic en el icono <strong className="text-[#ebd092]">&ldquo;Instalar aplicación&rdquo;</strong> en la barra de direcciones.</>
                 ) : (
                   <>Click the <strong className="text-[#ebd092]">&ldquo;Install App&rdquo;</strong> icon in your browser address bar.</>
@@ -319,9 +278,7 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
                 2
               </div>
               <div className="pt-0.5 leading-snug">
-                {isTr ? (
-                  <>Çıkan onay penceresinde <strong className="text-white">&ldquo;Yükle&rdquo;</strong> butonuna basın.</>
-                ) : isEs ? (
+                {isEs ? (
                   <>Haga clic en <strong className="text-white">&ldquo;Instalar&rdquo;</strong> para confirmar.</>
                 ) : (
                   <>Click <strong className="text-white">&ldquo;Install&rdquo;</strong> to confirm.</>
@@ -336,13 +293,13 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
           onClick={() => setShowModal(false)}
           className="mt-6 w-full py-3 rounded-xl bg-[#d4af62] text-[#131518] font-extrabold text-xs uppercase tracking-wider hover:bg-[#ebd092] transition-all cursor-pointer shadow-md active:scale-98"
         >
-          {isTr ? 'Anladım, Kapat' : isEs ? 'Entendido, Cerrar' : 'Got It, Close'}
+          {isEs ? 'Entendido, Cerrar' : 'Got It, Close'}
         </button>
       </div>
     </div>
   ) : null;
 
-  const buttonLabel = isTr ? 'Uygulamayı Yükle' : isEs ? 'Instalar App' : 'Install App';
+  const buttonLabel = isEs ? 'Instalar App' : 'Install App';
 
   return (
     <>

@@ -134,22 +134,22 @@ export default function AIChatBot() {
         }
     };
 
-    // ZEKİ LİNK FİLTRESİ (Regex) - Satır atlamalarını ve boşlukları affeden yeni versiyon
+    // Link filter (regex), tolerant of line breaks and whitespace
     const formatMessage = (text: string) => {
         if (!text) return null;
 
-        // Markdown liste işaretlerini ("- " / "* ") görsel madde imine çevir.
-        // Kalın yazı regex'i "**" ile çakışmasın diye tek yıldızı sadece satır başında yakalıyoruz.
+        // Turn Markdown list markers ("- " / "* ") into visual bullets.
+        // Single "*" is matched only at line start so it does not clash with the "**" bold regex.
         const normalized = text.replace(/^[ \t]*[-*][ \t]+/gm, '• ');
 
-        // DÜZELTME: \s* eklendi (aradaki boşluk/enter'ları yutar) ve parantez hataları giderildi.
+        // \s* swallows stray spaces/newlines; fixed bracket handling.
         const regex = /(\[[^\]]+\]\s*\([^)]+\)|https?:\/\/[^\s)]+|\*\*.*?\*\*)/g;
         const parts = normalized.split(regex);
 
         return parts.map((part, index) => {
             if (!part) return null;
 
-            // Link Formatı: [Yazı](URL) - \s* ile aradaki görünmez boşlukları affediyoruz
+            // Link format: [text](URL); \s* tolerates invisible whitespace
             const mdLinkMatch = part.match(/^\[([^\]]+)\]\s*\(([^)]+)\)$/);
 
             if (mdLinkMatch) {
@@ -174,7 +174,7 @@ export default function AIChatBot() {
                 );
             }
 
-            // Çıplak http:// veya https:// formatı
+            // Bare http:// or https:// URLs
             if (part.startsWith('http://') || part.startsWith('https://')) {
                 const url = part.trim();
                 const isInternal = url.includes('#');
@@ -192,7 +192,7 @@ export default function AIChatBot() {
                 );
             }
 
-            // Kalın Yazı **Formatı** - sarı vurgu + biraz daha büyük punto
+            // Bold **text**: gold highlight, slightly larger size
             if (part.startsWith('**') && part.endsWith('**')) {
                 return (
                     <strong key={index} className="text-[#ffd54a] font-bold text-[1.08em]">
