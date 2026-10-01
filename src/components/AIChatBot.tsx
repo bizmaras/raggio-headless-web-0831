@@ -14,17 +14,17 @@ const ORDER_URL = ORDER_LINKS.root;
 const SESSION_KEY = 'raggio_chat_history';
 
 const QUICK_REPLIES_EN = [
-    { label: '🍕 Deals', message: "What are today's deals and specials?" },
-    { label: '🛵 Hours & Delivery', message: 'What are your hours and do you deliver to my area?' },
-    { label: '🌮 Latin Menu', message: 'Tell me about your Latin food menu — pupusas, tacos, etc.' },
-    { label: '🎉 Catering', message: 'I want to ask about catering for a group event.' },
+    { label: 'Deals', message: "What are today's deals and specials?" },
+    { label: 'Hours & Delivery', message: 'What are your hours and do you deliver to my area?' },
+    { label: 'Latin Menu', message: 'Tell me about your Latin food menu — pupusas, tacos, etc.' },
+    { label: 'Catering', message: 'I want to ask about catering for a group event.' },
 ];
 
 const QUICK_REPLIES_ES = [
-    { label: '🍕 Ofertas', message: "¿Cuáles son las ofertas y especiales de hoy?" },
-    { label: '🛵 Horarios y Entrega', message: "¿Cuáles son sus horarios y hacen entregas a mi zona?" },
-    { label: '🌮 Comida Latina', message: "Cuéntame sobre el menú latino: pupusas, tacos, etc." },
-    { label: '🎉 Catering', message: "Quiero consultar sobre catering para un evento grupal." },
+    { label: 'Ofertas', message: "¿Cuáles son las ofertas y especiales de hoy?" },
+    { label: 'Horarios y Entrega', message: "¿Cuáles son sus horarios y hacen entregas a mi zona?" },
+    { label: 'Comida Latina', message: "Cuéntame sobre el menú latino: pupusas, tacos, etc." },
+    { label: 'Catering', message: "Quiero consultar sobre catering para un evento grupal." },
 ];
 
 function initialChatState(): { isEs: boolean; messages: Message[]; quick: boolean } {
@@ -38,8 +38,8 @@ function initialChatState(): { isEs: boolean; messages: Message[]; quick: boolea
                 {
                     sender: 'bot',
                     text: spanish
-                        ? "¡Hola! 🍕 ¿Se te antoja una **pizza gourmet** recién horneada, auténtica **comida latina**, **alitas** o **cheesesteaks**? Estás en el lugar correcto — ¿en qué te puedo ayudar hoy?"
-                        : "Hey there! 🍕 Craving a fresh-out-of-the-oven **gourmet pizza**, **authentic Latin food**, **wings**, or **cheesesteaks**? You're in the right place — what can I get started for you today?",
+                        ? "¡Hola! ¿Se te antoja una **pizza gourmet** recién horneada, auténtica **comida latina**, **alitas** o **cheesesteaks**? Estás en el lugar correcto — ¿en qué te puedo ayudar hoy?"
+                        : "Hey there! Craving a fresh-out-of-the-oven **gourmet pizza**, **authentic Latin food**, **wings**, or **cheesesteaks**? You're in the right place — what can I get started for you today?",
                 },
             ] };
         }
@@ -192,10 +192,10 @@ export default function AIChatBot() {
                 );
             }
 
-            // Bold **text**: gold highlight, slightly larger size
+            // Bold **text**: soft gold, same size (premium, not shouty)
             if (part.startsWith('**') && part.endsWith('**')) {
                 return (
-                    <strong key={index} className="text-[#ffd54a] font-bold text-[1.08em]">
+                    <strong key={index} className="text-[#e3c78c] font-semibold">
                         {part.slice(2, -2)}
                     </strong>
                 );
@@ -212,7 +212,7 @@ export default function AIChatBot() {
                 <div className="fixed bottom-24 right-4 sm:bottom-6 sm:right-6 z-40">
                     <button
                         onClick={() => setIsOpen(true)}
-                        className="flex h-12 w-12 items-center justify-center rounded-full bg-[#14181d] border border-gold text-gold shadow-[0_0_15px_rgba(212,175,55,0.25)] transition-all duration-300 ease-in-out touch-manipulation hover:scale-105 active:scale-90 active:bg-gold/20 cursor-pointer"
+                        className="flex h-12 w-12 items-center justify-center rounded-full bg-[#1e1b17] border border-gold text-gold shadow-[0_0_15px_rgba(201,161,92,0.25)] transition-all duration-300 ease-in-out touch-manipulation hover:scale-105 active:scale-90 active:bg-gold/20 cursor-pointer"
                         aria-label="Open Chat"
                     >
                         <MessageSquare className="h-5 w-5 text-gold" />
@@ -221,15 +221,15 @@ export default function AIChatBot() {
             )}
 
             {isOpen && (
-                <div className="fixed inset-0 z-50 flex flex-col bg-[#1c2127] h-[100dvh] sm:h-[80vh] sm:bottom-6 sm:right-6 sm:inset-auto sm:max-h-[760px] sm:min-h-[520px] sm:w-[450px] md:w-[470px] sm:rounded-2xl sm:border sm:border-[#252b34] sm:shadow-2xl overflow-hidden animate-in fade-in sm:zoom-in-95 duration-200">
-                    <div className="flex items-center justify-between border-b border-[#252b34] bg-[#14181d] px-4 py-3.5 sm:px-5 sm:py-4 text-[#f8f6f0] shrink-0">
+                <div className="fixed inset-0 z-50 flex flex-col bg-[#1e1b17] h-[100dvh] sm:h-[80vh] sm:bottom-6 sm:right-6 sm:inset-auto sm:max-h-[760px] sm:min-h-[520px] sm:w-[450px] md:w-[470px] sm:rounded-2xl sm:border sm:border-[#2c2721] sm:shadow-2xl overflow-hidden animate-in fade-in sm:zoom-in-95 duration-200">
+                    <div className="flex items-center justify-between border-b border-[#2c2721] bg-[#1e1b17] px-4 py-3.5 sm:px-5 sm:py-4 text-[#f4ede0] shrink-0">
                         <div className="flex items-center gap-3">
-                            <div className="flex h-9 w-9 items-center justify-center rounded-full border border-[#c9a15c] bg-[#232932]">
+                            <div className="flex h-9 w-9 items-center justify-center rounded-full border border-[#c9a15c] bg-[#2c2721]">
                                 <Bot className="h-5 w-5 text-[#c9a15c]" />
                             </div>
                             <div>
-                                <p className="font-semibold text-base text-[#f8f6f0] leading-tight">Raggio AI</p>
-                                <p className="text-xs text-[#9e9b93]">{isEs ? 'Asistente Gourmet' : 'Gourmet Assistant'}</p>
+                                <p className="font-semibold text-base text-[#f4ede0] leading-tight">Raggio AI</p>
+                                <p className="text-xs text-[#b9ae9c]">{isEs ? 'Asistente Gourmet' : 'Gourmet Assistant'}</p>
                             </div>
                         </div>
                         <div className="flex items-center gap-2.5">
@@ -237,13 +237,13 @@ export default function AIChatBot() {
                                 href={ORDER_URL}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center gap-1.5 rounded-lg border border-[#c9a15c] px-3 py-1.5 text-xs font-semibold text-[#c9a15c] hover:bg-[#c9a15c] hover:text-[#14181d] transition-colors"
+                                className="flex items-center gap-1.5 rounded-lg border border-[#c9a15c] px-3 py-1.5 text-xs font-semibold text-[#c9a15c] hover:bg-[#c9a15c] hover:text-[#1e1b17] transition-colors"
                             >
                                 {isEs ? 'Ordenar' : 'Order Now'} <ExternalLink className="h-3 w-3" />
                             </a>
                             <button
                                 onClick={() => setIsOpen(false)}
-                                className="p-1 text-[#9e9b93] hover:text-[#f8f6f0] transition-colors rounded-lg hover:bg-[#252b34]"
+                                className="p-1 text-[#b9ae9c] hover:text-[#f4ede0] transition-colors rounded-lg hover:bg-[#2c2721]"
                                 aria-label={isEs ? 'Cerrar Chat' : 'Close Chat'}
                             >
                                 <X className="h-6 w-6" />
@@ -251,18 +251,18 @@ export default function AIChatBot() {
                         </div>
                     </div>
 
-                    <div className="flex-1 overflow-y-auto overflow-x-hidden p-4 sm:p-5 space-y-4 [scrollbar-width:thin] [scrollbar-color:#38414e_transparent] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-[#38414e] [&::-webkit-scrollbar-thumb]:rounded-full">
+                    <div className="flex-1 overflow-y-auto overflow-x-hidden p-4 sm:p-5 space-y-4 [scrollbar-width:thin] [scrollbar-color:#463f35_transparent] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-[#463f35] [&::-webkit-scrollbar-thumb]:rounded-full">
                         {messages.map((msg, idx) => (
                             <div key={idx} className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}>
                                 <div
-                                    className={`max-w-[92%] sm:max-w-[88%] rounded-2xl p-3.5 sm:p-4 text-[14.5px] sm:text-[15px] leading-relaxed break-words whitespace-pre-wrap ${msg.sender === 'user' ? 'bg-[#c9a15c] text-[#14181d] font-medium rounded-tr-sm' : 'bg-[#232932] text-[#f8f6f0] border border-[#38414e] rounded-tl-sm'}`}
+                                    className={`max-w-[92%] sm:max-w-[88%] rounded-2xl p-3.5 sm:p-4 text-[14.5px] sm:text-[15px] leading-relaxed break-words whitespace-pre-wrap ${msg.sender === 'user' ? 'bg-[#c9a15c] text-[#1e1b17] font-medium rounded-tr-sm' : 'bg-[#2c2721] text-[#f4ede0] border border-[#463f35] rounded-tl-sm'}`}
                                 >
                                     {formatMessage(msg.text)}
                                 </div>
                                 {msg.sender === 'bot' && idx !== 0 && (
                                     <div className="mt-1 flex items-center gap-1 px-1">
-                                        <button onClick={() => handleFeedback(idx, 'up')} className={`rounded p-1 transition-colors ${msg.feedback === 'up' ? 'text-[#c9a15c]' : 'text-[#5a6270] hover:text-[#9e9b93]'}`}><ThumbsUp className="h-3.5 w-3.5" /></button>
-                                        <button onClick={() => handleFeedback(idx, 'down')} className={`rounded p-1 transition-colors ${msg.feedback === 'down' ? 'text-[#c9a15c]' : 'text-[#5a6270] hover:text-[#9e9b93]'}`}><ThumbsDown className="h-3.5 w-3.5" /></button>
+                                        <button onClick={() => handleFeedback(idx, 'up')} className={`rounded p-1 transition-colors ${msg.feedback === 'up' ? 'text-[#c9a15c]' : 'text-[#5c5347] hover:text-[#b9ae9c]'}`}><ThumbsUp className="h-3.5 w-3.5" /></button>
+                                        <button onClick={() => handleFeedback(idx, 'down')} className={`rounded p-1 transition-colors ${msg.feedback === 'down' ? 'text-[#c9a15c]' : 'text-[#5c5347] hover:text-[#b9ae9c]'}`}><ThumbsDown className="h-3.5 w-3.5" /></button>
                                     </div>
                                 )}
                             </div>
@@ -273,7 +273,7 @@ export default function AIChatBot() {
                                     <button
                                         key={qr.label}
                                         onClick={() => handleQuickReply(qr.message)}
-                                        className="rounded-full border border-[#38414e] bg-[#232932] px-3 py-1.5 text-xs font-medium text-[#f8f6f0] hover:border-[#c9a15c] hover:text-[#c9a15c] transition-colors text-left"
+                                        className="rounded-full border border-[#463f35] bg-[#2c2721] px-3 py-1.5 text-xs font-medium text-[#f4ede0] hover:border-[#c9a15c] hover:text-[#c9a15c] transition-colors text-left"
                                     >
                                         {qr.label}
                                     </button>
@@ -282,7 +282,7 @@ export default function AIChatBot() {
                         )}
                         {loading && (
                             <div className="flex justify-start">
-                                <div className="flex items-center gap-1.5 rounded-2xl bg-[#232932] px-4 py-3 border border-[#38414e] rounded-tl-sm">
+                                <div className="flex items-center gap-1.5 rounded-2xl bg-[#2c2721] px-4 py-3 border border-[#463f35] rounded-tl-sm">
                                     <span className="h-2 w-2 rounded-full bg-[#c9a15c] animate-bounce [animation-delay:-0.3s]" />
                                     <span className="h-2 w-2 rounded-full bg-[#c9a15c] animate-bounce [animation-delay:-0.15s]" />
                                     <span className="h-2 w-2 rounded-full bg-[#c9a15c] animate-bounce" />
@@ -292,7 +292,7 @@ export default function AIChatBot() {
                         <div ref={chatEndRef} />
                     </div>
 
-                    <div className="border-t border-[#252b34] bg-[#14181d] p-3.5 sm:p-4 shrink-0 pb-safe">
+                    <div className="border-t border-[#2c2721] bg-[#1e1b17] p-3.5 sm:p-4 shrink-0 pb-safe">
                         <form onSubmit={(e) => { e.preventDefault(); handleSend(); }} className="flex items-center gap-2.5">
                             <input
                                 ref={inputRef}
@@ -300,9 +300,9 @@ export default function AIChatBot() {
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
                                 placeholder={isEs ? 'Pregunta sobre el menú, ofertas...' : 'Ask about menu, specials...'}
-                                className="flex-1 rounded-xl border border-[#38414e] bg-[#232932] px-4 py-3 text-base sm:text-[15px] text-[#f8f6f0] placeholder-[#9e9b93] focus:border-[#c9a15c] focus:outline-none transition-colors"
+                                className="flex-1 rounded-xl border border-[#463f35] bg-[#2c2721] px-4 py-3 text-base sm:text-[15px] text-[#f4ede0] placeholder-[#b9ae9c] focus:border-[#c9a15c] focus:outline-none transition-colors"
                             />
-                            <button type="submit" disabled={loading || !input.trim()} className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#c9a15c] text-[#14181d] transition-transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:hover:scale-100">
+                            <button type="submit" disabled={loading || !input.trim()} className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#c9a15c] text-[#1e1b17] transition-transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:hover:scale-100">
                                 <Send className="h-5 w-5" />
                             </button>
                         </form>

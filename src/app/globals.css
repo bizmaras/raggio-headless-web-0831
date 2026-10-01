@@ -22,6 +22,7 @@
   --color-stone-dim: #a39884;
   --color-ember: #b8452b;        /* oven tomato (white text 5.6:1) */
   --color-ember-hover: #a63d26;
+  --color-ember-bright: #e8805c; /* ember for TEXT on dark — 6.3:1 on obsidian, 5.4:1 on panel */
 
   /* Light-surface primitives (used directly or via .surface-milk remap) */
   --color-milk: #fbf7ef;
@@ -100,7 +101,7 @@
   font-weight: 700;
   letter-spacing: -0.01em;
   border: 1px solid rgba(255, 255, 255, 0.35);
-  box-shadow: 0 4px 14px rgba(212, 175, 98, 0.25);
+  box-shadow: 0 4px 14px rgba(201, 161, 92, 0.25);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   text-decoration: none;
@@ -109,7 +110,7 @@
 .btn-gold:hover {
   transform: translateY(-1px);
   background-color: var(--color-gold-bright) !important;
-  box-shadow: 0 6px 20px rgba(212, 175, 98, 0.4);
+  box-shadow: 0 6px 20px rgba(201, 161, 92, 0.4);
 }
 
 .btn-gold:active {
@@ -129,7 +130,7 @@
   font-weight: 700;
   letter-spacing: -0.01em;
   border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4px 14px rgba(229, 77, 46, 0.35);
+  box-shadow: 0 4px 14px rgba(184, 69, 43, 0.35);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   text-decoration: none;
@@ -138,7 +139,7 @@
 .btn-ember:hover {
   transform: translateY(-1px);
   background-color: var(--color-ember-hover) !important;
-  box-shadow: 0 6px 20px rgba(229, 77, 46, 0.5);
+  box-shadow: 0 6px 20px rgba(184, 69, 43, 0.5);
 }
 
 .btn-ember:active {
@@ -151,7 +152,7 @@
   justify-content: center;
   gap: 0.5rem;
   border-radius: 9999px; /* True pill */
-  background-color: rgba(24, 26, 32, 0.85) !important;
+  background-color: rgba(30, 27, 23, 0.85) !important;
   background-image: none !important;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
@@ -166,7 +167,7 @@
 
 .btn-charcoal:hover {
   transform: translateY(-1px);
-  background-color: rgba(34, 37, 45, 0.95) !important;
+  background-color: rgba(44, 39, 33, 0.95) !important;
   border-color: rgba(255, 255, 255, 0.25);
   color: #ffffff !important;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
@@ -203,6 +204,7 @@
   --color-stone-dim: #6b6154;
   --color-gold: #8a6424;                   /* text-gold on milk: 5.0:1 (AA) */
   --color-gold-bright: #7a5820;            /* headings: 6.1:1 */
+  --color-ember-bright: #a63d26;           /* ember text on milk: 5.9:1 */
   background-color: var(--color-milk);
   color: var(--color-espresso);
 }

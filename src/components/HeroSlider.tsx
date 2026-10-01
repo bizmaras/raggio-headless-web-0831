@@ -341,7 +341,7 @@ export default function HeroSlider({ lang = 'en' }: HeroSliderProps) {
               <div key={slide.id} className="motion-safe:animate-[heroFade_420ms_ease-out]">
                 <div className="flex items-start justify-between gap-4">
                   <div className="min-w-0">
-                    <p className="text-[11px] uppercase tracking-[0.16em] text-gold">{c.tag}</p>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-ember-bright">{c.tag}</p>
                     <p className="font-display text-2xl sm:text-[1.75rem] font-semibold text-cream mt-1 leading-tight">{c.name}</p>
                   </div>
                   <p className="text-right shrink-0">
@@ -450,7 +450,7 @@ export default function HeroSlider({ lang = 'en' }: HeroSliderProps) {
                         className="object-cover transition-transform duration-700 ease-out motion-safe:group-hover:scale-[1.04]"
                       />
                       <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-[#14110d]/85 via-transparent to-transparent" />
-                      <p className="absolute left-4 bottom-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-gold-bright">
+                      <p className="absolute left-4 bottom-3 inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-cream"><span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-ember-bright" />
                         {fc.eyebrow}
                       </p>
                     </div>

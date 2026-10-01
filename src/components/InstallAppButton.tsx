@@ -106,7 +106,7 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
       aria-label="Install Raggio VIP App Guide"
     >
       <div
-        className="bg-[#12151a] border border-[#d4af62]/40 rounded-3xl p-6 sm:p-7 max-w-sm sm:max-w-md w-full shadow-[0_25px_60px_rgba(0,0,0,0.9)] relative text-left my-auto animate-in fade-in zoom-in-95 duration-200"
+        className="bg-[#1e1b17] border border-[#c9a15c]/40 rounded-3xl p-6 sm:p-7 max-w-sm sm:max-w-md w-full shadow-[0_25px_60px_rgba(0,0,0,0.9)] relative text-left my-auto animate-in fade-in zoom-in-95 duration-200"
         onClick={(e) => e.stopPropagation()}
         onTouchMove={(e) => e.stopPropagation()}
       >
@@ -114,24 +114,24 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
           type="button"
           onClick={() => setShowModal(false)}
           aria-label={isEs ? 'Cerrar' : 'Close'}
-          className="absolute top-4 right-4 text-stone hover:text-white w-8 h-8 flex items-center justify-center rounded-full bg-white/5 border border-white/10 hover:border-[#d4af62]/50 cursor-pointer transition-colors"
+          className="absolute top-4 right-4 text-stone hover:text-white w-8 h-8 flex items-center justify-center rounded-full bg-white/5 border border-white/10 hover:border-[#c9a15c]/50 cursor-pointer transition-colors"
         >
           ✕
         </button>
 
         {/* App Branding */}
         <div className="flex items-center gap-3.5 mb-5 pr-8">
-          <div className="w-12 h-12 rounded-2xl border border-[#d4af62] bg-[#101216] p-1 flex items-center justify-center shadow-[0_0_15px_rgba(212,175,98,0.3)] shrink-0 overflow-hidden">
+          <div className="w-12 h-12 rounded-2xl border border-[#c9a15c] bg-[#1e1b17] p-1 flex items-center justify-center shadow-[0_0_15px_rgba(201,161,92,0.3)] shrink-0 overflow-hidden">
             <img src="/icons/icon-192.png" alt="Raggio Logo" className="w-full h-full object-contain rounded-xl" />
           </div>
           <div>
             <div className="flex items-center gap-2">
               <h3 className="font-extrabold text-white text-base leading-tight">Raggio VIP App</h3>
-              <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-[#d4af62]/15 text-[#ebd092] border border-[#d4af62]/30">
+              <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-[#c9a15c]/15 text-[#e3c78c] border border-[#c9a15c]/30">
                 PWA
               </span>
             </div>
-            <p className="text-xs text-[#d4af62] font-medium mt-0.5">
+            <p className="text-xs text-[#c9a15c] font-medium mt-0.5">
               {isEs ? 'Guía de Instalación (3 Pasos)' : 'Installation Guide (3 Simple Steps)'}
             </p>
           </div>
@@ -152,7 +152,7 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
 
             {/* Step 1 */}
             <div className="flex items-start gap-3 p-3 rounded-2xl bg-white/[0.04] border border-white/10 text-cream">
-              <div className="w-7 h-7 rounded-lg bg-[#d4af62]/15 border border-[#d4af62]/30 flex items-center justify-center shrink-0 text-[#d4af62] font-bold text-xs">
+              <div className="w-7 h-7 rounded-lg bg-[#c9a15c]/15 border border-[#c9a15c]/30 flex items-center justify-center shrink-0 text-[#c9a15c] font-bold text-xs">
                 1
               </div>
               <div className="pt-0.5 leading-snug">
@@ -160,7 +160,7 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
                   isEs ? (
                     <>
                       Toque el icono <strong className="text-white">Compartir</strong> a la derecha de la barra superior o el menú <strong className="text-white">[ ··· ]</strong> abajo:
-                      <span className="inline-flex items-center gap-1 ml-1.5 px-2 py-0.5 rounded bg-white/10 text-[#ebd092] font-medium align-middle">
+                      <span className="inline-flex items-center gap-1 ml-1.5 px-2 py-0.5 rounded bg-white/10 text-[#e3c78c] font-medium align-middle">
                         <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
                         </svg>
@@ -170,7 +170,7 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
                   ) : (
                     <>
                       Tap the <strong className="text-white">Share</strong> icon at the top right of address bar (or the <strong className="text-white">[ ··· ]</strong> menu at bottom right):
-                      <span className="inline-flex items-center gap-1 ml-1.5 px-2 py-0.5 rounded bg-white/10 text-[#ebd092] font-medium align-middle">
+                      <span className="inline-flex items-center gap-1 ml-1.5 px-2 py-0.5 rounded bg-white/10 text-[#e3c78c] font-medium align-middle">
                         <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
                         </svg>
@@ -182,7 +182,7 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
                   isEs ? (
                     <>
                       Toque el botón <strong className="text-white">Compartir</strong> en la barra inferior de Safari:
-                      <span className="inline-flex items-center gap-1 ml-1.5 px-2 py-0.5 rounded bg-white/10 text-[#ebd092] font-medium align-middle">
+                      <span className="inline-flex items-center gap-1 ml-1.5 px-2 py-0.5 rounded bg-white/10 text-[#e3c78c] font-medium align-middle">
                         <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
                         </svg>
@@ -192,7 +192,7 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
                   ) : (
                     <>
                       Tap the <strong className="text-white">Share</strong> button in Safari&apos;s bottom toolbar:
-                      <span className="inline-flex items-center gap-1 ml-1.5 px-2 py-0.5 rounded bg-white/10 text-[#ebd092] font-medium align-middle">
+                      <span className="inline-flex items-center gap-1 ml-1.5 px-2 py-0.5 rounded bg-white/10 text-[#e3c78c] font-medium align-middle">
                         <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
                         </svg>
@@ -206,17 +206,17 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
 
             {/* Step 2 */}
             <div className="flex items-start gap-3 p-3 rounded-2xl bg-white/[0.04] border border-white/10 text-cream">
-              <div className="w-7 h-7 rounded-lg bg-[#d4af62]/15 border border-[#d4af62]/30 flex items-center justify-center shrink-0 text-[#d4af62] font-bold text-xs">
+              <div className="w-7 h-7 rounded-lg bg-[#c9a15c]/15 border border-[#c9a15c]/30 flex items-center justify-center shrink-0 text-[#c9a15c] font-bold text-xs">
                 2
               </div>
               <div className="pt-0.5 leading-snug">
                 {isEs ? (
                   <>
-                    Desplácese y seleccione <strong className="text-[#ebd092]">&ldquo;Agregar a pantalla de inicio&rdquo;</strong>.
+                    Desplácese y seleccione <strong className="text-[#e3c78c]">&ldquo;Agregar a pantalla de inicio&rdquo;</strong>.
                   </>
                 ) : (
                   <>
-                    Scroll down and tap <strong className="text-[#ebd092]">&ldquo;Add to Home Screen&rdquo;</strong>.
+                    Scroll down and tap <strong className="text-[#e3c78c]">&ldquo;Add to Home Screen&rdquo;</strong>.
                   </>
                 )}
               </div>
@@ -224,7 +224,7 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
 
             {/* Step 3 */}
             <div className="flex items-start gap-3 p-3 rounded-2xl bg-white/[0.04] border border-white/10 text-cream">
-              <div className="w-7 h-7 rounded-lg bg-[#d4af62]/15 border border-[#d4af62]/30 flex items-center justify-center shrink-0 text-[#d4af62] font-bold text-xs">
+              <div className="w-7 h-7 rounded-lg bg-[#c9a15c]/15 border border-[#c9a15c]/30 flex items-center justify-center shrink-0 text-[#c9a15c] font-bold text-xs">
                 3
               </div>
               <div className="pt-0.5 leading-snug">
@@ -241,7 +241,7 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
             </div>
 
             {/* Visual Pointer Hint */}
-            <div className="pt-2 pb-1 flex items-center justify-center gap-2 text-[#ebd092] text-[11px] font-semibold animate-pulse">
+            <div className="pt-2 pb-1 flex items-center justify-center gap-2 text-[#e3c78c] text-[11px] font-semibold animate-pulse">
               <span>{isChromeIOS ? '⬆️' : '⬇️'}</span>
               <span>
                 {isChromeIOS
@@ -262,19 +262,19 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
                 : 'In Google Chrome or Microsoft Edge:'}
             </p>
             <div className="flex items-start gap-3 p-3 rounded-2xl bg-white/[0.04] border border-white/10 text-cream">
-              <div className="w-7 h-7 rounded-lg bg-[#d4af62]/15 border border-[#d4af62]/30 flex items-center justify-center shrink-0 text-[#d4af62] font-bold text-xs">
+              <div className="w-7 h-7 rounded-lg bg-[#c9a15c]/15 border border-[#c9a15c]/30 flex items-center justify-center shrink-0 text-[#c9a15c] font-bold text-xs">
                 1
               </div>
               <div className="pt-0.5 leading-snug">
                 {isEs ? (
-                  <>Haga clic en el icono <strong className="text-[#ebd092]">&ldquo;Instalar aplicación&rdquo;</strong> en la barra de direcciones.</>
+                  <>Haga clic en el icono <strong className="text-[#e3c78c]">&ldquo;Instalar aplicación&rdquo;</strong> en la barra de direcciones.</>
                 ) : (
-                  <>Click the <strong className="text-[#ebd092]">&ldquo;Install App&rdquo;</strong> icon in your browser address bar.</>
+                  <>Click the <strong className="text-[#e3c78c]">&ldquo;Install App&rdquo;</strong> icon in your browser address bar.</>
                 )}
               </div>
             </div>
             <div className="flex items-start gap-3 p-3 rounded-2xl bg-white/[0.04] border border-white/10 text-cream">
-              <div className="w-7 h-7 rounded-lg bg-[#d4af62]/15 border border-[#d4af62]/30 flex items-center justify-center shrink-0 text-[#d4af62] font-bold text-xs">
+              <div className="w-7 h-7 rounded-lg bg-[#c9a15c]/15 border border-[#c9a15c]/30 flex items-center justify-center shrink-0 text-[#c9a15c] font-bold text-xs">
                 2
               </div>
               <div className="pt-0.5 leading-snug">
@@ -291,7 +291,7 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
         <button
           type="button"
           onClick={() => setShowModal(false)}
-          className="mt-6 w-full py-3 rounded-xl bg-[#d4af62] text-[#131518] font-extrabold text-xs uppercase tracking-wider hover:bg-[#ebd092] transition-all cursor-pointer shadow-md active:scale-98"
+          className="mt-6 w-full py-3 rounded-xl bg-[#c9a15c] text-[#1e1b17] font-extrabold text-xs uppercase tracking-wider hover:bg-[#e3c78c] transition-all cursor-pointer shadow-md active:scale-98"
         >
           {isEs ? 'Entendido, Cerrar' : 'Got It, Close'}
         </button>
@@ -311,9 +311,9 @@ export default function InstallAppButton({ className = '', children, lang }: Ins
         <button
           type="button"
           onClick={handleInstallClick}
-          className={'inline-flex items-center gap-2 bg-[#181c22] border border-[#d4af62]/60 text-[#ebd092] hover:bg-[#d4af62] hover:text-[#1c1408] font-bold text-xs px-5 py-2.5 rounded-full transition-all duration-200 cursor-pointer shadow-sm active:scale-95 ' + className}
+          className={'inline-flex items-center gap-2 bg-[#1e1b17] border border-[#c9a15c]/60 text-[#e3c78c] hover:bg-[#c9a15c] hover:text-[#1c1408] font-bold text-xs px-5 py-2.5 rounded-full transition-all duration-200 cursor-pointer shadow-sm active:scale-95 ' + className}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 shrink-0 text-[#d4af62]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
+          <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 shrink-0 text-[#c9a15c]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
           </svg>
           <span>{buttonLabel}</span>

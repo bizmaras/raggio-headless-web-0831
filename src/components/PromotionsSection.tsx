@@ -208,7 +208,7 @@ export default function PromotionsSection({ dict }: PromotionsSectionProps) {
           >
             <div>
               <div className="flex justify-between items-start mb-3">
-                <span className="text-[10px] font-extrabold uppercase tracking-widest text-gold bg-gold/10 px-2.5 py-1 rounded-md border border-gold/20 font-mono">
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-ember-bright bg-ember/10 px-2.5 py-1 rounded-md border border-ember/30 font-mono">
                   {promo.tag}
                 </span>
                 <span className="text-xl font-extrabold text-cream group-hover:text-gold-bright transition-colors">
